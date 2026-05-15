@@ -1,0 +1,64 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - staging
+      - main
+
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy-staging:
+    name: Deploy — Staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/staging'
+    environment: staging
+
+    steps:
+      - name: Deploy to staging with rollback
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            export PATH="$HOME/.local/bin:$HOME/.local/share/pnpm:$PATH"
+            cd ~/social_badge_ui_staging
+            CURRENT_SHA=$(git rev-parse HEAD)
+            git pull origin staging
+            pnpm install --frozen-lockfile
+            pnpm build
+            pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging --update-env
+            sleep 8
+            if ! curl -sf http://localhost:8080; then
+              git checkout $CURRENT_SHA
+              pnpm install --frozen-lockfile
+              pnpm build
+              pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging --update-env
+              echo "Rolled back to $CURRENT_SHA"
+              exit 1
+            fi
+            echo "Staging deploy successful."
+
+  deploy-production:
+    name: Deploy — Production
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+      - name: Deploy to production with rollback
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            export PATH="$HOME/.local/bin:$HOME/.local/share/pnpm:$PATH"
+            cd ~/social_badge_ui
+            CURRENT_SHA=$(git rev-parse HEAD)
