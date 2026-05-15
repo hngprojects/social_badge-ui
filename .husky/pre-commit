@@ -38,7 +38,7 @@ fix_create_require() {
   mv "${file}.cleaned" "$file"
 }
 
-LONG_LINE_EXCLUDE="pnpm-lock.yaml|yarn.lock|package-lock.json|.*\.min\.js|.*\.min\.css|.*\.map|.*\.lockb|.*\.svg|.*\.ts|.*\.tsx"
+LONG_LINE_EXCLUDE="pnpm-lock.yaml|yarn.lock|package-lock.json|.*\.min\.js|.*\.min\.css|.*\.map|.*\.lockb|.*\.svg|.*\.ts|.*\.tsx|.*\.png|.*\.jpg"
 
 # ── Scan staged files ─────────────────────────────────────────────────────────
 for file in $STAGED; do
