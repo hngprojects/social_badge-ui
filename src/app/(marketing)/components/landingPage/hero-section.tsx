@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function Hero() {
   return (
     <section className="bg-[#F9F9F9]">
-      <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:flex md:py-14">
+      <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:flex md:gap-8 lg:gap-12 md:py-14">
         {/* BG FLOAT LOGO */}
         <Image
           src="/assets/landing-page/logo-float-low-bg.svg"
@@ -33,9 +33,11 @@ export default function Hero() {
             <p className="text-[11px] font-light tracking-[1.54px] ">FOR EVENT ORGANIZERS</p>
           </div>
 
-          <h1 className="text-[clamp(32px,6vw,75px)] font-semibold text-center leading-12.5 text-pretty tracking-[-0.65px] md:text-left  lg:leading-18.5 lg:tracking-[-0.65px] lg:mt-3">
+          <h1 className="text-[clamp(2rem,5vw,4.6875rem)] font-semibold text-center md:text-left leading-tight md:leading-[1.15] lg:leading-[1.1] text-pretty tracking-[-0.02em] lg:mt-3">
             Turn attendees into your{' '}
-            <span className="text-primary italic font-fraunces">marketing </span>team.
+            <span className="whitespace-nowrap">
+              <span className="text-primary italic font-fraunces">marketing </span>team.
+            </span>
           </h1>
           <div className="text-muted-foreground text-[12px] text-center mt-4 mb-8 md:text-left">
             <p>Design a branded badge once. Watch your participants share it everywhere.</p>

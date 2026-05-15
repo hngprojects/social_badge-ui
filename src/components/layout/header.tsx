@@ -65,7 +65,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Primary navigation">
+          <nav className="hidden min-[1084px]:flex items-center gap-1" aria-label="Primary navigation">
             {NAV_LINKS.map(({ label, href }) => {
               const isActive = pathname === href;
               const isFeatures = href === '/#feature-section';
@@ -100,7 +100,7 @@ export default function Header() {
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
+          <div className="hidden min-[1084px]:flex items-center gap-3 shrink-0">
             <Link
               href="/login"
               className={cn(
@@ -132,7 +132,7 @@ export default function Header() {
             <SheetTrigger asChild>
               <button
                 className={cn(
-                  'lg:hidden flex items-center justify-center w-10 h-10 rounded-lg',
+                  'min-[1084px]:hidden flex items-center justify-center w-10 h-10 rounded-lg',
                   'text-foreground hover:bg-muted',
                   'transition-colors duration-150',
                 )}
