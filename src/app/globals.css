@@ -7,6 +7,22 @@
 html {
   scroll-behavior: smooth;
 }
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces/Fraunces-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces/Fraunces-Italic-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -121,6 +137,7 @@ html {
 }
 
 :root {
+  --font-fraunces: "Fraunces", serif;
   /* Backgrounds & Foregrounds */
   --background: #ffffff;
   --foreground: #4b4b4b; /* neutral-900 */
