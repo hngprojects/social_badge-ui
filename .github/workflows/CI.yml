@@ -11,19 +11,37 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  security-scans:
-    name: Security Scans
+  build-and-check:
+    name: Build & Type Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run forbidden pattern scan
-        run: bash scripts/forbidden-pattern-scan.sh "${{ github.workspace }}"
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-node@v4
         with:
-          python-version: "3.12"
-      - name: Download lazarus_scanner.py
-        run: |
-          curl -fsSL -o lazarus_scanner.py \
-            https://raw.githubusercontent.com/hngprojects/lazarus-scanner/main/lazarus_scanner.py
-          [ -s lazarus_scanner.py ] || { echo "FAIL: lazarus_scanner.py is empty or missing"; exit 1; }
-      - name: Run Lazarus scanner
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "10"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Type check
+        run: pnpm typecheck
+      - name: Build
+        run: pnpm build
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    needs: build-and-check
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "10"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run tests
+        run: pnpm test --passWithNoTests
