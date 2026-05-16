@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { DM_Sans, Fraunces } from "next/font/google";
+import { DM_Sans} from "next/font/google";
 import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 export const dmSans = DM_Sans({
@@ -9,11 +9,6 @@ export const dmSans = DM_Sans({
   weight: ["400", "500", "600"],
 });
 
-export const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-  weight: ["400", "500", "600"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -36,7 +31,7 @@ export default function RootLayout({
   return (
     <html data-scroll-behavior="smooth" lang="en" suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} ${fraunces.variable} bg-page text-ink antialiased`}
+        className={`${dmSans.variable} bg-page text-ink antialiased`}
       >
         <Providers>{children}</Providers>
         <Toaster

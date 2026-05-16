@@ -75,7 +75,7 @@ export const ForgotPasswordForm = () => {
                     title="We've sent you a reset link"
                     description={
                         <>
-                            <p>We've sent instructions to your registered email address.</p>
+                            <p>We&apos;ve sent instructions to your registered email address.</p>
                             <p>Click the link in the email to reset your password.</p>
                         </>
                     }
