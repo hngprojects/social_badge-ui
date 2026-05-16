@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import LegalLayout from '../components/legal-layout';
-
+import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Terms of Service',
   description: 'Read the terms and conditions for using Social Badge.',
@@ -193,9 +193,9 @@ export default function TermsOfServicePage() {
           </p>
           <p>
             For general support:{' '}
-            <a href="/contact" className="text-primary hover:text-primary-600 transition-colors">
+            <Link href="/contact" className="text-primary hover:text-primary-600 transition-colors">
               contact page
-            </a>
+            </Link>
           </p>
           <p>Badge Build Ltd. 14 Victoria Island, Lagos, Nigeria</p>
         </div>

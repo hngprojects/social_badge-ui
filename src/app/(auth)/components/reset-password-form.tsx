@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { useForm, useWatch } from "react-hook-form";
 import { useResetPassword } from "@/app/features/auth/hooks/useResetPassword";
 import { resetPasswordSchema, ResetPasswordFormValues } from "@/schemas/auth";
-
+import Link from "next/link";
 export const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
@@ -93,12 +93,13 @@ export const ResetPasswordForm = () => {
       <div className="text-center">
         <p className="text-md">
           Go back to{" "}
-          
-          <a  href="/login"
+
+          <Link
+            href="/login"
             className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
           >
             Log in
-          </a>
+          </Link>
         </p>
       </div>
     </div>

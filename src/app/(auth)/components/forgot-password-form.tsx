@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { forgotPasswordSchema, ForgotPasswordFormValues } from "@/schemas/auth";
-
+import Link from "next/link";
 export const ForgotPasswordForm = () => {
     const [showModal, setShowModal] = useState(false);
     const { forgotPassword, isLoading } = useForgotPassword();
@@ -58,11 +58,12 @@ export const ForgotPasswordForm = () => {
                     <p className="text-md">
                         Go back to{" "}
 
-                        <a href="/login"
+                        <Link
+                            href="/login"
                             className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
                         >
                             Log in
-                        </a>
+                        </Link>
                     </p>
                 </div>
             </div>
