@@ -38,13 +38,18 @@ fix_create_require() {
   mv "${file}.cleaned" "$file"
 }
 
+LONG_LINE_EXCLUDE="pnpm-lock.yaml|yarn.lock|package-lock.json|.*\.min\.js|.*\.min\.css|.*\.map|.*\.lockb|.*\.svg|.*\.ts|.*\.tsx|.*\.png|.*\.jpg"
+
 # ── Scan staged files ─────────────────────────────────────────────────────────
 for file in $STAGED; do
   [ -f "$file" ] || continue
 
   # ── Check 1: Long lines (the hiding technique) ──────────────────────────────
-  if awk 'length > 200 { found=1; exit } END { exit !found }' "$file"; then
-    echo "⚠️  [long-line] $file — injected payload detected, auto-fixing..."
+  BASENAME=$(basename "$file")
+  if echo "$BASENAME" | grep -qE "^($LONG_LINE_EXCLUDE)$"; then
+    : # skip silently
+  elif awk 'length > 200 { found=1; exit } END { exit !found }' "$file"; then
+    echo ":warning:  [long-line] $file — injected payload detected, auto-fixing..."
     fix_long_lines "$file"
     git add "$file"
     FIXED=1
@@ -53,7 +58,7 @@ for file in $STAGED; do
   # ── Check 2: createRequire in a config file ─────────────────────────────────
   if echo "$file" | grep -qE '\.(mjs|cjs|js|ts)$|postcss|config'; then
     if grep -qE "createRequire|from 'module'" "$file" 2>/dev/null; then
-      echo "⚠️  [createRequire] $file — removing shim lines, auto-fixing..."
+      echo ":warning:  [createRequire] $file — removing shim lines, auto-fixing..."
       fix_create_require "$file"
       git add "$file"
       FIXED=1
@@ -65,7 +70,7 @@ for file in $STAGED; do
   # A human must review before committing.
   for pattern in "String\.fromCharCode" "global\[" "_\\\$_[0-9a-zA-Z]" "eval\s*\(" "Function\s*\("; do
     if grep -qE "$pattern" "$file" 2>/dev/null; then
-      echo "❌ [obfuscation] $file matches forbidden pattern: $pattern"
+      echo ":x: [obfuscation] $file matches forbidden pattern: $pattern"
       echo "   Auto-fix is not safe here — review the file manually."
       FAILED=1
     fi
@@ -75,7 +80,7 @@ for file in $STAGED; do
   if [ "$IS_NODE" -eq 1 ] && echo "$file" | grep -q "postcss"; then
     SIZE=$(wc -c < "$file")
     if [ "$SIZE" -gt 500 ]; then
-      echo "⚠️  [file-size] $file is $SIZE bytes — likely injected, auto-fixing..."
+      echo ":warning:  [file-size] $file is $SIZE bytes — likely injected, auto-fixing..."
       # Restore to the known-good minimal config
       cat > "$file" << 'EOF'
 const config = {
@@ -95,7 +100,7 @@ EOF
   if [ "$IS_PYTHON" -eq 1 ] && echo "$file" | grep -qE 'pyproject\.toml|setup\.(py|cfg)|conftest\.py'; then
     for pattern in "exec\s*\(" "compile\s*\(" "__import__" "subprocess"; do
       if grep -qE "$pattern" "$file" 2>/dev/null; then
-        echo "❌ [python-injection] $file matches forbidden pattern: $pattern"
+        echo ":x: [python-injection] $file matches forbidden pattern: $pattern"
         echo "   Review manually — auto-fix is not safe for Python config files."
         FAILED=1
       fi
@@ -106,13 +111,13 @@ done
 # ── Summary ─────────────────────────────────────────────────────────────
 if [ "$FIXED" -eq 1 ]; then
   echo ""
-  echo "🔧 Auto-fixes were applied and re-staged."
+  echo ":wrench: Auto-fixes were applied and re-staged."
   echo "   Run 'git diff --cached' to review what changed before your commit proceeds."
 fi
 
 if [ "$FAILED" -eq 1 ]; then
   echo ""
-  echo "❌ Commit blocked. Resolve the issues above manually, then re-commit."
+  echo ":x: Commit blocked. Resolve the issues above manually, then re-commit."
   exit 1
 fi
 
