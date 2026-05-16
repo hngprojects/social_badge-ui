@@ -13,7 +13,7 @@ export const signupSchema = z
     password: z
       .string()
       .min(1, "Password is required")
-      .min(6, "Password should be at least eight characters")
+      .min(8, "Password should be at least eight characters")
       .regex(/[A-Z]/, "Password should have at least a CAPITAL letter")
       .regex(/[a-z]/, "Password should have at least a small letter")
       .regex(/\d/, "Password should have at least a number")
@@ -37,7 +37,7 @@ export const resetPasswordSchema = z
     password: z
       .string()
       .min(1, "Password is required")
-      .min(6, "Password should be at least six characters")
+      .min(8, "Password should be at least eight characters")
       .regex(/[A-Z]/, "Password should have at least a CAPITAL letter")
       .regex(/[a-z]/, "Password should have at least a small letter")
       .regex(/\d/, "Password should have at least a number")
