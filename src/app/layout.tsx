@@ -1,43 +1,70 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { DM_Sans} from "next/font/google";
+import Providers from "@/components/providers/providers";
+import { Toaster } from "sonner";
+export const dmSans = DM_Sans({
   subsets: ["latin"],
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-const appName = process.env.NEXT_PUBLIC_APP_NAME ?? "Next Starter";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(appUrl),
   title: {
-    default: appName,
-    template: `%s · ${appName}`,
+    default: "Social Badge — Digital Badge Builder",
+    template: "%s | Social Badge",
   },
-  description: `${appName} — a Next.js 16 starter.`,
+  description:
+    "Create customisable digital badge templates that participants can personalise and share on social media.",
+  openGraph: {
+    title: "Social Badge",
+    description:
+      "Turn participants into active promoters with shareable digital badges.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", figtree.variable)}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html data-scroll-behavior="smooth" lang="en" suppressHydrationWarning>
+      <body
+        className={`${dmSans.variable} bg-page text-ink antialiased`}
+      >
+        <Providers>{children}</Providers>
+        <Toaster
+          position="top-right"
+          richColors
+          toastOptions={{
+            style: {
+              background: "#FFFFFF",
+              color: "#121217",
+              border: "1px solid #ECECF2",
+              borderRadius: "16px",
+              padding: "16px",
+              boxShadow: "0px 10px 30px rgba(0,0,0,0.08)",
+            },
+
+            classNames: {
+              toast: "gap-3",
+
+              title: "text-sm font-semibold",
+
+              description: "text-sm text-[#6C6C89]",
+
+              success: "!bg-[#F0FDF4] !border-[#22C55E]",
+
+              error: "!bg-[#FEF2F2] !text-[#EF4444] !border-[#EF4444]",
+
+              warning: "!bg-[#FFFBEB] !border-[#F59E0B]",
+
+              info: "!bg-[#EFF6FF] !border-[#3B82F6]",
+            },
+          }}
+        />
+      </body>
     </html>
   );
 }
