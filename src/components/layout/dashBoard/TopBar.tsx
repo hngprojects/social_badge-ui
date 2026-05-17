@@ -34,7 +34,7 @@ export default function TopBar() {
           />
         </div>
 
-        <Link href="/">
+        <Link href="/create-badges">
           <Button className="h-auto! bg-[#FA5424] px-6 py-3.5! text-[14px] font-semibold">
             Create new badge
           </Button>
