@@ -22,8 +22,14 @@ export default function SideNav() {
         <div>
           <header className="flex items-center justify-between gap-6 p-4 pb-6 whitespace-nowrap text-[#231F20]">
             <div className="flex items-center gap-2">
-              <Image alt="logo" src="/assets/logo.svg" width={22} height={27} />
-
+              <Link href="/dashboard">
+                <Image
+                  alt="logo"
+                  src="/assets/logo.svg"
+                  width={22}
+                  height={27}
+                />
+              </Link>
               {expanded && (
                 <p className="text-[19px] font-medium tracking-normal">
                   Social Badge
