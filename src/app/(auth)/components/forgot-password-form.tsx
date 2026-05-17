@@ -33,7 +33,7 @@ export const ForgotPasswordForm = () => {
     return (
         <>
             <div className="login-form bg-[#F5F5F5] rounded-lg px-5 py-6 flex flex-col gap-7">
-                <form className="flex flex-col gap-7" onSubmit={handleSubmit(onSubmit)}>
+                <form className="flex flex-col gap-7" onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="flex flex-col gap-4">
                         <AuthInput
                             disabled={isSubmitting || isLoading}
