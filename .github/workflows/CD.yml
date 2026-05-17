@@ -21,6 +21,7 @@ jobs:
             cd ~/social_badge_ui_staging
             git fetch origin
             git reset --hard origin/staging
+            echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" > .env.local
             pnpm install --frozen-lockfile
             pnpm build
             pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging
@@ -46,6 +47,7 @@ jobs:
             cd ~/social_badge_ui
             git fetch origin
             git reset --hard origin/main
+            echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" > .env.local
             pnpm install --frozen-lockfile
             pnpm build
             pm2 reload ~/ecosystem.config.js --only social_badge_ui
