@@ -2,7 +2,13 @@ name: CD
 
 on:
   push:
-    branches: [staging, main]
+    branches:
+      - staging
+      - main
+
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   deploy-staging:
