@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function TopBar() {
   return (
-    <section className="flex items-center justify-between gap-6">
+    <section className="flex items-center w-full justify-between gap-6 ">
       <div className="flex w-full max-w-[70%] items-center gap-[4.35px] rounded-[10.41px] bg-[#F8F8F8] py-2.5 pl-[12.5px] text-[14px] font-medium">
         <Image
           src="/assets/dashboard/icons/search-icon.svg"
@@ -20,9 +20,9 @@ export default function TopBar() {
         />
       </div>
 
-      <div className="flex shrink-0 gap-5">
+      <div className="flex shrink-0 gap-5 ">
         <div className="relative grid h-11 w-11 place-content-center rounded-full bg-[#F7F7F8] cursor-pointer">
-          <div className="absolute grid h-auto w-[15.59px] items-center rounded-full bg-[#FA5424] px-1 py-[1px] text-[7.31px] text-white">
+          <div className="absolute grid h-auto w-[15.59px] items-center rounded-full bg-[#FA5424] px-1 py-px text-[7.31px] text-white">
             10
           </div>
 
