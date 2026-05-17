@@ -20,16 +20,20 @@ jobs:
           script: |
             cd ~/social_badge_ui_staging
             git fetch origin
+            PREVIOUS_COMMIT=$(git rev-parse HEAD)
             git reset --hard origin/staging
             echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" > .env.local
             pnpm install --frozen-lockfile
             pnpm build
             pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging
-
-      - name: Health check
-        run: |
-          sleep 15
-          curl -f https://staging.social-badge.hng14.com/api/health || exit 1
+            sleep 15
+            if ! curl -f https://staging.social-badge.hng14.com/api/health; then
+              git reset --hard $PREVIOUS_COMMIT
+              pnpm install --frozen-lockfile
+              pnpm build
+              pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging
+              exit 1
+            fi
 
   deploy-production:
     name: Deploy to Production
@@ -46,13 +50,17 @@ jobs:
           script: |
             cd ~/social_badge_ui
             git fetch origin
+            PREVIOUS_COMMIT=$(git rev-parse HEAD)
             git reset --hard origin/main
             echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" > .env.local
             pnpm install --frozen-lockfile
             pnpm build
             pm2 reload ~/ecosystem.config.js --only social_badge_ui
-
-      - name: Health check
-        run: |
-          sleep 15
-          curl -f https://social-badge.hng14.com/api/health || exit 1
+            sleep 15
+            if ! curl -f https://social-badge.hng14.com/api/health; then
+              git reset --hard $PREVIOUS_COMMIT
+              pnpm install --frozen-lockfile
+              pnpm build
+              pm2 reload ~/ecosystem.config.js --only social_badge_ui
+              exit 1
+            fi
