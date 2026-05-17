@@ -1,3 +1,3 @@
-export default function Badges() {
+export default function CreateBadges() {
   return <>Badges</>;
 }
