@@ -1,4 +1,11 @@
-export const navigationLinks = [
+export type NavigationLink = {
+  label: string;
+  icon: string;
+  activeIcon: string;
+  href: string;
+};
+
+export const navigationLinks: NavigationLink[] = [
   {
     label: "Dashboard",
     icon: "/assets/dashboard/icons/home.svg",
@@ -14,7 +21,7 @@ export const navigationLinks = [
   {
     label: "Templates",
     icon: "/assets/dashboard/icons/template.svg",
-    activeIcon: "/assets/dashboard/icons/template.svg",
+    activeIcon: "/assets/dashboard/icons/template-active.svg",
     href: "/templates",
   },
   {
