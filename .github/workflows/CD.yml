@@ -24,22 +24,26 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -euo pipefail
+            export PATH="$HOME/.local/bin:$HOME/.local/share/pnpm:$PATH"
             cd ~/social_badge_ui_staging
-            git fetch origin
             PREVIOUS_COMMIT=$(git rev-parse HEAD)
+            git fetch origin
             git reset --hard origin/staging
             echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" > .env.local
             pnpm install --frozen-lockfile
             pnpm build
-            pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging
+            pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging --update-env
             sleep 15
-            if ! curl -f https://staging.social-badge.hng14.com/api/health; then
+            if ! curl -sf http://localhost:8080; then
               git reset --hard $PREVIOUS_COMMIT
               pnpm install --frozen-lockfile
               pnpm build
-              pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging
+              pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging --update-env
+              echo "Rolled back to $PREVIOUS_COMMIT"
               exit 1
             fi
+            echo "Staging deploy successful."
 
   deploy-production:
     name: Deploy to Production
@@ -54,19 +58,23 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -euo pipefail
+            export PATH="$HOME/.local/bin:$HOME/.local/share/pnpm:$PATH"
             cd ~/social_badge_ui
-            git fetch origin
             PREVIOUS_COMMIT=$(git rev-parse HEAD)
+            git fetch origin
             git reset --hard origin/main
             echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" > .env.local
             pnpm install --frozen-lockfile
             pnpm build
-            pm2 reload ~/ecosystem.config.js --only social_badge_ui
+            pm2 reload ~/ecosystem.config.js --only social_badge_ui --update-env
             sleep 15
-            if ! curl -f https://social-badge.hng14.com/api/health; then
+            if ! curl -sf http://localhost:3000; then
               git reset --hard $PREVIOUS_COMMIT
               pnpm install --frozen-lockfile
               pnpm build
-              pm2 reload ~/ecosystem.config.js --only social_badge_ui
+              pm2 reload ~/ecosystem.config.js --only social_badge_ui --update-env
+              echo "Rolled back to $PREVIOUS_COMMIT"
               exit 1
             fi
+            echo "Production deploy successful."
