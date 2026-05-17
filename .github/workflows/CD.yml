@@ -36,11 +36,17 @@ jobs:
             pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging --update-env
             sleep 15
             if ! curl -sf http://localhost:8080; then
+              echo "Deploy failed, rolling back to $PREVIOUS_COMMIT..."
               git reset --hard $PREVIOUS_COMMIT
               pnpm install --frozen-lockfile
               pnpm build
               pm2 reload ~/ecosystem.config.js --only social_badge_ui_staging --update-env
-              echo "Rolled back to $PREVIOUS_COMMIT"
+              sleep 15
+              if ! curl -sf http://localhost:8080; then
+                echo "Rollback also failed. Manual intervention required."
+                exit 2
+              fi
+              echo "Rollback successful."
               exit 1
             fi
             echo "Staging deploy successful."
@@ -70,11 +76,17 @@ jobs:
             pm2 reload ~/ecosystem.config.js --only social_badge_ui --update-env
             sleep 15
             if ! curl -sf http://localhost:3000; then
+              echo "Deploy failed, rolling back to $PREVIOUS_COMMIT..."
               git reset --hard $PREVIOUS_COMMIT
               pnpm install --frozen-lockfile
               pnpm build
               pm2 reload ~/ecosystem.config.js --only social_badge_ui --update-env
-              echo "Rolled back to $PREVIOUS_COMMIT"
+              sleep 15
+              if ! curl -sf http://localhost:3000; then
+                echo "Rollback also failed. Manual intervention required."
+                exit 2
+              fi
+              echo "Rollback successful."
               exit 1
             fi
             echo "Production deploy successful."
