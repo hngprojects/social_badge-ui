@@ -46,7 +46,7 @@ export default function MobileHeader() {
                 "text-foreground hover:bg-muted",
                 "transition-colors duration-150",
               )}
-              aria-label="Open menu"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
               {mobileOpen ? (
                 <X className="w-5 h-5" />
