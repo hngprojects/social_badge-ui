@@ -3,43 +3,12 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-
-const navigation = [
-  {
-    label: "Dashboard",
-    icon: "/assets/dashboard/icons/home.svg",
-    activeIcon: "/assets/dashboard/icons/home-active.svg",
-    href: "/dashboard",
-  },
-  {
-    label: "Create Badges",
-    icon: "/assets/dashboard/icons/badges.svg",
-    activeIcon: "/assets/dashboard/icons/badges-active.svg",
-    href: "/create-badges",
-  },
-  {
-    label: "Templates",
-    icon: "/assets/dashboard/icons/template.svg",
-    activeIcon: "/assets/dashboard/icons/template.svg",
-    href: "/templates",
-  },
-  {
-    label: "Settings",
-    icon: "/assets/dashboard/icons/settings.svg",
-    activeIcon: "/assets/dashboard/icons/settings.svg",
-    href: "/settings",
-  },
-  {
-    label: "Support",
-    icon: "/assets/dashboard/icons/support.svg",
-    activeIcon: "/assets/dashboard/icons/support.svg",
-    href: "/support",
-  },
-];
+import { navigationLinks } from "../navLinks";
 
 export default function SideNav() {
   const [expanded, setExpanded] = useState(true);
   const pathname = usePathname();
+  const navigation = navigationLinks;
   const topNav = navigation.slice(0, 3);
   const bottomNav = navigation.slice(3);
 
