@@ -65,8 +65,8 @@ const templates: Template[] = [
 
 export default function BrowseTemplate() {
   return (
-    <section className="mt-6 rounded-[12px] border border-[#E8E8E8] px-5">
-      <div className="flex justify-between items-center py-[18px]">
+    <section className=" rounded-[12px] border border-[#E8E8E8] ">
+      <div className="flex justify-between items-center py-[18px] px-5 border-b-[1px]">
         <h1 className="text-[clamp(18px,2.5vw,20px)] font-semibold text-[#242424]">
           Browse templates
         </h1>
@@ -78,7 +78,7 @@ export default function BrowseTemplate() {
         </Link>
       </div>
 
-      <div className="mb-5 grid place-content-center w-full gap-[18px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+      <div className="p-5 grid place-content-center w-full gap-[18px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
         {templates.map((template) => (
           <article
             key={template.id}
