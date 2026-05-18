@@ -43,6 +43,7 @@ export const AuthModal = ({
             <div className="text-base text-[#4D4645]  ">{description}</div>
             <Button
               onClick={() => {
+                console.log(email);
                 const mailUrl = getEmailProviderUrl(email);
                 if (!mailUrl) return;
 

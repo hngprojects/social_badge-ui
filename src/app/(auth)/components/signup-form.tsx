@@ -15,6 +15,7 @@ import { signupSchema, SignupFormValues } from "@/schemas/auth";
 export const SignupForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState("");
   const [modalMessage, setModalMessage] = useState<string | undefined>();
   const { signup, isLoading } = useSignup();
 
@@ -46,16 +47,17 @@ export const SignupForm = () => {
     confirmPasswordInputClassName = "border-[#22C55E]";
   }
 
-  const onSubmit = (data: SignupFormValues) => {
+  const onSubmit = (formData: SignupFormValues) => {
     signup(
       {
-        email: data.email,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        password: data.password,
+        email: formData.email,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        password: formData.password,
       },
       {
         onSuccess: (data) => {
+          setSubmittedEmail(formData.email);
           if (data.message.includes("Verification email failed to send")) {
             setModalMessage(data.message);
           }
@@ -203,7 +205,7 @@ export const SignupForm = () => {
       {showModal && (
         <AuthModal
           closeModal={() => setShowModal(false)}
-          email={email}
+          email={submittedEmail}
           title="Verify your email address"
           description={
             modalMessage ? (
@@ -211,7 +213,9 @@ export const SignupForm = () => {
             ) : (
               <>
                 <p>We have sent a link to verify your email address.</p>
-                <p>Check your email for the link to verify your email address</p>
+                <p>
+                  Check your email for the link to verify your email address
+                </p>
               </>
             )
           }

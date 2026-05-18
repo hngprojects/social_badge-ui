@@ -4,7 +4,8 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-export const getEmailProviderUrl = (email: string) => {
+export const getEmailProviderUrl = (email?: string) => {
+  if (!email || !email.includes("@")) return null;
   const domain = email.split("@")[1];
 
   switch (domain) {
