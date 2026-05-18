@@ -66,6 +66,12 @@ export const verifyEmail = async ({ token }: { token: string }) => {
     data: { token },
   });
 };
+export const resendVerifyEmail = async ({ email }: { email: string }) => {
+  return apiClient<{ status: string; message: string }>("/auth/resend-verification-email", {
+    method: "POST",
+    data: { email },
+  });
+};
 
 // export const checkEmailAvailability = async (email: string) => {
 //   return apiClient<CheckEmailResponse>(`/auth/check-email`, {
