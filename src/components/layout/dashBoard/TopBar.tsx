@@ -13,7 +13,7 @@ export default function TopBar() {
           alt="search icon"
         />
 
-        <label htmlFor="dashbaord-search" className="sr-only">
+        <label htmlFor="dashboard-search" className="sr-only">
           Search for events, badges, attendees
         </label>
         <input
