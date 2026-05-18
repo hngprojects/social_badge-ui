@@ -15,11 +15,11 @@ export default function DashboardLayout({
 
       <main className="grid h-screen flex-1 grid-rows-[83px_1fr] overflow-hidden px-6 lg:pl-6 lg:pr-8">
         <header className="flex">
-          <div className="lg:hidden  lg:pt-[16px]">
+          <div className="lg:hidden">
             <MobileHeader />
           </div>
 
-          <div className=" hidden lg:flex w-full items-end">
+          <div className="hidden lg:flex w-full items-end">
             <TopBar />
           </div>
         </header>
