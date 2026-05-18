@@ -31,7 +31,6 @@ export const SignupForm = () => {
   });
 
   const password = useWatch({ control, name: "password" });
-  const email = useWatch({ control, name: "email" });
 
   let passwordInputClassName = "";
   if (errors.password) {
@@ -58,6 +57,7 @@ export const SignupForm = () => {
       {
         onSuccess: (data) => {
           setSubmittedEmail(formData.email);
+          setModalMessage(undefined);
           if (data.message.includes("Verification email failed to send")) {
             setModalMessage(data.message);
           }

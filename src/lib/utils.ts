@@ -5,8 +5,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 export const getEmailProviderUrl = (email?: string) => {
-  if (!email || !email.includes("@")) return null;
-  const domain = email.split("@")[1];
+  const normalized = email?.trim().toLowerCase();
+  if (!normalized || !normalized.includes("@")) return null;
+  const domain = normalized.split("@")[1];
 
   switch (domain) {
     case "gmail.com":
