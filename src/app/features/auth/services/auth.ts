@@ -1,6 +1,4 @@
 "use server";
-import axios from "axios";
-
 import { cookies } from "next/headers";
 import { apiClient } from "@/lib/api/client";
 import { LoginPayload, SignupPayload } from "../types";
@@ -17,7 +15,7 @@ export const signup = async (data: SignupPayload) => {
   return response;
 };
 export const login = async (data: LoginPayload) => {
-  const { data: body } = await axios.post<{
+  const body = await apiClient<{
     status: string;
     message: string;
     data: {
@@ -25,16 +23,15 @@ export const login = async (data: LoginPayload) => {
       token_type?: string;
       user: Record<string, unknown>;
     };
-  }>("/api/auth/login", data, {
-    headers: { "Content-Type": "application/json" },
-    withCredentials: true,
+  }>("/auth/login", {
+    method: "POST",
+    data,
   });
-  const cookie = await cookies();
 
+  const cookie = await cookies();
   cookie.set("access-token", body.data.access_token);
   return body;
 };
-
 export const forgotPassword = async ({ email }: { email: string }) => {
   return apiClient<{ status: string; message: string }>(
     "/auth/forgot-password",
