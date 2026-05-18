@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signup as signupApi } from "../services/auth";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import { ApiError } from "@/app/features/auth/types";
+import { ApiError } from "@/app/features/auth/types/types";
 
 export const useSignup = () => {
   const {

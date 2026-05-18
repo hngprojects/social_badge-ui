@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { forgotPassword as forgotPasswordApi } from "../services/auth";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import { ApiError } from "../types";
+import { ApiError } from "../types/types";
 
 export const useForgotPassword = () => {
   const {

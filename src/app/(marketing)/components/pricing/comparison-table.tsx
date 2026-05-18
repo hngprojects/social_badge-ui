@@ -1,7 +1,6 @@
 import { COMPARISON_ROWS } from '../../pricing/constants/comparison-rows';
 import StatusIcon from './status-icon';
-type CellValue = string;
-
+import type { CellValue } from './types/comparison-table';
 function TableCell({ value }: { value: CellValue }) {
   if (value === 'check') return <StatusIcon type="check" className="bg-green-500" />;
   if (value === 'cross') return <StatusIcon type="cross" className="bg-red-500" />;

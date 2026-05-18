@@ -1,19 +1,5 @@
 import Image from 'next/image';
-
-type BadgeTag = 'Trending' | 'New' | null;
-
-export type Template = {
-  id: number;
-  title: string;
-  type: string;
-  creator: string;
-  location: string;
-  badgeCount: string;
-  image: string;
-  tag: BadgeTag;
-  hasShadow?: boolean;
-};
-
+import type { Template } from './types/template-card';
 const TemplateCard = ({ template, index }: { template: Template; index: number }) => {
   return (
     <div

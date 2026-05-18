@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { apiClient } from "@/lib/api/client";
-import { LoginPayload, SignupPayload } from "../types";
+import { LoginPayload, SignupPayload } from "../types/types";
 
 export const signup = async (data: SignupPayload) => {
   const response = await apiClient<{ status: string; message: string }>(

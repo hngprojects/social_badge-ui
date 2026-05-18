@@ -1,16 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { LegalLayoutProps } from '../types/legal-layout';
 
-interface LegalLayoutProps {
-  title: string;
-  titleHighlight: string;
-  date: string;
-  dateLabel?: string;
-  summary: React.ReactNode;
-  toc: Array<{ id: string; title: string }>;
-  children: React.ReactNode;
-}
 
 export default function LegalLayout({
   title,

@@ -1,4 +1,5 @@
-import TemplateCard, { type Template } from './template-card';
+import TemplateCard from './template-card';
+import type { Template } from './types/template-card';
 
 const templates: Template[] = [
   {

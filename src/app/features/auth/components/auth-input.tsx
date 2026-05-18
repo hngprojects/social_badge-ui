@@ -2,12 +2,7 @@
 import { Icons } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 import React from "react";
-
-type InputProps = {
-  label: string;
-  icon?: React.ReactNode;
-} & React.InputHTMLAttributes<HTMLInputElement>;
-
+import type { InputProps } from "../types/auth-input";
 export const AuthInput = (props: InputProps) => {
   const [isVisible, setIsVisible] = React.useState(false);
   const inputType = isVisible ? "text" : "password";

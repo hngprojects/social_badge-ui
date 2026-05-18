@@ -1,10 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useRef } from 'react';
-interface PhotoUploadProps {
-  photoPreview: string;
-  onUpload: (file: File, preview: string) => void;
-}
+import type { PhotoUploadProps } from './types/PhotoUpload';
 
 export function PhotoUpload({ photoPreview, onUpload }: PhotoUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);

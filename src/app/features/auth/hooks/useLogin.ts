@@ -3,7 +3,7 @@ import { login as loginApi } from "../services/auth";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { ApiError } from "@/app/features/auth/types";
+import { ApiError } from "@/app/features/auth/types/types";
 
 export const useLogin = () => {
   const router = useRouter();

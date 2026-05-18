@@ -1,10 +1,5 @@
 import { BillingCycle } from '../../pricing/types/pricing';
-
-type PricingToggleProps = {
-  billing: BillingCycle;
-  onChange: (billing: BillingCycle) => void;
-};
-
+import type { PricingToggleProps } from './types/pricing-toggle';
 export default function PricingToggle({ billing, onChange }: PricingToggleProps) {
   return (
     <div className="flex flex-col items-center gap-2 mb-6">

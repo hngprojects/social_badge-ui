@@ -1,17 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { FILTERS } from './constants/filter-tabs';
 
-const FILTERS = [
-  'All',
-  'Conference',
-  'Hackathon',
-  'Community',
-  'Bootcamp',
-  'Meetup',
-  'Speaker',
-  'Trending',
-];
 
 const FilterTabs = () => {
   const [active, setActive] = useState('All');

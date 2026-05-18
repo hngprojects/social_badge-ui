@@ -1,17 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { BadgeStyle } from '../../types/badge';
-
-interface StylePickerProps {
-  selected: BadgeStyle;
-  onChange: (style: BadgeStyle) => void;
-  activeColor: string;
-}
-
-const STYLES: { value: BadgeStyle; label: string }[] = [
-  { value: 'classic', label: 'Classic' },
-  { value: 'centered', label: 'Centered' },
-  { value: 'banner', label: 'Banner' },
-];
+import type { StylePickerProps } from './types/StylePicker';
+import { STYLES } from './constants/StylePicker';
 
 function StyleThumbnail({ style }: { style: BadgeStyle }) {
   if (style === 'classic')
