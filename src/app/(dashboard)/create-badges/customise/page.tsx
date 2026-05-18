@@ -219,11 +219,11 @@ export default function CreateBadgePage() {
   };
 
 
- const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  console.log({ template, formData, logoData });
- }
+    console.log({ template, formData, logoData });
+  }
 
 
 
@@ -231,7 +231,7 @@ export default function CreateBadgePage() {
     <main className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6 max-w-7xl mx-auto w-full items-start">
 
       {/* SECTION 1: THE CONTROL PANEL FORM */}
-      <section className="lg:col-span-7 bg-white rounded-2xl p-6  space-y-6 ">
+      <section className="order-2 lg:order-1 lg:col-span-7 bg-white rounded-2xl p-6  space-y-6 ">
 
         <form onSubmit={handleSubmit} className="space-y-6">
 
@@ -384,7 +384,7 @@ export default function CreateBadgePage() {
 
 
       {/*SECTION 2: LIVE PREVIEW CONTAINER */}
-      <section className="lg:col-span-5 w-full lg:sticky lg:top-6 lg:max-w-[450px] lg:h-[calc(100vh-48px)] bg-[#FFF0EC] rounded-2xl p-6 flex flex-col items-center justify-center">
+      <section className="order-1 lg:order-2 lg:col-span-5 w-full lg:sticky lg:top-6 lg:max-w-[450px] lg:h-[calc(100vh-48px)] bg-[#FFF0EC] rounded-2xl p-6 flex flex-col items-center justify-center">
         <div className="w-full text-left mb-6 flex items-center gap-2 text-xs font-bold text-[#595959] uppercase tracking-wider">
           <Image
             src="/assets/icons/create-badge-live-icon.svg"
