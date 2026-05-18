@@ -228,7 +228,7 @@ export default function CreateBadgePage() {
 
 
   return (
-    <main className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6 max-w-7xl mx-auto w-full items-start">
+    <main className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6 max-w-360 mx-auto w-full items-start">
 
       {/* SECTION 1: THE CONTROL PANEL FORM */}
       <section className="order-2 lg:order-1 lg:col-span-7 bg-white rounded-2xl p-6  space-y-6 ">
