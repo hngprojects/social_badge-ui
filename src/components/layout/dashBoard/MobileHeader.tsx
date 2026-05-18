@@ -85,17 +85,9 @@ export default function MobileHeader() {
               <nav className="flex flex-col gap-1 px-3 py-4 flex-1">
                 {navigation.map(({ label, href }) => {
                   const isActive = pathname === href;
-                  const isFeatures = href === "/#feature-section";
 
                   const handleClick = () => {
                     setMobileOpen(false);
-                    if (isFeatures && pathname === "/") {
-                      setTimeout(() => {
-                        document
-                          .getElementById("feature-section")
-                          ?.scrollIntoView({ behavior: "smooth" });
-                      }, 300);
-                    }
                   };
 
                   return (
