@@ -74,32 +74,12 @@
         width: 100% !important;
         max-width: 100%;
       }
-
-      .mj-column-px-355 {
-        width: 355px !important;
-        max-width: 355px;
-      }
-
-      .mj-column-px-526 {
-        width: 526px !important;
-        max-width: 526px;
-      }
     }
   </style>
   <style media="screen and (min-width:480px)">
     .moz-text-html .mj-column-per-100 {
       width: 100% !important;
       max-width: 100%;
-    }
-
-    .moz-text-html .mj-column-px-355 {
-      width: 355px !important;
-      max-width: 355px;
-    }
-
-    .moz-text-html .mj-column-px-526 {
-      width: 526px !important;
-      max-width: 526px;
     }
   </style>
   <style type="text/css">
@@ -113,7 +93,6 @@
       }
     }
   </style>
-  <!-- SETTING DEFAULT ELEMENT STYLES -->
 </head>
 
 <body style="word-spacing:normal;background-color:#F4F4F2;">
@@ -134,12 +113,10 @@
                   <tbody>
                     <table align="center">
                       <tr>
-                        <td> <img width="22.5px" src="https://staging.social-badge.hng14.com/assets/logo.svg"
-                            alt="Logo" /> </td>
-                        <td>
-                          <span style="font-family: 'DM Sans', Arial, sans-serif; font-size: 19.25px; font-weight:
-          600; color: #242424;"> Social Badge </span>
+                        <td> <img width="22.5px" src="{{ logo_url }}" alt="Logo">
                         </td>
+                        <td> <span style="font-family: 'DM Sans', Arial, sans-serif; font-size: 19.25px;
+          font-weight: 600; color: #242424;"> Social Badge </span> </td>
                       </tr>
                     </table>
                   </tbody>
@@ -163,7 +140,7 @@
             <td
               style="border:1px solid #EAEAE6;border-radius:24px;direction:ltr;font-size:0px;padding:0px;text-align:center;">
               <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><![endif]-->
-              <!-- CARD IMAGE -->
+              <!-- WELCOME TEXT -->
               <!--[if mso | IE]><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:598px;" width="598" ><tr><td 
               <div style="margin:0px auto;max-width:598px;">
                 <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
@@ -178,15 +155,55 @@
                             style="vertical-align:top;" width="100%">
                             <tbody>
                               <tr>
-                                <td align="center" style="font-size:0px;padding:0px;word-break:break-word;">
-                                  <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                    style="border-collapse:collapse;border-spacing:0px;">
+                                <td align="center"
+                                  style="font-size:0px;padding:0px;padding-bottom:16px;word-break:break-word;">
+                                  <div
+                                    style="font-family:DM Sans, sans-serif;font-size:11px;line-height:24px;text-align:center;color:#FF693E;">
+                                    - WELCOME</div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--[if mso | IE]></td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+              <!-- CARD IMAGE -->
+              <!--[if mso | IE]><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:598px;" width="598" ><tr><td 
+              <div style="margin:0px auto;max-width:598px;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                  style="width:100%;">
+                  <tbody>
+                    <tr>
+                      <td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
+                        <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:598px;" ><![endif]-->
+                        <div class="mj-column-per-100 mj-outlook-group-fix"
+                          style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align:top;padding-bottom:40px;">
+                                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" style
+                                    width="100%">
                                     <tbody>
                                       <tr>
-                                        <td style="width:56px;">
-                                          <img alt="Reset password" src="{{reset_image_url}}"
-                                            style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
-                                            width="56" height="auto" />
+                                        <td align="center" style="font-size:0px;padding:0px;word-break:break-word;">
+                                          <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                            style="border-collapse:collapse;border-spacing:0px;">
+                                            <tbody>
+                                              <tr>
+                                                <td style="width:358px;">
+                                                  <img alt="Welcome" src="{{welcome_image_url}}"
+                                                    style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                                    width="358" height="auto">
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -210,39 +227,9 @@
                   style="width:100%;">
                   <tbody>
                     <tr>
-                      <td style="direction:ltr;font-size:0px;padding:24px 64px 0px 64px;text-align:center;">
-                        <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:470px;" ><![endif]-->
+                      <td style="direction:ltr;font-size:0px;padding:0px 100px 0px 100px;text-align:center;">
+                        <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:398px;" ><![endif]-->
                         <div class="mj-column-per-100 mj-outlook-group-fix"
-                          style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                          <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                            style="vertical-align:top;" width="100%">
-                            <tbody>
-                              <tr>
-                                <td align="center"
-                                  style="font-size:0px;padding:0px;padding-bottom:16px;word-break:break-word;">
-                                  <div
-                                    style="font-family:DM Sans, sans-serif;font-size:11px;line-height:24px;text-align:center;color:#FF693E;">
-                                    - PASSWORD RESET</div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <!--[if mso | IE]></td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--[if mso | IE]></td></tr></table></td></tr><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:5
-              <div style="margin:0px auto;max-width:598px;">
-                <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                  style="width:100%;">
-                  <tbody>
-                    <tr>
-                      <td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
-                        <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:355px;" ><![endif]-->
-                        <div class="mj-column-px-355 mj-outlook-group-fix"
                           style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                           <table border="0" cellpadding="0" cellspacing="0" role="presentation"
                             style="vertical-align:top;" width="100%">
@@ -250,8 +237,8 @@
                               <tr>
                                 <td align="center" style="font-size:0px;padding:0px;word-break:break-word;">
                                   <div
-                                    style="font-family:DM Sans, sans-serif;font-size:64px;font-weight:600;line-height:57.6px;text-align:center;color:#555550;">
-                                    Forgot it?</div>
+                                    style="font-family:Fraunces;font-size:64px;font-weight:600;line-height:57.6px;text-align:center;color:#555550;">
+                                    You're In.</div>
                                 </td>
                               </tr>
                               <tr>
@@ -259,15 +246,15 @@
                                   style="font-size:0px;padding:0px;padding-bottom:16px;word-break:break-word;">
                                   <div
                                     style="font-family:Fraunces;font-size:64px;font-style:italic;font-weight:600;line-height:57.6px;text-align:center;color:#FF693E;">
-                                    happens.</div>
+                                    let's ship.</div>
                                 </td>
                               </tr>
                               <tr>
                                 <td align="center" style="font-size:0px;padding:0px;word-break:break-word;">
                                   <div
                                     style="font-family:DM Sans, sans-serif;font-size:15px;line-height:24px;text-align:center;color:#555550;">
-                                    We got a request to reset the password for your badge.build account. Tap below to
-                                    set a new one. The link is good for 30 minutes.</div>
+                                    Your account is live. From here, it takes about three minutes to put a branded badge
+                                    in front of your attendees. Here's the route.</div>
                                 </td>
                               </tr>
                             </tbody>
@@ -288,14 +275,14 @@
                   <tbody>
                     <tr>
                       <td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
-                        <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:526px;" ><![endif]-->
-                        <div class="mj-column-px-526 mj-outlook-group-fix"
+                        <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:598px;" ><![endif]-->
+                        <div class="mj-column-per-100 mj-outlook-group-fix"
                           style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                             <tbody>
                               <tr>
                                 <td style="vertical-align:top;padding-top:24px;padding-bottom:32px;">
-                                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" style=""
+                                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" style
                                     width="100%">
                                     <tbody>
                                       <tr>
@@ -308,31 +295,13 @@
                                                 <td align="center" bgcolor="#FF693E" role="presentation"
                                                   style="border:none;border-radius:28px;cursor:auto;mso-padding-alt:16px 24px;background:#FF693E;"
                                                   valign="middle">
-                                                  <a href="{{reset_url}}"
+                                                  <a href="{{cta_link}}"
                                                     style="display:inline-block;background:#FF693E;color:#EEEEEE;font-family:DM Sans, sans-serif;font-size:14px;font-weight:normal;line-height:120%;marg
-                                                    target="_blank"> Reset your password </a>
+                                                    target="_blank"> Build Your First Badge&nbsp;&nbsp;↗ </a>
                                                 </td>
                                               </tr>
                                             </tbody>
                                           </table>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td align="center"
-                                          style="font-size:0px;padding:0px;padding-bottom:32px;word-break:break-word;">
-                                          <div
-                                            style="font-family:DM Sans, sans-serif;font-size:12px;line-height:24px;text-align:center;color:#757575;">
-                                            EXPIRES IN <span style="color: #3a3a3a">{{ expiry_time }}</span></div>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td align="center" style="font-size:0px;padding:0px;word-break:break-word;">
-                                          <div
-                                            style="font-family:DM Sans, sans-serif;font-size:14px;line-height:24px;text-align:center;color:#555550;">
-                                            <span style="font-style: italic; color: #757575"> Button not working? Paste
-                                              this into your browser: </span>
-                                            <a href="{{reset_url}}" style="color: #3a3a3a"> {{ reset_url }}</a>
-                                          </div>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -349,7 +318,7 @@
                 </table>
               </div>
               <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
-              <!-- IGNORE TEXT -->
+              <!-- Pointer section -->
               <!--[if mso | IE]><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:598px;" width="598" ><tr><td 
               <div style="margin:0px auto;max-width:598px;">
                 <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
@@ -366,13 +335,62 @@
                               <table role="presentation" cellpadding="0" cellspacing="0" border="0"
                                 style="margin-bottom: 24px; border-top: 1px solid #EAEAE6;">
                                 <tr>
-                                  <td style="vertical-align: top; padding-right: 20px; color:#8A8A85; font-size:12px;
-            padding-top: 32px; padding-bottom: 24px;"> <span style="color:#3a3a3a; font-weight:
-            700">Didn't request this?</span> Ignore this email — your password stays the same. If you keep getting
-                                    these, write us at <a href="mailto:{{ security_email }}"
-                                      style="color:#3a3a3a; text-decoration: underline">
-                                      {{ security_email }}
-                                    </a> so we can lock things down. </td>
+                                  <td style="vertical-align: top; padding-right: 20px; padding-top: 32px">
+                                    <p class="step-number"
+                                      style="margin: 0; font-family: Fraunces, serif; font-size: 34px; font-style: italic; color: #ff693e; font-weight: 600; line-height: 34px;">
+                                      01 </p>
+                                  </td>
+                                  <td style="vertical-align: top; padding-top: 32px">
+                                    <p class="step-title" style="margin: 0 0 8px 0; font-family: DM Sans,
+          sans-serif; font-size: 17px; font-weight: 600; color: #3a3a3a; line-height: 100%;"> Pick a template </p>
+                                    <p class="step-description" style="margin: 0; font-family: DM Sans,
+          sans-serif; color: #525252;"> Four pre-built layouts. Swap colors, drop your logo, you're 80% there. </p>
+                                  </td>
+                                </tr>
+                              </table>
+                              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:
+            24px;">
+                                <tr>
+                                  <td style="vertical-align: top; padding-right: 20px;">
+                                    <p class="step-number"
+                                      style="margin: 0; font-family: Fraunces, serif; font-size: 34px; font-style: italic; color: #ff693e; font-weight: 600; line-height: 34px;">
+                                      02 </p>
+                                  </td>
+                                  <td style="vertical-align: top;">
+                                    <p class="step-title" style="margin: 0 0 8px 0; font-family: DM Sans,
+          sans-serif; font-size: 17px; font-weight: 600; color: #3a3a3a; line-height: 100%;"> Set the caption + link
+                                    </p>
+                                    <p class="step-description" style="margin: 0; font-family: DM Sans,
+          sans-serif; color: #525252;"> Write the share text once. UTMs get appended automatically. Every share is
+                                      traceable. </p>
+                                  </td>
+                                </tr>
+                              </table>
+                              <table role="presentation" cellpadding="0" cellspacing="0" border="0"
+                                style="margin-bottom: 24px; border-bottom: 1px solid #EAEAE6;">
+                                <tr>
+                                  <td style="vertical-align: top; padding-right: 20px; padding-bottom: 32px">
+                                    <p class="step-number"
+                                      style="margin: 0; font-family: Fraunces, serif; font-size: 34px; font-style: italic; color: #ff693e; font-weight: 600; line-height: 34px;">
+                                      03 </p>
+                                  </td>
+                                  <td style="vertical-align: top; padding-bottom:
+            32px">
+                                    <p class="step-title" style="margin: 0 0 8px 0; font-family: DM Sans,
+          sans-serif; font-size: 17px; font-weight: 600; color: #3a3a3a; line-height: 100%;"> Publish & share the link
+                                    </p>
+                                    <p class="step-description" style="margin: 0; font-family: DM Sans,
+          sans-serif; color: #525252;"> Drop it in your confirmation emails or paste it anywhere. Watch the dashboard
+                                      fill up. </p>
+                                  </td>
+                                </tr>
+                              </table> <!-- STUCK? TEXT -->
+                              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                  <td style=" font-family:
+            'DM Sans', Arial, sans-serif; font-size: 12px; line-height: 24px; color: #555550;
+            text-align: center; "> Stuck? Reply to this email — it lands in our inbox, a human reads it. Or browse
+                                    Explore Page, for inspiration from organizers who've already shipped. </td>
                                 </tr>
                               </table>
                             </tbody>
@@ -408,18 +426,19 @@
                       <td align="center" style="font-size:0px;padding:0px;word-break:break-word;">
                         <div
                           style="font-family:DM Sans, sans-serif;font-size:12px;line-height:24px;text-align:center;color:#8A8A85;">
-                          Need help? <a href="mailto:hello@badge.build"
-                            style="color: #3a3a3a; text-decoration: underline">hello@badge.build</a></div>
+                          Need help? <a href="mailto:{{support_email}}"
+                            style="color: #3a3a3a; text-decoration: underline">{{ support_email
+                            }}</a></div>
                       </td>
                     </tr>
                     <tr>
                       <td align="center" style="font-size:0px;padding:0px;word-break:break-word;">
                         <div
                           style="font-family:DM Sans, sans-serif;font-size:11px;line-height:18px;text-align:center;color:#9B9B9B;">
-                          © 2026 <a href="{{homepage_url}}" style="color: #9b9b9b; text-decoration: none"> BADGE.BUILD
-                          </a> &nbsp; · &nbsp; <a href="{{privacy_url}}" style="color: #9b9b9b; text-decoration: none">
-                            PRIVACY </a> &nbsp; · &nbsp; <a href="{{terms_url}}"
-                            style="color: #9b9b9b; text-decoration: none"> TERMS </a></div>
+                          © 2026 <a href="{{homepage_url}}" style="color: #9b9b9b; text-decoration: underline">
+                            BADGE.BUILD </a> &nbsp; · &nbsp; <a href="{{privacy_url}}"
+                            style="color: #9b9b9b; text-decoration: underline"> PRIVACY </a> &nbsp; · &nbsp; <a
+                            href="{{terms_url}}" style="color: #9b9b9b; text-decoration: underline"> TERMS </a></div>
                       </td>
                     </tr>
                   </tbody>
