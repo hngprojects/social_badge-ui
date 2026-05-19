@@ -4,35 +4,42 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { ApiError } from "@/app/features/auth/types";
-
+import { useUserStore } from "@/stores/use-user-store";
+import { resendVerifyEmail } from "../services/auth";
 export const useLogin = () => {
-  const router = useRouter();
+	const router = useRouter();
+	const { setUser } = useUserStore();
 
-  const {
-    mutate: login,
-    isPending: isLoading,
-    isError,
-  } = useMutation({
-    mutationFn: loginApi,
+	const {
+		mutate: login,
+		isPending: isLoading,
+		isError,
+	} = useMutation({
+		mutationFn: loginApi,
 
-    onSuccess: () => {
-      toast.success("Login successful!");
-      router.push("/coming-soon");
-    },
+		onSuccess: (data) => {
+			setUser(data.data.user);
+			toast.success("Login successful!");
+			router.push("/coming-soon");
+		},
+		onError: (error, data) => {
+			const axiosError = error as AxiosError<ApiError>;
+			const status = axiosError.response?.status;
+			const message =
+				axiosError.response?.data?.message || "Login failed. Please try again.";
 
-    onError: (error) => {
-      const axiosError = error as AxiosError<ApiError>;
+			if (status === 403 && message === "Please verify your email") {
+				const email = data.email;
+				resendVerifyEmail({ email });
+				toast.error(
+					"Your email is not verified. We've sent you a new verification link — please check your inbox.",
+				);
+				return;
+			}
 
-      const message =
-        axiosError.response?.data?.message || "Login failed. Please try again.";
+			toast.error(message);
+		},
+	});
 
-      toast.error(message);
-    },
-  });
-
-  return {
-    login,
-    isLoading,
-    isError,
-  };
+	return { login, isLoading, isError };
 };
