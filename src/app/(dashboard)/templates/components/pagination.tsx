@@ -29,7 +29,7 @@ const TemplatePagination = ({
   };
 
   return (
-    <div className="flex items-center sticky bottom-5 gap-7">
+    <div className="flex items-center sticky bottom-5 gap-7 md:gap-5">
       {/* Prev */}
       <button
         onClick={() => handlePageChange(activePage - 1)}

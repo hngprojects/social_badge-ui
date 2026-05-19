@@ -19,17 +19,19 @@ const TemplateTabs = ({ activeTab, onTabChange }: TemplateTabsProps) => {
   ];
 
   return (
-    <div className="flex gap-2.5 text-sm font-medium flex-wrap">
-      {template_tabs.map((tab) => (
-        <button
-          key={tab.name}
-          onClick={() => onTabChange(tab.name)}
-          className={`border px-[18px] py-[5px] rounded-full border-[#EEEEEE] cursor-pointer uppercase transition-colors duration-200
+    <div className="-mx-4 px-4 z-9 overflow-x-auto scrollbar-hide">
+      <div className="flex flex-nowrap gap-2.5 text-sm font-medium min-w-max">
+        {template_tabs.map((tab) => (
+          <button
+            key={tab.name}
+            onClick={() => onTabChange(tab.name)}
+            className={`border px-[18px] py-[5px] rounded-full border-[#EEEEEE] cursor-pointer uppercase transition-colors duration-200
             ${activeTab === tab.name ? "bg-black text-[#EEE]" : "bg-transparent text-[#3A3A3A]"}`}
-        >
-          {tab.name}
-        </button>
-      ))}
+          >
+            {tab.name}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
