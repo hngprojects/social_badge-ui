@@ -6,13 +6,26 @@ import TemplateTabs from "./components/tabs";
 import TemplatePagination from "./components/pagination";
 
 export default function Templates() {
-  const [currentPage, setCurrentPage] = useState(2);
-  const [postsPerPage, setPostsPerPage] = useState(8);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(8);
+  const [activeTab, setActiveTab] = useState("all");
+
+  const filteredTemplates =
+    activeTab === "all"
+      ? templates
+      : templates.filter(
+          (t) => t.type.toLowerCase() === activeTab.toLowerCase(),
+        );
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = filteredTemplates.slice(firstPostIndex, lastPostIndex);
 
-  const currentPosts = templates.slice(firstPostIndex, lastPostIndex);
+  // Reset to page 1 when tab changes
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="flex flex-col space-y-8">
@@ -24,16 +37,19 @@ export default function Templates() {
           Choose stylish templates that reflects your creativity.
         </p>
       </div>
-      <TemplateTabs />
-      <MockTemplates templates={currentPosts} />
-      
-      <div className="flex justify-center mt-8">
-        <TemplatePagination
-          totalPosts={templates.length}
-          postsPerPage={postsPerPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+
+      <TemplateTabs activeTab={activeTab} onTabChange={handleTabChange} />
+      <MockTemplates templates={currentPosts} activeTab={activeTab} />
+
+      {filteredTemplates.length > 0 && (
+        <div className="flex justify-center mt-8">
+          <TemplatePagination
+            totalPosts={filteredTemplates.length}
+            postsPerPage={postsPerPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      )}
     </div>
   );
 }
