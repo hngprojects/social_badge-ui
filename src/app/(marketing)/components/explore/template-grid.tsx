@@ -1,4 +1,4 @@
-import { templates } from "../../mocks/explore.mock";
+import { templates } from "../../constants/explore";
 import TemplateCard from "./template-card";
 
 const TemplateGrid = () => {

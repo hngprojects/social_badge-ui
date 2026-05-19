@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { templates } from "../../mocks/dashboard.mock";
+import { templates } from "../../constants/dashboard";
 
 export default function BrowseTemplate() {
 	return (

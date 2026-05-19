@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { stats } from "../../mocks/dashboard.mock";
+import { stats } from "../../constants/dashboard";
 
 export default function Analytics() {
 

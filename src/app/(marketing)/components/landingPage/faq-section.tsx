@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/accordion';
 import { Plus, X } from 'lucide-react';
 
-import { faqData } from '../../mocks/home.mock';
+import { faqData } from '../../constants/home';
 
 export default function FAQ() {
   const [openId, setOpenId] = useState<string>('');

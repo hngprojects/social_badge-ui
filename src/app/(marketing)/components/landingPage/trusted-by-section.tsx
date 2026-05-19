@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { trustedBy } from '../../mocks/home.mock';
+import { trustedBy } from '../../constants/home';
 
 export default function TrustedBy() {
 

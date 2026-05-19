@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Check } from 'lucide-react';
 
-import { BENEFITS_DATA } from '../../mocks/home.mock';
+import { BENEFITS_DATA } from '../../constants/home';
 
 const BenefitSection = () => {
   return (

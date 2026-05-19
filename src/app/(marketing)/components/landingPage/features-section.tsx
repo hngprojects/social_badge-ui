@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 // --- Tab 4 UI Component: Comprehensive Analytics ---
 
-import { FEATURES } from '../../mocks/home.mock';
+import { FEATURES } from '../../constants/home';
 
 export default function Feature() {
   const [activeId, setActiveId] = useState('01');

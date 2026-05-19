@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { templates } from '../../mocks/explore.mock';
+import { templates } from '../../constants/explore';
 
 const Templates = () => {
   const displayTemplates = templates.slice(0, 8);

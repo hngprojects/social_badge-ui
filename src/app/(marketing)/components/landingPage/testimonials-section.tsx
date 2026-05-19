@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import { TestimonialsProps } from "../../types/home";
-import { DEFAULT_TESTIMONIALS } from "../../mocks/home.mock";
+import { DEFAULT_TESTIMONIALS } from "../../constants/home";
 
 export default function Testimonials({
 	testimonials = DEFAULT_TESTIMONIALS,
