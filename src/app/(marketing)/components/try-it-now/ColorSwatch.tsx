@@ -1,8 +1,4 @@
-interface ColorSwatchProps {
-  colors: string[];
-  selected: string;
-  onChange: (color: string) => void;
-}
+import { ColorSwatchProps } from '../../types/home';
 
 export function ColorSwatch({ colors, selected, onChange }: ColorSwatchProps) {
   return (

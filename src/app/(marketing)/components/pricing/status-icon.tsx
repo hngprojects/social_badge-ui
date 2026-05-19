@@ -1,8 +1,4 @@
-type StatusIconProps = {
-  type: 'check' | 'cross';
-  className?: string;
-};
-
+import { StatusIconProps } from '../../types/pricing';
 export default function StatusIcon({ type, className }: StatusIconProps) {
   const isCheck = type === 'check';
 

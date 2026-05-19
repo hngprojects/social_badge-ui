@@ -1,0 +1,81 @@
+import { Template, StatCard } from "../types/dashboard";
+
+export const templates: Template[] = [
+  {
+    id: 1,
+    title: "Hack The Future",
+    type: "Hackathon",
+    creator: "@techevents",
+    location: "Berlin",
+    badgeCount: "4,230",
+    image: "/assets/landing-page/template-1.png",
+    tag: "Trending",
+    hasShadow: true,
+    bg: "#E2E7D5",
+  },
+  {
+    id: 2,
+    title: "Dev Summit '26",
+    type: "Conference",
+    creator: "@techevents",
+    location: "Berlin",
+    badgeCount: "4,230",
+    image: "/assets/landing-page/template-2.png",
+    tag: "Trending",
+    hasShadow: true,
+    bg: "#F0F0E8",
+  },
+  {
+    id: 7,
+    title: "Dev Summit '26",
+    type: "Conference",
+    creator: "@techevents",
+    location: "Berlin",
+    badgeCount: "4,230",
+    image: "/assets/landing-page/template-7.png",
+    tag: "Trending",
+    bg: "#B1F4E7",
+  },
+  {
+    id: 5,
+    title: "Dev Summit '26",
+    type: "Conference",
+    creator: "@techevents",
+    location: "Berlin",
+    badgeCount: "4,230",
+    image: "/assets/landing-page/template-5.png",
+    tag: null,
+    bg: "#FFEDDD",
+  },
+];
+
+export const stats: StatCard[] = [
+  {
+    image: "/assets/dashboard/icons/total-badges.svg",
+    title: "total badges",
+    count: "0",
+    metrics: "+2% vs last 7 days",
+    bg: "#FFF0EC",
+  },
+  {
+    image: "/assets/dashboard/icons/active-badges.svg",
+    title: "active badges",
+    count: "0",
+    metrics: "+2% vs last 7 days",
+    bg: "#DCFCE7",
+  },
+  {
+    image: "/assets/dashboard/icons/total-links.svg",
+    title: "total links",
+    count: "0",
+    metrics: "+2% vs last 7 days",
+    bg: "#DCE6FD",
+  },
+  {
+    image: "/assets/dashboard/icons/total-shares.svg",
+    title: "total shares",
+    count: "0",
+    metrics: "+2% vs last 7 days",
+    bg: "#FEF3C7",
+  },
+];
