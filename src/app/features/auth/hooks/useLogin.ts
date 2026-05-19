@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { ApiError } from "@/app/features/auth/types";
 import { useUserStore } from "@/stores/use-user-store";
-
+import { resendVerifyEmail } from "../services/auth";
 export const useLogin = () => {
 	const router = useRouter();
 	const { setUser } = useUserStore();
@@ -22,10 +22,21 @@ export const useLogin = () => {
 			toast.success("Login successful!");
 			router.push("/coming-soon");
 		},
-		onError: (error) => {
+		onError: (error, data) => {
 			const axiosError = error as AxiosError<ApiError>;
+			const status = axiosError.response?.status;
 			const message =
 				axiosError.response?.data?.message || "Login failed. Please try again.";
+
+			if (status === 403 && message === "Please verify your email") {
+				const email = data.email;
+				resendVerifyEmail({ email });
+				toast.error(
+					"Your email is not verified. We've sent you a new verification link — please check your inbox.",
+				);
+				return;
+			}
+
 			toast.error(message);
 		},
 	});
