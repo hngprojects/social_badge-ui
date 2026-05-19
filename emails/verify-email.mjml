@@ -1,0 +1,191 @@
+<mjml>
+  <mj-head>
+    <mj-font
+      name="DM Sans"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000"
+    />
+
+    <mj-font
+      name="Fraunces"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+    />
+    <mj-attributes>
+      <mj-text
+        font-family="DM Sans, sans-serif"
+        align="center"
+        font-size="15px"
+        line-height="24px"
+        color="#555550"
+        padding="0px"
+      />
+
+      <mj-image padding="0px" />
+
+      <mj-button
+        background-color="#FF693E"
+        font-size="14px"
+        color="#EEEEEE"
+        font-family="DM Sans, sans-serif"
+        text-transform="capitalize"
+        border-radius="28px"
+        inner-padding="16px 24px"
+      />
+
+      <mj-section padding="0px" />
+      <mj-class
+        name="head-text"
+        font-size="64px"
+        line-height="57.6px"
+        font-weight="600"
+      />
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#F4F4F2">
+    <!-- LOGO -->
+    <mj-section padding-top="50px" padding-bottom="32px">
+      <mj-column>
+        <mj-raw>
+          <table align="center"> <tr> <td> <img width="22.5px" src="{{
+            logo_url
+          }}" alt="Logo" /> </td> <td> <span style="font-family: 'DM Sans',
+          Arial, sans-serif; font-size: 19.25px; font-weight: 600; color:
+          #242424;"> Social Badge </span> </td> </tr> </table>
+        </mj-raw>
+      </mj-column>
+    </mj-section>
+
+    <!-- CARD WRAPPER -->
+    <mj-wrapper
+      background-color="#FFFFFF"
+      border-radius="24px"
+      border="1px solid #EAEAE6"
+      padding="0px"
+    >
+      <!-- CARD IMAGE -->
+      <mj-section padding="40px 64px 0px 64px">
+        <mj-column>
+          <mj-image
+            width="164.48px"
+            src="{{verify_image_url}}"
+            alt="Email verification"
+            align="center"
+          />
+        </mj-column>
+      </mj-section>
+
+      <!-- VERIFY TEXT -->
+      <mj-section padding="24px 64px 0px 64px">
+        <mj-column>
+          <mj-text color="#FF693E" font-size="11px" padding-bottom="16px">
+            - EMAIL VERIFICATION
+          </mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- HEADER -->
+      <mj-section>
+        <mj-column width="355px">
+          <mj-text
+            mj-class="head-text"
+            font-family="DM Sans, sans-serif"
+            font-weight="600"
+            padding-bottom="16px"
+          >
+            Verify your email</mj-text
+          >
+
+          <mj-text>
+            Tap the button below and we'll know it's really you. The link works
+            for the next 24 hours, then it expires.</mj-text
+          >
+        </mj-column>
+      </mj-section>
+
+      <!-- CTA BUTTON -->
+      <mj-section>
+        <mj-column padding-top="24px" padding-bottom="32px" width="526px">
+          <mj-button href="{{verification_url}}"> Verify your email </mj-button>
+          <mj-text color="#757575" padding-bottom="32px">
+            EXPIRES IN <span style="color: #3a3a3a">{{ expiry_time }}</span>
+          </mj-text>
+          <mj-text font-size="14px">
+            <span style="font-style: italic; color: #757575">
+              Button not working? Paste this into your browser:
+            </span>
+            <a href="{{verification_url}}" style="color: #3a3a3a">{{
+              verification_url
+            }}</a>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- IGNORE TEXT -->
+      <mj-section padding="0 64px 43px 64px">
+        <mj-column>
+          <mj-raw>
+            <table role="presentation" cellpadding="0" cellspacing="0"
+            border="0" style="margin-bottom: 24px; border-top: 1px solid
+            #EAEAE6;"> <tr> <td style="vertical-align: top; padding-right: 20px;
+            color:#8A8A85; font-size:12px; padding-top: 32px; padding-bottom:
+            24px;"> <span style="color:#3a3a3a; font-weight: 700">Didn't request
+            this?</span> Ignore this email — your password stays the same. If
+            you keep getting these, write us at <a href="mailto:{{
+              security_email
+            }}" style="color: #3a3a3a; text-decoration: underline">{{
+              security_email
+            }}</a> so we can lock things down. </td> </tr> </table>
+          </mj-raw>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+
+    <!-- FOOTER -->
+    <mj-section padding-top="32px">
+      <mj-column>
+        <mj-text font-size="12px" color="#8A8A85">
+          Need help?
+          <a
+            href="mailto:{{support_email}}"
+            style="color: #3a3a3a; text-decoration: underline"
+            >{{ support_email }}</a
+          >
+        </mj-text>
+
+        <mj-text
+          font-size="11px"
+          line-height="18px"
+          color="#9B9B9B"
+          align="center"
+          padding="0px"
+        >
+          © 2026
+          <a
+            href="{{homepage_url}}"
+            style="color: #9b9b9b; text-decoration: underline"
+          >
+            BADGE.BUILD
+          </a>
+
+          &nbsp; · &nbsp;
+
+          <a
+            href="{{privacy_url}}"
+            style="color: #9b9b9b; text-decoration: underline"
+          >
+            PRIVACY
+          </a>
+
+          &nbsp; · &nbsp;
+
+          <a
+            href="{{terms_url}}"
+            style="color: #9b9b9b; text-decoration: underline"
+          >
+            TERMS
+          </a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
