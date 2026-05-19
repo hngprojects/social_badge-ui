@@ -1,36 +1,46 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
+const SOCIAL_LINKS = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/flaretagme/" },
+  { label: "Instagram", href: "https://www.instagram.com/flaretagme/" },
+  {
+    label: "Facebook",
+    href: "https://web.facebook.com/profile.php?id=61589456016397",
+  },
+  { label: "X(Twitter)", href: "http://x.com/flaretagme" },
+] as const;
 
 const PRODUCT_LINKS = [
-  { label: 'Features', href: '#feature-section' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Explore', href: '/explore' },
+  { label: "Features", href: "#feature-section" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Explore", href: "/explore" },
 ] as const;
 
 const SUPPORT_LINKS = [
-  { label: 'FAQ', href: '#faq-section' },
-  { label: 'Contact Us', href: '/contact' },
+  { label: "FAQ", href: "#faq-section" },
+  { label: "Contact Us", href: "/contact" },
 ] as const;
 
 const LEGAL_LINKS = [
-  { label: 'Privacy Policy', href: '/privacy' },
-  { label: 'Terms of Service', href: '/terms' },
-  { label: 'Cookies', href: '/cookies' },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Cookies", href: "/cookies" },
 ] as const;
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   const handleSubscribe = () => {
     // TODO: wire up subscription logic
-    console.log('Subscribe:', email);
-    setEmail('');
+    console.log("Subscribe:", email);
+    setEmail("");
   };
 
   return (
@@ -47,7 +57,8 @@ export default function Footer() {
                 Subscribe to our newsletter for the latest updates and insights.
               </h2>
               <p className="text-white text-base max-w-sm">
-                Stay ahead with the latest updates, insights, and events from Social Badge.
+                Stay ahead with the latest updates, insights, and events from
+                Social Badge.
               </p>
             </div>
 
@@ -70,20 +81,20 @@ export default function Footer() {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
+                  onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
                   className={cn(
-                    'flex-1 border-none bg-transparent shadow-none',
-                    'text-foreground placeholder:text-muted-foreground',
-                    'focus-visible:ring-0 focus-visible:ring-offset-0',
-                    'text-xs lg:text-sm px-3',
+                    "flex-1 border-none bg-transparent shadow-none",
+                    "text-foreground placeholder:text-muted-foreground",
+                    "focus-visible:ring-0 focus-visible:ring-offset-0",
+                    "text-xs lg:text-sm px-3",
                   )}
                 />
                 <Button
                   onClick={handleSubscribe}
                   className={cn(
-                    'rounded-full px-4 lg:px-5 h-8 lg:h-9 text-xs lg:text-sm font-semibold shrink-0 cursor-pointer',
-                    'bg-primary text-primary-foreground',
-                    'hover:opacity-90 active:opacity-80 transition-opacity',
+                    "rounded-full px-4 lg:px-5 h-8 lg:h-9 text-xs lg:text-sm font-semibold shrink-0 cursor-pointer",
+                    "bg-primary text-primary-foreground",
+                    "hover:opacity-90 active:opacity-80 transition-opacity",
                   )}
                 >
                   Subscribe
@@ -92,7 +103,8 @@ export default function Footer() {
 
               {/* Desktop subtext below input */}
               <p className="hidden lg:block text-white text-sm mt-3">
-                Stay ahead with the latest updates, insights, and events from Social Badge.
+                Stay ahead with the latest updates, insights, and events from
+                Social Badge.
               </p>
             </div>
           </div>
@@ -122,18 +134,38 @@ export default function Footer() {
           </div>
 
           {/* Link columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-16">
+            <div>
+              <h3 className="text-md lg:text-base font-bold uppercase text-foreground mb-1">
+                Socials
+              </h3>
+              <ul className="flex flex-col gap-1">
+                {SOCIAL_LINKS.map(({ label, href }, i) => (
+                  <li key={i}>
+                    <Link
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-foreground hover:text-primary transition-colors duration-150"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {/* Product */}
             <div>
-              <h3 className="text-xs lg:text-base font-bold tracking-widest uppercase text-foreground mb-4">
+              <h3 className="text-md lg:text-base font-bold uppercase text-foreground mb-1">
                 Product
               </h3>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-1">
                 {PRODUCT_LINKS.map(({ label, href }, i) => (
                   <li key={i}>
                     <Link
                       href={href}
-                      className="text-xs lg:text-sm text-foreground hover:text-primary transition-colors duration-150"
+                      className="text-sm text-foreground hover:text-primary transition-colors duration-150"
                     >
                       {label}
                     </Link>
@@ -144,15 +176,15 @@ export default function Footer() {
 
             {/* Support */}
             <div>
-              <h3 className="text-xs lg:text-base font-bold tracking-widest uppercase text-foreground mb-4">
+              <h3 className="text-md lg:text-base font-bold uppercase text-foreground mb-1">
                 Support
               </h3>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-1">
                 {SUPPORT_LINKS.map(({ label, href }) => (
                   <li key={label}>
                     <Link
                       href={href}
-                      className="text-xs lg:text-sm text-foreground hover:text-primary transition-colors duration-150"
+                      className="text-sm text-foreground hover:text-primary transition-colors duration-150"
                     >
                       {label}
                     </Link>
@@ -163,15 +195,15 @@ export default function Footer() {
 
             {/* Legal */}
             <div>
-              <h3 className="text-xs lg:text-base font-bold tracking-widest uppercase text-foreground mb-4">
+              <h3 className="text-md lg:text-base font-bold uppercase text-foreground mb-1">
                 Legal
               </h3>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-1">
                 {LEGAL_LINKS.map(({ label, href }) => (
                   <li key={label}>
                     <Link
                       href={href}
-                      className="text-xs lg:text-sm text-foreground hover:text-primary transition-colors duration-150"
+                      className="text-sm text-foreground hover:text-primary transition-colors duration-150"
                     >
                       {label}
                     </Link>
