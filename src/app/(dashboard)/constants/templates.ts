@@ -1,4 +1,5 @@
-import type { Template } from "../components/template-card";
+import { Template } from "../types/template";
+
 export const templates: Template[] = [
   {
     id: 1,

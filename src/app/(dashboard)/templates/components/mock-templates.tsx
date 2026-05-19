@@ -1,4 +1,5 @@
-import TemplateCard, { type Template } from "./template-card";
+import { Template } from "../../types/template";
+import TemplateCard from "./template-card";
 
 type MockTemplatesProps = {
   templates: Template[];
@@ -9,7 +10,6 @@ const MockTemplates = ({ templates, activeTab }: MockTemplatesProps) => {
   if (templates.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-3 text-center">
-        <span className="text-4xl">🎨</span>
         <p className="text-[#0A0A0A] font-semibold text-lg">No templates yet</p>
         <p className="text-[#8A8A85] text-sm max-w-xs">
           There are no{" "}

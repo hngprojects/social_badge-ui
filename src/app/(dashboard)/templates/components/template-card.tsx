@@ -1,18 +1,5 @@
+import { Template } from "@/app/(marketing)/types/explore";
 import Image from "next/image";
-
-type BadgeTag = "Trending" | "New" | null;
-
-export type Template = {
-  id: number;
-  title: string;
-  type: string;
-  creator: string;
-  location: string;
-  badgeCount: string;
-  image: string;
-  tag: BadgeTag;
-  hasShadow?: boolean;
-};
 
 const TemplateCard = ({
   template,

@@ -1,5 +1,5 @@
 "use client";
-import { templates } from "./lib/templatesData";
+import { templates } from "../constants/templates";
 import { useState } from "react";
 import MockTemplates from "./components/mock-templates";
 import TemplateTabs from "./components/tabs";
