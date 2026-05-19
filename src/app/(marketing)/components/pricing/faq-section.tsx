@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FAQ_DATA } from '../../pricing/constants/faq-data';
+import { FAQ_DATA } from '../../constants/pricing';
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);

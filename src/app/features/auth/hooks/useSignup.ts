@@ -3,36 +3,33 @@ import { signup as signupApi } from "../services/auth";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { ApiError } from "@/app/features/auth/types";
+import { useUserStore } from "@/stores/use-user-store";
 
 export const useSignup = () => {
-  const {
-    mutate: signup,
-    isPending: isLoading,
-    isError,
-  } = useMutation({
-    mutationFn: signupApi,
+	const { setUser } = useUserStore();
 
-    onSuccess: (data) => {
-      console.log(data);
-      toast.success(
-        "Signup successful! Please check your email to verify your account.",
-      );
-    },
+	const {
+		mutate: signup,
+		isPending: isLoading,
+		isError,
+	} = useMutation({
+		mutationFn: signupApi,
 
-    onError: (error) => {
-      const axiosError = error as AxiosError<ApiError>;
+		onSuccess: (data) => {
+			setUser(data.data);
+			toast.success(
+				"Signup successful! Please check your email to verify your account.",
+			);
+		},
 
-      const message =
-        axiosError.response?.data?.message ||
-        "Signup failed. Please try again.";
+		onError: (error) => {
+			const axiosError = error as AxiosError<ApiError>;
+			const message =
+				axiosError.response?.data?.message ||
+				"Signup failed. Please try again.";
+			toast.error(message);
+		},
+	});
 
-      toast.error(message);
-    },
-  });
-
-  return {
-    signup,
-    isLoading,
-    isError,
-  };
+	return { signup, isLoading, isError };
 };

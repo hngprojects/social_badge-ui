@@ -1,93 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const templates = [
-  {
-    id: 1,
-    title: 'Hack The Future',
-    type: 'Hackathon',
-    creator: '@techevents',
-    location: 'Berlin',
-    badgeCount: '4,230',
-    image: '/assets/landing-page/template-1.png',
-    tag: 'Trending',
-    hasShadow: true,
-  },
-  {
-    id: 2,
-    title: "Dev Summit '26",
-    type: 'Conference',
-    creator: '@techevents',
-    location: 'Berlin',
-    badgeCount: '4,230',
-    image: '/assets/landing-page/template-2.png',
-    tag: 'Trending',
-    hasShadow: true,
-  },
-  {
-    id: 3,
-    title: "Dev Summit '26",
-    type: 'Conference',
-    creator: '@techevents',
-    location: 'Berlin',
-    badgeCount: '4,230',
-    image: '/assets/landing-page/template-3.png',
-    tag: 'New',
-  },
-  {
-    id: 4,
-    title: "Dev Summit '26",
-    type: 'Conference',
-    creator: '@techevents',
-    location: 'Berlin',
-    badgeCount: '4,230',
-    image: '/assets/landing-page/template-4.png',
-    tag: null,
-    hasShadow: true,
-  },
-  {
-    id: 5,
-    title: "Dev Summit '26",
-    type: 'Conference',
-    creator: '@techevents',
-    location: 'Berlin',
-    badgeCount: '4,230',
-    image: '/assets/landing-page/template-5.png',
-    tag: null,
-  },
-  {
-    id: 6,
-    title: "Dev Summit '26",
-    type: 'Conference',
-    creator: '@techevents',
-    location: 'Berlin',
-    badgeCount: '4,230',
-    image: '/assets/landing-page/template-6.png',
-    tag: null,
-  },
-  {
-    id: 7,
-    title: "Dev Summit '26",
-    type: 'Conference',
-    creator: '@techevents',
-    location: 'Berlin',
-    badgeCount: '4,230',
-    image: '/assets/landing-page/template-7.png',
-    tag: 'Trending',
-  },
-  {
-    id: 8,
-    title: 'Sabi Girls SQ',
-    type: 'Community',
-    creator: '@sabigirls',
-    location: 'Lagos',
-    badgeCount: '4,230',
-    image: '/assets/landing-page/template-8.png',
-    tag: null,
-  },
-];
+import { templates } from '../../constants/explore';
 
 const Templates = () => {
+  const displayTemplates = templates.slice(0, 8);
   return (
     <section className="bg-[#F9F9F9]">
       <div className="relative w-full max-w-360 px-4 md:px-10 lg:px-30 pt-[54px] pb-10 mx-auto flex justify-center max-md:items-center flex-col">
@@ -104,7 +21,7 @@ const Templates = () => {
 
         {/* Cards stack — carousel on mobile, grid on md+ */}
         <div className="flex md:hidden w-full overflow-x-auto snap-x snap-mandatory gap-4 mb-3 pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          {templates.map((template) => (
+          {displayTemplates.map((template) => (
             <div
               key={template.id}
               className="relative h-105 flex flex-col rounded-[12px] border border-[#EAEAE6] overflow-hidden shrink-0 w-[80vw] snap-start"
@@ -161,7 +78,7 @@ const Templates = () => {
 
         {/* Cards grid — md+ only */}
         <div className="hidden md:grid md:grid-cols-2 w-full lg:grid-cols-4 gap-y-6 gap-x-[17px] mb-3">
-          {templates.map((template, index) => (
+          {displayTemplates.map((template, index) => (
             <div
               key={template.id}
               className={`relative h-105 flex flex-col rounded-[12px] border border-[#EAEAE6] overflow-hidden ${

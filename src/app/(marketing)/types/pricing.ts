@@ -26,3 +26,28 @@ export interface FaqItem {
   answer: string;
   defaultOpen?: boolean;
 }
+
+export type StatusIconProps = {
+  type: 'check' | 'cross';
+  className?: string;
+};
+
+export type PricingToggleProps = {
+  billing: BillingCycle;
+  onChange: (billing: BillingCycle) => void;
+};
+
+export type PricingGridProps = {
+  billing: BillingCycle;
+  selectedPlan: string | null;
+  onSelectPlan: (id: string) => void;
+};
+
+export type PricingCardProps = {
+  plan: Plan;
+  billing: BillingCycle;
+  isSelected?: boolean;
+  onSelect?: () => void;
+};
+
+export type CellValue = string;

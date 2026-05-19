@@ -3,18 +3,7 @@ import { useState, useRef } from 'react';
 import BadgePreview from '../try-it-now/BadgePreview';
 import BadgeForm from '../try-it-now/BadgeForm';
 import { BadgeState } from '../../types/badge';
-
-const INITIAL_STATE: BadgeState = {
-  photo: null,
-  photoPreview: '',
-  name: '',
-  role: '',
-  event: '',
-  hashtag: '',
-  style: 'classic',
-  badgeColor: '#E8441A',
-  textColor: '#ffffff',
-};
+import { INITIAL_STATE } from '../../constants/home';
 
 export default function TryItNow() {
   const [badge, setBadge] = useState<BadgeState>(INITIAL_STATE);
