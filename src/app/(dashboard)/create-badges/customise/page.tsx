@@ -328,18 +328,30 @@ export default function CreateBadgePage() {
 
           {/* SYSTEMATIC SCALABLE TEXT INPUT LOOP */}
           {
-            template?.layout.fields.map((field) => (
+            template?.layout.fields.map((field, i) => (
               <div key={field.token} className="space-y-2">
                 <label className="block text-xs font-bold uppercase tracking-wider text-[#595959]">
                   {field.token} <span className="text-[#FB3748]">{field.token.toLowerCase() === "name" ? "*" : ""}</span>
                 </label>
-                <input
-                  type="text"
-                  placeholder="Placeholder text"
-                  value={formData[field.token] ?? ""}
-                  onChange={(e) => handleInputChange(field.token, e.target.value)}
-                  className="w-full h-12 px-4 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959]  text-sm lg:text-base font-medium  font-sans"
-                />
+                {
+                  i === 0 ?
+                    (<input
+                      autoFocus
+                      type="text"
+                      placeholder="Placeholder text"
+                      value={formData[field.token] ?? ""}
+                      onChange={(e) => handleInputChange(field.token, e.target.value)}
+                      className="w-full h-12 px-4 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959]  text-sm lg:text-base font-medium  font-sans"
+                    />)
+                    :
+                    (<input
+                      type="text"
+                      placeholder="Placeholder text"
+                      value={formData[field.token] ?? ""}
+                      onChange={(e) => handleInputChange(field.token, e.target.value)}
+                      className="w-full h-12 px-4 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959]  text-sm lg:text-base font-medium  font-sans"
+                    />)
+                }
               </div>
             ))}
 
