@@ -1,14 +1,7 @@
 import Image from 'next/image';
+import { trustedBy } from '../../constants/home';
 
 export default function TrustedBy() {
-  const trustedBy = [
-    'DEVCON BERLIN',
-    'LAGOS UX WEEK',
-    'HACK THE BAY',
-    'THE AI SUMMIT',
-    'FOUNDERSHQ',
-    'FRONTEND NATION ',
-  ];
 
   return (
     <section className="text-[10px] bg-[#2B2A2A] py-3 lg:text-[24px] lg:py-6 overflow-hidden">

@@ -2,16 +2,7 @@
 
 import { useState } from 'react';
 
-const FILTERS = [
-  'All',
-  'Conference',
-  'Hackathon',
-  'Community',
-  'Bootcamp',
-  'Meetup',
-  'Speaker',
-  'Trending',
-];
+import { FILTERS } from '../../constants/explore';
 
 const FilterTabs = () => {
   const [active, setActive] = useState('All');

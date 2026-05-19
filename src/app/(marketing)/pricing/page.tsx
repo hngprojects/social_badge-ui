@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BillingCycle } from './types/pricing';
+import { BillingCycle } from '../types/pricing';
 import PricingToggle from '../components/pricing/pricing-toggle';
 import PricingGrid from '../components/pricing/pricing-grid';
 import ComparisonTable from '../components/pricing/comparison-table';
