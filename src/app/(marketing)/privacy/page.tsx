@@ -6,16 +6,7 @@ export const metadata: Metadata = {
   description: 'Learn how we collect, use, and protect your data at Social Badge.',
 };
 
-const toc = [
-  { id: 'data-collection', title: '1. Data collection' },
-  { id: 'data-usage', title: '2. Data usage' },
-  { id: 'data-storage', title: '3. Data storage' },
-  { id: 'data-sharing', title: '4. Data sharing' },
-  { id: 'user-rights', title: '5. User rights' },
-  { id: 'cookies', title: '6. Cookies' },
-  { id: 'security', title: '7. Security' },
-  { id: 'contact', title: '8. Contact' },
-];
+import { toc } from '../constants/privacy';
 
 export default function PrivacyPolicyPage() {
   return (

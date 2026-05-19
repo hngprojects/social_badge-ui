@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { BadgeUI } from "../features/auth/components/badge-ui";
-
 type LayoutProps = {
   children: ReactNode;
 };

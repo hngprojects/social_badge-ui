@@ -1,9 +1,4 @@
-import { BillingCycle } from '../../pricing/types/pricing';
-
-type PricingToggleProps = {
-  billing: BillingCycle;
-  onChange: (billing: BillingCycle) => void;
-};
+import { BillingCycle, PricingToggleProps } from '../../types/pricing';
 
 export default function PricingToggle({ billing, onChange }: PricingToggleProps) {
   return (
