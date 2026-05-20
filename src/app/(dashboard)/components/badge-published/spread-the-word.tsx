@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image";
 import Qr from "../../badges/published/icons/qr";
 import { Share } from "../../badges/published/icons/share-icon";
 import { SocialPlatform } from "../../types/badge-published/badge";
@@ -86,7 +87,7 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 	return (
 		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6">
 			<div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-3.5">
-				<Share/>
+				<Share />
 			</div>
 			<h3 className="text-[0.9375rem] font-bold text-gray-900 mb-1.5">
 				One-tap share
@@ -122,7 +123,7 @@ function QRCodeCard({ badgeName }: QRCodeCardProps) {
 	return (
 		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6">
 			<div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center text-[#e8511a] mb-3.5">
-				<Qr/>
+				<Qr />
 			</div>
 			<h3 className="text-[0.9375rem] font-bold text-gray-900 mb-1.5">
 				QR code
@@ -132,11 +133,14 @@ function QRCodeCard({ badgeName }: QRCodeCardProps) {
 			</p>
 
 			<div className="flex gap-3.75 items-center mb-4.5">
-				<img
+				<Image
 					src={qrUrl}
 					alt={`QR code for ${badgeName}`}
-					className="w-20 h-20 rounded-md border border-gray-200 flex-shrink-0"
+					width={80}
+					height={80}
+					className="rounded-md border border-gray-200 flex-shrink-0"
 				/>
+
 				<div>
 					<div className="flex gap-1.5 mb-1.5">
 						{QR_FORMATS.map((fmt, i) => (
