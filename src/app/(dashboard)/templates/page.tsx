@@ -30,7 +30,7 @@ export default function Templates() {
   };
 
   return (
-    <div className="flex flex-col space-y-8">
+    <div className="flex min-w-0 flex-col space-y-8">
       <div className="border-t mt-4 pt-4">
         <h2 className="font-semibold text-[36px] tracking-[-2%] text-[#242424] leading-[44px]">
           Browse templates
