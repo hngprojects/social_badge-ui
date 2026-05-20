@@ -37,9 +37,8 @@ const ThreeStepSection = () => {
 				{/* Visual Composition Container */}
 				<div className="w-full overflow-x-hidden">
 					<div className="relative overflow-y-visible lg:overflow-visible w-full min-h-[750px] md:aspect-square max-w-[500px] lg:max-w-full mt-8 lg:mt-0 mx-auto lg:mx-0">
-						{/* Card 1*/}-
+						{/* Card 1*/}
 						<div className="absolute top-[15%] sm:top-0 lg:top-[13%] -left-[70px] sm:left-0 md:-left-[10%] lg:left-0 w-[55%] w-[250px] lg:w-[288px] z-20 transform -rotate-12 md:rotate-0">
-							+
 							<div className="absolute top-[15%] sm:top-0 lg:top-[13%] -left-[70px] sm:left-0 md:-left-[10%] lg:left-0 w-[55%] max-w-[250px] lg:w-[288px] z-20 transform -rotate-12 md:rotate-0"></div>
 							<Image
 								src="/assets/waitlist/card1.png"

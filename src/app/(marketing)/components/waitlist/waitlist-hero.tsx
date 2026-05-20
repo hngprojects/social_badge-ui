@@ -98,8 +98,12 @@ export default function WaitlistHero() {
 						onSubmit={handleSubmit}
 						className="flex flex-col md:flex-row w-full max-w-[372px] items-center gap-4 md:gap-1 bg-transparent md:bg-white md:border md:border-[#E5E5E5] md:rounded-full md:p-1 md:shadow-sm mb-16 md:focus-within:ring-2 md:focus-within:ring-[#FA5424]/20 transition-all mx-auto"
 					>
+						<label htmlFor="waitlist-email" className="sr-only">
+							Email address
+						</label>
 						<Input
 							type="email"
+							id="waitlist-email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							onFocus={() => setIsFocused(true)}

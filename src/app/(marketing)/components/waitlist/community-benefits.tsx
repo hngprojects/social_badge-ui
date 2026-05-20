@@ -40,7 +40,8 @@ export default function CommunityBenefits() {
 								<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FDD5CA] text-[#AD380F] text-xs font-medium mb-6 font-sans">
 									<Image
 										src={item.tagImg}
-										alt="tag_image"
+										alt=""
+										aria-hidden="true"
 										width={16}
 										height={16}
 										className="object-contain"

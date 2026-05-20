@@ -26,7 +26,7 @@ const StepCard = ({
 
 			{/* Text Content */}
 			<h3 className="mb-2 text-xl font-bold text-[#161616]">{title}</h3>
-			<p className="text-sm leading-relaxed text-[#222222] font-bold-s">
+			<p className="text-sm leading-relaxed text-[#222222] font-bold">
 				{description}
 			</p>
 		</div>
