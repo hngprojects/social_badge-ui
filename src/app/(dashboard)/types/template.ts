@@ -1,5 +1,3 @@
-type BadgeTag = "Trending" | "New" | null;
-
 export type Template = {
   id: number;
   title: string;
@@ -8,7 +6,7 @@ export type Template = {
   location: string;
   badgeCount: string;
   image: string;
-  tag: BadgeTag;
+  tag: string | null;
   hasShadow?: boolean;
   bg: string;
 };

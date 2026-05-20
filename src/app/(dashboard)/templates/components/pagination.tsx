@@ -1,23 +1,22 @@
-import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type TemplatePaginationProps = {
   totalPosts: number;
   postsPerPage: number;
+  currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const TemplatePagination = ({
   totalPosts,
   postsPerPage,
+  currentPage,
   setCurrentPage,
 }: TemplatePaginationProps) => {
-  const [activePage, setActivePage] = useState(1);
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
-    setActivePage(page);
     setCurrentPage(page);
   };
 
@@ -32,8 +31,10 @@ const TemplatePagination = ({
     <div className="flex items-center sticky bottom-5 gap-7 md:gap-5">
       {/* Prev */}
       <button
-        onClick={() => handlePageChange(activePage - 1)}
-        disabled={activePage === 1}
+        type="button"
+        aria-label="Go to previous page"
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
         className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-[#F3F4F6] text-[#4B5563] hover:bg-gray-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
       >
         <ChevronLeft size={16} />
@@ -54,7 +55,7 @@ const TemplatePagination = ({
             onClick={() => handlePageChange(item)}
             className={`w-10 h-10 rounded-[4px] flex items-center justify-center text-sm font-medium transition-colors
               ${
-                activePage === item
+                currentPage === item
                   ? "bg-black text-white"
                   : "bg-[#F3F4F6] text-[#4B5563] hover:bg-gray-200"
               }`}
@@ -66,8 +67,10 @@ const TemplatePagination = ({
 
       {/* Next */}
       <button
-        onClick={() => handlePageChange(activePage + 1)}
-        disabled={activePage === totalPages}
+        type="button"
+        aria-label="Go to next page"
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
         className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-[#F3F4F6] text-[#4B5563] hover:bg-gray-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
       >
         <ChevronRight size={16} />

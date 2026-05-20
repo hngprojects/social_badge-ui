@@ -48,6 +48,7 @@ export default function Templates() {
           <TemplatePagination
             totalPosts={filteredTemplates.length}
             postsPerPage={postsPerPage}
+            currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
         </div>
