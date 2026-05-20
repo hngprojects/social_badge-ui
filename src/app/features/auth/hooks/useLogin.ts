@@ -20,7 +20,7 @@ export const useLogin = () => {
 		onSuccess: (data) => {
 			setUser(data.data.user);
 			toast.success("Login successful!");
-			router.push("/coming-soon");
+			router.push("/dashboard");
 		},
 		onError: (error, data) => {
 			const axiosError = error as AxiosError<ApiError>;
