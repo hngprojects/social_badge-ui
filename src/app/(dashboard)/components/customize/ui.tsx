@@ -123,7 +123,9 @@ export function BadgeDatePicker({ onChange }: { onChange: (formatted: string) =>
 
   const handleChange = (newMonth: string, newDay: string) => {
     if (newMonth && newDay) {
-      onChange(`${newMonth.toUpperCase()} ${ordinal(parseInt(newDay))}`);
+      const dm = new Date(new Date().getFullYear(), MONTHS.indexOf(newMonth) + 1, 0).getDate();
+      const validDay = Math.min(parseInt(newDay), dm);
+      onChange(`${newMonth.toUpperCase()} ${ordinal(validDay)}`);
     }
   };
 
@@ -134,7 +136,18 @@ export function BadgeDatePicker({ onChange }: { onChange: (formatted: string) =>
     <div className="flex gap-2">
       <select
         value={month}
-        onChange={(e) => { setMonth(e.target.value); handleChange(e.target.value, day); }}
+        onChange={(e) => {
+          const newMonth = e.target.value;
+          setMonth(newMonth);
+          if (newMonth && day) {
+            const dm = new Date(new Date().getFullYear(), MONTHS.indexOf(newMonth) + 1, 0).getDate();
+            const validDay = Math.min(parseInt(day), dm);
+            if (validDay !== parseInt(day)) setDay(String(validDay));
+            handleChange(newMonth, String(validDay));
+          } else {
+            handleChange(newMonth, day);
+          }
+        }}
         className={selectClass}
       >
         <option value="">Month</option>

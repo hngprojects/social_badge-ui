@@ -13,6 +13,8 @@ interface LivePreviewProps {
   logoData: UploadedFileMetadata | null;
   formData: Record<string, string>;
   shareCaption: string;
+  allowPhoto: boolean;
+  destinationUrl: string;
 }
 
 export function LivePreview({
@@ -24,6 +26,8 @@ export function LivePreview({
   logoData,
   formData,
   shareCaption,
+  allowPhoto,
+  destinationUrl,
 }: LivePreviewProps) {
   return (
     <div className="space-y-3">
@@ -101,7 +105,7 @@ export function LivePreview({
 
             {/* CANVAS LAYER 2: Attendee photo / upload preview */}
             <div className="absolute top-22 left-6 right-6 aspect-square rounded-2xl border-2 border-white/20 z-10 overflow-hidden shadow-inner">
-              {logoData?.blobUrl ? (
+              {allowPhoto && logoData?.blobUrl ? (
                 <div className="relative w-full h-full animate-in fade-in duration-200">
                   <Image
                     src={logoData.blobUrl}
@@ -176,7 +180,7 @@ export function LivePreview({
           </svg>
         </span>
         <span className="text-sm font-medium text-gray-800 truncate">
-          achieveher.com/register
+          {destinationUrl || "achieveher.com/register"}
         </span>
       </div>
 

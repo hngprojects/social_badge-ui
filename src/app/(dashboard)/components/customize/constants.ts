@@ -126,7 +126,7 @@ export const MONTHS = [
 /* ── Helpers ────────────────────────────────────────────────────────────── */
 
 export function ordinal(n: number): string {
-  if (n >= 11 && n <= 13) return `${n}TH`;
+  if (n % 100 >= 11 && n % 100 <= 13) return `${n}TH`;
   switch (n % 10) {
     case 1: return `${n}ST`;
     case 2: return `${n}ND`;

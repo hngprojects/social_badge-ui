@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { SectionCard, FieldLabel, TextArea, HelperText } from "./ui";
 
 interface ShareMessageSectionProps {
   shareCaption: string;
   setShareCaption: (v: string) => void;
+  destinationLink: string;
+  setDestinationLink: (v: string) => void;
 }
 
-export function ShareMessageSection({ shareCaption, setShareCaption }: ShareMessageSectionProps) {
-  const [destinationLink, setDestinationLink] = useState("achieveher.com/register");
+export function ShareMessageSection({ shareCaption, setShareCaption, destinationLink, setDestinationLink }: ShareMessageSectionProps) {
 
   return (
     <SectionCard

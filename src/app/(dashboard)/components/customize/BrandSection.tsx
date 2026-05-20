@@ -55,6 +55,9 @@ export function BrandSection({
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (!file) return;
+                const validType = file.type.startsWith("image/") || file.type === "image/svg+xml";
+                const validSize = file.size <= 5 * 1024 * 1024; // 5 MB
+                if (!validType || !validSize) return;
                 if (currentBlobUrl.current) URL.revokeObjectURL(currentBlobUrl.current);
                 const blobUrl = URL.createObjectURL(file);
                 currentBlobUrl.current = blobUrl;
@@ -63,7 +66,7 @@ export function BrandSection({
               }}
             />
           </label>
-          <span className="text-sm text-gray-400">{logoFile ?? "No file Chosen"}</span>
+          <span className="text-sm text-gray-400">{logoFile ?? "No file chosen"}</span>
         </div>
         <HelperText>SVG recommended for crisp display. PNG works too (min 240 × 240px).</HelperText>
       </div>

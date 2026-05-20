@@ -37,6 +37,7 @@ export default function CreateBadgePage() {
   const [eventName,       setEventName]       = useState("");
   const [activeTab,       setActiveTab]       = useState<typeof TABS[number]>("Badge");
   const [shareCaption,    setShareCaption]    = useState("");
+  const [destinationLink, setDestinationLink] = useState("achieveher.com/register");
 
   /* Derive activeBackground from palette + bgMode — no effect needed */
   const activeBackground = useMemo<BackgroundOption>(() => {
@@ -81,9 +82,9 @@ export default function CreateBadgePage() {
             &nbsp;/&nbsp;
             <Link href="/create-badges" className="hover:text-gray-600 transition-colors">Create badges</Link>
             &nbsp;/&nbsp;
-            <span className="text-gray-500">Customise</span>
+            <span className="text-gray-500">Customize</span>
           </p>
-          <h1 className="mt-1 text-2xl font-bold text-[#3A3A3A]">Customise your badge</h1>
+          <h1 className="mt-1 text-2xl font-bold text-[#3A3A3A]">Customize your badge</h1>
           <p className="text-xs text-gray-400 mt-1">
             Make it yours — your changes appear live on the right.
           </p>
@@ -121,6 +122,8 @@ export default function CreateBadgePage() {
           <ShareMessageSection
             shareCaption={shareCaption}
             setShareCaption={setShareCaption}
+            destinationLink={destinationLink}
+            setDestinationLink={setDestinationLink}
           />
 
           {/* Publish — mobile only */}
@@ -146,6 +149,8 @@ export default function CreateBadgePage() {
           logoData={logoData}
           formData={formData}
           shareCaption={shareCaption}
+          allowPhoto={allowPhoto}
+          destinationUrl={destinationLink}
         />
       </section>
 
