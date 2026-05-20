@@ -1,6 +1,7 @@
 import MobileHeader from "@/components/layout/dashBoard/MobileHeader";
 import SideNav from "@/components/layout/dashBoard/SideBar";
 import TopBar from "@/components/layout/dashBoard/TopBar";
+import LenisProvider from "@/components/providers/LenisProvider";
 
 export default function DashboardLayout({
   children,
@@ -8,23 +9,26 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mx-auto flex h-screen max-w-[1440px] overflow-hidden">
-      <div className="hidden lg:block">
-        <SideNav />
-      </div>
+    <LenisProvider>
+      <section className="flex min-h-screen">
+        <div className="hidden lg:block sticky top-0 self-start">
+          <SideNav />
+        </div>
 
-      <main className="grid h-screen flex-1 grid-rows-[83px_1fr] overflow-hidden px-6 lg:pl-6 lg:pr-8">
-        <header className="flex">
-          <div className="lg:hidden">
-            <MobileHeader />
-          </div>
+        <main className="flex flex-1 flex-col">
+          <header className="sticky top-0 z-20 bg-background flex h-[83px] items-end">
+            <div className="lg:hidden">
+              <MobileHeader />
+            </div>
 
-          <div className="hidden lg:flex w-full items-end">
-            <TopBar />
-          </div>
-        </header>
-        <section className="overflow-y-auto pb-8">{children}</section>
-      </main>
-    </section>
+            <div className="hidden lg:flex w-full items-end">
+              <TopBar />
+            </div>
+          </header>
+
+          <section className="pb-8 bg-[#FBFAF7]">{children}</section>
+        </main>
+      </section>
+    </LenisProvider>
   );
 }
