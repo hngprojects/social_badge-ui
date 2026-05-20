@@ -1,7 +1,13 @@
 import { Template } from "../../types/template";
 import Image from "next/image";
 
-const TemplateCard = ({ template }: { template: Template }) => {
+const TemplateCard = ({
+  template,
+  isAboveFold = false,
+}: {
+  template: Template;
+  isAboveFold?: boolean;
+}) => {
   return (
     <div
       className={`relative flex flex-col cursor-pointer rounded-[12px] border border-[#EAEAE6] overflow-hidden`}
@@ -21,6 +27,8 @@ const TemplateCard = ({ template }: { template: Template }) => {
           src={template.image}
           alt={template.title}
           fill
+          loading={isAboveFold ? "eager" : "lazy"}
+          fetchPriority={isAboveFold ? "high" : "auto"}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
           className={`object-contain ${template.hasShadow ? "p-0 pt-2" : "p-4"}`}
         />
