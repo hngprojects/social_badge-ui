@@ -20,7 +20,7 @@ export default function RoundCheck() {
 					fill="#fff"
 					fillOpacity=".01"
 					rx="38"
-					shape-rendering="crispEdges"
+					shapeRendering="crispEdges"
 				/>
 			</g>
 			<path
@@ -37,10 +37,10 @@ export default function RoundCheck() {
 					height="116"
 					x="0"
 					y="0"
-					color-interpolation-filters="sRGB"
+					colorInterpolationFilters="sRGB"
 					filterUnits="userSpaceOnUse"
 				>
-					<feFlood flood-opacity="0" result="BackgroundImageFix" />
+					<feFlood floodOpacity="0" result="BackgroundImageFix" />
 					<feColorMatrix
 						in="SourceAlpha"
 						result="hardAlpha"

@@ -15,7 +15,7 @@ const BADGE_DATA: BadgeData = {
 
 export default function page() {
 	return (
-		<div className="w-[90%] bordet max-w-227 mx-auto">
+		<div className="w-[90%] mt-16 max-w-227 mx-auto">
 			<LiveHeroBanner badgeName={BADGE_DATA.name} />
 			<ShareableLinkCard url={BADGE_DATA.url} fullUrl={BADGE_DATA.fullUrl} />
 			<SpreadTheWord url={BADGE_DATA.fullUrl} badgeName={BADGE_DATA.name} />

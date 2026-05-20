@@ -58,7 +58,7 @@ export default function WhatsNext() {
 
 function NextActionCard({ action }: { action: NextAction }) {
 	return (
-		<div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex flex-col">
+		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-5 flex flex-col">
 			<div
 				className={`w-9 h-9 rounded-lg ${action.iconBg} ${action.iconColor} flex items-center justify-center mb-3.5`}
 			>

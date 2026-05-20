@@ -1,7 +1,8 @@
 'use client'
+import Qr from "../../badges/published/icons/qr";
+import { Share } from "../../badges/published/icons/share-icon";
 import { SocialPlatform } from "../../types/badge-published/badge";
 
-// ─── Platform config ──────────────────────────────────────────────────────────
 
 const SOCIAL_PLATFORMS: SocialPlatform[] = [
 	{
@@ -42,7 +43,6 @@ const SOCIAL_PLATFORMS: SocialPlatform[] = [
 
 const QR_FORMATS = ["PNG", "SVG", "PDF"] as const;
 
-// ─── SpreadTheWord (section root) ─────────────────────────────────────────────
 
 interface SpreadTheWordProps {
 	url: string;
@@ -67,7 +67,6 @@ export default function SpreadTheWord({ url, badgeName }: SpreadTheWordProps) {
 	);
 }
 
-// ─── OneTapShare ──────────────────────────────────────────────────────────────
 
 interface OneTapShareProps {
 	url: string;
@@ -85,9 +84,9 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 	};
 
 	return (
-		<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6">
 			<div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-3.5">
-				<ShareIcon />
+				<Share/>
 			</div>
 			<h3 className="text-[0.9375rem] font-bold text-gray-900 mb-1.5">
 				One-tap share
@@ -95,12 +94,12 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 			<p className="text-[0.8375rem] text-gray-500 leading-relaxed mb-4">
 				Open a pre-filled post on the platform you choose. Edit before posting.
 			</p>
-			<div className="flex gap-2 flex-wrap">
+			<div className="flex gap-1.5 flex-wrap">
 				{SOCIAL_PLATFORMS.map((platform) => (
 					<button
 						key={platform.id}
 						onClick={() => handleShare(platform)}
-						className="w-10 h-10 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 flex items-center justify-center text-gray-600 transition-colors cursor-pointer"
+						className="w-14 h-14 md:w-18.5 md:h-18.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 flex items-center justify-center text-gray-600 transition-colors cursor-pointer"
 						aria-label={`Share on ${platform.label}`}
 						title={platform.label}
 					>
@@ -112,7 +111,6 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 	);
 }
 
-// ─── QRCodeCard ───────────────────────────────────────────────────────────────
 
 interface QRCodeCardProps {
 	badgeName: string;
@@ -122,9 +120,9 @@ function QRCodeCard({ badgeName }: QRCodeCardProps) {
 	const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent("https://badge.build/achieveher")}`;
 
 	return (
-		<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6">
 			<div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center text-[#e8511a] mb-3.5">
-				<QRIcon />
+				<Qr/>
 			</div>
 			<h3 className="text-[0.9375rem] font-bold text-gray-900 mb-1.5">
 				QR code
@@ -133,7 +131,7 @@ function QRCodeCard({ badgeName }: QRCodeCardProps) {
 				Perfect for venue signage, slides, lanyards, name tags.
 			</p>
 
-			<div className="flex gap-4 items-start mb-5">
+			<div className="flex gap-3.75 items-center mb-4.5">
 				<img
 					src={qrUrl}
 					alt={`QR code for ${badgeName}`}
@@ -158,11 +156,11 @@ function QRCodeCard({ badgeName }: QRCodeCardProps) {
 				</div>
 			</div>
 
-			<div className="flex gap-2 justify-end">
-				<button className="px-4 py-2 rounded-full text-[0.8125rem] font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer">
+			<div className="flex gap-2 justify-between">
+				<button className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer">
 					Preview
 				</button>
-				<button className="px-4 py-2 rounded-full text-[0.8125rem] font-semibold text-white bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors cursor-pointer">
+				<button className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold text-white bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors cursor-pointer">
 					Download
 				</button>
 			</div>
@@ -170,85 +168,6 @@ function QRCodeCard({ badgeName }: QRCodeCardProps) {
 	);
 }
 
-// ─── Icons ────────────────────────────────────────────────────────────────────
-
-function ShareIcon() {
-	return (
-		<svg
-			width="17"
-			height="17"
-			viewBox="0 0 24 24"
-			fill="none"
-			aria-hidden="true"
-		>
-			<circle cx="18" cy="5" r="3" stroke="currentColor" strokeWidth="2" />
-			<circle cx="6" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
-			<circle cx="18" cy="19" r="3" stroke="currentColor" strokeWidth="2" />
-			<line
-				x1="8.59"
-				y1="13.51"
-				x2="15.42"
-				y2="17.49"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-			/>
-			<line
-				x1="15.41"
-				y1="6.51"
-				x2="8.59"
-				y2="10.49"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-			/>
-		</svg>
-	);
-}
-
-function QRIcon() {
-	return (
-		<svg
-			width="17"
-			height="17"
-			viewBox="0 0 24 24"
-			fill="none"
-			aria-hidden="true"
-		>
-			<rect
-				x="3"
-				y="3"
-				width="7"
-				height="7"
-				rx="1"
-				stroke="currentColor"
-				strokeWidth="2"
-			/>
-			<rect
-				x="14"
-				y="3"
-				width="7"
-				height="7"
-				rx="1"
-				stroke="currentColor"
-				strokeWidth="2"
-			/>
-			<rect
-				x="3"
-				y="14"
-				width="7"
-				height="7"
-				rx="1"
-				stroke="currentColor"
-				strokeWidth="2"
-			/>
-			<rect x="14" y="14" width="3" height="3" fill="currentColor" />
-			<rect x="18" y="14" width="3" height="3" fill="currentColor" />
-			<rect x="14" y="18" width="3" height="3" fill="currentColor" />
-			<rect x="18" y="18" width="3" height="3" fill="currentColor" />
-		</svg>
-	);
-}
 
 function LinkedInIcon() {
 	return (
