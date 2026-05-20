@@ -4,7 +4,7 @@ import { templates } from "../../constants/dashboard";
 
 export default function BrowseTemplate() {
 	return (
-		<section className=" rounded-[12px] border border-[#E8E8E8] ">
+		<section className="rounded-[12px] border border-[#E8E8E8] w-full ">
 			<div className="flex justify-between items-center py-[18px] px-5 border-b-[1px]">
 				<h1 className="text-[clamp(18px,2.5vw,20px)] font-semibold text-[#242424]">
 					Browse templates
@@ -17,7 +17,7 @@ export default function BrowseTemplate() {
 				</Link>
 			</div>
 
-			<div className="p-5 grid place-content-center w-full gap-[18px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+			<div className="p-5 grid w-full gap-4.5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 				{templates.map((template) => (
 					<article
 						key={template.id}

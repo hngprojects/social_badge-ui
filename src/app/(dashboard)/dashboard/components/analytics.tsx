@@ -5,10 +5,10 @@ import { stats } from "../../constants/dashboard";
 export default function Analytics() {
 
   return (
-    <section className="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-6">
+    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {stats.map((card) => (
         <article
-          className="p-5 border bg-[#F8F8F866]  flex gap-4 text-[#F8F8F866]/40 rounded-[12px]"
+          className="p-5 border bg-[#F8F8F866] flex gap-4 rounded-[12px]"
           key={card.title}
         >
           <div
