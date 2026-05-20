@@ -3,7 +3,7 @@ export type Template = {
   title: string;
   type: string;
   creator: string;
-  location: string;
+  target: string;
   badgeCount: string;
   image: string;
   tag?: string | null;
@@ -15,7 +15,6 @@ export type StatCard = {
   image: string;
   title: string;
   count: string;
-  metrics: string;
   bg: string;
 };
 
@@ -25,4 +24,18 @@ export interface TemplateData {
   title: string;
   category: string;
   image_url: string;
+}
+
+
+export interface LayoutTemplate {
+  id: string;
+  title: string;
+  category: string;
+  image_url: string;
+  card_bg: string;
+  usageCount: string;
+  shareRate: string;
+  isMostPicked: boolean;
+  description: string;
+  features: string[];
 }
