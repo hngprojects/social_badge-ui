@@ -1,6 +1,6 @@
 import { Template, StatCard } from "../types/dashboard";
 import { TemplateData } from "../types/dashboard";
-import { LayoutTemplate } from "../../(dashboard)/types/dashboard";
+import { LayoutTemplate } from "../types/dashboard";
 
 export const templates: Template[] = [
   {

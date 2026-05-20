@@ -109,7 +109,7 @@ export default function TemplatesMarketplacePage() {
               <Image src="/assets/dashboard/icons/made.svg" alt="Usage count icon" width={11} height={11} className="object-contain shrink-0" />
               <span className="truncate block">{tpl.usageCount}</span>
             </span>
-            <span className="flex items-center gap-1 min-w-0 shrink-0 truncate">
+            <span className="flex items-center gap-1 min-w-0 ">
               <Image src="/assets/dashboard/icons/rate.svg" alt="Share rate icon" width={11} height={11} className="object-contain shrink-0" />
               <span className="truncate block">{tpl.shareRate}</span>
             </span>
