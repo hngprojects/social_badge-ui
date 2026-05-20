@@ -18,3 +18,11 @@ export type StatCard = {
   metrics: string;
   bg: string;
 };
+
+
+export interface TemplateData {
+  id: string;
+  title: string;
+  category: string;
+  image_url: string;
+}
