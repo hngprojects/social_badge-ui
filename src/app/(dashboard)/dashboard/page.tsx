@@ -5,10 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Dashboard() {
-  const getCurrentUser = () => {
-    return { name: "There" };
-  };
-  const user = getCurrentUser();
+  const userName = "there";
 
   return (
     <section className="flex flex-col gap-6 pt-[32px]">
@@ -18,9 +15,7 @@ export default function Dashboard() {
         <div className="my-[16px]">
           <p className="text-[28px] font-bold text-[#1A1A1A]">
             Welcome to Social Badge,{" "}
-            <span className="italic text-[`#FF693E`]">
-              {user?.name || "there"}
-            </span>
+            <span className="italic text-[`#FF693E`]">{userName}</span>
           </p>
           <p className="text-[14px] text-[#9B9B9B]">
             Let&apos;s create amazing badge experiences.
@@ -44,7 +39,7 @@ export default function Dashboard() {
             <span className="text-[#FF693E]">a marketing channel</span>
           </h1>
 
-          <p className="">
+          <p>
             Create a branded badge once, share one link, and let your attendees
             promote your event on LinkedIn, X, and WhatsApp — automatically.
           </p>
