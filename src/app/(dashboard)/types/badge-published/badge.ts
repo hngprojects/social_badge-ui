@@ -1,3 +1,4 @@
+import type { ComponentType, SVGProps } from "react";
 export interface BadgeData {
 	name: string;
 	slug: string;
@@ -10,7 +11,7 @@ export interface SocialPlatform {
 	id: string;
 	label: string;
 	getShareUrl: (url: string, name: string) => string;
-	Icon: React.FC;
+	Icon: ComponentType<SVGProps <SVGSVGElement>>;
 }
 
 export interface NextAction {
