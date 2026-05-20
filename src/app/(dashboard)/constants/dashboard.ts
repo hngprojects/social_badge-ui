@@ -26,7 +26,7 @@ export const templates: Template[] = [
     bg: "#F0F0E8",
   },
   {
-    id: 2,
+    id: 3,
     title: "Next Gen Meetup",
     type: "meetup",
     creator: "@techevents",
@@ -37,7 +37,7 @@ export const templates: Template[] = [
     bg: "#B1F4E7",
   },
   {
-    id: 3,
+    id: 4,
     title: "Founder's Circle",
     type: "vip event",
     creator: "@techevents",
