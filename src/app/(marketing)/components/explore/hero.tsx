@@ -1,10 +1,6 @@
 import Image from 'next/image';
 
-const STATS = [
-  { value: '1,240', label: 'Templates' },
-  { value: '48k', label: 'Badges Made' },
-  { value: '3.2k', label: 'Organizers' },
-];
+import { STATS } from '../../constants/explore';
 
 const ExploreHero = () => {
   return (

@@ -46,7 +46,7 @@ export default function MobileHeader() {
                 "text-foreground hover:bg-muted",
                 "transition-colors duration-150",
               )}
-              aria-label="Open menu"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
               {mobileOpen ? (
                 <X className="w-5 h-5" />
@@ -85,17 +85,9 @@ export default function MobileHeader() {
               <nav className="flex flex-col gap-1 px-3 py-4 flex-1">
                 {navigation.map(({ label, href }) => {
                   const isActive = pathname === href;
-                  const isFeatures = href === "/#feature-section";
 
                   const handleClick = () => {
                     setMobileOpen(false);
-                    if (isFeatures && pathname === "/") {
-                      setTimeout(() => {
-                        document
-                          .getElementById("feature-section")
-                          ?.scrollIntoView({ behavior: "smooth" });
-                      }, 300);
-                    }
                   };
 
                   return (

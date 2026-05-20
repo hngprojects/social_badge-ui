@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { ContactFormValues } from '../../types/contact';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,8 +22,6 @@ const contactSchema = z.object({
   subject: z.string().min(1, 'Please select a topic'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
-
-type ContactFormValues = z.infer<typeof contactSchema>;
 
 export default function ContactForm() {
   const {

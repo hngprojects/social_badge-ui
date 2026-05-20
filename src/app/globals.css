@@ -5,7 +5,31 @@
 @custom-variant dark (&:is(.dark *));
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+
+html:hover {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+}
+
+html:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
 }
 @font-face {
   font-family: "Fraunces";
@@ -287,6 +311,7 @@ html {
   animation: marquee 50s linear infinite;
 }
 
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -308,16 +333,4 @@ html {
   h6 {
     font-family: var(--font-heading);
   }
-}
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.marquee {
-  animation: marquee 50s linear infinite;
 }

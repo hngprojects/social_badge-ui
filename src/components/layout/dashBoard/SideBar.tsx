@@ -20,7 +20,9 @@ export default function SideNav() {
     >
       <div className="flex h-full flex-col justify-between">
         <div>
-          <header className="flex items-center justify-between gap-6 p-4 pb-6 whitespace-nowrap text-[#231F20]">
+          <header
+            className={`flex ${!expanded && "flex-col"} items-center justify-between gap-6 p-4 pb-6 whitespace-nowrap text-[#231F20]`}
+          >
             <div className="flex items-center gap-2">
               <Link href="/dashboard">
                 <Image
@@ -37,19 +39,18 @@ export default function SideNav() {
               )}
             </div>
 
-            {expanded && (
-              <button
-                type="button"
-                onClick={() => setExpanded((prev) => !prev)}
-              >
-                <Image
-                  alt="sidebar toggle"
-                  src="/assets/dashboard/icons/sidebar-toggle.svg"
-                  width={24}
-                  height={24}
-                />
-              </button>
-            )}
+            <button
+              className="cursor-pointer"
+              type="button"
+              onClick={() => setExpanded((prev) => !prev)}
+            >
+              <Image
+                alt="sidebar toggle"
+                src="/assets/dashboard/icons/sidebar-toggle.svg"
+                width={24}
+                height={24}
+              />
+            </button>
           </header>
 
           <nav>
@@ -80,7 +81,9 @@ export default function SideNav() {
             ))}
           </ul>
 
-          <div className="flex items-center justify-between py-6">
+          <div
+            className={`flex items-center ${expanded ? "justify-between" : "justify-center"} py-6`}
+          >
             <div className="flex items-center gap-2">
               <div className="h-12 w-12 overflow-hidden rounded-full border">
                 <Image
@@ -128,16 +131,13 @@ type SidebarItemProps = {
 };
 
 function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
-  const isActive =
-    nav.href === "/dashboard"
-      ? pathname === "/dashboard"
-      : pathname.startsWith(nav.href);
+  const isActive = pathname === nav.href || pathname.startsWith(`${nav.href}/`);
 
   return (
     <li
       className={`relative rounded-[8px] py-4 ${
         expanded ? "px-2" : ""
-      } ${isActive && expanded ? "bg-primary/10 text-primary" : "text-[#6B7280]"}`}
+      } ${isActive && expanded ? "bg-primary/10 text-primary" : "text-black"}`}
     >
       {!expanded && isActive && (
         <div className="absolute bottom-0 left-0 top-0 w-[6px] rounded-l-[6px] bg-[#FA5424]" />

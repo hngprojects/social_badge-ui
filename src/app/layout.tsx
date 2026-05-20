@@ -29,7 +29,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html data-scroll-behavior="smooth" lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${dmSans.variable} bg-page text-ink antialiased`}
       >
