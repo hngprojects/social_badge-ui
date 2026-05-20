@@ -86,7 +86,7 @@ export const MOCK_TEMPLATES_DB: TemplateData[] = [
 	{
 		id: "tpl_achieveher",
 		title: "Achieveher",
-		category: "festivals",
+		category: "festival",
 		image_url: "/assets/dashboard/bg-1.png",
 	},
 	{
