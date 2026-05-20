@@ -162,8 +162,8 @@ export default function RecentBadges() {
 							</tr>
 						) : (
 							filtered.map((badge) => {
-								const isUnpublished =
-									badge.status === "Draft" && badge.clicks === null;
+								const hasMetrics =
+									badge.clicks !== null && badge.shares !== null;
 
 								return (
 									<tr
@@ -226,7 +226,7 @@ export default function RecentBadges() {
 
 										{/* Link clicks */}
 										<td className="py-[14px] px-[16px]">
-											{isUnpublished ? (
+											{!hasMetrics ? (
 												<div>
 													<div className="text-[15px] text-gray-700 leading-none">
 														—
@@ -244,7 +244,7 @@ export default function RecentBadges() {
 
 										{/* Shares */}
 										<td className="py-[14px] px-[16px]">
-											{isUnpublished ? (
+											{!hasMetrics ? (
 												<div>
 													<div className="text-[15px] text-gray-700 leading-none">
 														—
