@@ -3,7 +3,6 @@ import Image from "next/image";
 import { stats } from "../../constants/dashboard";
 
 export default function Analytics() {
-
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {stats.map((card) => (
@@ -12,7 +11,7 @@ export default function Analytics() {
           key={card.title}
         >
           <div
-            className="w-12.5 h-12.5  grid rounded-full place-content-center"
+            className="w-12.5 h-12.5  grid rounded-[8px] place-content-center"
             style={{ backgroundColor: card.bg }}
           >
             <Image
@@ -28,9 +27,6 @@ export default function Analytics() {
             </p>
             <p className="text-[32px] text-[#353535] font-medium">
               {card.count}
-            </p>
-            <p className="text-success-500 font-medium text-[9px]">
-              {card.metrics}
             </p>
           </div>
         </article>
