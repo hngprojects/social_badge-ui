@@ -30,7 +30,7 @@ export default function Dashboard() {
 
       <Analytics />
 
-      <section className="flex min-h-75 rounded-[12px] border items-center justify-center border-[#E8E8E8] center px-[56px] gap-[24px]  rounded-[24px] bg-[linear-gradient(120deg,#FFEDE0_15%,#FED4CC_60%,#FF8D6D_100%)] pt-[56px]">
+      <section className="flex min-h-75 rounded-[12px] border items-center justify-center border-[#E8E8E8] center px-[56px] gap-[24px]  rounded-[24px] bg-[linear-gradient(120deg,#FFEDE0_15%,#FED4CC_60%,#FF8D6D_100%)] pt-[56px] pb-[52px]">
         <div className="flex-1">
           <div className="py-[4.5px] px-[11px] flex place-items-center gap-[6px] bg-white w-fit rounded-full">
             <div className="w-[5px] h-[5px] rounded-full bg-[#E86038]"></div>
@@ -50,13 +50,22 @@ export default function Dashboard() {
             Create a branded badge once, share one link, and let your attendees
             promote your event on LinkedIn, X, and WhatsApp — automatically.
           </p>
-          <div className="pt-[24px]">
-            <Button className="py-[14px] px-[16px]">
+          <div className="pt-[24px] flex items-center gap-[12px] ">
+            <Link
+              href="/create-badges "
+              className="py-[14px] px-[16px] text-[14px] bg-[#6B2C1A] text-white rounded-full"
+            >
               Create your first badge
-            </Button>
-            <Button>Browse templates</Button>
+            </Link>
+            <Link
+              className="py-[14px] px-[16px] text-[14px] bg-white  rounded-full"
+              href="/templates"
+            >
+              Browse templates
+            </Link>
           </div>
         </div>
+
         <div className="flex-1 align-end">
           <Image
             className="h-auto w-full"
