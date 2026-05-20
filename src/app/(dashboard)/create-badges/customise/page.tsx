@@ -198,13 +198,23 @@ export default function CreateBadgePage() {
 
     const calculatedSize = (file.size / (1024 * 1024)).toFixed(1);
 
+    if (logoData?.blobUrl) {
+      URL.revokeObjectURL(logoData.blobUrl);
+    }
+
+    const nextBlobUrl = URL.createObjectURL(file);
     setLogoData({
       name: file.name,
       sizeStr: `${calculatedSize}MB`,
-      blobUrl: URL.createObjectURL(file),
+      blobUrl: nextBlobUrl
     });
   };
 
+  useEffect(() => {
+    return () => {
+      if (logoData?.blobUrl) URL.revokeObjectURL(logoData.blobUrl);
+    };
+  }, [logoData]);
 
 
 
@@ -221,8 +231,6 @@ export default function CreateBadgePage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log({ template, formData, logoData });
   }
 
 
@@ -261,7 +269,7 @@ export default function CreateBadgePage() {
                         <p className="text-xs text-[#7A7A7A]">JPG / PNG</p>
                       </div>
                     </div>
-                    <div className=" w-7.5 h-7.5 flex item-center justify-center">
+                    <div className=" w-7.5 h-7.5 flex items-center justify-center">
                       <Image
                         src="/assets/icons/create-badge-upload-circle.svg"
                         alt=""
@@ -463,7 +471,7 @@ export default function CreateBadgePage() {
 
               {/* CANVAS COMPONENT LAYER 2: STATIC ATTENDEE AVATAR CONTAINER */}
               {/* Centered proportionally using absolute positioning metrics */}
-              <div className="absolute top-[88px] left-6 right-6 aspect-square lg-max-w-[318px] lg:max-h-[424px] bg-[#E5E7EB] rounded-2xl border-2 border-white/20 z-10 flex items-center justify-center shadow-inner">
+              <div className="absolute top-[88px] left-6 right-6 aspect-square lg:max-w-[318px] lg:max-h-[424px] bg-[`#E5E7EB`] rounded-2xl border-2 border-white/20 z-10 flex items-center justify-center shadow-inner">
                 <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center px-4 select-none">
                   Attendee Photograph Frame
                 </span>

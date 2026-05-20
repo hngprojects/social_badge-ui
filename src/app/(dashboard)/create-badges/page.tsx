@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { LayoutTemplate } from "../../(marketing)/types/create-bage";
 import { EXTENDED_MOCK_DB } from "../constants/dashboard";
@@ -104,7 +105,7 @@ export default function TemplatesMarketplacePage() {
 
           {/* Title Row */}
           <div className="flex flex-wrap items-center justify-between gap-1 mt-0.5">
-            <span className={`text-sm sm:text-base font-bold truncate max-w-full text-[#1A1A1A]"}`}>
+            <span className="text-sm sm:text-base font-bold truncate max-w-full text-[#1A1A1A]">
               {tpl.title}
             </span>
           </div>
@@ -199,12 +200,12 @@ export default function TemplatesMarketplacePage() {
 
         {/* Structural Interface Customisation Action Row Buttons */}
         <div className="w-full space-y-2.5 pt-1">
-          <button
-            type="button"
-            className="w-full h-11 bg-[#FF693E] hover:bg-[#FF693E]/60 cursor-pointer text-white font-semibold rounded-xl text-sm transition-colors shadow-sm"
+          <Link
+            href="/create-badges/customise"
+            className="w-full h-11 bg-[`#FF693E`] hover:bg-[`#FF693E`]/60 cursor-pointer text-white font-semibold rounded-xl text-sm transition-colors shadow-sm flex items-center justify-center"
           >
             Continue to customise
-          </button>
+          </Link>
           <div className="w-full flex items-center justify-center gap-2 text-[10px] text-[#9CA3AF] font-sans font-normal uppercase select-none">
             <div className="h-[1px] bg-gray-200 flex-1" />
             <span>OR</span>

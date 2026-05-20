@@ -181,7 +181,7 @@ export const EXTENDED_MOCK_DB: LayoutTemplate[] = [
     title: "Web3 Summit",
     category: "hackathon",
     image_url: "/assets/dashboard/adams-card.png",
-    card_bg: "linear-gradient(to bottom, #CAC8CC, #CAC5D1#CAC5D1)",
+    card_bg: "linear-gradient(to bottom, #CAC8CC, #CAC5D1)",
     usageCount: "1,120 made",
     shareRate: "34% share rate",
     isMostPicked: false,
