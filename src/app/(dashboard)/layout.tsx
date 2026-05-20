@@ -15,7 +15,7 @@ export default function DashboardLayout({
           <SideNav />
         </div>
 
-        <main className="flex flex-1 flex-col px-6 lg:pl-6 lg:pr-8">
+        <main className="flex flex-1 flex-col px-6">
           <header className="sticky top-0 z-20 bg-background flex h-[83px] items-end">
             <div className="lg:hidden">
               <MobileHeader />
