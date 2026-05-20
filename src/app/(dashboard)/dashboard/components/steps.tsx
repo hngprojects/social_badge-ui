@@ -34,7 +34,7 @@ export default function Steps() {
         >
           <div className="flex justify-between">
             <div
-              className={`h-[40px] w-[40px] grid place-content-center rounded-[8px`}
+              className={`h-[40px] w-[40px] grid place-content-center rounded-[8px]`}
               style={{ backgroundColor: step.iconBg }}
             >
               <Image alt="layout icon" src={step.icon} width={20} height={20} />

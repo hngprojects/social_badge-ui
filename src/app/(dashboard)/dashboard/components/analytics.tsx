@@ -11,7 +11,7 @@ export default function Analytics() {
           key={card.title}
         >
           <div
-            className="w-12.5 h-12.5  grid rounded-[8px] place-content-center"
+            className="w-12.5 h-12.5  grid rounded-full place-content-center"
             style={{ backgroundColor: card.bg }}
           >
             <Image
