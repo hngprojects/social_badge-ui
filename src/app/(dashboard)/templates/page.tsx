@@ -52,7 +52,7 @@ export default function Templates() {
       <FilterTabs activeTab={activeTab} onTabChange={handleTabChange} />
       <MockTemplates templates={currentPosts} activeTab={activeTab} />
 
-      {filteredTemplates.length >= postsPerPage && (
+      {filteredTemplates.length > postsPerPage && (
         <div className="flex justify-center mt-8">
           <TemplatePagination
             totalPosts={filteredTemplates.length}

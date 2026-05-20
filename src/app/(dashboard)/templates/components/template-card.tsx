@@ -29,7 +29,10 @@ const TemplateCard = ({
           fill
           loading={isAboveFold ? "eager" : "lazy"}
           fetchPriority={isAboveFold ? "high" : "auto"}
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
+          sizes="(max-width: 349px) 100vw,
+       (max-width: 768px) 50vw,
+       (max-width: 1024px) 33vw,
+       25vw"
           className={`object-contain ${template.hasShadow ? "p-0 pt-2" : "p-4"}`}
         />
       </div>
