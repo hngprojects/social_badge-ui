@@ -4,12 +4,6 @@ import Steps from "./components/steps";
 import Image from "next/image";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
-});
 
 export default function Dashboard() {
   return (
