@@ -3,7 +3,7 @@ export type Template = {
   title: string;
   type: string;
   creator: string;
-  location: string;
+  target: string;
   badgeCount: string;
   image: string;
   tag?: string | null;
@@ -15,7 +15,6 @@ export type StatCard = {
   image: string;
   title: string;
   count: string;
-  metrics: string;
   bg: string;
 };
 
