@@ -4,15 +4,18 @@ import CodeIcon from "../../badges/published/icons/code";
 import CopyIcon from "../../badges/published/icons/copy-icon";
 
 interface EmbedNewsletterProps {
-	embedCode: string;
+	fullUrl: string;
+	imageUrl: string;
 }
 
-export default function EmbedNewsletter({ embedCode }: EmbedNewsletterProps) {
+export default function EmbedNewsletter({ fullUrl, imageUrl }: EmbedNewsletterProps) {
 	const [copied, setCopied] = useState(false);
+
+	const rawEmbedCode = `<a href="${fullUrl}">\n  <img src="${imageUrl}"/>\n</a>`;
 
 	const handleCopy = async () => {
 		try {
-			await navigator.clipboard.writeText(embedCode);
+			await navigator.clipboard.writeText(rawEmbedCode);
 		} catch {
 			console.error("Copy failed");
 		}
@@ -33,9 +36,19 @@ export default function EmbedNewsletter({ embedCode }: EmbedNewsletterProps) {
 			</p>
 
 			{/* Code block */}
-			<div className="bg-[#1a1a1a] rounded-xl px-5 py-4 mb-4 overflow-x-auto">
-				<pre className="font-mono text-[0.8125rem] text-gray-300 leading-relaxed whitespace-pre">
-					<code>{embedCode}</code>
+			<div className="h-20 bg-[#1a1a1a] p-3 flex items-center rounded-xl mb-4 overflow-x-auto">
+				<pre className="font-mono text-[0.8125rem] leading-relaxed whitespace-pre">
+					<span className="text-[#FF8B5C]">{`<a`}</span>
+					<span className="text-[#C2EAD3]">{` href="`}</span>
+					<span className="text-[#FFD89B]">{fullUrl}</span>
+					<span className="text-[#FF8B5C]">{`">`}</span>
+					{`\n  `}
+					<span className="text-[#FF8B5C]">{`<img`}</span>
+					<span className="text-[#C2EAD3]">{` src="`}</span>
+					<span className="text-[#FFD89B]">{imageUrl}</span>
+					<span className="text-[#FF8B5C]">{`"/>`}</span>
+					{`\n`}
+					<span className="text-[#FF8B5C]">{`</a>`}</span>
 				</pre>
 			</div>
 
@@ -52,5 +65,3 @@ export default function EmbedNewsletter({ embedCode }: EmbedNewsletterProps) {
 		</div>
 	);
 }
-
-

@@ -1,41 +1,7 @@
 'use client'
+import { ArrowOrange } from "../../badges/published/icons/arrow-up";
 import { NextAction } from "../../types/badge-published/badge";
-
-const NEXT_ACTIONS: NextAction[] = [
-	{
-		id: "preview",
-		Icon: PreviewIcon,
-		iconBg: "bg-orange-50",
-		iconColor: "text-[#e8511a]",
-		title: "Preview as an attendee",
-		description:
-			"See exactly what visitors will experience when they tap your link.",
-		cta: "Open link",
-		href: "#preview",
-	},
-	{
-		id: "analytics",
-		Icon: AnalyticsIcon,
-		iconBg: "bg-orange-50",
-		iconColor: "text-[#e8511a]",
-		title: "Track engagement",
-		description:
-			"Claims, shares per platform, click-through to your destination — in real time.",
-		cta: "Open link",
-		href: "#analytics",
-	},
-	{
-		id: "edit",
-		Icon: EditIcon,
-		iconBg: "bg-orange-50",
-		iconColor: "text-[#e8511a]",
-		title: "Edit this badge",
-		description:
-			"Changes go live immediately. Anyone with the link sees the updated design.",
-		cta: "Open link",
-		href: "#edit",
-	},
-];
+import { NEXT_ACTIONS } from "../../constants/badges-published/next-action";
 
 export default function WhatsNext() {
 	return (
@@ -76,123 +42,9 @@ function NextActionCard({ action }: { action: NextAction }) {
 				aria-label={`${action.cta} — ${action.title}`}
 			>
 				{action.cta}
-				<ArrowIcon />
+				<ArrowOrange />
 			</a>
 		</div>
 	);
 }
-// ─── Icons ────────────────────────────────────────────────────────────────────
 
-function PreviewIcon() {
-	return (
-		<svg
-			width="17"
-			height="17"
-			viewBox="0 0 24 24"
-			fill="none"
-			aria-hidden="true"
-		>
-			<path
-				d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-				stroke="currentColor"
-				strokeWidth="2"
-			/>
-			<circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
-		</svg>
-	);
-}
-
-function AnalyticsIcon() {
-	return (
-		<svg
-			width="17"
-			height="17"
-			viewBox="0 0 24 24"
-			fill="none"
-			aria-hidden="true"
-		>
-			<line
-				x1="18"
-				y1="20"
-				x2="18"
-				y2="10"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-			/>
-			<line
-				x1="12"
-				y1="20"
-				x2="12"
-				y2="4"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-			/>
-			<line
-				x1="6"
-				y1="20"
-				x2="6"
-				y2="14"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-			/>
-		</svg>
-	);
-}
-
-function EditIcon() {
-	return (
-		<svg
-			width="17"
-			height="17"
-			viewBox="0 0 24 24"
-			fill="none"
-			aria-hidden="true"
-		>
-			<path
-				d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-			/>
-			<path
-				d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	);
-}
-
-function ArrowIcon() {
-	return (
-		<svg
-			width="13"
-			height="13"
-			viewBox="0 0 24 24"
-			fill="none"
-			aria-hidden="true"
-		>
-			<line
-				x1="5"
-				y1="12"
-				x2="19"
-				y2="12"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-			/>
-			<polyline
-				points="12 5 19 12 12 19"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	);
-}

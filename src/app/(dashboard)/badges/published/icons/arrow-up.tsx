@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function ArrowUp() {
-  return (
+	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="12"
@@ -18,4 +18,10 @@ export default function ArrowUp() {
 			/>
 		</svg>
 	);
+}
+export function ArrowOrange() {
+	return (<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+		<path stroke="#FF693E" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.4" d="m3 9 6-6m0 4V3H5" />
+	</svg>
+	)
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import CopyIcon from "../../badges/published/icons/copy-icon";
 import Link from "next/link";
 import ArrowUp from "../../badges/published/icons/arrow-up";
+import GradientBgSm, { GradientBgLg } from "../../badges/published/icons/gradient-bg";
 
 interface ShareableLinkCardProps {
 	url: string;
@@ -31,9 +32,18 @@ export default function ShareableLinkCard({
 	};
 
 	return (
-		<div className="bg-[#1a1a1a] rounded-2xl p-6 md:pt-[38px] md:pb-7 md:px-8 mb-9 md:h-[163px] flex justify-between flex-col md:flex-row">
-			{/* Label pill */}
-			<div>
+		<div className="bg-[#1a1a1a] relative overflow-hidden rounded-2xl p-6 md:pt-[38px] md:pb-7 md:px-8 mb-9 md:h-[163px] flex justify-between flex-col md:flex-row">
+
+			<div className="absolute inset-0 pointer-events-none">
+								<div className="absolute top-0 right-0 hidden md:block">
+					<GradientBgLg />
+				</div>
+				<div className="absolute top-0 right-0 md:hidden">
+					<GradientBgSm />
+				</div>
+
+
+			</div>			<div>
 				<div className="inline-flex h-5 items-center gap-1.5 bg-[#2a2a2a] border border-[#333] rounded-full px-2.5 py-2 mb-3">
 					<span className="relative w-[5px] h-[5px] flex-shrink-0" aria-hidden="true">
 						<span className="absolute inset-0 rounded-full bg-[#4ADE80] opacity-40 scale-[2.2]" />

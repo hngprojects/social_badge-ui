@@ -4,7 +4,6 @@ export interface BadgeData {
 	url: string;
 	fullUrl: string;
 	imageUrl: string;
-	embedCode: string;
 }
 
 export interface SocialPlatform {
