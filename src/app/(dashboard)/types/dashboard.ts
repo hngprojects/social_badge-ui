@@ -17,3 +17,11 @@ export type StatCard = {
   count: string;
   bg: string;
 };
+
+
+export interface TemplateData {
+  id: string;
+  title: string;
+  category: string;
+  image_url: string;
+}

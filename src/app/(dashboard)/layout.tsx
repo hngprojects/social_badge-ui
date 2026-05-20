@@ -15,7 +15,7 @@ export default function DashboardLayout({
           <SideNav />
         </div>
 
-        <main className="flex flex-1 flex-col px-6 lg:pl-6 lg:pr-8">
+        <main className="flex flex-1 flex-col">
           <header className="sticky top-0 z-20 bg-background flex h-[83px] items-end">
             <div className="lg:hidden">
               <MobileHeader />
@@ -26,7 +26,7 @@ export default function DashboardLayout({
             </div>
           </header>
 
-          <section className="pb-8">{children}</section>
+          <section className="pb-8 bg-[#FBFAF7]">{children}</section>
         </main>
       </section>
     </LenisProvider>
