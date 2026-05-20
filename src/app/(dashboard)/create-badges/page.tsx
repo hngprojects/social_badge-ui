@@ -201,8 +201,8 @@ export default function TemplatesMarketplacePage() {
         {/* Structural Interface Customisation Action Row Buttons */}
         <div className="w-full space-y-2.5 pt-1">
           <Link
-            href="/create-badges/customise"
-            className="w-full h-11 bg-[`#FF693E`] hover:bg-[`#FF693E`]/60 cursor-pointer text-white font-semibold rounded-xl text-sm transition-colors shadow-sm flex items-center justify-center"
+            href="/create-badges/customize"
+            className="w-full h-11 bg-[#FF693E] hover:bg-[#FF693E]/60 cursor-pointer text-white font-semibold rounded-xl text-sm transition-colors shadow-sm flex items-center justify-center"
           >
             Continue to customise
           </Link>
