@@ -2,7 +2,6 @@ import Analytics from "./components/analytics";
 import BrowseTemplate from "./components/browse-templates";
 import Steps from "./components/steps";
 import Image from "next/image";
-import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
 
 export default function Dashboard() {
@@ -35,9 +34,7 @@ export default function Dashboard() {
           </div>
           <h1 className="font-bold text-[#6B2C1A] text-[36px] py-[12px] leading-[40px]">
             Turn every attendee into{" "}
-            <span className={`${plusJakartaSans.className} text-[#FF693E]`}>
-              a marketing channel
-            </span>
+            <span className="text-[#FF693E]">a marketing channel</span>
           </h1>
 
           <p className="">
