@@ -5,18 +5,27 @@ import MockTemplates from "./components/mock-templates";
 import FilterTabs from "./components/filter-tabs";
 import TemplatePagination from "./components/pagination";
 
+const templateTypeByTab: Record<string, string> = {
+  festivals: "festival",
+  hackathons: "hackathon",
+  conferences: "conference",
+  meetups: "meetup",
+  speakers: "speaker",
+};
+
 export default function Templates() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(8);
   const [activeTab, setActiveTab] = useState("all");
 
+  const activeTemplateType = templateTypeByTab[activeTab] ?? activeTab;
   const filteredTemplates =
     activeTab === "all"
       ? templates
       : activeTab === "trending"
         ? templates.filter((t) => t.tag === "Trending")
         : templates.filter(
-            (t) => t.type.toLowerCase() === activeTab.toLowerCase(),
+            (t) => t.type.toLowerCase() === activeTemplateType.toLowerCase(),
           );
 
   const lastPostIndex = currentPage * postsPerPage;

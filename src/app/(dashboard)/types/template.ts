@@ -8,5 +8,5 @@ export type Template = {
   image: string;
   tag: string | null;
   hasShadow?: boolean;
-  bg: string;
+  bg?: string;
 };
