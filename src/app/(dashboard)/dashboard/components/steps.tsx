@@ -18,7 +18,7 @@ export default function Steps() {
     },
     {
       number: "3",
-      head: "Pick a layout",
+      head: "Share one link",
       body: "Send the link to attendees. They claim, post, and your reach compounds automatically.",
       icon: "/assets/dashboard/icons/share-icon.svg",
       iconBg: "#ECF6FF",

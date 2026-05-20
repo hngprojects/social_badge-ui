@@ -5,6 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Dashboard() {
+  const getCurrentUser = () => {
+    return { name: "There" };
+  };
+  const user = getCurrentUser();
+
   return (
     <section className="flex flex-col gap-6 pt-[32px]">
       <header>
@@ -13,7 +18,9 @@ export default function Dashboard() {
         <div className="my-[16px]">
           <p className="text-[28px] font-bold text-[#1A1A1A]">
             Welcome to Social Badge,{" "}
-            <span className="italic text-[#FF693E]">Joe</span>
+            <span className="italic text-[`#FF693E`]">
+              {user?.name || "there"}
+            </span>
           </p>
           <p className="text-[14px] text-[#9B9B9B]">
             Let&apos;s create amazing badge experiences.
@@ -43,7 +50,7 @@ export default function Dashboard() {
           </p>
           <div className="pt-[24px] flex items-center gap-[12px] ">
             <Link
-              href="/create-badges "
+              href="/create-badges"
               className="py-[14px] px-[16px] text-[14px] bg-[#6B2C1A] text-white rounded-full"
             >
               Create your first badge
