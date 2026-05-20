@@ -25,7 +25,7 @@ export default function WaitlistHero() {
 			// Mock API call
 			await new Promise((resolve) => setTimeout(resolve, 2000));
 			// Use an existing route (or create /success before redirecting there)
-			router.push("waitlist/success?from=waitlist");
+			router.push("/waitlist/success?from=waitlist");
 		} finally {
 			setIsSubmitting(false);
 		}
