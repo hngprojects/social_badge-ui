@@ -1,18 +1,10 @@
-import { Template } from "@/app/(marketing)/types/explore";
+import { Template } from "../../types/template";
 import Image from "next/image";
 
-const TemplateCard = ({
-  template,
-  index,
-}: {
-  template: Template;
-  index: number;
-}) => {
+const TemplateCard = ({ template }: { template: Template }) => {
   return (
     <div
-      className={`relative flex flex-col rounded-[12px] border border-[#EAEAE6] overflow-hidden ${
-        index >= 7 ? "hidden md:flex" : "flex"
-      }`}
+      className={`relative flex flex-col cursor-pointer rounded-[12px] border border-[#EAEAE6] overflow-hidden`}
     >
       {/* Tag */}
       {template.tag && (
@@ -21,7 +13,10 @@ const TemplateCard = ({
         </span>
       )}
 
-      <div className="bg-[#F0F0E8] relative w-full h-64 shrink-0 overflow-hidden">
+      <div
+        className={`relative w-full h-64 shrink-0 overflow-hidden`}
+        style={{ backgroundColor: template.bg }}
+      >
         <Image
           src={template.image}
           alt={template.title}

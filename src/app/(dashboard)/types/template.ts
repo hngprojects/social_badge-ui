@@ -10,4 +10,5 @@ export type Template = {
   image: string;
   tag: BadgeTag;
   hasShadow?: boolean;
+  bg: string;
 };

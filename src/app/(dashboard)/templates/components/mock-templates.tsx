@@ -22,8 +22,8 @@ const MockTemplates = ({ templates, activeTab }: MockTemplatesProps) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      {templates.map((template, index) => (
-        <TemplateCard key={template.id} template={template} index={index} />
+      {templates.map((template) => (
+        <TemplateCard key={template.id} template={template} />
       ))}
     </div>
   );

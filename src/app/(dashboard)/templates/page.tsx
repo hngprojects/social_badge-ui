@@ -2,7 +2,7 @@
 import { templates } from "../constants/templates";
 import { useState } from "react";
 import MockTemplates from "./components/mock-templates";
-import TemplateTabs from "./components/tabs";
+import FilterTabs from "./components/filter-tabs";
 import TemplatePagination from "./components/pagination";
 
 export default function Templates() {
@@ -13,9 +13,11 @@ export default function Templates() {
   const filteredTemplates =
     activeTab === "all"
       ? templates
-      : templates.filter(
-          (t) => t.type.toLowerCase() === activeTab.toLowerCase(),
-        );
+      : activeTab === "trending"
+        ? templates.filter((t) => t.tag === "Trending")
+        : templates.filter(
+            (t) => t.type.toLowerCase() === activeTab.toLowerCase(),
+          );
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -38,7 +40,7 @@ export default function Templates() {
         </p>
       </div>
 
-      <TemplateTabs activeTab={activeTab} onTabChange={handleTabChange} />
+      <FilterTabs activeTab={activeTab} onTabChange={handleTabChange} />
       <MockTemplates templates={currentPosts} activeTab={activeTab} />
 
       {filteredTemplates.length > 0 && (
