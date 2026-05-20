@@ -7,7 +7,15 @@ const SECURITY_HEADERS: Record<string, string> = {
 	"Permissions-Policy": "camera=(), microphone=(), geolocation=()",
 };
 
-const PROTECTED_ROUTES = ["/coming-soon"];
+const PROTECTED_ROUTES = [
+	"/dashboard",
+	"/badges",
+	"/create-badges",
+	"/templates",
+	"/settings",
+	"/support",
+	"/coming-soon",
+];
 
 export const proxy: NextProxy = (request) => {
 	const { pathname } = request.nextUrl;

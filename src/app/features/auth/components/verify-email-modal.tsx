@@ -26,7 +26,7 @@ export const VerifyEmailModal = () => {
             Set up profile
           </Button>
           <Link
-            href="/coming-soon"
+            href="/dashboard"
             className={cn(
               buttonVariants({ variant: "outline" }),
               "inline-flex w-full items-center justify-center no-underline",
