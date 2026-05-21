@@ -21,7 +21,7 @@ export default function SideNav() {
       <div className="flex gap-[30px] h-full flex-col justify-between ">
         <div className="">
           <header
-            className={`flex ${!expanded && "flex-col"} items-center justify-between gap-6 p-4 pt-[18px] mt-3 pb-6 mb-8 whitespace-nowrap text-[#231F20]`}
+            className={`flex ${!expanded && "flex-col"} items-center justify-between gap-6 p-4 pt-[18px] mt-3 pb-6 mb-3 whitespace-nowrap text-[#231F20]`}
           >
             <div className="flex items-center gap-2">
               <Link href="/dashboard">
