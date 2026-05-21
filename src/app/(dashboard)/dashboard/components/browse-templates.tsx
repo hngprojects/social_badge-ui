@@ -88,8 +88,8 @@ export default function BrowseTemplate() {
                         <path
                           d="M6 2.5L9.5 6L6 9.5"
                           stroke="#FF693E"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     </div>
