@@ -82,7 +82,7 @@ export default function Hero() {
 
         {/* LANDING IMAGE */}
         <div className="grid flex-1  place-items-center md:place-items-start relative">
-          <div className=" w-80 pb-9 md:py-0 sm:w-92.5 h-auto -my-5.5 md:my:0 lg:w-full lg:flex-1">
+          <div className=" w-80 pb-9 md:py-0 sm:w-92.5 h-auto -my-5.5 md:my-0 lg:w-full lg:flex-1">
             <Image
               src="/assets/landing-page/heroSingle.png"
               width={320}
