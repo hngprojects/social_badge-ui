@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import {
   Sheet,
@@ -22,8 +21,6 @@ export default function MobileHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const navigation = navigationLinks;
-  const topNav = navigation.slice(0, 3);
-  const bottomNav = navigation.slice(3);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
