@@ -16,7 +16,7 @@ export default function DashboardLayout({
         </div>
 
         <main className="flex flex-1 flex-col">
-          <header className="sticky top-0 z-20 flex items-center py-[18px]  pl-[24px] pr-[32px] lg:border-b lg:border-black/8 bg-background">
+          <header className="lg:sticky lg:top-0 lg:z-20 lg:flex lg:items-center lg:py-[18px] lg:pl-[24px] lg:pr-[32px] lg:border-b lg:border-black/8 lg:bg-background">
             <div className="lg:hidden">
               <MobileHeader />
             </div>
@@ -26,7 +26,7 @@ export default function DashboardLayout({
             </div>
           </header>
 
-          <section className="pt-[76px] lg:pt-0 pb-8 px-[16px] md:pl-[24px]  md:pr-[32px]">
+          <section className="pt-[76px] lg:pt-0 pb-8 px-[16px] md:pl-[24px] md:pr-[32px]">
             {children}
           </section>
         </main>
