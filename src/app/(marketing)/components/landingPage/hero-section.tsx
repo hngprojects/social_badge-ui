@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -13,8 +13,9 @@ export default function Hero() {
           alt="background image"
           width={400}
           height={400}
-          style={{ width: 'auto', height: 'auto' }}
+          style={{ width: "auto", height: "auto" }}
           className="absolute -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5"
+          loading="eager"
         />
 
         <Image
@@ -22,33 +23,44 @@ export default function Hero() {
           alt="background image"
           width={400}
           height={400}
-          style={{ width: 'auto', height: 'auto' }}
+          style={{ width: "auto", height: "auto" }}
           className="absolute -right-45 bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35"
         />
 
         {/* HEADER */}
         <div className="flex flex-1 flex-col items-center py-7.5 md:py-16 lg:py-35 lg:max-w-150 md:items-start">
           <div className=" mb-2 gap-2.5 flex items-center">
-            <div className="bg-primary rounded-full w-2 h-2"> </div>{' '}
-            <p className="text-[11px] font-light tracking-[1.54px] ">FOR EVENT ORGANIZERS</p>
+            <div className="bg-primary rounded-full w-2 h-2"> </div>{" "}
+            <p className="text-[11px] font-light tracking-[1.54px] ">
+              FOR EVENT ORGANIZERS
+            </p>
           </div>
 
           <h1 className="text-[clamp(2rem,5vw,4.6875rem)] font-semibold text-center md:text-left leading-tight md:leading-[1.15] lg:leading-[1.1] text-pretty tracking-[-0.02em] lg:mt-3">
-            Turn attendees into your{' '}
+            Turn attendees into your{" "}
             <span className="whitespace-nowrap">
-              <span className="text-primary italic font-fraunces">marketing </span>team.
+              <span className="text-primary italic font-fraunces">
+                marketing{" "}
+              </span>
+              team.
             </span>
           </h1>
           <div className="text-muted-foreground text-[12px] text-center mt-4 mb-8 md:text-left">
-            <p>Design a branded badge once. Watch your participants share it everywhere.</p>
+            <p>
+              Design a branded badge once. Watch your participants share it
+              everywhere.
+            </p>
             <p>Track every click back to your event page.</p>
           </div>
 
           {/* CTA BTNS */}
           <div className="w-full flex-col flex items-center md:flex-row gap-3.5 ">
-            <Button className=" w-3xs font-light py-4! md:w-fit lg:py-6!" asChild>
+            <Button
+              className=" w-3xs font-light py-4! md:w-fit lg:py-6!"
+              asChild
+            >
               <Link href="/signup">
-                Create Your First Badge{' '}
+                Create Your First Badge{" "}
                 <Image
                   src="/assets/icons/round-arrow-right-up.svg"
                   alt="arrow"
@@ -62,9 +74,9 @@ export default function Hero() {
             <Link
               href="/login"
               className={cn(
-                'px-2 py-2 md:px-2 flex gap-1 text-base font-medium rounded-lg',
-                'text-foreground hover:bg-muted',
-                'transition-colors duration-150',
+                "px-2 py-2 md:px-2 flex gap-1 text-base font-medium rounded-lg",
+                "text-foreground hover:bg-muted",
+                "transition-colors duration-150",
               )}
             >
               <span>View Templates</span>
@@ -89,13 +101,13 @@ export default function Hero() {
               loading="eager"
               className="-ml-1 md:hidden"
               alt="badge preview"
-            />{' '}
+            />{" "}
             <Image
               src="/assets/landing-page/heroGroup1.png"
               width={600}
               height={500}
               loading="eager"
-              style={{ width: '100%', height: 'auto' }}
+              style={{ width: "100%", height: "auto" }}
               className="hidden md:block"
               alt="badge preview"
             />
