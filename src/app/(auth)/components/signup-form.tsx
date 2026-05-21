@@ -57,10 +57,11 @@ export const SignupForm = () => {
 			{
 				onSuccess: (data) => {
 					setSubmittedEmail(formData.email);
-					setModalMessage(undefined);
-					if (data.message.includes("Verification email failed to send")) {
-						setModalMessage(data.message);
-					}
+					setModalMessage(
+						data.message?.includes("Verification email failed to send")
+							? data.message
+							: undefined,
+					);
 					setShowModal(true);
 					reset();
 				},
@@ -183,7 +184,7 @@ export const SignupForm = () => {
 						type="submit"
 						disabled={!isChecked || isSubmitting || isLoading}
 					>
-						{isLoading ? "Signing up..." : "Sign Up"}
+						{isLoading ? "Signing up..." : "Sign up"}
 					</Button>
 				</form>
 

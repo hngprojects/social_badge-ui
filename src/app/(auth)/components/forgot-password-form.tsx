@@ -54,7 +54,7 @@ export const ForgotPasswordForm = () => {
 					</div>
 
 					<Button disabled={isSubmitting || isLoading} type="submit">
-						{isLoading ? "Resetting Password..." : "Reset Password"}
+						{isLoading ? "Resetting password..." : "Reset password"}
 					</Button>
 				</form>
 
