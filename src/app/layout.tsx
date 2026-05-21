@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Social Badge",
   },
   description:
-    "Create customisable digital badge templates that participants can personalise and share on social media.",
+    "Create customizable digital badge templates that participants can personalize and share on social media.",
   openGraph: {
     title: "Social Badge",
     description:
