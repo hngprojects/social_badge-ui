@@ -1,15 +1,15 @@
 "use client";
 
 import { SectionCard, FieldLabel, TextArea, HelperText } from "./ui";
+import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 interface ShareMessageSectionProps {
-  shareCaption: string;
-  setShareCaption: (v: string) => void;
-  destinationLink: string;
-  setDestinationLink: (v: string) => void;
+  editor: CustomizeEditorState;
+  onChange: (partial: Partial<CustomizeEditorState>) => void;
 }
 
-export function ShareMessageSection({ shareCaption, setShareCaption, destinationLink, setDestinationLink }: ShareMessageSectionProps) {
+export function ShareMessageSection({ editor, onChange }: ShareMessageSectionProps) {
+  const hashtagsInput = editor.hashtags.join(", ");
 
   return (
     <SectionCard
@@ -24,7 +24,6 @@ export function ShareMessageSection({ shareCaption, setShareCaption, destination
       title="Share message"
       subtitle="What attendees post when they share their badge."
     >
-      {/* Info banner */}
       <div className="flex items-start gap-2.5 rounded-lg bg-orange-50 border border-orange-200 px-3.5 py-3">
         <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-orange-500 mt-0.5 shrink-0">
           <path
@@ -40,18 +39,33 @@ export function ShareMessageSection({ shareCaption, setShareCaption, destination
         </p>
       </div>
 
-      {/* Default share caption */}
       <div>
         <FieldLabel label="Default share caption" />
         <TextArea
           placeholder="e.g. I'm at #Summit26 this weekend — who's joining?"
-          value={shareCaption}
-          onChange={(v) => setShareCaption(v)}
+          value={editor.defaultCaption}
+          onChange={(v) => onChange({ defaultCaption: v })}
         />
         <HelperText>Auto-shortened for X / Twitter. WhatsApp and LinkedIn use the full text.</HelperText>
       </div>
 
-      {/* Destination link */}
+      <div>
+        <FieldLabel label="Hashtag (optional)" />
+        <TextArea
+          placeholder="e.g. AchieveHer2026, WomenInTech (comma-separated)"
+          value={hashtagsInput}
+          onChange={(v) =>
+            onChange({
+              hashtags: v
+                .split(",")
+                .map((tag) => tag.trim().replace(/^#/, ""))
+                .filter(Boolean),
+            })
+          }
+        />
+        <HelperText>Displayed on the badge and added to share captions automatically.</HelperText>
+      </div>
+
       <div>
         <FieldLabel label="Destination link" required />
         <div className="flex items-center rounded-lg border border-gray-200 overflow-hidden focus-within:ring-2 focus-within:ring-orange-400 focus-within:border-transparent transition">
@@ -60,8 +74,8 @@ export function ShareMessageSection({ shareCaption, setShareCaption, destination
           </span>
           <input
             type="text"
-            value={destinationLink}
-            onChange={(e) => setDestinationLink(e.target.value)}
+            value={editor.destinationLink}
+            onChange={(e) => onChange({ destinationLink: e.target.value })}
             className="flex-1 px-3 py-2.5 text-sm text-gray-800 focus:outline-none bg-white"
           />
         </div>

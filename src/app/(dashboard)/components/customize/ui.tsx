@@ -115,7 +115,11 @@ export function Toggle({ checked, onChange }: { checked: boolean; onChange: () =
 
 /* ── BadgeDatePicker ────────────────────────────────────────────────────── */
 
-export function BadgeDatePicker({ onChange }: { onChange: (formatted: string) => void }) {
+export function BadgeDatePicker({
+  onChange,
+}: {
+  onChange: (formatted: string) => void;
+}) {
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
 

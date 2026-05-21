@@ -2,30 +2,22 @@
 
 import React from "react";
 import { SectionCard, HelperText } from "./ui";
-import { PALETTES, FONTS, SIZES } from "./constants";
+import { FONTS, SIZES } from "./constants";
+import { EDITOR_PALETTES } from "@/app/features/templates/lib/palette-mapping";
+import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 interface StyleSectionProps {
-  bgMode: "gradient" | "solid";
-  setBgMode: (m: "gradient" | "solid") => void;
-  selectedPalette: string;
-  setSelectedPalette: (id: string) => void;
-  selectedFont: string;
-  setSelectedFont: (id: string) => void;
-  selectedSize: typeof SIZES[number];
-  setSelectedSize: (s: typeof SIZES[number]) => void;
-  eventName: string;
+  editor: CustomizeEditorState;
+  onChange: (partial: Partial<CustomizeEditorState>) => void;
+  onPaletteChange: (paletteId: string) => void;
+  onBgModeChange: (mode: "gradient" | "solid") => void;
 }
 
 export function StyleSection({
-  bgMode,
-  setBgMode,
-  selectedPalette,
-  setSelectedPalette,
-  selectedFont,
-  setSelectedFont,
-  selectedSize,
-  setSelectedSize,
-  eventName,
+  editor,
+  onChange,
+  onPaletteChange,
+  onBgModeChange,
 }: StyleSectionProps) {
   return (
     <SectionCard
@@ -38,7 +30,6 @@ export function StyleSection({
       title="Style"
       subtitle="Colour, typography, and visual feel."
     >
-      {/* Background toggle */}
       <div>
         <p className="text-sm font-medium text-gray-800 mb-2">Background</p>
         <div className="flex rounded-lg border border-gray-200 overflow-hidden">
@@ -46,9 +37,9 @@ export function StyleSection({
             <button
               key={mode}
               type="button"
-              onClick={() => setBgMode(mode)}
+              onClick={() => onBgModeChange(mode)}
               className={`flex-1 flex bg-[#EEEEEE] items-center justify-center gap-2 py-2 text-sm font-medium transition ${
-                bgMode === mode
+                editor.bgMode === mode
                   ? "bg-white text-gray-900 shadow-sm"
                   : "bg-gray-50 text-gray-400 hover:text-gray-600"
               }`}
@@ -57,8 +48,8 @@ export function StyleSection({
                 className="w-3 h-3 rounded-sm inline-block"
                 style={
                   mode === "gradient"
-                    ? { background: "linear-gradient(135deg,#FF4D4D,#FF8C42)" }
-                    : { background: "#FF4D4D" }
+                    ? { background: `linear-gradient(135deg, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})` }
+                    : { background: editor.solidColor }
                 }
               />
               {mode.charAt(0).toUpperCase() + mode.slice(1)}
@@ -67,45 +58,34 @@ export function StyleSection({
         </div>
       </div>
 
-      {/* Palette swatches */}
       <div>
         <div className="flex items-center gap-2 flex-wrap">
-          {PALETTES.map((p) => (
+          {EDITOR_PALETTES.map((p) => (
             <button
               key={p.id}
               type="button"
-              onClick={() => setSelectedPalette(p.id)}
+              onClick={() => onPaletteChange(p.id)}
               className={`w-9 h-9 rounded-md flex items-center justify-center transition-transform ${
-                selectedPalette === p.id ? "ring-2 ring-offset-2 ring-black scale-110" : "hover:scale-105"
+                editor.paletteId === p.id ? "ring-2 ring-offset-2 ring-black scale-110" : "hover:scale-105"
               }`}
               style={{
                 background:
-                  bgMode === "gradient"
+                  editor.bgMode === "gradient"
                     ? `linear-gradient(135deg, ${p.from}, ${p.to})`
                     : p.from,
               }}
             >
-              {selectedPalette === p.id && (
+              {editor.paletteId === p.id && (
                 <svg className="w-4 h-4 text-white drop-shadow" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l3.5 3.5L13 5" />
                 </svg>
               )}
             </button>
           ))}
-          <button
-            type="button"
-            disabled
-            aria-disabled="true"
-            title="Coming soon"
-            className="w-9 h-9 rounded-full border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-300 cursor-not-allowed opacity-50 text-lg leading-none"
-          >
-            +
-          </button>
         </div>
         <HelperText>Pick from curated palettes designed for high-contrast share posts.</HelperText>
       </div>
 
-      {/* Title font */}
       <div>
         <p className="text-sm font-medium text-gray-800 mb-2">Title font</p>
         <div className="grid grid-cols-2 gap-2">
@@ -113,15 +93,15 @@ export function StyleSection({
             <button
               key={f.id}
               type="button"
-              onClick={() => setSelectedFont(f.id)}
+              onClick={() => onChange({ fontId: f.id })}
               className={`rounded-xl border px-4 py-3 text-left transition ${
-                selectedFont === f.id
+                editor.fontId === f.id
                   ? "border-orange-400 ring-1 ring-orange-400 bg-orange-50"
                   : "border-gray-200 hover:border-gray-300 bg-white"
               }`}
             >
               <span className="block text-xl text-gray-900 truncate" style={f.style}>
-                {eventName || "Achieveher"}
+                {editor.eventName || "Achieveher"}
               </span>
               <span className="block text-[10px] font-semibold tracking-widest text-gray-400 mt-1">
                 {f.label}
@@ -129,10 +109,8 @@ export function StyleSection({
             </button>
           ))}
         </div>
-        <HelperText>Different layouts pair best with different fonts. The default is matched to your template.</HelperText>
       </div>
 
-      {/* Title size */}
       <div>
         <p className="text-sm font-medium text-gray-800 mb-2">Title size</p>
         <div className="grid grid-cols-3 gap-2">
@@ -140,9 +118,9 @@ export function StyleSection({
             <button
               key={s}
               type="button"
-              onClick={() => setSelectedSize(s)}
+              onClick={() => onChange({ titleSize: s })}
               className={`rounded-xl border py-3 flex flex-col items-center gap-1 transition ${
-                selectedSize === s
+                editor.titleSize === s
                   ? "border-gray-900 bg-white shadow-sm"
                   : "border-gray-200 bg-gray-50 hover:border-gray-300"
               }`}

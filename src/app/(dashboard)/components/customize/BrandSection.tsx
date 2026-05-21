@@ -2,25 +2,16 @@
 
 import React, { useEffect, useRef } from "react";
 import { SectionCard, FieldLabel, TextInput, HelperText, BadgeDatePicker } from "./ui";
-import { UploadedFileMetadata } from "./constants";
+import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
+import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
 interface BrandSectionProps {
-  logoFile: string | null;
-  setLogoFile: (f: string | null) => void;
-  setLogoData: (d: UploadedFileMetadata | null) => void;
-  eventName: string;
-  setEventName: (v: string) => void;
-  setFormData: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  editor: CustomizeEditorState;
+  onChange: (partial: Partial<CustomizeEditorState>) => void;
+  layoutCaps: LayoutCapabilities;
 }
 
-export function BrandSection({
-  logoFile,
-  setLogoFile,
-  setLogoData,
-  eventName,
-  setEventName,
-  setFormData,
-}: BrandSectionProps) {
+export function BrandSection({ editor, onChange, layoutCaps }: BrandSectionProps) {
   const currentBlobUrl = useRef<string | null>(null);
 
   useEffect(() => {
@@ -40,7 +31,6 @@ export function BrandSection({
       title="Brand"
       subtitle="How your event shows up on the badge."
     >
-      {/* Logo */}
       <div>
         <FieldLabel label="Logo" required />
         <div className="flex items-center gap-3">
@@ -56,40 +46,66 @@ export function BrandSection({
                 const file = e.target.files?.[0];
                 if (!file) return;
                 const validType = file.type.startsWith("image/") || file.type === "image/svg+xml";
-                const validSize = file.size <= 5 * 1024 * 1024; // 5 MB
+                const validSize = file.size <= 5 * 1024 * 1024;
                 if (!validType || !validSize) return;
                 if (currentBlobUrl.current) URL.revokeObjectURL(currentBlobUrl.current);
                 const blobUrl = URL.createObjectURL(file);
                 currentBlobUrl.current = blobUrl;
-                setLogoFile(file.name);
-                setLogoData({ name: file.name, sizeStr: "", blobUrl });
+                onChange({
+                  pendingLogoFile: file,
+                  logoPreviewUrl: blobUrl,
+                  logo: null,
+                });
               }}
             />
           </label>
-          <span className="text-sm text-gray-400">{logoFile ?? "No file chosen"}</span>
+          <span className="text-sm text-gray-400 truncate max-w-[200px]">
+            {editor.pendingLogoFile?.name ?? (editor.logo ? "Logo uploaded" : "No file chosen")}
+          </span>
         </div>
         <HelperText>SVG recommended for crisp display. PNG works too (min 240 × 240px).</HelperText>
       </div>
 
-      {/* Event Name */}
+      <div>
+        <FieldLabel label="Template title" required />
+        <TextInput
+          placeholder="e.g. AchieveHer Summit Badge"
+          value={editor.title}
+          onChange={(v) => onChange({ title: v })}
+        />
+        <HelperText>A name for this badge template in your dashboard.</HelperText>
+      </div>
+
       <div>
         <FieldLabel label="Event Name" required />
         <TextInput
           placeholder="e.g. AchieveHer Summit"
-          value={eventName}
-          onChange={(v) => setEventName(v)}
+          value={editor.eventName}
+          onChange={(v) => onChange({ eventName: v })}
         />
         <HelperText>Appears as the main title on the badge.</HelperText>
       </div>
 
-      {/* Date */}
-      <div>
-        <FieldLabel label="Date" />
-        <BadgeDatePicker
-          onChange={(v) => setFormData((prev) => ({ ...prev, Date: v }))}
-        />
-        <HelperText>Updates the date shown on the live badge preview.</HelperText>
-      </div>
+      {layoutCaps.staticFields.includes("event_date") && (
+        <>
+          <div>
+            <FieldLabel label="Date" />
+            <BadgeDatePicker onChange={(v) => onChange({ eventDate: v })} />
+            <HelperText>Updates the date shown on the live badge preview.</HelperText>
+          </div>
+          {editor.layoutId === "speaker_card_v1" && (
+            <div>
+              <FieldLabel label="Time" />
+              <TextInput
+                placeholder="e.g. 10am"
+                value={editor.eventTime}
+                onChange={(v) => onChange({ eventTime: v })}
+              />
+              <HelperText>Shown alongside the date on the badge.</HelperText>
+            </div>
+          )}
+        </>
+      )}
     </SectionCard>
   );
 }
