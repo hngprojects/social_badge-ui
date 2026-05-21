@@ -38,8 +38,7 @@ const ThreeStepSection = () => {
 				<div className="w-full overflow-x-hidden scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
 					<div className="relative overflow-y-visible lg:overflow-visible w-full min-h-[750px] md:aspect-square max-w-[500px] lg:max-w-full mt-8 lg:mt-0 mx-auto lg:mx-0 ">
 						{/* Card 1*/}
-						<div className="absolute top-[15%] sm:top-0 lg:top-[13%] -left-[70px] sm:left-0 md:-left-[10%] lg:left-0 w-[55%] w-[250px] lg:w-[288px] z-20 transform -rotate-12 md:rotate-0">
-							<div className="absolute top-[15%] sm:top-0 lg:top-[13%] -left-17.5 sm:left-0 md:left-[-10%] lg:left-0 w-[55%] max-w-62.5 lg:w-[288px] z-20 transform -rotate-12 md:rotate-0"></div>
+						<div className="absolute top-[15%] sm:top-0 lg:top-[13%] -left-[70px] sm:left-0 md:-left-[10%] lg:left-0  w-[250px] lg:w-[288px] z-20 transform -rotate-12 md:rotate-0">
 							<Image
 								src="/assets/waitlist/card1.png"
 								alt="Settings UI"
