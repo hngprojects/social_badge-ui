@@ -167,7 +167,7 @@ export const DEFAULT_TESTIMONIALS: Testimonial[] = [
 
 
  export const steps: StepItem[] = [
-    { id: 'step-1', stepNumber: 'STEP 01', title: 'Design template' },
+    { id: 'step-1', stepNumber: 'STEP 01', title: 'Design Template' },
     { id: 'step-2', stepNumber: 'STEP 02', title: 'Generate Template' },
     { id: 'step-3', stepNumber: 'STEP 03', title: 'Share Link' },
   ];
