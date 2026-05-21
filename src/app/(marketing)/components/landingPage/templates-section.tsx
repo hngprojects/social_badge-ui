@@ -16,7 +16,7 @@ const Templates = () => {
 
         {/* Section title */}
         <h1 className="font-semibold text-[#525252] text-[clamp(2rem,6vw,4.5rem)] mt-4 mb-10 text-center md:text-left leading-[0.95]">
-          Browse Template <span className="font-fraunces italic text-primary">section</span>
+          Browse Template <span className="font-fraunces italic text-primary">Collections</span>
         </h1>
 
         {/* Cards stack — carousel on mobile, grid on md+ */}
