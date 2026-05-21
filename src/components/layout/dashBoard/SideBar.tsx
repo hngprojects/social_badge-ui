@@ -137,7 +137,7 @@ function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
     <li
       className={`relative rounded-[8px] py-4 ${
         expanded ? "px-2" : ""
-      } ${isActive && expanded ? "bg-primary/10 text-primary" : "text-black"}`}
+      } ${isActive && expanded ? "bg-primary/10 text-primary" : "text-black"} whitespace-nowrap`}
     >
       {!expanded && isActive && (
         <div className="absolute bottom-0 left-0 top-0 w-[6px] rounded-l-[6px] bg-[#FA5424]" />
