@@ -1,5 +1,6 @@
 import { BadgeState, BadgeStyle } from '../types/badge';
 import { Testimonial } from '../types/home';
+import { StepItem } from '../types/home';
 
 export const BADGE_COLORS = ['#E8441A', '#1A1A1A', '#F5C542', '#4ECDC4', '#A78BFA', '#3B82F6', '#E5E7EB'];
 export const TEXT_COLORS = ['#E8441A', '#1A1A1A', '#F5C542', '#4ECDC4', '#A78BFA', '#3B82F6', '#ffffff'];
@@ -161,3 +162,12 @@ export const DEFAULT_TESTIMONIALS: Testimonial[] = [
     initials: 'DC',
   },
 ];
+
+
+
+
+ export const steps: StepItem[] = [
+    { id: 'step-1', stepNumber: 'STEP 01', title: 'Design Template' },
+    { id: 'step-2', stepNumber: 'STEP 02', title: 'Generate Template' },
+    { id: 'step-3', stepNumber: 'STEP 03', title: 'Share Link' },
+  ];
