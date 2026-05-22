@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import Image from "next/image";
 
 // ── Text children slide in from the left one after another ────────────────────
@@ -21,6 +21,8 @@ const itemVariants = {
 };
 
 export default function ContactHero() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className="bg-[#F9F9F9]">
       <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:py-18">
@@ -43,7 +45,7 @@ export default function ContactHero() {
         <motion.div
           className="relative pt-10 pb-16 md:pt-0 md:pb-0 text-center md:text-left"
           variants={containerVariants}
-          initial="hidden"
+          initial={shouldReduceMotion ? "show" : "hidden"}
           animate="show"
         >
           <motion.h1
