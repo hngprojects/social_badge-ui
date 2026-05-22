@@ -26,7 +26,9 @@ function Field({
 	);
 }
 
-export default function BadgeForm({ badge, update }: BadgeFormProps) {
+export default function BadgeForm({ badge, update, onGenerate }: BadgeFormProps) {
+	const isReady = badge.name.trim().length > 0;
+
 	return (
 		<div className="flex flex-col gap-4">
 			{/* Photo */}
@@ -108,8 +110,10 @@ export default function BadgeForm({ badge, update }: BadgeFormProps) {
 			</Field>
 
 			<Button
-				className="w-full  bg-[#FF693E] hover:bg-[#E5532A]  text-white font-semibold py-3 rounded-full text-sm mt-2 transition-colors h-11"
-
+				className="w-full bg-[#FF693E] hover:bg-[#E5532A] text-white font-semibold py-3 rounded-full text-sm mt-2 transition-colors h-11 disabled:opacity-50 disabled:cursor-not-allowed"
+				disabled={!isReady}
+				title={!isReady ? 'Enter your name to generate your badge' : undefined}
+				onClick={isReady ? onGenerate : undefined}
 			>
 				Generate and share
 			</Button>
