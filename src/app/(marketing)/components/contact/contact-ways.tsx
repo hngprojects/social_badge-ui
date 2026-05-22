@@ -16,10 +16,9 @@ export default function ContactWays() {
           <Image
             width={56}
             height={56}
-            alt="check"
-            style={{ width: "auto", height: "auto" }}
+            alt=""
             src={`/assets/icons/mail.svg`}
-            className="w-full h-full"
+            className="w-auto h-auto"
           />
         </div>
         <div>

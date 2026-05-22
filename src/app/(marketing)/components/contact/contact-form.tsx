@@ -59,7 +59,18 @@ export default function ContactForm() {
         message: data.message,
       };
 
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/contact/`, payload);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+      if (!apiUrl) {
+        setStatus({
+          type: "error",
+          message: "API configuration is missing.",
+        });
+
+        return;
+      }
+
+      await axios.post(`${apiUrl}/contact/`, payload);
 
       setStatus({
         type: "success",
@@ -86,10 +97,9 @@ export default function ContactForm() {
         <Image
           width={56}
           height={56}
-          alt="check"
-          style={{ width: "auto", height: "auto" }}
+          alt=""
           src={`/assets/icons/check-icon.svg`}
-          className="w-full h-full"
+          className="w-auto h-auto"
         />
 
         <div className="space-y-3">
@@ -118,10 +128,9 @@ export default function ContactForm() {
               <Image
                 width={20}
                 height={20}
-                alt="check"
-                style={{ width: "auto", height: "auto" }}
+                alt=""
                 src={`/assets/icons/ui-arrow-left.svg`}
-                className="w-full h-full"
+                className="w-auto h-auto"
               />
             </span>
             Back
@@ -137,10 +146,9 @@ export default function ContactForm() {
               <Image
                 width={16}
                 height={16}
-                alt="check"
-                style={{ width: "auto", height: "auto" }}
+                alt=""
                 src={`/assets/icons/ui-arrow-right.svg`}
-                className="w-full h-full"
+                className="w-auto h-auto"
               />
             </span>
           </Link>
@@ -278,6 +286,10 @@ export default function ContactForm() {
           )}
         </div>
 
+        {status.type === "error" && (
+          <p className="text-red-500 text-sm mt-2">{status.message}</p>
+        )}
+
         <Button
           type="submit"
           disabled={isSubmitting}
@@ -290,6 +302,7 @@ export default function ContactForm() {
               alt=""
               width={20}
               height={20}
+              className="w-auto h-auto"
             />
           )}
         </Button>

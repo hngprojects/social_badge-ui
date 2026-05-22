@@ -9,8 +9,7 @@ export default function ContactHero() {
           alt=""
           width={400}
           height={400}
-          style={{ width: "auto", height: "auto" }}
-          className="absolute -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5 pointer-events-none select-none"
+          className="absolute w-auto h-auto -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5 pointer-events-none select-none"
           loading="eager"
         />
         <Image
@@ -18,8 +17,7 @@ export default function ContactHero() {
           alt=""
           width={400}
           height={400}
-          style={{ width: "auto", height: "auto" }}
-          className="absolute -right-45 bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35 pointer-events-none select-none"
+          className="absolute -right-45 w-auto h-auto bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35 pointer-events-none select-none"
         />
 
         <div className="relative pt-10 pb-16 md:pt-0 md:pb-0 text-center md:text-left">
