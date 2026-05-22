@@ -53,11 +53,14 @@ export const LoginForm = () => {
 							<div className="flex items-center gap-2">
 								<input
 									type="checkbox"
-									className="h-6 w-6 rounded-[5px] border border-[#727272] accent-[#FA5424]"
+									className="h-6 w-6 rounded-[5px] border cursor-pointer border-[#727272] accent-[#FA5424]"
 									name="remember-me"
 									id="remember-me"
 								/>
-								<label htmlFor="remember-me" className="text-sm text-[#978B8A]">
+								<label
+									htmlFor="remember-me"
+									className="text-sm cursor-pointer text-[#978B8A]"
+								>
 									Remember me
 								</label>
 							</div>
@@ -72,7 +75,11 @@ export const LoginForm = () => {
 					</div>
 				</div>
 
-				<Button disabled={isSubmitting || isLoading} type="submit">
+				<Button
+					disabled={isSubmitting || isLoading}
+					type="submit"
+					className="py-6 text-[20px] cursor-pointer"
+				>
 					{isLoading ? "Logging in..." : "Log in"}
 				</Button>
 			</form>

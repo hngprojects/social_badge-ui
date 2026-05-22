@@ -52,8 +52,11 @@ export const ForgotPasswordForm = () => {
 							</p>
 						)}
 					</div>
-
-					<Button disabled={isSubmitting || isLoading} type="submit">
+					<Button
+						disabled={isSubmitting || isLoading}
+						type="submit"
+						className="py-6 text-[20px] cursor-pointer"
+					>
 						{isLoading ? "Resetting password..." : "Reset password"}
 					</Button>
 				</form>
