@@ -5,6 +5,8 @@ export type CanvasFieldKey =
   | "role_title"
   | "participant_photo";
 
+export type PreviewFieldKey = CanvasFieldKey | "brand_initials";
+
 export type CanvasLayoutId =
   | "photo_gradient_v1"
   | "name_role_dark_v1"

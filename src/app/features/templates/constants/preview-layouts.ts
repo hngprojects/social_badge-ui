@@ -309,8 +309,16 @@ export function getPreviewValueForField(
 			return state.participantNamePlaceholder || placeholder;
 		case CANVAS_FIELD_KEYS.ROLE_TITLE:
 			return state.roleTitlePlaceholder || placeholder;
-		case "brand_initials":
-			return placeholder;
+		case "brand_initials": {
+			if (!state.eventName) return placeholder;
+			return state.eventName
+				.split(/[\s/-]+/)
+				.filter(Boolean)
+				.map((word) => word[0])
+				.join("")
+				.toUpperCase()
+				.slice(0, 2);
+		}
 		default:
 			return placeholder;
 	}
