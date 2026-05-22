@@ -48,3 +48,10 @@ export interface Testimonial {
 export interface TestimonialsProps {
   testimonials?: Testimonial[];
 }
+
+
+export interface StepItem {
+  id: string;
+  stepNumber: string;
+  title: string;
+}
