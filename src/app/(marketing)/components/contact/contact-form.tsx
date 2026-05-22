@@ -1,12 +1,15 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import axios from "axios";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ContactFormValues } from "../../types/contact";
+import {
+  getContactErrorMessage,
+  useContactMessage,
+} from "../../hooks/useContactMessage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,6 +28,7 @@ const contactSchema = z.object({
 });
 
 export default function ContactForm() {
+  const { sendContactMessage, isLoading } = useContactMessage();
   const [status, setStatus] = useState<{
     type: "success" | "error" | null;
     message: string;
@@ -36,6 +40,7 @@ export default function ContactForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -49,46 +54,24 @@ export default function ContactForm() {
     },
   });
 
-  const onSubmit = async (data: ContactFormValues) => {
-    try {
-      const payload = {
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        subject: data.subject,
-        message: data.message,
-      };
+  const onSubmit = (data: ContactFormValues) => {
+    setStatus({ type: null, message: "" });
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-      if (!apiUrl) {
+    sendContactMessage(data, {
+      onSuccess: () => {
+        reset();
+        setStatus({
+          type: "success",
+          message: "Message sent successfully!",
+        });
+      },
+      onError: (error) => {
         setStatus({
           type: "error",
-          message: "API configuration is missing.",
+          message: getContactErrorMessage(error),
         });
-
-        return;
-      }
-
-      await axios.post(`${apiUrl}/contact/`, payload);
-
-      setStatus({
-        type: "success",
-        message: "Message sent successfully!",
-      });
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setStatus({
-          type: "error",
-          message: error.response?.data?.message || "Failed to send message.",
-        });
-      } else {
-        setStatus({
-          type: "error",
-          message: "Something unexpected happened.",
-        });
-      }
-    }
+      },
+    });
   };
 
   if (status.type === "success") {
@@ -292,11 +275,11 @@ export default function ContactForm() {
 
         <Button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || isLoading}
           className="w-full h-14 text-base cursor-pointer font-light mt-1 gap-2 disabled:opacity-60"
         >
-          {isSubmitting ? "Sending..." : "Send Message"}
-          {!isSubmitting && (
+          {isSubmitting || isLoading ? "Sending..." : "Send Message"}
+          {!isSubmitting && !isLoading && (
             <Image
               src="/assets/icons/round-arrow-right-up.svg"
               alt=""
