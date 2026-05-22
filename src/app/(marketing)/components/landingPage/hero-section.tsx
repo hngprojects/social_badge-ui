@@ -2,11 +2,12 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
+import FloatingSteps from './floating-steps';
 
 export default function Hero() {
   return (
-    <section className="bg-[#F9F9F9]">
-      <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:flex md:gap-8 lg:gap-12 md:py-14">
+    <section className="bg-[#F9F9F9] ">
+      <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:flex  md:py-14">
         {/* BG FLOAT LOGO */}
         <Image
           src="/assets/landing-page/logo-float-low-bg.svg"
@@ -27,7 +28,7 @@ export default function Hero() {
         />
 
         {/* HEADER */}
-        <div className="flex flex-1 flex-col items-center py-7.5 md:py-16 lg:py-35 lg:max-w-150 md:items-start">
+        <div className="flex flex-1 flex-col items-center py-7.5 md:py-16 lg:py-35 lg:max-w-150 md:items-start md:mt-[-9%] lg:mt-[-12%]">
           <div className=" mb-2 gap-2.5 flex items-center">
             <div className="bg-primary rounded-full w-2 h-2"> </div>{' '}
             <p className="text-[11px] font-light tracking-[1.54px] ">FOR EVENT ORGANIZERS</p>
@@ -80,8 +81,8 @@ export default function Hero() {
         </div>
 
         {/* LANDING IMAGE */}
-        <div className="grid flex-1  place-items-center">
-          <div className="w-80 pb-9 md:py-0 sm:w-92.5 h-auto -my-5.5 md:my:0 lg:w-full lg:flex-1">
+        <div className="grid flex-1  place-items-center md:place-items-start relative">
+          <div className=" w-80 pb-9 md:py-0 sm:w-92.5 h-auto -my-5.5 md:my-0 lg:w-full lg:flex-1">
             <Image
               src="/assets/landing-page/heroSingle.png"
               width={320}
@@ -91,14 +92,14 @@ export default function Hero() {
               alt="badge preview"
             />{' '}
             <Image
-              src="/assets/landing-page/heroGroup1.png"
-              width={600}
-              height={500}
+              src="/assets/landing-page/hero-cards.png"
+              width={400}
+              height={614}
               loading="eager"
-              style={{ width: '100%', height: 'auto' }}
-              className="hidden md:block"
+              className="hidden md:block object-contain mt-[5%] "
               alt="badge preview"
             />
+            <FloatingSteps />
           </div>
         </div>
       </div>
