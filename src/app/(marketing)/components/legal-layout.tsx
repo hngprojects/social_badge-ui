@@ -63,13 +63,15 @@ export default function LegalLayout({
   const shouldReduceMotion = useReducedMotion();
 
   function handleTocClick(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
-    e.preventDefault();
     const el = document.getElementById(id);
     if (el) {
+      // Element found — take over navigation for smooth scroll + hash update
+      e.preventDefault();
       el.scrollIntoView({ behavior: shouldReduceMotion ? 'auto' : 'smooth' });
       // Update URL hash so browser history and bookmarks work correctly
       history.pushState(null, '', `#${id}`);
     }
+    // Element not found — let native anchor navigation proceed as fallback
   }
 
   return (
