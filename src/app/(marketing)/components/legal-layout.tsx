@@ -1,6 +1,6 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface LegalLayoutProps {
   title: string;
@@ -16,7 +16,7 @@ export default function LegalLayout({
   title,
   titleHighlight,
   date,
-  dateLabel = 'Effective',
+  dateLabel = "Effective",
   summary,
   toc,
   children,
@@ -33,7 +33,7 @@ export default function LegalLayout({
             width={400}
             height={400}
             priority
-            className="absolute -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5 opacity-60 pointer-events-none select-none"
+            className="absolute w-auto h-auto -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5 opacity-60 pointer-events-none select-none"
           />
           <Image
             src="/assets/landing-page/landing-logo-bgg.svg"
@@ -41,13 +41,15 @@ export default function LegalLayout({
             width={400}
             height={400}
             priority
-            className="absolute -right-45 bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35 opacity-60 pointer-events-none select-none"
+            className="absolute -right-45 w-auto h-auto bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35 opacity-60 pointer-events-none select-none"
           />
 
           <div className="relative pt-10 pb-16 md:pt-0 md:pb-0 flex flex-col items-center md:items-start text-center md:text-left">
             <h1 className="text-[clamp(32px,6vw,75px)] font-semibold tracking-[-0.65px] leading-tight text-foreground flex flex-col">
               <span>{title}</span>
-              <span className="font-fraunces text-primary italic">{titleHighlight}</span>
+              <span className="font-fraunces text-primary italic">
+                {titleHighlight}
+              </span>
             </h1>
             <p className="mt-4 text-sm md:text-[15px] font-medium text-muted-foreground">
               {dateLabel}: {date}
