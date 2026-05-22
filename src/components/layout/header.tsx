@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
@@ -26,19 +27,31 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  useMotionValueEvent(scrollY, 'change', (current) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    setScrolled(current > 8);
+    if (current > previous && current > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
 
   return (
-    <header
+    <motion.header
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: '-100%' },
+      }}
+      animate={hidden ? 'hidden' : 'visible'}
+      transition={{ duration: 0.35, ease: 'easeInOut' }}
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-background',
+        'fixed inset-x-0 top-0 z-50 bg-background',
         scrolled
           ? 'shadow-sm border-b border-border backdrop-blur-md bg-background/95'
           : 'border-b border-border shadow-sm',
@@ -250,6 +263,6 @@ export default function Header() {
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
