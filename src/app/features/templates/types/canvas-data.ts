@@ -1,4 +1,3 @@
-/** Frozen field keys — must match backend renderer contract. */
 export type CanvasFieldKey =
   | "event_name"
   | "event_date"
@@ -9,6 +8,7 @@ export type CanvasFieldKey =
 export type CanvasLayoutId =
   | "photo_gradient_v1"
   | "name_role_dark_v1"
+  | "name_role_dark_v2"
   | "speaker_card_v1";
 
 export type CanvasFieldType = "static" | "participant_input" | "participant_upload";

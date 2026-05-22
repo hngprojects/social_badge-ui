@@ -15,7 +15,7 @@ export function TemplateLivePreview({ template }: TemplateLivePreviewProps) {
         <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
           No layout active
         </span>
-        <p className="text-xs text-[#737373] max-w-[200px] mt-1">
+        <p className="text-xs text-[#737373] max-w-50 mt-1">
           Select a template framework from the gallery stream to preview.
         </p>
       </div>

@@ -1,9 +1,8 @@
 import type { CanvasLayoutId } from "../types/canvas-data";
 
-/** Maps gallery platform template ids to backend layout_id values. */
 export const PLATFORM_TEMPLATE_LAYOUT_MAP: Record<string, CanvasLayoutId> = {
   tpl_achieveher: "photo_gradient_v1",
-  tpl_dev_summit_26: "name_role_dark_v1",
+  tpl_dev_summit_26: "name_role_dark_v2",
   tpl_web3_summit: "name_role_dark_v1",
   tpl_next_gen: "speaker_card_v1",
 };
@@ -30,13 +29,21 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
     defaultPaletteId: "bg_mesh_01",
     previewColor: "",
   },
+  name_role_dark_v2: {
+    staticFields: ["event_name"],
+    participantFields: ["participant_name", "participant_photo"],
+    hasHeaderLogo: false,
+    defaultLogoPosition: "top-right",
+    defaultPaletteId: "bg_color_dark",
+    previewColor: "#0A0A0A",
+  },
   name_role_dark_v1: {
     staticFields: ["event_name"],
     participantFields: ["participant_name", "role_title", "participant_photo"],
     hasHeaderLogo: false,
     defaultLogoPosition: "top-right",
-    defaultPaletteId: "bg_color_dark",
-    previewColor: "#0A0A0A",
+    defaultPaletteId: "bg_mesh_02",
+    previewColor: "#1a1232",
   },
   speaker_card_v1: {
     staticFields: ["event_name", "event_date"],

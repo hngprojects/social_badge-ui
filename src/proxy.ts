@@ -8,12 +8,12 @@ const SECURITY_HEADERS: Record<string, string> = {
 };
 
 const PROTECTED_ROUTES = [
-  "/dashboard",
-  "/badges",
-  "/create-badges",
-  "/templates",
-  "/settings",
-  "/support",
+  //"/dashboard",
+  //"/badges",
+ // "/create-badges",
+  //"/templates",
+ // "/settings",
+  //"/support",
   "/coming-soon",
 ];
 

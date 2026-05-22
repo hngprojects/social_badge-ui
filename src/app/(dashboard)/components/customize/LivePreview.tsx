@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import Image from "next/image";
-import { TABS } from "./constants";
+import { TABS, FONTS } from "./constants";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import {
   PREVIEW_LAYOUTS,
@@ -26,9 +26,6 @@ export function LivePreview({
   const preview = PREVIEW_LAYOUTS[editor.layoutId];
 
   const backgroundStyle = useMemo(() => {
-    if (preview.previewColor) {
-      return { backgroundColor: preview.previewColor };
-    }
     if (editor.backgroundImageUrl) {
       return undefined;
     }
@@ -37,7 +34,13 @@ export function LivePreview({
         background: `linear-gradient(${editor.gradientDirection}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
       };
     }
-    return { backgroundColor: editor.solidColor };
+    if (editor.bgMode === "solid") {
+      return { backgroundColor: editor.solidColor };
+    }
+    if (preview.previewColor) {
+      return { backgroundColor: preview.previewColor };
+    }
+    return undefined;
   }, [editor, preview.previewColor]);
 
   const visibleFields = preview.fields.filter((slot) => {
@@ -47,6 +50,19 @@ export function LivePreview({
     }
     return true;
   });
+
+  const titleStyle = useMemo(() => {
+    const font = FONTS.find((f) => f.id === editor.fontId) || FONTS[0];
+    const sizeMap = {
+      SMALL: "16px",
+      MEDIUM: "22px",
+      LARGE: "32px",
+    };
+    return {
+      ...font.style,
+      fontSize: sizeMap[editor.titleSize] || "22px",
+    };
+  }, [editor.fontId, editor.titleSize]);
 
   return (
     <div className="space-y-3">
@@ -101,7 +117,10 @@ export function LivePreview({
                   />
                 </div>
               )}
-              <h1 className="text-white text-2xl font-serif italic tracking-wide select-none opacity-80 truncate">
+              <h1
+                className="text-white tracking-wide select-none opacity-80 truncate"
+                style={titleStyle}
+              >
                 {editor.eventName || "Your event"}
               </h1>
             </header>
@@ -135,10 +154,13 @@ export function LivePreview({
               slot.key === CANVAS_FIELD_KEYS.PARTICIPANT_NAME ||
               slot.key === CANVAS_FIELD_KEYS.ROLE_TITLE;
 
+            const isEventName = slot.key === CANVAS_FIELD_KEYS.EVENT_NAME;
+            const combinedStyle = isEventName ? { ...slot.style, ...titleStyle } : slot.style;
+
             return (
               <div
                 key={slot.key}
-                style={slot.style}
+                style={combinedStyle}
                 className={`z-10 select-none transition-all duration-150 ${
                   isParticipant ? "opacity-70 italic" : ""
                 }`}

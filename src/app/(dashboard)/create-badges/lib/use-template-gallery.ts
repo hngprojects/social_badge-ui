@@ -6,16 +6,19 @@ import { EXTENDED_MOCK_DB, FILTER_TABS } from "../../constants/dashboard";
 import type { LayoutTemplate } from "../../types/dashboard";
 
 export function useTemplateGallery() {
-  const { data: apiTemplates, isLoading, isError } = usePlatformTemplates({
-    page: 1,
-    limit: 10,
-  });
+  // const { data: apiTemplates, isLoading, isError } = usePlatformTemplates({
+  //   page: 1,
+  //   limit: 10,
+  // });
 
   const templates = useMemo((): LayoutTemplate[] => {
-    if (apiTemplates && apiTemplates.length > 0) return apiTemplates;
-    if (isError) return EXTENDED_MOCK_DB;
-    return [];
-  }, [apiTemplates, isError]);
+    // if (apiTemplates && apiTemplates.length > 0) return apiTemplates;
+    // if (isError) return EXTENDED_MOCK_DB;
+    // return [];
+    return EXTENDED_MOCK_DB;
+  }, []);
+
+  const isLoading = false; // API is disabled
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState("All layouts");
