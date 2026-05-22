@@ -13,8 +13,7 @@ export default function Hero() {
           alt="background image"
           width={400}
           height={400}
-          style={{ width: "auto", height: "auto" }}
-          className="absolute -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5"
+          className="absolute w-auto h-auto -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5"
           loading="eager"
         />
 
@@ -23,8 +22,7 @@ export default function Hero() {
           alt="background image"
           width={400}
           height={400}
-          style={{ width: "auto", height: "auto" }}
-          className="absolute -right-45 bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35"
+          className="absolute w-auto h-auto -right-45 bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35"
         />
 
         {/* HEADER */}
