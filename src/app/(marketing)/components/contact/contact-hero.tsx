@@ -23,9 +23,9 @@ export default function ContactHero() {
         />
 
         <div className="relative pt-10 pb-16 md:pt-0 md:pb-0 text-center md:text-left">
-          <h1 className="text-[clamp(32px,6vw,75px)] font-semibold text-center leading-12.5 text-pretty tracking-[-0.65px] md:text-left lg:leading-18.5 lg:tracking-[-0.65px] lg:mt-3">
+          <h1 className="text-[clamp(32px,6vw,75px)] font-semibold text-center leading-[39px] text-pretty tracking-[-0.65px] md:text-left lg:leading-18.5 lg:tracking-[-0.65px] lg:mt-3">
             <span className="block font-fraunces">Let&apos;s talk</span>
-            <span className="block text-primary italic font-fraunces">
+            <span className="block text-primary font-semibold italic font-fraunces">
               We&apos;re fast.
             </span>
           </h1>

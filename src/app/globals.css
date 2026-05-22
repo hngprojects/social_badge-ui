@@ -334,3 +334,13 @@ html:hover::-webkit-scrollbar-thumb {
     font-family: var(--font-heading);
   }
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #FEF0C7 inset !important;
+  -webkit-text-fill-color: #0A0A0A !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

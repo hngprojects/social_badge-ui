@@ -1,52 +1,158 @@
-'use client';
-
-import Image from 'next/image';
-import Link from 'next/link';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { ContactFormValues } from '../../types/contact';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+"use client";
+import { useState } from "react";
+import Image from "next/image";
+import axios from "axios";
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { ContactFormValues } from "../../types/contact";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const contactSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
   email: z
     .string()
-    .min(1, 'Email is required')
+    .min(1, "Email is required")
     .refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-      message: 'Enter a valid email address',
+      message: "Enter a valid email address",
     }),
-  subject: z.string().min(1, 'Please select a topic'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
+  subject: z.string().min(1, "Please select a topic"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
 export default function ContactForm() {
+  const [status, setStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({
+    type: null,
+    message: "",
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
-    mode: 'onTouched',
+    mode: "onTouched",
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      subject: '',
-      message: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      subject: "",
+      message: "",
     },
   });
 
   const onSubmit = async (data: ContactFormValues) => {
-    // TODO: wire to API
-    console.log(data);
+    try {
+      const payload = {
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+      };
+
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/contact/`, payload);
+
+      setStatus({
+        type: "success",
+        message: "Message sent successfully!",
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setStatus({
+          type: "error",
+          message: error.response?.data?.message || "Failed to send message.",
+        });
+      } else {
+        setStatus({
+          type: "error",
+          message: "Something unexpected happened.",
+        });
+      }
+    }
   };
 
+  if (status.type === "success") {
+    return (
+      <div className="w-full lg:w-3/5 border border-[#EAEAE6] rounded-[24px] p-8 md:p-12 flex flex-col items-center justify-center text-center gap-6 min-h-[380px]">
+        <Image
+          width={56}
+          height={56}
+          alt="check"
+          style={{ width: "auto", height: "auto" }}
+          src={`/assets/icons/check-icon.svg`}
+          className="w-full h-full"
+        />
+
+        <div className="space-y-3">
+          <h2 className="text-lg sm:text-[22px] leading-[24px] font-bold text-[#3A3A3A]">
+            Got it. We&apos;ll be in touch
+          </h2>
+
+          <p className="text-[#8A8A85] text-sm sm:text-md max-w-[454px] leading-[24px]">
+            Your message is in. Expect a reply within one business day — usually
+            sooner.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row w-full max-w-[454px] items-center gap-4">
+          <button
+            onClick={() =>
+              setStatus({
+                type: null,
+                message: "",
+              })
+            }
+            className="px-6 py-3 flex items-center justify-center gap-2 w-full rounded-full bg-[#F4F4F2]"
+          >
+            <span>
+              {" "}
+              <Image
+                width={20}
+                height={20}
+                alt="check"
+                style={{ width: "auto", height: "auto" }}
+                src={`/assets/icons/ui-arrow-left.svg`}
+                className="w-full h-full"
+              />
+            </span>
+            Back
+          </button>
+
+          <Link
+            href="/explore"
+            className="px-2 py-3 flex items-center gap-2 justify-center rounded-full w-full text-md bg-[#3A3A3A] text-white"
+          >
+            Explore Templates
+            <span>
+              {" "}
+              <Image
+                width={16}
+                height={16}
+                alt="check"
+                style={{ width: "auto", height: "auto" }}
+                src={`/assets/icons/ui-arrow-right.svg`}
+                className="w-full h-full"
+              />
+            </span>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full lg:w-3/5 border border-[#EAEAE6] rounded-[14px] p-8 md:p-12">
+    <div
+      className={`w-full lg:w-3/5 border border-[#EAEAE6] rounded-[14px] p-8 md:p-12`}
+    >
       <div className="mb-5 gap-2.5 flex items-center">
         <div className="bg-primary rounded-full w-2 h-2 shrink-0" />
         <p className="text-[11px] font-light tracking-[1.54px] uppercase text-[#8A8A85]">
@@ -58,7 +164,11 @@ export default function ContactForm() {
         We&apos;ll get back to you fast.
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        className="flex flex-col gap-6"
+      >
         {/* First / Last name */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-1.5">
@@ -73,9 +183,11 @@ export default function ContactForm() {
               placeholder="Alex"
               aria-invalid={!!errors.firstName}
               className="h-12 text-base rounded-[12px] bg-[#F4F4F2] placeholder:text-[#757575] border-[#EAEAE6] aria-invalid:border-red-400"
-              {...register('firstName')}
+              {...register("firstName")}
             />
-            {errors.firstName && <p className="text-xs text-red-500">{errors.firstName.message}</p>}
+            {errors.firstName && (
+              <p className="text-xs text-red-500">{errors.firstName.message}</p>
+            )}
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -90,15 +202,20 @@ export default function ContactForm() {
               placeholder="Rivera"
               aria-invalid={!!errors.lastName}
               className="h-12 text-base rounded-[12px] bg-[#F4F4F2] placeholder:text-[#757575] border-[#EAEAE6] aria-invalid:border-red-400"
-              {...register('lastName')}
+              {...register("lastName")}
             />
-            {errors.lastName && <p className="text-xs text-red-500">{errors.lastName.message}</p>}
+            {errors.lastName && (
+              <p className="text-xs text-red-500">{errors.lastName.message}</p>
+            )}
           </div>
         </div>
 
         {/* Email */}
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="email" className="text-[11px] tracking-widest uppercase text-[#8A8A85]">
+          <Label
+            htmlFor="email"
+            className="text-[11px] tracking-widest uppercase text-[#8A8A85]"
+          >
             Email Address
           </Label>
           <Input
@@ -107,21 +224,26 @@ export default function ContactForm() {
             placeholder="alex@yourcompany.com"
             aria-invalid={!!errors.email}
             className="h-12 text-base rounded-[12px] bg-[#F4F4F2] placeholder:text-[#757575] border-[#EAEAE6] aria-invalid:border-red-400"
-            {...register('email')}
+            {...register("email")}
           />
-          {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-xs text-red-500">{errors.email.message}</p>
+          )}
         </div>
 
         {/* Subject */}
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="subject" className="text-[11px] tracking-widest uppercase text-[#8A8A85]">
+          <Label
+            htmlFor="subject"
+            className="text-[11px] tracking-widest uppercase text-[#8A8A85]"
+          >
             Subject
           </Label>
           <select
             id="subject"
             aria-invalid={!!errors.subject}
             className="h-12 w-full rounded-[12px] border border-[#EAEAE6] bg-[#F4F4F2] px-3 text-base text-[#0A0A0A] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-invalid:border-red-400"
-            {...register('subject')}
+            {...register("subject")}
           >
             <option value="">Select a topic...</option>
             <option value="general">General Inquiry</option>
@@ -130,7 +252,9 @@ export default function ContactForm() {
             <option value="feedback">Feedback</option>
             <option value="billing">Billing</option>
           </select>
-          {errors.subject && <p className="text-xs text-red-500">{errors.subject.message}</p>}
+          {errors.subject && (
+            <p className="text-xs text-red-500">{errors.subject.message}</p>
+          )}
         </div>
 
         {/* Message */}
@@ -147,24 +271,31 @@ export default function ContactForm() {
             placeholder="Tell us what's on your mind. The more detail the better — we'll actually read it."
             aria-invalid={!!errors.message}
             className="resize-none w-full rounded-[12px] border border-[#EAEAE6] bg-[#F4F4F2] px-3 py-3 text-base placeholder:text-[#757575] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-invalid:border-red-400"
-            {...register('message')}
+            {...register("message")}
           />
-          {errors.message && <p className="text-xs text-red-500">{errors.message.message}</p>}
+          {errors.message && (
+            <p className="text-xs text-red-500">{errors.message.message}</p>
+          )}
         </div>
 
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full h-14 text-base font-light mt-1 gap-2 disabled:opacity-60"
+          className="w-full h-14 text-base cursor-pointer font-light mt-1 gap-2 disabled:opacity-60"
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {isSubmitting ? "Sending..." : "Send Message"}
           {!isSubmitting && (
-            <Image src="/assets/icons/round-arrow-right-up.svg" alt="" width={20} height={20} />
+            <Image
+              src="/assets/icons/round-arrow-right-up.svg"
+              alt=""
+              width={20}
+              height={20}
+            />
           )}
         </Button>
 
         <p className="text-center text-sm text-[#8A8A85]">
-          By submitting you agree to our{' '}
+          By submitting you agree to our{" "}
           <Link href="/privacy" className="text-[#FF4F1F]">
             Privacy Policy
           </Link>
