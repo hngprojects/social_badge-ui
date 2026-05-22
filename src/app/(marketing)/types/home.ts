@@ -22,6 +22,7 @@ export interface BadgeFormProps {
   badge: BadgeState;
   update: <K extends keyof BadgeState>(key: K, value: BadgeState[K]) => void;
   previewRef: React.RefObject<HTMLDivElement | null>;
+  onGenerate?: () => void;
 }
 
 export interface BadgePreviewProps {

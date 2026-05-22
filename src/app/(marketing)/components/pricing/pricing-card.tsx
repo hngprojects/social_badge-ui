@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { PricingCardProps } from '../../types/pricing';
 import StatusIcon from './status-icon';
 
@@ -8,21 +8,9 @@ export default function PricingCard({ plan, billing, isSelected, onSelect }: Pri
   const price = billing === 'yearly' ? plan.yearlyPrice : plan.monthlyPrice;
   const isPrimary = plan.ctaVariant === 'primary';
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onSelect?.();
-    }
-  };
-
   return (
     <div
-      role="button"
-      tabIndex={0}
-      onClick={onSelect}
-      onKeyDown={handleKeyDown}
-      aria-pressed={isSelected}
-      className="min-h-117.5 min-w-85 max-w-87.5 relative rounded-2xl p-6 text-left flex flex-col cursor-pointer border border-[#f0ece8] shadow-[0_2px_16px_rgba(0,0,0,0.06)] bg-[#f8f8f8]"
+      className="min-h-117.5 min-w-85 max-w-87.5 relative rounded-2xl p-6 text-left flex flex-col border border-[#f0ece8] shadow-[0_2px_16px_rgba(0,0,0,0.06)] bg-[#f8f8f8]"
     >
       <motion.div
         className="absolute inset-0 rounded-2xl bg-primary-50 pointer-events-none"
@@ -30,13 +18,19 @@ export default function PricingCard({ plan, billing, isSelected, onSelect }: Pri
         transition={{ duration: 0.25 }}
       />
 
-      {isSelected && (
-        <motion.div
-          layoutId="pricing-active-border"
-          className="absolute inset-0 rounded-2xl border-2 border-[#FA5424] shadow-[0_4px_32px_rgba(232,80,26,0.2)] pointer-events-none"
-          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-        />
-      )}
+      <AnimatePresence>
+        {isSelected && (
+          <motion.div
+            key="pricing-active-border"
+            layoutId="pricing-active-border"
+            className="absolute inset-0 rounded-2xl border-2 border-[#FA5424] shadow-[0_4px_32px_rgba(232,80,26,0.2)] pointer-events-none"
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+          />
+        )}
+      </AnimatePresence>
 
       {/* ── Popular badge (absolute to card) + flex spacer ────────────────── */}
       {plan.popular && (
@@ -60,6 +54,8 @@ export default function PricingCard({ plan, billing, isSelected, onSelect }: Pri
         <p className="text-[13px] text-[#5A5A5A]">{plan.description}</p>
 
         <button
+          onClick={onSelect}
+          aria-pressed={isSelected}
           className={`w-full h-12.5 py-3 rounded-full text-sm font-semibold cursor-pointer transition-opacity my-6 ${
             isPrimary
               ? 'bg-[#FA5424] text-white border-none'

@@ -5,9 +5,8 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
-import FloatingSteps from './floating-steps';
 
-// Each child in the text column slides up + fades in one after another
+// Text column children slide in from the right one after another
 const containerVariants = {
   hidden: {},
   show: {
@@ -19,26 +18,26 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 36 },
+  hidden: { opacity: 0, x: -60 },
   show: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] },
+    x: 0,
+    transition: { duration: 0.85, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] },
   },
 };
 
 export default function Hero() {
   return (
-    <section className="bg-[#F9F9F9] ">
-      <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:flex  md:py-14">
+    <section className="bg-[#F9F9F9]">
+      <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:flex md:gap-8 lg:gap-12">
         {/* BG FLOAT LOGO */}
         <Image
           src="/assets/landing-page/logo-float-low-bg.svg"
           alt="background image"
           width={400}
           height={400}
-          className="absolute w-auto h-auto -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5"
-          loading="eager"
+          style={{ width: 'auto', height: 'auto' }}
+          className="absolute -my-4 scale-[1.1] top-8 -left-10.5 lg:-top-2.5 lg:-left-9.5"
         />
 
         <Image
@@ -46,7 +45,8 @@ export default function Hero() {
           alt="background image"
           width={400}
           height={400}
-          className="absolute w-auto h-auto -right-45 bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35"
+          style={{ width: 'auto', height: 'auto' }}
+          className="absolute -right-45 bottom-10 rotate-13 scale-[1.1] lg:rotate-[-15deg] lg:-bottom-57.5 lg:-right-35"
         />
 
         {/* HEADER — staggered children slide up on mount */}
@@ -69,10 +69,7 @@ export default function Hero() {
           >
             Turn attendees into your{' '}
             <span className="whitespace-nowrap">
-              <span className="text-primary italic font-fraunces">
-                marketing{" "}
-              </span>
-              team.
+              <span className="text-primary italic font-fraunces">marketing </span>team.
             </span>
           </motion.h1>
 
@@ -92,7 +89,7 @@ export default function Hero() {
           >
             <Button className="w-3xs font-light py-4! md:w-fit lg:py-6!" asChild>
               <Link href="/signup">
-                Create Your First Badge{" "}
+                Create Your First Badge{' '}
                 <Image
                   src="/assets/icons/round-arrow-right-up.svg"
                   alt="arrow"
@@ -106,9 +103,9 @@ export default function Hero() {
             <Link
               href="/login"
               className={cn(
-                "px-2 py-2 md:px-2 flex gap-1 text-base font-medium rounded-lg",
-                "text-foreground hover:bg-muted",
-                "transition-colors duration-150",
+                'px-2 py-2 md:px-2 flex gap-1 text-base font-medium rounded-lg',
+                'text-foreground hover:bg-muted',
+                'transition-colors duration-150',
               )}
             >
               <span>View Templates</span>
@@ -116,11 +113,11 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* LANDING IMAGE — floats up slightly after the text */}
+        {/* LANDING IMAGE — slides in from the left */}
         <motion.div
-          initial={{ opacity: 0, y: 52 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], delay: 0.5 }}
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.0, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], delay: 0.5 }}
           className="grid flex-1 place-items-center"
         >
           <div className="w-80 pb-9 md:py-0 sm:w-92.5 h-auto -my-5.5 md:my:0 lg:w-full lg:flex-1">
@@ -131,16 +128,16 @@ export default function Hero() {
               loading="eager"
               className="-ml-1 md:hidden"
               alt="badge preview"
-            />{" "}
+            />{' '}
             <Image
-              src="/assets/landing-page/hero-cards.png"
-              width={400}
-              height={614}
+              src="/assets/landing-page/heroGroup1.png"
+              width={600}
+              height={500}
               loading="eager"
-              className="hidden md:block object-contain mt-[5%] "
+              style={{ width: '100%', height: 'auto' }}
+              className="hidden md:block"
               alt="badge preview"
             />
-            <FloatingSteps />
           </div>
         </motion.div>
       </div>

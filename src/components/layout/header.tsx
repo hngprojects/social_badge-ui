@@ -45,11 +45,13 @@ export default function Header() {
   return (
     <motion.header
       variants={{
-        visible: { y: 0 },
-        hidden: { y: '-100%' },
+        visible: { y: 0, pointerEvents: 'auto' as const },
+        hidden: { y: '-100%', pointerEvents: 'none' as const },
       }}
       animate={hidden ? 'hidden' : 'visible'}
       transition={{ duration: 0.35, ease: 'easeInOut' }}
+      aria-hidden={hidden}
+      onFocusCapture={() => setHidden(false)}
       className={cn(
         'fixed inset-x-0 top-0 z-50 bg-background',
         scrolled

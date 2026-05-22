@@ -17,11 +17,11 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 36 },
+  hidden: { opacity: 0, x: -60 },
   show: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: EASE },
+    x: 0,
+    transition: { duration: 0.85, ease: EASE },
   },
 };
 
@@ -34,11 +34,11 @@ const statsContainerVariants = {
 };
 
 const statItemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, x: -60 },
   show: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: EASE },
+    x: 0,
+    transition: { duration: 0.85, ease: EASE },
   },
 };
 
@@ -133,9 +133,9 @@ const ExploreHero = () => {
           {/* Right: Badge image — floats up after text */}
           <motion.div
             className="flex items-center justify-center min-[1130px]:justify-end mt-6 min-[1130px]:mt-0"
-            initial={{ opacity: 0, y: 52 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.5 }}
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.0, ease: EASE, delay: 0.5 }}
           >
             <Image
               src="/assets/landing-page/exploreHero.png"

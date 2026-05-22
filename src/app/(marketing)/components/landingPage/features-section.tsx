@@ -8,6 +8,40 @@ import Image from 'next/image';
 
 import { FEATURES } from '../../constants/home';
 
+// Header slides up from bottom
+const fromBottomVariants = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  },
+};
+
+// Each step slides up with an explicit delay based on its index (01 → 04)
+const stepVariants = {
+  hidden: { opacity: 0, y: 40 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.75,
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+      delay: 0.15 + i * 0.2,
+    },
+  }),
+};
+
+// Image area slides in from the right
+const fromRightVariants = {
+  hidden: { opacity: 0, x: 60 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.85, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], delay: 0.2 },
+  },
+};
+
 export default function Feature() {
   const [activeId, setActiveId] = useState('01');
   const activeFeature = FEATURES.find((f) => f.id === activeId) || FEATURES[0];
@@ -20,7 +54,13 @@ export default function Feature() {
       <div className="mx-auto px-4 md:px-10 lg:px-30 max-w-360">
         <div className="w-full mx-auto">
           {/* ── Header ── */}
-          <div className="flex flex-col gap-3 sm:gap-4 mb-8 sm:mb-12 lg:mb-10 max-w-[750px] items-center md:items-start">
+          <motion.div
+            variants={fromBottomVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            className="flex flex-col gap-3 sm:gap-4 mb-8 sm:mb-12 lg:mb-10 max-w-187.5 items-center md:items-start"
+          >
             <div className="flex items-center gap-3">
               <div className="bg-primary w-2 h-2 rounded-sm" />
               <span className="text-[11px] text-gray-400 tracking-[1.54px] uppercase">
@@ -32,20 +72,26 @@ export default function Feature() {
               shouldn&apos;t be <span className="italic text-primary font-fraunces">this</span>{' '}
               hard.
             </h2>
-          </div>
+          </motion.div>
 
           {/* ── Content Layout ──
                Mobile/Tablet : steps list → CTA button → visual (stacked)
                Desktop (lg+) : left column (steps) | right column (visual)
           ── */}
           <div className="flex flex-col min-[900px]:flex-row min-[900px]:items-stretch min-[900px]:justify-between gap-8 min-[900px]:gap-6 w-full transition-all duration-500">
-            {/* ── LEFT COLUMN: Step Menu ── */}
+
+            {/* ── LEFT COLUMN: Step Menu — each step staggers in one by one ── */}
             <div className="flex flex-col w-full min-[900px]:w-[42%] shrink-0 p-0 items-stretch">
-              {FEATURES.map((feature) => {
+              {FEATURES.map((feature, index) => {
                 const isActive = activeId === feature.id;
                 return (
-                  <div
+                  <motion.div
                     key={feature.id}
+                    custom={index}
+                    variants={stepVariants}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.3 }}
                     onClick={() => setActiveId(feature.id)}
                     className={`relative flex flex-col items-start justify-start w-full py-3 sm:py-5 gap-2 sm:gap-3 cursor-pointer transition-all duration-300 ease-in-out group ${
                       isActive
@@ -103,7 +149,7 @@ export default function Feature() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -115,8 +161,14 @@ export default function Feature() {
               </button>
             </div>
 
-            {/* ── RIGHT COLUMN: Visual Stage ── */}
-            <div className="w-full min-[900px]:w-[50%] shrink-0 flex items-stretch justify-center overflow-visible">
+            {/* ── RIGHT COLUMN: Visual Stage — slides in from right on entry ── */}
+            <motion.div
+              variants={fromRightVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="w-full min-[900px]:w-[50%] shrink-0 flex items-stretch justify-center overflow-visible"
+            >
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeId}
@@ -138,7 +190,8 @@ export default function Feature() {
                   </div>
                 </motion.div>
               </AnimatePresence>
-            </div>
+            </motion.div>
+
           </div>
         </div>
       </div>

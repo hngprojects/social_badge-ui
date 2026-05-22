@@ -13,7 +13,7 @@ const EASE = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
 const textContainerVariants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.13, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.2, delayChildren: 0.05 },
   },
 };
 
@@ -22,25 +22,24 @@ const textItemVariants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: EASE },
+    transition: { duration: 0.65, ease: EASE },
   },
 };
 
-// ── Benefit cards: stagger each card ──────────────────────────────────────────
+// ── Benefit cards: each card at explicit timing ───────────────────────────────
+// Card 1: 0s–1.5s | Card 2: 1.5s–3s | Card 3: 3s–4.5s
 const cardsContainerVariants = {
   hidden: {},
-  show: {
-    transition: { staggerChildren: 0.11, delayChildren: 0.0 },
-  },
+  show: {},
 };
 
 const cardVariants = {
   hidden: { opacity: 0, y: 28 },
-  show: {
+  show: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: EASE },
-  },
+    transition: { duration: 0.80, ease: EASE, delay: i * .80 },
+  }),
 };
 
 // ── Left-side image: slide in from the left ───────────────────────────────────
@@ -56,7 +55,7 @@ const imageVariants = {
 const BenefitSection = () => {
   return (
     <section className="bg-[#F9F9F9]">
-      <div className="py-12 md:py-16 max-w-360 px-4 md:px-10 lg:px-30 mx-auto">
+      <div className="py-12 md:py-10 max-w-360 px-4 md:px-10 lg:px-30 mx-auto">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-14">
 
           {/* RIGHT SIDE — eyebrow + headline + benefit cards */}
@@ -97,6 +96,7 @@ const BenefitSection = () => {
               {BENEFITS_DATA.map((benefit, index) => (
                 <motion.div
                   key={index}
+                  custom={index}
                   variants={cardVariants}
                   className="flex items-start gap-4 p-2 md:p-6 rounded-xl border border-[#EAEAE6] bg-white"
                 >
