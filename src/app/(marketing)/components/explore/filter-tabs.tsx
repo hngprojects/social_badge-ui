@@ -1,12 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { FILTERS } from "../../constants/explore";
 
-import { FILTERS } from '../../constants/explore';
+type Props = {
+  active: string;
+  onChange: (filter: string) => void;
+};
 
-const FilterTabs = () => {
-  const [active, setActive] = useState('All');
-
+const FilterTabs = ({ active, onChange }: Props) => {
   return (
     <div className="border-b border-[#0A0A0A]/10">
       <div className="max-w-360 mx-auto overflow-x-auto scrollbar-hide">
@@ -18,7 +19,7 @@ const FilterTabs = () => {
               <button
                 key={filter}
                 type="button"
-                onClick={() => setActive(filter)}
+                onClick={() => onChange(filter)}
                 className={`shrink-0 px-4 py-2 rounded-full text-[8px] md:text-[11px] flex items-center tracking-[1.1px] border transition-colors ${
                   isActive
                     ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
