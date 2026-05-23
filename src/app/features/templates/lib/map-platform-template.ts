@@ -42,6 +42,7 @@ export function mapPlatformTemplateToLayout(template: PlatformTemplate): LayoutT
       "Logo upload",
       "Participant name field",
     ],
+    canvasData: template.canvas_data,
   };
 }
 

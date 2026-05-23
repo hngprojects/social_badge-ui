@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useLoadOrganiserTemplate } from "@/app/features/templates/hooks/useLoadOrganiserTemplate";
+import { useLoadPlatformTemplate } from "@/app/features/templates/hooks/useLoadPlatformTemplate";
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { CustomizeBadgeForm } from "./customize-badge-form";
 
@@ -11,9 +12,15 @@ export function CustomizeBadgePageClient() {
   const organiserTemplateId = searchParams.get("id");
 
   const platformId = platformTemplateId ?? "tpl_achieveher";
-  const { data: loadedState, isLoading } = useLoadOrganiserTemplate(organiserTemplateId);
+  const { data: loadedState, isLoading: organiserLoading } =
+    useLoadOrganiserTemplate(organiserTemplateId);
+  const { data: platformTemplate, isLoading: platformLoading } = useLoadPlatformTemplate(
+    organiserTemplateId ? null : platformTemplateId,
+  );
 
-  if (organiserTemplateId && isLoading) {
+  const isLoading = organiserTemplateId ? organiserLoading : platformLoading;
+
+  if (isLoading) {
     return (
       <main className="flex min-h-[50vh] items-center justify-center bg-[#F5F5F5]">
         <p className="text-sm text-gray-500">Loading template…</p>
@@ -21,7 +28,9 @@ export function CustomizeBadgePageClient() {
     );
   }
 
-  const initialEditor = loadedState ?? createDefaultEditorState(platformId);
+  const initialEditor =
+    loadedState ??
+    createDefaultEditorState(platformId, platformTemplate?.canvasData);
   const editorKey = `${organiserTemplateId ?? platformId}-${loadedState ? "loaded" : "new"}`;
 
   return (

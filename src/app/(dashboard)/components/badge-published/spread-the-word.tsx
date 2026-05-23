@@ -62,7 +62,7 @@ export default function SpreadTheWord({ url, badgeName }: SpreadTheWordProps) {
 
 			<div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
 				<OneTapShare url={url} badgeName={badgeName} />
-				<QRCodeCard badgeName={badgeName} />
+				<QRCodeCard url={url} badgeName={badgeName} />
 			</div>
 		</section>
 	);
@@ -114,11 +114,12 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 
 
 interface QRCodeCardProps {
+	url: string;
 	badgeName: string;
 }
 
-function QRCodeCard({ badgeName }: QRCodeCardProps) {
-	const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent("https://badge.build/achieveher")}`;
+function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
+	const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(url)}`;
 
 	return (
 		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6">

@@ -137,7 +137,14 @@ export function parseCanvasDataToEditorState(
   };
 }
 
-export function createDefaultEditorState(platformTemplateId: string): CustomizeEditorState {
+export function createDefaultEditorState(
+  platformTemplateId: string,
+  canvasData?: CanvasData | null,
+): CustomizeEditorState {
+  if (canvasData) {
+    return parseCanvasDataToEditorState(platformTemplateId, canvasData);
+  }
+
   const layoutId = resolveLayoutId(platformTemplateId);
   const caps = LAYOUT_CAPABILITIES[layoutId];
   const palette = caps.defaultPaletteId;

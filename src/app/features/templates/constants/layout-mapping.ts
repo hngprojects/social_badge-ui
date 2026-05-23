@@ -1,4 +1,11 @@
-import type { CanvasLayoutId } from "../types/canvas-data";
+import type { CanvasData, CanvasLayoutId } from "../types/canvas-data";
+
+const CANVAS_LAYOUT_IDS: CanvasLayoutId[] = [
+  "photo_gradient_v1",
+  "name_role_dark_v1",
+  "name_role_dark_v2",
+  "speaker_card_v1",
+];
 
 export const PLATFORM_TEMPLATE_LAYOUT_MAP: Record<string, CanvasLayoutId> = {
   tpl_achieveher: "photo_gradient_v1",
@@ -7,7 +14,19 @@ export const PLATFORM_TEMPLATE_LAYOUT_MAP: Record<string, CanvasLayoutId> = {
   tpl_next_gen: "speaker_card_v1",
 };
 
-export function resolveLayoutId(platformTemplateId: string): CanvasLayoutId {
+function isCanvasLayoutId(value: string): value is CanvasLayoutId {
+  return CANVAS_LAYOUT_IDS.includes(value as CanvasLayoutId);
+}
+
+/** Used by /customize live preview — prefers API `canvas_data.layout_id`. */
+export function resolveLayoutId(
+  platformTemplateId: string,
+  canvasData?: CanvasData | null,
+): CanvasLayoutId {
+  const fromCanvas = canvasData?.layout_id;
+  if (fromCanvas && isCanvasLayoutId(fromCanvas)) {
+    return fromCanvas;
+  }
   return PLATFORM_TEMPLATE_LAYOUT_MAP[platformTemplateId] ?? "photo_gradient_v1";
 }
 
