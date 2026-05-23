@@ -121,9 +121,8 @@ export interface OrganiserTemplateResponse {
 	id: string;
 	platform_template_id: string;
 	title: string;
-	canvas_data: CanvasData;
-	default_caption: string;
-	destination_link: string;
+default_caption?: string | null | undefined;
+destination_link?: string | null | undefined;
 	hashtags: string[];
 	access_type: number;
 }

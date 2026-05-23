@@ -15,8 +15,8 @@ export interface TemplateInstanceResponse {
 export interface EditTemplateRequest {
   title?: string | null;
   canvas_data?: CanvasData | null;
-  default_caption?: string | null;
-  destination_link?: string | null;
+default_caption?: string | null | undefined;
+destination_link?: string | null | undefined;
   thumbnail_url?: string | null;
   access_type?: number | null;
   hashtags?: string[] | null;
