@@ -1,171 +1,180 @@
+import { LAYOUT_CAPABILITIES } from "../constants/layout-mapping";
 import {
-  LAYOUT_CAPABILITIES,
-} from "../constants/layout-mapping";
-import {
-  DEFAULT_OUTPUT,
-  PHOTO_ACCEPTED_FORMATS,
-  PHOTO_MAX_SIZE_MB,
-  CANVAS_FIELD_KEYS,
+	DEFAULT_OUTPUT,
+	PHOTO_ACCEPTED_FORMATS,
+	PHOTO_MAX_SIZE_MB,
+	CANVAS_FIELD_KEYS,
 } from "../constants/field-keys";
 import type {
-  CanvasBackground,
-  CanvasData,
-  CanvasField,
-  CustomizeEditorState,
-  OrganiserTemplatePayload,
+	CanvasBackground,
+	CanvasData,
+	CanvasField,
+	CustomizeEditorState,
+	OrganiserTemplatePayload,
 } from "../types/canvas-data";
 import { resolveFontFamily, resolveTitleSizePx } from "./font-mapping";
 import { BACKGROUND_IMAGE_BY_PALETTE, getPalette } from "./palette-mapping";
 
 function buildBackground(state: CustomizeEditorState): CanvasBackground {
-  if (state.backgroundImageUrl) {
-    return {
-      type: "image",
-      image_url: state.backgroundImageUrl,
-      overlay_opacity: 0.45,
-    };
-  }
+	if (state.backgroundImageUrl) {
+		return {
+			type: "image",
+			image_url: state.backgroundImageUrl,
+			overlay_opacity: 0.45,
+		};
+	}
 
-  if (state.bgMode === "solid") {
-    return { type: "solid", color: state.solidColor };
-  }
+	if (state.bgMode === "solid") {
+		return { type: "solid", color: state.solidColor };
+	}
 
-  return {
-    type: "gradient",
-    gradient: {
-      colors: state.gradientColors,
-      direction: state.gradientDirection,
-    },
-  };
+	return {
+		type: "gradient",
+		gradient: {
+			colors: state.gradientColors,
+			direction: state.gradientDirection,
+		},
+	};
 }
 
 function formatEventDateValue(eventDate: string, eventTime: string): string {
-  const date = eventDate.trim();
-  const time = eventTime.trim();
-  if (date && time) return `${date} · ${time}`;
-  return date || time;
+	const date = eventDate.trim();
+	const time = eventTime.trim();
+	if (date && time) return `${date} · ${time}`;
+	return date || time;
 }
 
 function buildFields(state: CustomizeEditorState): CanvasField[] {
-  const caps = LAYOUT_CAPABILITIES[state.layoutId];
-  const fields: CanvasField[] = [];
+	const caps = LAYOUT_CAPABILITIES[state.layoutId];
+	const fields: CanvasField[] = [];
 
-  if (caps.staticFields.includes("event_date")) {
-    const value = state.layoutId === "speaker_card_v1"
-      ? formatEventDateValue(state.eventDate, state.eventTime)
-      : state.eventDate.trim().toUpperCase() || "JULY 21ST";
+	if (caps.staticFields.includes("event_date")) {
+		const value =
+			state.layoutId === "next_gen_mint_v1"
+				? formatEventDateValue(state.eventDate, state.eventTime)
+				: state.eventDate.trim().toUpperCase() || "JULY 21ST";
 
-    fields.push({
-      key: CANVAS_FIELD_KEYS.EVENT_DATE,
-      type: "static",
-      label: "Event Date",
-      value,
-      visible: true,
-    });
-  }
+		fields.push({
+			key: CANVAS_FIELD_KEYS.EVENT_DATE,
+			type: "static",
+			label: "Event Date",
+			value,
+			visible: true,
+		});
+	}
 
-  if (caps.staticFields.includes("event_name")) {
-    fields.push({
-      key: CANVAS_FIELD_KEYS.EVENT_NAME,
-      type: "static",
-      label: "Event Name",
-      value: state.eventName.trim() || "YOUR EVENT",
-      visible: true,
-    });
-  }
+	if (caps.staticFields.includes("event_name")) {
+		fields.push({
+			key: CANVAS_FIELD_KEYS.EVENT_NAME,
+			type: "static",
+			label: "Event Name",
+			value: state.eventName.trim() || "YOUR EVENT",
+			visible: true,
+		});
+	}
 
-  if (caps.participantFields.includes("participant_name")) {
-    fields.push({
-      key: CANVAS_FIELD_KEYS.PARTICIPANT_NAME,
-      type: "participant_input",
-      label: state.participantNameLabel.trim() || "NAME",
-      placeholder: state.participantNamePlaceholder.trim() || "Your name",
-      required: true,
-      visible: true,
-    });
-  }
+	if (caps.participantFields.includes("participant_name")) {
+		fields.push({
+			key: CANVAS_FIELD_KEYS.PARTICIPANT_NAME,
+			type: "participant_input",
+			label: state.participantNameLabel.trim() || "NAME",
+			placeholder: state.participantNamePlaceholder.trim() || "Your name",
+			required: true,
+			visible: true,
+		});
+	}
 
-  if (caps.participantFields.includes("role_title")) {
-    fields.push({
-      key: CANVAS_FIELD_KEYS.ROLE_TITLE,
-      type: "participant_input",
-      label: state.roleTitleLabel.trim() || "ROLE / TITLE",
-      placeholder: state.roleTitlePlaceholder.trim() || "e.g. Attendee",
-      required: state.roleTitleRequired,
-      visible: true,
-    });
-  }
+	if (caps.participantFields.includes("role_title")) {
+		fields.push({
+			key: CANVAS_FIELD_KEYS.ROLE_TITLE,
+			type: "participant_input",
+			label: state.roleTitleLabel.trim() || "ROLE / TITLE",
+			placeholder: state.roleTitlePlaceholder.trim() || "e.g. Attendee",
+			required: state.roleTitleRequired,
+			visible: true,
+		});
+	}
 
-  if (state.allowParticipantPhoto && caps.participantFields.includes("participant_photo")) {
-    fields.push({
-      key: CANVAS_FIELD_KEYS.PARTICIPANT_PHOTO,
-      type: "participant_upload",
-      label: "YOUR PHOTO",
-      required: false,
-      accepted_formats: [...PHOTO_ACCEPTED_FORMATS],
-      max_size_mb: PHOTO_MAX_SIZE_MB,
-      visible: true,
-    });
-  }
+	if (
+		state.allowParticipantPhoto &&
+		caps.participantFields.includes("participant_photo")
+	) {
+		fields.push({
+			key: CANVAS_FIELD_KEYS.PARTICIPANT_PHOTO,
+			type: "participant_upload",
+			label: "YOUR PHOTO",
+			required: false,
+			accepted_formats: [...PHOTO_ACCEPTED_FORMATS],
+			max_size_mb: PHOTO_MAX_SIZE_MB,
+			visible: true,
+		});
+	}
 
-  return fields;
+	return fields;
 }
 
 export function buildCanvasData(state: CustomizeEditorState): CanvasData {
-  const caps = LAYOUT_CAPABILITIES[state.layoutId];
+	const caps = LAYOUT_CAPABILITIES[state.layoutId];
 
-  return {
-    layout_id: state.layoutId,
-    background: buildBackground(state),
-    typography: {
-      font_family: resolveFontFamily(state.fontId),
-      size_px: resolveTitleSizePx(state.titleSize),
-      weight: "bold",
-      italic: state.fontId === "fraunces",
-      underline: false,
-    },
-    logo: state.logo
-      ? { ...state.logo, position: state.logo.position ?? caps.defaultLogoPosition }
-      : null,
-    fields: buildFields(state),
-    output: { ...DEFAULT_OUTPUT },
-  };
+	return {
+		layout_id: state.layoutId,
+		background: buildBackground(state),
+		typography: {
+			font_family: resolveFontFamily(state.fontId),
+			size_px: resolveTitleSizePx(state.titleSize),
+			weight: "bold",
+			italic: state.fontId === "fraunces",
+			underline: false,
+		},
+		logo: state.logo
+			? {
+					...state.logo,
+					position: state.logo.position ?? caps.defaultLogoPosition,
+				}
+			: null,
+		fields: buildFields(state),
+		output: { ...DEFAULT_OUTPUT },
+	};
 }
 
 export function buildOrganiserTemplatePayload(
-  state: CustomizeEditorState,
+	state: CustomizeEditorState,
 ): OrganiserTemplatePayload {
-  const destination = state.destinationLink.trim();
-  const normalizedDestination = destination.startsWith("http")
-    ? destination
-    : `https://${destination.replace(/^\/+/, "")}`;
+	const destination = state.destinationLink.trim();
+	const normalizedDestination = destination.startsWith("http")
+		? destination
+		: `https://${destination.replace(/^\/+/, "")}`;
 
-  return {
-    platform_template_id: state.platformTemplateId,
-    title: state.title.trim() || state.eventName.trim() || "Untitled Badge",
-    canvas_data: buildCanvasData(state),
-    default_caption: state.defaultCaption.trim(),
-    destination_link: normalizedDestination,
-    hashtags: state.hashtags.filter(Boolean),
-    access_type: state.accessType,
-  };
+	return {
+		platform_template_id: state.platformTemplateId,
+		title: state.title.trim() || state.eventName.trim() || "Untitled Badge",
+		canvas_data: buildCanvasData(state),
+		default_caption: state.defaultCaption.trim(),
+		destination_link: normalizedDestination,
+		hashtags: state.hashtags.filter(Boolean),
+		access_type: state.accessType,
+	};
 }
 
 export function paletteToBackgroundState(
-  paletteId: string,
-  bgMode: "gradient" | "solid",
+	paletteId: string,
+	bgMode: "gradient" | "solid",
 ): Pick<
-  CustomizeEditorState,
-  "paletteId" | "gradientColors" | "gradientDirection" | "solidColor" | "backgroundImageUrl"
+	CustomizeEditorState,
+	| "paletteId"
+	| "gradientColors"
+	| "gradientDirection"
+	| "solidColor"
+	| "backgroundImageUrl"
 > {
-  const palette = getPalette(paletteId);
-  const imageUrl = BACKGROUND_IMAGE_BY_PALETTE[paletteId];
+	const palette = getPalette(paletteId);
+	const imageUrl = BACKGROUND_IMAGE_BY_PALETTE[paletteId];
 
-  return {
-    paletteId,
-    gradientColors: [palette.from, palette.to],
-    gradientDirection: "135deg",
-    solidColor: palette.from,
-    backgroundImageUrl: bgMode === "gradient" && imageUrl ? imageUrl : null,
-  };
+	return {
+		paletteId,
+		gradientColors: [palette.from, palette.to],
+		gradientDirection: "135deg",
+		solidColor: palette.from,
+		backgroundImageUrl: bgMode === "gradient" && imageUrl ? imageUrl : null,
+	};
 }
