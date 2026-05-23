@@ -109,11 +109,6 @@ export default function Footer() {
 								</Button>
 							</div>
 
-							{/* Desktop subtext below input */}
-							<p className="hidden lg:block text-white text-sm mt-3">
-								Stay ahead with the latest updates, insights, and events from
-								Social Badge.
-							</p>
 						</div>
 					</div>
 				</div>
