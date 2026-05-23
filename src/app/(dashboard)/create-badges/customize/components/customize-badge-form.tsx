@@ -52,7 +52,7 @@ export function CustomizeBadgeForm({
     if (editor.pendingLogoFile) {
       try {
         setIsUploadingLogo(true);
-        const uploaded = await uploadLogo(editor.pendingLogoFile);
+        const uploaded = await uploadLogo(editor.pendingLogoFile, organiserTemplateId);
         state = {
           ...editor,
           logo: {

@@ -22,17 +22,17 @@ import type {
 } from "../types/organiser-template";
 import type { PublicParticipantPageResponse } from "../types/public-participant";
 
-export async function uploadLogo(file: File): Promise<LogoUploadResponse> {
+export async function uploadLogo(file: File, instanceId: string | null) : Promise<LogoUploadResponse> {
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await axios.post<LogoUploadResponse>(
-    `${process.env.NEXT_PUBLIC_API_URL}/uploads/logo`,
-    formData,
-    { withCredentials: true },
+  return apiClient<LogoUploadResponse>(
+    `/templates/organizer/instances/${instanceId}/logo`,
+    {
+      method: "PUT",
+      data: formData,
+    },
   );
-
-  return response.data;
 }
 
 /** Step 1 — create a draft instance from a platform template (organiser from JWT). */
@@ -106,11 +106,7 @@ export async function getPublicParticipantPage(
   );
 }
 
-/**
- * Load organiser instance metadata for the editor.
- * Note: list items omit canvas_data; we merge platform template canvas as the baseline
- * until a dedicated GET organiser detail endpoint exists.
- */
+
 export async function getOrganiserTemplate(
   templateId: string,
 ): Promise<OrganiserTemplateDetail> {
