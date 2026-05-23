@@ -13,11 +13,9 @@ export default function Dashboard() {
   const user = useUserStore((state) => state.user);
   const userName = user?.first_name ?? "there";
 
-  const { templates, isLoading } =
-    useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
+  const { templates } = useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
 
   const hasBadges = templates.length > 0;
-  const canShowBadgeSection = !isLoading;
 
   return (
     <section className="flex flex-col gap-6 pt-[32px]">
@@ -41,9 +39,7 @@ export default function Dashboard() {
 
       <Analytics />
 
-      {canShowBadgeSection && hasBadges && <RecentBadges />}
-
-      {canShowBadgeSection && !hasBadges && <FirstBadgeCta />}
+      {hasBadges ? <RecentBadges /> : <FirstBadgeCta />}
 
       <Steps />
 
