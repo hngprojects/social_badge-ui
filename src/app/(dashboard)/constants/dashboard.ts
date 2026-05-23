@@ -1,5 +1,4 @@
 import { Template, StatCard } from "../types/dashboard/dashboard";
-import { LayoutTemplate } from "../types/dashboard/dashboard";
 import { Badge, Filter, Status } from "../types/dashboard/dashboard";
 
 export const templates: Template[] = [
@@ -75,80 +74,6 @@ export const stats: StatCard[] = [
     title: "total shares",
     count: "0",
     bg: "#FEF3C7",
-  },
-];
-
-export const EXTENDED_MOCK_DB: LayoutTemplate[] = [
-  {
-    id: "tpl_achieveher",
-    title: "Achiever",
-    category: "summit",
-    image_url: "/assets/dashboard/archiever-card.png",
-    card_bg: "linear-gradient(to bottom, #FFF0F4, #FFE4DA)",
-    usageCount: "4,230 made",
-    shareRate: "18% share rate",
-    isMostPicked: true,
-    description: "Soft, warm aesthetic. Built for high social-share rates.",
-    features: [
-      "Customisable accent colour",
-      "Logo upload + script title",
-      "Optional attendee photo",
-      "Custom name field label",
-    ],
-  },
-  {
-    id: "tpl_dev_summit_26",
-    title: "Dev Summit '26",
-    category: "conference",
-    image_url: "/assets/dashboard/dev-submmit-card.png",
-    card_bg: "linear-gradient(to bottom, #B4B4B4, #F1EFE8)",
-    usageCount: "4,230 made",
-    shareRate: "18% share rate",
-    isMostPicked: false,
-    description:
-      "Dark mode modern developer aesthetic. Tailored for corporate tech environments.",
-    features: [
-      "Dynamic hash token matrix",
-      "Organization label node",
-      "Strict monochrome text fields",
-      "Embedded dark canvas layers",
-    ],
-  },
-  {
-    id: "tpl_web3_summit",
-    title: "Web3 Summit",
-    category: "hackathon",
-    image_url: "/assets/dashboard/adams-card.png",
-    card_bg: "linear-gradient(to bottom, #CAC8CC, #CAC5D1)",
-    usageCount: "1,120 made",
-    shareRate: "34% share rate",
-    isMostPicked: false,
-    description:
-      "High-contrast neon composition built explicitly for decentralized community assemblies.",
-    features: [
-      "Multi-chain network tags",
-      "Wallet handle custom field",
-      "Fluorescent badge borders",
-      "Anonymized avatar presets",
-    ],
-  },
-  {
-    id: "tpl_next_gen",
-    title: "Next Gen Meetup",
-    category: "conference",
-    image_url: "/assets/dashboard/next-gen-card.png",
-    card_bg: "linear-gradient(to bottom, #E7FFEB, #8AB590)",
-    usageCount: "2,890 made",
-    shareRate: "12% share rate",
-    isMostPicked: false,
-    description:
-      "Clean organic layouts sporting asymmetrical border features and clean typography accents.",
-    features: [
-      "Asymmetric brand accent bars",
-      "Localized scanning barcodes",
-      "Subtle leaf/organic asset background",
-      "High-contrast dynamic header typography",
-    ],
   },
 ];
 

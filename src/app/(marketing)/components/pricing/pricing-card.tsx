@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'motion/react';
+import Link from 'next/link';
 import { PricingCardProps } from '../../types/pricing';
 import StatusIcon from './status-icon';
 
@@ -53,17 +54,17 @@ export default function PricingCard({ plan, billing, isSelected, onSelect }: Pri
 
         <p className="text-[13px] text-[#5A5A5A]">{plan.description}</p>
 
-        <button
+        <Link
+          href={plan.ctaHref}
           onClick={onSelect}
-          aria-pressed={isSelected}
-          className={`w-full h-12.5 py-3 rounded-full text-sm font-semibold cursor-pointer transition-opacity my-6 ${
+          className={`w-full h-12.5 py-3 rounded-full text-sm font-semibold text-center cursor-pointer transition-opacity my-6 flex items-center justify-center ${
             isPrimary
               ? 'bg-[#FA5424] text-white border-none'
               : 'bg-transparent text-[#FA5424] border border-[#FA5424]'
           }`}
         >
           {plan.cta}
-        </button>
+        </Link>
 
         <ul className="flex flex-col gap-4 list-none m-0 p-0">
           {plan.features.map((feature) => (

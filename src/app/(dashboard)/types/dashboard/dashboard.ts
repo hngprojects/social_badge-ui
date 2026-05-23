@@ -1,3 +1,5 @@
+import type { CanvasData } from "@/app/features/templates/types/canvas-data";
+
 export type Template = {
 	id: number;
 	title: string;
@@ -30,6 +32,8 @@ export interface LayoutTemplate {
 	isMostPicked: boolean;
 	description: string;
 	features: string[];
+	/** Passed to /customize only - gallery cards use thumbnail_url. */
+	canvasData?: CanvasData;
 }
 
 export type Status = "Live" | "Draft" | "Archived";
