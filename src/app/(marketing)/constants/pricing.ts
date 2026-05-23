@@ -8,7 +8,7 @@ export const PLANS: Plan[] = [
     yearlyPrice: 0,
     description: 'Best for small or one-time events',
     cta: 'Get Started Free',
-    ctaHref: '/signup',
+    ctaHref: '/login',
     ctaVariant: 'outline',
     popular: false,
     features: [

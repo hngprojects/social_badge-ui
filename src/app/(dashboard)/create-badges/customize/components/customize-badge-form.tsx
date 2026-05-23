@@ -50,9 +50,12 @@ export function CustomizeBadgeForm({
     let state = editor;
 
     if (editor.pendingLogoFile) {
+      if (!organiserTemplateId) {
+        toast.error("Badge Instance ID is missing, please refresh and try agian")
+      }
       try {
         setIsUploadingLogo(true);
-        const uploaded = await uploadLogo(editor.pendingLogoFile);
+        const uploaded = await uploadLogo(editor.pendingLogoFile, organiserTemplateId);
         state = {
           ...editor,
           logo: {
