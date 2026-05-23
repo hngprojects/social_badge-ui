@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { PhotoUpload } from "./PhotoUpload";
 import { StylePicker } from "./StylePicker";
 import { ColorSwatch } from "./ColorSwatch";
@@ -26,8 +26,8 @@ function Field({
 	);
 }
 
-export default function BadgeForm({ badge, update, onGenerate }: BadgeFormProps) {
-	const isReady = badge.name.trim().length > 0;
+export default function BadgeForm({ badge, update }: BadgeFormProps) {
+	//const isReady = badge.name.trim().length > 0;
 
 	return (
 		<div className="flex flex-col gap-4">
