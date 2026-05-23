@@ -17,14 +17,6 @@ import type { NextConfig } from "next";
       },
     ],
    },
-   async rewrites() {
-     return [
-       {
-         source: "/api/:path*",
-         destination: "https://api.staging.social-badge.hng14.com/api/:path*",
-       },
-     ];
-   },
  };
  
  export default nextConfig;
