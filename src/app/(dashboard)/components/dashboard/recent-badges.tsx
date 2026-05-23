@@ -14,10 +14,7 @@ import { DeleteBadgeModal } from "./delete-badge-modal";
 import { RecentBadgesHeader } from "./recent-badges-header";
 import { RecentBadgesMobileList } from "./recent-badges-mobile-list";
 import { RecentBadgesTable } from "./recent-badges-table";
-import {
-  RECENT_BADGES_LIMIT,
-  TemplateFilter,
-} from "./recent-badges-types";
+import { RECENT_BADGES_LIMIT, TemplateFilter } from "./recent-badges-types";
 import { TemplateInfoModal } from "./template-info-modal";
 
 export default function RecentBadges() {
@@ -46,7 +43,8 @@ export default function RecentBadges() {
   );
 
   function getTemplateThumbnail(template: OrganizerTemplateInstance) {
-    return platformTemplatesById.get(template.platform_template_id)?.thumbnail_url;
+    return platformTemplatesById.get(template.platform_template_id)
+      ?.thumbnail_url;
   }
 
   async function handleDeleteTemplate() {
