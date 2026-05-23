@@ -13,10 +13,10 @@ export default function Dashboard() {
   const user = useUserStore((state) => state.user);
   const userName = user?.first_name ?? "there";
 
-  const { total, isLoading, isError } =
+  const { templates, isLoading, isError } =
     useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
 
-  const hasBadges = total > 0;
+  const hasBadges = templates.length > 0;
   const canShowBadgeSection = !isLoading && !isError;
 
   return (
