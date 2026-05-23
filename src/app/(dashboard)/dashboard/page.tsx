@@ -5,11 +5,18 @@ import Analytics from "../components/dashboard/analytics";
 import BrowseTemplate from "../components/dashboard/browse-templates";
 import { FirstBadgeCta } from "../components/dashboard/first-badge-cta";
 import RecentBadges from "../components/dashboard/recent-badges";
+import { RECENT_BADGES_LIMIT } from "../components/dashboard/recent-badges-types";
 import Steps from "../components/dashboard/steps";
+import { useRecentOrganizerBadges } from "../hooks/use-organizer-template-instances";
 
 export default function Dashboard() {
   const user = useUserStore((state) => state.user);
   const userName = user?.first_name ?? "there";
+  const { templates, isLoading, isError } =
+    useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
+
+  const hasBadges = templates.length > 0;
+  const canShowBadgeSection = !isLoading && !isError;
 
   return (
     <section className="flex flex-col gap-6 pt-[32px]">
@@ -33,9 +40,9 @@ export default function Dashboard() {
 
       <Analytics />
 
-      <FirstBadgeCta />
+      {canShowBadgeSection && !hasBadges && <FirstBadgeCta />}
 
-      <RecentBadges />
+      {canShowBadgeSection && hasBadges && <RecentBadges />}
 
       <Steps />
 
