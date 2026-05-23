@@ -1,5 +1,4 @@
 import { Template, StatCard } from "../types/dashboard/dashboard";
-import { TemplateData } from "../types/dashboard/dashboard";
 import { LayoutTemplate } from "../types/dashboard/dashboard";
 import { Badge, Filter, Status } from "../types/dashboard/dashboard";
 
@@ -76,57 +75,6 @@ export const stats: StatCard[] = [
     title: "total shares",
     count: "0",
     bg: "#FEF3C7",
-  },
-];
-
-export const MOCK_TEMPLATES_DB: TemplateData[] = [
-  {
-    id: "tpl_achieveher",
-    title: "Achieveher",
-    category: "festivals",
-    image_url: "/assets/dashboard/bg-1.png",
-  },
-  {
-    id: "tpl_mens_summit_26",
-    title: "Men's Summit 26",
-    category: "conference",
-    image_url: "/assets/dashboard/bg-2.png",
-  },
-  {
-    id: "tpl_web3_summit",
-    title: "Web3 Summit",
-    category: "hackathon",
-    image_url: "/assets/dashboard/bg-3.png",
-  },
-  {
-    id: "tpl_founders_circle",
-    title: "Founder's Circle",
-    category: "conference",
-    image_url: "/assets/dashboard/bg-4.png",
-  },
-  {
-    id: "tpl_achieveher1",
-    title: "Achieveher",
-    category: "festival",
-    image_url: "/assets/dashboard/bg-1.png",
-  },
-  {
-    id: "tpl_mens_summit_261",
-    title: "Men's Summit 26",
-    category: "conference",
-    image_url: "/assets/dashboard/bg-2.png",
-  },
-  {
-    id: "tpl_web3_summit1",
-    title: "Web3 Summit",
-    category: "hackathon",
-    image_url: "/assets/dashboard/bg-3.png",
-  },
-  {
-    id: "tpl_founders_circle1",
-    title: "Founder's Circle",
-    category: "conference",
-    image_url: "/assets/dashboard/bg-4.png",
   },
 ];
 

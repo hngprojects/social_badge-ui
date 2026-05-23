@@ -1,20 +1,39 @@
-import { OrganizerTemplatesResponse } from "../types/dashboard/organizer-template-instances";
+import {
+  OrganizerTemplateInstance,
+  OrganizerTemplatesResponse,
+} from "../types/dashboard/organizer-template-instances";
 import { apiClient } from "@/lib/api/client";
 
-export async function getOrganizerTemplateInstances(page = 1, limit = 20) {
+const ORGANIZER_TEMPLATE_INSTANCES_ENDPOINT =
+  "/templates/organizer/instances";
+
+export type OrganizerTemplateInstancesResult = Omit<
+  OrganizerTemplatesResponse["data"],
+  "templates"
+> & {
+  templates: OrganizerTemplateInstance[];
+};
+
+export async function getOrganizerTemplateInstances(
+  page = 1,
+  limit = 20,
+): Promise<OrganizerTemplateInstancesResult> {
   const body = await apiClient<OrganizerTemplatesResponse>(
-    "/templates/organizer/instances",
+    ORGANIZER_TEMPLATE_INSTANCES_ENDPOINT,
     {
       method: "GET",
       params: { page, limit },
     },
   );
 
+  const templates: OrganizerTemplateInstance[] =
+    body.data.templates.map((t) => ({
+      ...t,
+      status: t.status === "published" ? "live" : "draft",
+    }));
+
   return {
     ...body.data,
-    templates: body.data.templates.map((t) => ({
-      ...t,
-      status: t.status === "published" ? "live" : t.status,
-    })),
+    templates,
   };
 }

@@ -19,13 +19,6 @@ export type StatCard = {
 	bg: string;
 };
 
-export interface TemplateData {
-	id: string;
-	title: string;
-	category: string;
-	image_url: string;
-}
-
 export interface LayoutTemplate {
 	id: string;
 	title: string;
@@ -37,13 +30,6 @@ export interface LayoutTemplate {
 	isMostPicked: boolean;
 	description: string;
 	features: string[];
-}
-
-export interface TemplateData {
-	id: string;
-	title: string;
-	category: string;
-	image_url: string;
 }
 
 export type Status = "Live" | "Draft" | "Archived";
