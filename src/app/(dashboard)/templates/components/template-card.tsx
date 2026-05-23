@@ -9,7 +9,7 @@ const TemplateCard = ({
   template: Template;
   isAboveFold?: boolean;
 }) => {
-  const customizeHref = `/create-badges/customize?templateId=${template.id}&source=dashboard`;
+  const customizeHref = `/create-badges/customize?template=${template.id}`;
 
   return (
     <div
