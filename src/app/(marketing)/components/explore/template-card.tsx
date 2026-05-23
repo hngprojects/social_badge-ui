@@ -51,7 +51,7 @@ const TemplateCard = ({ template, index }: TemplateCardProps) => {
           </div>
 
           {/* Link arrow */}
-          <Link
+          {/* <Link
             href={customizeHref}
             aria-label={`Use ${template.title} template`}
             className="flex cursor-pointer items-center justify-center w-5 h-5 bg-primary rounded-full hover:bg-primary/60 transition-colors duration-200"
@@ -63,7 +63,7 @@ const TemplateCard = ({ template, index }: TemplateCardProps) => {
               alt="Arrow"
               className="w-2 h-2"
             />
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>
