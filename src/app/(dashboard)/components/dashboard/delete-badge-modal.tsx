@@ -1,3 +1,4 @@
+import Image from "next/image";
 export function DeleteBadgeModal({
   title,
   onClose,
@@ -20,21 +21,12 @@ export function DeleteBadgeModal({
       >
         <div className="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#FFF1F1]">
           <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#FFE4E4]">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 28 28"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10.5 3.5H17.5M3.5 7H24.5M22.1667 7L21.3485 19.2725C21.2257 21.1138 21.1644 22.0344 20.7667 22.7325C20.4166 23.3471 19.8884 23.8412 19.2519 24.1496C18.529 24.5 17.6063 24.5 15.7609 24.5H12.2391C10.3937 24.5 9.47104 24.5 8.74806 24.1496C8.11155 23.8412 7.58344 23.3471 7.23331 22.7325C6.83563 22.0344 6.77425 21.1138 6.6515 19.2725L5.83333 7M11.6667 12.25V18.0833M16.3333 12.25V18.0833"
-                stroke="#D50B3E"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <Image
+              src="/public/assets/dashboard/_ui-trash-03.svg"
+              height={28}
+              width={28}
+              alt="trash icon"
+            />
           </div>
         </div>
 
