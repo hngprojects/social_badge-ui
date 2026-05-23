@@ -11,10 +11,10 @@ export const templates: Template[] = [
     creator: "@techevents",
     target: "High engagement",
     badgeCount: "4,230",
-    image: "/assets/landing-page/template-1.png",
+    image: "/assets/landing-page/template-10.png",
     tag: "Trending",
     hasShadow: true,
-    bg: "#E2E7D5",
+    bg: "linear-gradient(rgb(255,240,244), rgb(255,228,218))",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ export const templates: Template[] = [
     image: "/assets/landing-page/template-2.png",
     tag: "Trending",
     hasShadow: true,
-    bg: "#F0F0E8",
+    bg: "linear-gradient(rgb(180,180,180), rgb(241,239,232))",
   },
   {
     id: 3,
@@ -35,9 +35,9 @@ export const templates: Template[] = [
     creator: "@techevents",
     target: "Newcomer",
     badgeCount: "1,650",
-    image: "/assets/landing-page/template-7.png",
+    image: "/assets/landing-page/template-9.png",
     tag: null,
-    bg: "#B1F4E7",
+    bg: "linear-gradient(rgb(202, 200, 204), rgb(202, 197, 209))",
   },
   {
     id: 4,
@@ -46,9 +46,9 @@ export const templates: Template[] = [
     creator: "@techevents",
     target: "VIP audience",
     badgeCount: "980",
-    image: "/assets/landing-page/template-5.png",
+    image: "/assets/landing-page/template-17.png",
     tag: null,
-    bg: "#ECE3F7",
+    bg: "linear-gradient(rgb(231, 255, 235), rgb(138, 181, 144))",
   },
 ];
 
