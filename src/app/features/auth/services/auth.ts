@@ -81,11 +81,11 @@ export const resendVerifyEmail = async ({ email }: { email: string }) => {
 //   });
 // };
 
-// export const logout = async () => {
-//   return apiClient('/auth/logout', {
-//     method: 'POST',
-//   });
-// };
+export const logout = async () => {
+  return apiClient("/auth/logout", {
+    method: "POST",
+  });
+};
 
 // export const getCurrentUser = async () => {
 //   return apiClient<AuthResponse>('/auth/me');

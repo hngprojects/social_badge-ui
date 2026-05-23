@@ -3,8 +3,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { LogOut } from "lucide-react";
 import { navigationLinks } from "../navLinks";
 import { useUserStore } from "@/stores/use-user-store";
+import { useLogout } from "@/app/features/auth/hooks/useLogout";
+import { getUserDisplayName } from "@/lib/api/auth-session";
+
+const DEFAULT_AVATAR = "/assets/dashboard/user-avatar.png";
 
 export default function SideNav() {
   const [expanded, setExpanded] = useState(true);
@@ -13,7 +18,9 @@ export default function SideNav() {
   const topNav = navigation.slice(0, 3);
   const bottomNav = navigation.slice(3);
   const user = useUserStore((state) => state.user);
-  const userName = user?.first_name ?? "there";
+  const { logout, isLoggingOut } = useLogout();
+  const displayName = getUserDisplayName(user);
+  const avatarSrc = user?.profile_photo_url || DEFAULT_AVATAR;
 
   return (
     <aside
@@ -46,6 +53,7 @@ export default function SideNav() {
               className="cursor-pointer"
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
+              aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
             >
               <Image
                 alt="sidebar toggle"
@@ -91,17 +99,17 @@ export default function SideNav() {
               <div className="h-12 w-12 overflow-hidden rounded-full border">
                 <Image
                   className="object-cover h-full w-full"
-                  src="/assets/dashboard/user-avatar.png"
+                  src={avatarSrc}
                   width={48}
                   height={48}
-                  alt="profile image"
+                  alt=""
                 />
               </div>
 
               {expanded && (
                 <div className="flex flex-col">
                   <p className="text-[16px] font-medium text-[#161616]">
-                    {userName}
+                    {displayName}
                   </p>
                   <p className="text-[14px] text-[#6B7280]">Organizer</p>
                 </div>
@@ -116,6 +124,23 @@ export default function SideNav() {
                 alt="open profile"
               />
             )} */}
+
+            <button
+              type="button"
+              onClick={() => logout()}
+              disabled={isLoggingOut}
+              className={`flex cursor-pointer items-center gap-2 rounded-[8px] py-3 text-[#161616] transition-colors hover:bg-[#FAF4EC] disabled:opacity-60 ${
+                expanded ? "ml-2 px-2" : "px-0"
+              }`}
+              aria-label="Log out"
+            >
+              <LogOut className="h-6 w-6 shrink-0" strokeWidth={1.75} />
+              {expanded && (
+                <span className="text-sm font-medium">
+                  {isLoggingOut ? "Logging out..." : "Log out"}
+                </span>
+              )}
+            </button>
           </div>
         </div>
       </div>
