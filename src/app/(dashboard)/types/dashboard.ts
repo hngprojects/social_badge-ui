@@ -26,6 +26,8 @@ export interface TemplateData {
 	image_url: string;
 }
 
+import type { CanvasData } from "@/app/features/templates/types/canvas-data";
+
 export interface LayoutTemplate {
 	id: string;
 	title: string;
@@ -37,6 +39,8 @@ export interface LayoutTemplate {
 	isMostPicked: boolean;
 	description: string;
 	features: string[];
+	/** Passed to /customize only — gallery cards use thumbnail_url. */
+	canvasData?: CanvasData;
 }
 
 export interface TemplateData {

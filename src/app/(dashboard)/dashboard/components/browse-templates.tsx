@@ -11,7 +11,7 @@ export default function BrowseTemplate() {
             Get inspired
           </h1>
           <p className="text[13.5px] text-[#5C5C5C]">
-            Start from a trending template — you can always customise everything
+            Start from a trending template — you can always customize everything
             later.
           </p>
         </div>

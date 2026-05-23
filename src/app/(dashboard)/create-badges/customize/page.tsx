@@ -1,4 +1,4 @@
-"use client";
+import { CustomizeBadgePageClient } from "./components/customize-badge-page-client";
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
@@ -206,4 +206,6 @@ export default function CreateBadgePage() {
 
     </main>
   );
+export default function CustomizeBadgePage() {
+  return <CustomizeBadgePageClient />;
 }
