@@ -8,7 +8,7 @@ import TemplatePagination from "./components/pagination";
 const templateTypeByTab: Record<string, string> = {
   festivals: "festival",
   hackathons: "hackathon",
-  conferences: "conference",
+  conferences: "conferences",
   meetups: "meetup",
   speakers: "speaker",
 };
