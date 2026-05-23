@@ -96,13 +96,14 @@ const ExploreHero = () => {
 						{/* Search bar */}
 						<motion.div
 							variants={itemVariants}
+							aria-label="Search templates, events, styles"
 							className="flex items-center justify-center min-[1130px]:justify-start z-10 gap-2 bg-white rounded-full w-full py-1 md:py-2 max-w-113.75 mx-auto min-[1130px]:mx-0 border-white border"
 						>
-							<input
+							{/* <input
 								type="text"
 								placeholder="Search templates, events, styles"
 								className="flex-1 bg-white font-medium ml-2 md:ml-5 outline-none text-[12px] md:text-[14px] placeholder:text-[#0A0A0A99]"
-							/>
+							/> */}
 							{/* <button
                 type="button"
                 className="bg-primary text-[#EEEEEE] text-[14px] md:text-[16px] font-medium px-5 py-1 mr-1 md:mr-2 lg:mr-2 md:py-2 rounded-full hover:bg-primary/90 transition-colors"
@@ -147,7 +148,7 @@ const ExploreHero = () => {
 							height={500}
 							style={{ width: "97%", height: "auto" }}
 							className="hidden min-[1130px]:block"
-							priority
+							preload={true}
 						/>
 						<Image
 							src="/assets/landing-page/group17.png"
@@ -156,7 +157,7 @@ const ExploreHero = () => {
 							height={577}
 							style={{ width: "100%", height: "auto" }}
 							className="block min-[1130px]:hidden object-contain"
-							priority
+							preload={true}
 						/>
 					</motion.div>
 				</div>
