@@ -17,7 +17,7 @@ export const SignupForm = () => {
 	const [isChecked, setIsChecked] = useState(false);
 	const [submittedEmail, setSubmittedEmail] = useState("");
 	const [modalMessage, setModalMessage] = useState<string | undefined>();
-	const { signup, isLoading } = useSignup();
+	const { signup, isLoading, isRateLimited } = useSignup();
 
 	const {
 		register,
@@ -81,7 +81,7 @@ export const SignupForm = () => {
 									type="text"
 									placeholder="John"
 									label={"First name"}
-									disabled={isSubmitting || isLoading}
+									disabled={isSubmitting || isLoading || isRateLimited}
 									icon={errors.first_name ? <Icons.InfoCircle /> : null}
 									className={errors.first_name ? "border-[#EF4444]" : ""}
 								/>
@@ -98,7 +98,7 @@ export const SignupForm = () => {
 									type="text"
 									placeholder="Doe"
 									label={"Last name"}
-									disabled={isSubmitting || isLoading}
+									disabled={isSubmitting || isLoading || isRateLimited}
 									icon={errors.last_name ? <Icons.InfoCircle /> : null}
 									className={errors.last_name ? "border-[#EF4444]" : ""}
 								/>
@@ -114,7 +114,7 @@ export const SignupForm = () => {
 							<AuthInput
 								{...register("email")}
 								type="email"
-								disabled={isSubmitting || isLoading}
+								disabled={isSubmitting || isLoading || isRateLimited}
 								placeholder="usersocialbadge@hng.com"
 								label={"Email"}
 								id="email"
@@ -131,7 +131,7 @@ export const SignupForm = () => {
 						<div className="">
 							<AuthInput
 								{...register("password")}
-								disabled={isSubmitting || isLoading}
+								disabled={isSubmitting || isLoading || isRateLimited}
 								type="password"
 								placeholder="***********"
 								label={"Password"}
@@ -148,7 +148,7 @@ export const SignupForm = () => {
 							<div className="w-full">
 								<AuthInput
 									{...register("confirmPassword")}
-									disabled={isSubmitting || isLoading}
+									disabled={isSubmitting || isLoading || isRateLimited}
 									type="password"
 									placeholder="***********"
 									label={"Confirm password"}
@@ -168,7 +168,7 @@ export const SignupForm = () => {
 									className="h-3.5 w-3.5 rounded-[5px] border border-[#727272] accent-[#FA5424]"
 									name="remember-me"
 									id="remember-me"
-									disabled={isSubmitting || isLoading}
+									disabled={isSubmitting || isLoading || isRateLimited}
 									onChange={(e) => setIsChecked(e.target.checked)}
 									checked={isChecked}
 								/>
@@ -182,9 +182,10 @@ export const SignupForm = () => {
 
 					<Button
 						type="submit"
-						disabled={!isChecked || isSubmitting || isLoading}
+						disabled={!isChecked || isSubmitting || isLoading || isRateLimited}
 					>
 						{isLoading ? "Signing up..." : "Sign up"}
+						{isRateLimited ? "Try again later" : "Sign Up"}
 					</Button>
 				</form>
 
