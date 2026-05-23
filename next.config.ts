@@ -16,7 +16,7 @@ import type { NextConfig } from "next";
         pathname: "/**",
       },
     ],
-   },
- };
- 
- export default nextConfig;
+  },
+};
+
+export default nextConfig;
