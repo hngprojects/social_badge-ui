@@ -22,6 +22,9 @@ import type {
 import type { PublicParticipantPageResponse } from "../types/public-participant";
 
 export async function uploadLogo(file: File, instanceId: string | null) : Promise<LogoUploadResponse> {
+  if (!instanceId) {
+    throw new Error("Missing organizer template istance id.")
+  }
   const formData = new FormData();
   formData.append("file", file);
 
