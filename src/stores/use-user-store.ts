@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 export type User = {
 	id: string;
 	first_name: string;
-	last_name: string;
+	last_name?: string | null;
 	email: string;
 	is_email_verified: boolean;
 	profile_photo_url: string | null;

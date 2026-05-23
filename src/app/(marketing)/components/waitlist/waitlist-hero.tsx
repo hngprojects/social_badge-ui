@@ -10,25 +10,27 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { items } from "@/app/(marketing)/constants/waitlist";
 
+import { useSubscribe } from "@/app/(marketing)/hooks/newsletter";
+
 export default function WaitlistHero() {
 	const [email, setEmail] = useState("");
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isFocused, setIsFocused] = useState(false);
 	const router = useRouter();
+	const { subscribeToNewsletter, isLoading: isSubmitting } = useSubscribe();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!email) return;
 
-		setIsSubmitting(true);
-		try {
-			// Mock API call
-			await new Promise((resolve) => setTimeout(resolve, 2000));
-			// Use an existing route (or create /success before redirecting there)
-			router.push("/waitlist/success?from=waitlist");
-		} finally {
-			setIsSubmitting(false);
-		}
+		subscribeToNewsletter(
+			{ email },
+			{
+				onSuccess: () => {
+					setEmail("");
+					router.push("/waitlist/success?from=waitlist");
+				},
+			},
+		);
 	};
 
 	return (
