@@ -2,6 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { templates as exploreTemplates } from "@/app/(marketing)/constants/explore";
 
 import {
   MOCK_TEMPLATE_API_RESPONSE,
@@ -13,6 +15,8 @@ import {
   BackgroundOption,
   UploadedFileMetadata,
 } from "../../components/customize/constants";
+import { EXTENDED_MOCK_DB } from "../../constants/dashboard";
+import { templates as dashboardTemplates } from "../../constants/templates";
 
 import { BrandSection }        from "../../components/customize/BrandSection";
 import { StyleSection }        from "../../components/customize/StyleSection";
@@ -21,10 +25,56 @@ import { ShareMessageSection } from "../../components/customize/ShareMessageSect
 import { LivePreview }         from "../../components/customize/LivePreview";
 
 export default function CreateBadgePage() {
-  const [template] = useState<TemplateConfig | null>(() => MOCK_TEMPLATE_API_RESPONSE);
+  const searchParams = useSearchParams();
+
+  const template = useMemo<TemplateConfig>(() => {
+    const templateId = searchParams.get("templateId");
+    const source = searchParams.get("source");
+
+    if (!templateId) return MOCK_TEMPLATE_API_RESPONSE;
+
+    const createTemplate = EXTENDED_MOCK_DB.find((item) => item.id === templateId);
+    if (source === "create" && createTemplate) {
+      return {
+        ...MOCK_TEMPLATE_API_RESPONSE,
+        id: createTemplate.id,
+        title: createTemplate.title,
+        category: createTemplate.category,
+        preview_url: createTemplate.image_url,
+        preview_color: "",
+      };
+    }
+
+    const dashboardTemplate = dashboardTemplates.find((item) => String(item.id) === templateId);
+    if (source === "dashboard" && dashboardTemplate) {
+      return {
+        ...MOCK_TEMPLATE_API_RESPONSE,
+        id: `dashboard_${dashboardTemplate.id}`,
+        title: dashboardTemplate.title,
+        category: dashboardTemplate.type,
+        preview_url: dashboardTemplate.image,
+        preview_color: dashboardTemplate.bg ?? "",
+      };
+    }
+
+    const exploreTemplate = exploreTemplates.find((item) => String(item.id) === templateId);
+    if (exploreTemplate) {
+      return {
+        ...MOCK_TEMPLATE_API_RESPONSE,
+        id: `explore_${exploreTemplate.id}`,
+        title: exploreTemplate.title,
+        category: exploreTemplate.type,
+        preview_url: exploreTemplate.image,
+        preview_color: "",
+      };
+    }
+
+    return MOCK_TEMPLATE_API_RESPONSE;
+  }, [searchParams]);
+
   const [formData,        setFormData]        = useState<Record<string, string>>(() => {
     const initial: Record<string, string> = {};
-    MOCK_TEMPLATE_API_RESPONSE.layout.fields.forEach((f) => { initial[f.token] = ""; });
+    template.layout.fields.forEach((f) => { initial[f.token] = ""; });
     return initial;
   });
   const [logoData,        setLogoData]        = useState<UploadedFileMetadata | null>(null);

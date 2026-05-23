@@ -1,5 +1,6 @@
 import { Template } from "../../types/template";
 import Image from "next/image";
+import Link from "next/link";
 
 const TemplateCard = ({
   template,
@@ -8,6 +9,8 @@ const TemplateCard = ({
   template: Template;
   isAboveFold?: boolean;
 }) => {
+  const customizeHref = `/create-badges/customize?templateId=${template.id}&source=dashboard`;
+
   return (
     <div
       className={`relative flex flex-col cursor-pointer rounded-[12px] border border-[#EAEAE6] overflow-hidden`}
@@ -59,7 +62,11 @@ const TemplateCard = ({
           </div>
 
           {/* Link arrow */}
-          <span className="flex items-center justify-center w-5 h-5 bg-primary rounded-full">
+          <Link
+            href={customizeHref}
+            aria-label={`Use ${template.title} template`}
+            className="flex cursor-pointer items-center justify-center w-5 h-5 bg-primary rounded-full hover:bg-primary/60 transition-colors duration-200"
+          >
             <Image
               width={2}
               height={2}
@@ -67,7 +74,7 @@ const TemplateCard = ({
               alt="Arrow"
               className="w-2 h-2"
             />
-          </span>
+          </Link>
         </div>
       </div>
     </div>
