@@ -9,7 +9,7 @@ import { useUserStore } from "@/stores/use-user-store";
 import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
 
-const DEFAULT_AVATAR = "/assets/dashboard/pfp.jpg";
+const DEFAULT_AVATAR = "/assets/dashboard/pfp.png";
 
 export default function SideNav() {
   const [expanded, setExpanded] = useState(true);
