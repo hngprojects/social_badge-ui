@@ -1,4 +1,3 @@
-import axios from "axios";
 import { apiClient } from "@/lib/api/client";
 import type {
   LogoUploadResponse,
