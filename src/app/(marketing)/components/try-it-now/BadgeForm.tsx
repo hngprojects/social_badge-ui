@@ -25,7 +25,7 @@ function Field({
 	);
 }
 
-export default function BadgeForm({ badge, update }: BadgeFormProps) {
+export default function BadgeForm({ badge, update,  }: BadgeFormProps) {
 	//const isReady = badge.name.trim().length > 0;
 
 	return (
