@@ -11,9 +11,6 @@ export const FILTERS = [
   'Conference',
   'Hackathon',
   'Community',
-  'Bootcamp',
-  'Meetup',
-  'Speaker',
   'Trending',
 ];
 

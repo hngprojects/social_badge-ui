@@ -48,7 +48,7 @@ const TemplateCard = ({ template, index }: TemplateCardProps) => {
 					</div>
 
 					{/* Link arrow */}
-					<span className="flex items-center justify-center w-5 h-5 bg-primary rounded-full">
+					{/* <span className="flex items-center justify-center w-5 h-5 bg-primary rounded-full">
 						<Image
 							width={2}
 							height={2}
@@ -56,7 +56,7 @@ const TemplateCard = ({ template, index }: TemplateCardProps) => {
 							alt="Arrow"
 							className="w-2 h-2"
 						/>
-					</span>
+					</span> */}
 				</div>
 			</div>
 		</div>
