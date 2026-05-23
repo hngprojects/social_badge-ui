@@ -61,7 +61,11 @@ const Templates = () => {
                     <span className="inline-block bg-primary rounded-full w-2 h-2" />
                     <span>{template.badgeCount} badges made</span>
                   </div>
-                  <span className="flex items-center justify-center w-5 h-5 bg-primary rounded-full">
+                  <Link
+                    href={`/create-badges/customize?templateId=${template.id}&source=explore`}
+                    aria-label={`Use ${template.title} template`}
+                    className="flex cursor-pointer items-center justify-center w-5 h-5 bg-primary rounded-full hover:bg-primary/60 transition-colors duration-200"
+                  >
                     <Image
                       src="/assets/landing-page/icons/Vector.svg"
                       alt="Arrow"
@@ -69,7 +73,7 @@ const Templates = () => {
                       height={8}
                       className="w-2 h-2"
                     />
-                  </span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -124,7 +128,11 @@ const Templates = () => {
                   </div>
 
                   {/* Link arrow */}
-                  <span className="flex items-center justify-center w-5 h-5 bg-primary rounded-full">
+                  {/* <Link
+                    href={`/create-badges/customize?templateId=${template.id}&source=explore`}
+                    aria-label={`Use ${template.title} template`}
+                    className="flex cursor-pointer items-center justify-center w-5 h-5 bg-primary rounded-full hover:bg-primary/60 transition-colors duration-200"
+                  >
                     <Image
                       src="/assets/landing-page/icons/Vector.svg"
                       alt="Arrow"
@@ -132,7 +140,7 @@ const Templates = () => {
                       height={8}
                       className="w-2 h-2"
                     />
-                  </span>
+                  </Link> */}
                 </div>
               </div>
             </div>

@@ -35,7 +35,7 @@ export default function BrowseTemplate() {
 
               <div
                 className="relative h-[272px]  w-full shrink-0 overflow-hidden"
-                style={{ backgroundColor: template.bg }}
+                style={{ background: template.bg }}
               >
                 <Image
                   src={template.image}

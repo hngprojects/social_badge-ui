@@ -8,6 +8,7 @@ import StatusIcon from './status-icon';
 export default function PricingCard({ plan, billing, isSelected, onSelect }: PricingCardProps) {
   const price = billing === 'yearly' ? plan.yearlyPrice : plan.monthlyPrice;
   const isPrimary = plan.ctaVariant === 'primary';
+  const ctaHref = plan.id === 'free' ? '/signup' : '/coming-soon';
 
   return (
     <div
@@ -55,7 +56,7 @@ export default function PricingCard({ plan, billing, isSelected, onSelect }: Pri
         <p className="text-[13px] text-[#5A5A5A]">{plan.description}</p>
 
         <Link
-          href="/signup"
+          href={ctaHref}
           onClick={onSelect}
           className={`w-full h-12.5 py-3 rounded-full text-sm font-semibold cursor-pointer transition-opacity my-6 flex items-center justify-center ${
             isPrimary

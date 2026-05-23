@@ -24,7 +24,7 @@ const TemplateCard = ({
 
       <div
         className={`relative w-full h-64 shrink-0 overflow-hidden`}
-        style={{ backgroundColor: template.bg }}
+        style={{ background: template.bg }}
       >
         <Image
           src={template.image}
