@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'motion/react';
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +12,29 @@ import { Plus, X } from 'lucide-react';
 
 import { faqData } from '../../constants/home';
 
+// ── Shared easing ─────────────────────────────────────────────────────────────
+const EASE = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
+
+// ── Header: slides up from bottom on scroll ───────────────────────────────────
+const headerVariants = {
+  hidden: { opacity: 0, y: 36 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, ease: EASE },
+  },
+};
+
+// ── Each FAQ item: slides up one by one with explicit delay per index ─────────
+const faqItemVariants = {
+  hidden: { opacity: 0, y: 28 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: EASE, delay: i * 0.15 },
+  }),
+};
+
 export default function FAQ() {
   const [openId, setOpenId] = useState<string>('');
 
@@ -19,7 +43,14 @@ export default function FAQ() {
       id="faq-section"
       className="w-full max-w-360 mx-auto px-4 md:px-10 lg:px-30 py-12 sm:py-16 lg:py-16"
     >
-      <div className="mb-10 md:mb-[70px] text-center">
+      {/* ── Header ── */}
+      <motion.div
+        className="mb-10 md:mb-17.5 text-center"
+        variants={headerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="font-sans tracking-widest text-muted-foreground text-[11px] items-center flex justify-center mb-6">
           <span className="inline-block h-2 w-2 rounded-full bg-primary mr-2 text-sm" />
           <span className="hidden md:block">FAQS</span>
@@ -31,8 +62,9 @@ export default function FAQ() {
           <p className="font-semibold md:hidden">questions,</p>
           <h2 className="font-medium italic  text-primary">answered.</h2>
         </div>
-      </div>
+      </motion.div>
 
+      {/* ── FAQ Items ── */}
       <Accordion
         type="single"
         collapsible
@@ -41,8 +73,13 @@ export default function FAQ() {
         onValueChange={setOpenId}
       >
         {faqData.map((faq, index) => (
-          <div
+          <motion.div
             key={faq.id}
+            custom={index}
+            variants={faqItemVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
             className={`overflow-visible ${index === 0 ? 'border-t-2' : ''} border-b-2`}
           >
             <AccordionItem
@@ -81,7 +118,7 @@ export default function FAQ() {
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>
-          </div>
+          </motion.div>
         ))}
       </Accordion>
     </section>

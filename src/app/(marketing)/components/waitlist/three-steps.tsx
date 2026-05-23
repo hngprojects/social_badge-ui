@@ -35,11 +35,10 @@ const ThreeStepSection = () => {
 				</div>
 
 				{/* Visual Composition Container */}
-				<div className="w-full overflow-x-hidden">
-					<div className="relative overflow-y-visible lg:overflow-visible w-full min-h-[750px] md:aspect-square max-w-[500px] lg:max-w-full mt-8 lg:mt-0 mx-auto lg:mx-0">
+				<div className="w-full overflow-x-hidden scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+					<div className="relative overflow-y-visible lg:overflow-visible w-full min-h-[750px] md:aspect-square max-w-[500px] lg:max-w-full mt-8 lg:mt-0 mx-auto lg:mx-0 ">
 						{/* Card 1*/}
-						<div className="absolute top-[15%] sm:top-0 lg:top-[13%] -left-[70px] sm:left-0 md:-left-[10%] lg:left-0 w-[55%] w-[250px] lg:w-[288px] z-20 transform -rotate-12 md:rotate-0">
-							<div className="absolute top-[15%] sm:top-0 lg:top-[13%] -left-[70px] sm:left-0 md:-left-[10%] lg:left-0 w-[55%] max-w-[250px] lg:w-[288px] z-20 transform -rotate-12 md:rotate-0"></div>
+						<div className="absolute top-[15%] sm:top-0 lg:top-[13%] -left-[70px] sm:left-0 md:-left-[10%] lg:left-0  w-[250px] lg:w-[288px] z-20 transform -rotate-12 md:rotate-0">
 							<Image
 								src="/assets/waitlist/card1.png"
 								alt="Settings UI"
@@ -49,7 +48,7 @@ const ThreeStepSection = () => {
 							/>
 						</div>
 						{/* Card 2 */}
-						<div className="absolute top-[10%] left-[5%] md:left-[15%] w-[368px] lg:w-[486px] z-10 drop-shadow-2xl">
+						<div className="absolute top-[10%] left-[5%] md:left-[15%] w-92 lg:w-121.5 z-10 drop-shadow-2xl">
 							<Image
 								src="/assets/waitlist/card2.png"
 								alt="Hack the Future Badge"
@@ -60,7 +59,7 @@ const ThreeStepSection = () => {
 							/>
 						</div>
 						{/* Card 3 */}
-						<div className="absolute -bottom-[3%] sm:bottom-0 right-[10%] md:-right-[100px] lg:right-0 lg:bottom-[19%] w-[70%] md:w-[287px] z-30 drop-shadow-2xl transform rotate-3">
+						<div className="absolute bottom-[-3%] sm:bottom-0 right-[10%] md:-right-25 lg:right-0 lg:bottom-[19%] w-[70%] md:w-71.75 z-30 drop-shadow-2xl transform rotate-3">
 							<Image
 								src="/assets/waitlist/card3.png"
 								alt="Attendee Badge"

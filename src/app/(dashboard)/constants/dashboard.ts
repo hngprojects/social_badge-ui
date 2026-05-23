@@ -1,6 +1,7 @@
 import { Template, StatCard } from "../types/dashboard";
 import { TemplateData } from "../types/dashboard";
 import { LayoutTemplate } from "../types/dashboard";
+import { Badge, Filter, Status } from "../types/dashboard";
 
 export const templates: Template[] = [
   {
@@ -78,10 +79,6 @@ export const stats: StatCard[] = [
   },
 ];
 
-
-
-
-
 export const MOCK_TEMPLATES_DB: TemplateData[] = [
   {
     id: "tpl_achieveher",
@@ -130,12 +127,8 @@ export const MOCK_TEMPLATES_DB: TemplateData[] = [
     title: "Founder's Circle",
     category: "conference",
     image_url: "/assets/dashboard/bg-4.png",
-  }
+  },
 ];
-
-
-
-
 
 export const EXTENDED_MOCK_DB: LayoutTemplate[] = [
   {
@@ -164,7 +157,8 @@ export const EXTENDED_MOCK_DB: LayoutTemplate[] = [
     usageCount: "4,230 made",
     shareRate: "18% share rate",
     isMostPicked: false,
-    description: "Dark mode modern developer aesthetic. Tailored for corporate tech environments.",
+    description:
+      "Dark mode modern developer aesthetic. Tailored for corporate tech environments.",
     features: [
       "Dynamic hash token matrix",
       "Organization label node",
@@ -181,7 +175,8 @@ export const EXTENDED_MOCK_DB: LayoutTemplate[] = [
     usageCount: "1,120 made",
     shareRate: "34% share rate",
     isMostPicked: false,
-    description: "High-contrast neon composition built explicitly for decentralized community assemblies.",
+    description:
+      "High-contrast neon composition built explicitly for decentralized community assemblies.",
     features: [
       "Multi-chain network tags",
       "Wallet handle custom field",
@@ -198,16 +193,108 @@ export const EXTENDED_MOCK_DB: LayoutTemplate[] = [
     usageCount: "2,890 made",
     shareRate: "12% share rate",
     isMostPicked: false,
-    description: "Clean organic layouts sporting asymmetrical border features and clean typography accents.",
+    description:
+      "Clean organic layouts sporting asymmetrical border features and clean typography accents.",
     features: [
       "Asymmetric brand accent bars",
       "Localized scanning barcodes",
       "Subtle leaf/organic asset background",
       "High-contrast dynamic header typography",
     ],
-  }
+  },
 ];
 
+export const FILTER_TABS = [
+  "All layouts",
+  "Summit",
+  "Conference",
+  "Hackathon",
+  "VIP / Invite",
+];
 
+export const BADGES: Badge[] = [
+  {
+    id: 1,
+    name: "Achieveher Summit '26",
+    type: "Summit",
+    url: "https://badge.build/achieveher",
+    status: "Live",
+    lastEdited: "Just now",
+    clicks: 0,
+    shares: 0,
+    iconBg: "#F97066",
+    iconImg: "/assets/landing-page/template-2.png",
+  },
+  {
+    id: 2,
+    name: "Dev Summit '26",
+    type: "Conference",
+    url: "https://badge.build/devsummit",
+    status: "Live",
+    lastEdited: "2 days ago",
+    clicks: 1420,
+    shares: 214,
+    iconBg: "#2D3A6B",
+    iconImg: "/assets/landing-page/template-2.png",
+  },
+  {
+    id: 3,
+    name: "Q3 Founder Meetup",
+    type: "VIP",
+    url: "https://badge.build/founders-q3",
+    status: "Live",
+    lastEdited: "1 week ago",
+    clicks: 11032,
+    shares: 1840,
+    iconBg: "#3B4B7A",
+    iconImg: "/assets/landing-page/template-2.png",
+  },
+  {
+    id: 4,
+    name: "Internal Workshop '26",
+    type: "Workshop",
+    url: "https://badge.build/workshop-26",
+    status: "Archived",
+    lastEdited: "9 hours ago",
+    clicks: 248,
+    shares: 37,
+    iconBg: "#2D3A6B",
+    iconImg: "/assets/landing-page/template-2.png",
+  },
+  {
+    id: 5,
+    name: "Hackathon Berlin",
+    type: "Hackathon",
+    url: "Not yet published",
+    status: "Draft",
+    lastEdited: "2 days ago",
+    clicks: null,
+    shares: null,
+    iconBg: "#3BAD7A",
+    iconImg: "/assets/landing-page/template-2.png",
+  },
+];
 
-export const FILTER_TABS = ["All layouts", "Summit", "Conference", "Hackathon", "VIP / Invite"];
+export const FILTERS: Filter[] = ["All", "Live", "Draft", "Archived"];
+
+export const STATUS_STYLES: Record<
+  Status,
+  { bg: string; text: string; dot: string; border?: string }
+> = {
+  Live: {
+    bg: "#ECFDF3",
+    text: "#15803D",
+    dot: "#22C55E",
+  },
+  Draft: {
+    bg: "#F9FAFB",
+    text: "#6B7280",
+    dot: "#9CA3AF",
+    border: "1px solid #E5E7EB",
+  },
+  Archived: {
+    bg: "#FFFBEB",
+    text: "#B45309",
+    dot: "#F59E0B",
+  },
+};

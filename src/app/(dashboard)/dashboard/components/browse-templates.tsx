@@ -11,7 +11,7 @@ export default function BrowseTemplate() {
             Get inspired
           </h1>
           <p className="text[13.5px] text-[#5C5C5C]">
-            Start from a trending template — you can always customise everything
+            Start from a trending template — you can always customize everything
             later.
           </p>
         </div>
@@ -88,8 +88,8 @@ export default function BrowseTemplate() {
                         <path
                           d="M6 2.5L9.5 6L6 9.5"
                           stroke="#FF693E"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     </div>

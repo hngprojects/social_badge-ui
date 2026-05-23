@@ -13,214 +13,215 @@ import { useForm, useWatch } from "react-hook-form";
 import { signupSchema, SignupFormValues } from "@/schemas/auth";
 
 export const SignupForm = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [submittedEmail, setSubmittedEmail] = useState("");
-  const [modalMessage, setModalMessage] = useState<string | undefined>();
-  const { signup, isLoading } = useSignup();
+	const [showModal, setShowModal] = useState(false);
+	const [isChecked, setIsChecked] = useState(false);
+	const [submittedEmail, setSubmittedEmail] = useState("");
+	const [modalMessage, setModalMessage] = useState<string | undefined>();
+	const { signup, isLoading } = useSignup();
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors, touchedFields, isSubmitting },
-  } = useForm<SignupFormValues>({
-    mode: "onChange",
-    resolver: zodResolver(signupSchema),
-  });
+	const {
+		register,
+		handleSubmit,
+		control,
+		reset,
+		formState: { errors, touchedFields, isSubmitting },
+	} = useForm<SignupFormValues>({
+		mode: "onChange",
+		resolver: zodResolver(signupSchema),
+	});
 
-  const password = useWatch({ control, name: "password" });
+	const password = useWatch({ control, name: "password" });
 
-  let passwordInputClassName = "";
-  if (errors.password) {
-    passwordInputClassName = "border-[#EF4444]";
-  } else if (password) {
-    passwordInputClassName = "border-[#22C55E]";
-  }
+	let passwordInputClassName = "";
+	if (errors.password) {
+		passwordInputClassName = "border-[#EF4444]";
+	} else if (password) {
+		passwordInputClassName = "border-[#22C55E]";
+	}
 
-  let confirmPasswordInputClassName = "";
-  if (errors.confirmPassword) {
-    confirmPasswordInputClassName = "border-[#EF4444]";
-  } else if (touchedFields.confirmPassword) {
-    confirmPasswordInputClassName = "border-[#22C55E]";
-  }
+	let confirmPasswordInputClassName = "";
+	if (errors.confirmPassword) {
+		confirmPasswordInputClassName = "border-[#EF4444]";
+	} else if (touchedFields.confirmPassword && errors.confirmPassword) {
+		confirmPasswordInputClassName = "border-[#22C55E]";
+	}
 
-  const onSubmit = (formData: SignupFormValues) => {
-    signup(
-      {
-        email: formData.email,
-        first_name: formData.first_name,
-        last_name: formData.last_name,
-        password: formData.password,
-      },
-      {
-        onSuccess: (data) => {
-          setSubmittedEmail(formData.email);
-          setModalMessage(undefined);
-          if (data.message.includes("Verification email failed to send")) {
-            setModalMessage(data.message);
-          }
-          setShowModal(true);
-          reset();
-        },
-      },
-    );
-  };
+	const onSubmit = (formData: SignupFormValues) => {
+		signup(
+			{
+				email: formData.email,
+				first_name: formData.first_name,
+				last_name: formData.last_name,
+				password: formData.password,
+			},
+			{
+				onSuccess: (data) => {
+					setSubmittedEmail(formData.email);
+					setModalMessage(
+						data.message?.includes("Verification email failed to send")
+							? data.message
+							: undefined,
+					);
+					setShowModal(true);
+					reset();
+				},
+			},
+		);
+	};
 
-  return (
-    <>
-      <div className="login-form bg-[#F5F5F5] rounded-lg px-5 py-6 flex flex-col gap-7">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-          <div className="flex flex-col gap-4">
-            <div className="first flex justify-between gap-4 w-full">
-              <div className="w-full">
-                <AuthInput
-                  {...register("first_name")}
-                  type="text"
-                  placeholder="John"
-                  label={"First Name"}
-                  disabled={isSubmitting || isLoading}
-                  icon={errors.first_name ? <Icons.InfoCircle /> : null}
-                  className={errors.first_name ? "border-[#EF4444]" : ""}
-                />
-                {errors.first_name && (
-                  <p className="text-[#EF4444] text-xs mt-1">
-                    {errors.first_name.message}
-                  </p>
-                )}
-              </div>
+	return (
+		<>
+			<div className="login-form bg-[#F5F5F5] rounded-lg px-5 py-11 flex flex-col gap-7">
+				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+					<div className="flex flex-col gap-4">
+						<div className="first flex justify-between gap-4 w-full">
+							<div className="w-full">
+								<AuthInput
+									{...register("first_name")}
+									type="text"
+									placeholder="John"
+									label={"First name"}
+									disabled={isSubmitting || isLoading}
+									icon={errors.first_name ? <Icons.InfoCircle /> : null}
+									className={errors.first_name ? "border-[#EF4444]" : ""}
+								/>
+								{errors.first_name && (
+									<p className="text-[#EF4444] text-xs mt-1">
+										{errors.first_name.message}
+									</p>
+								)}
+							</div>
 
-              <div className="w-full">
-                <AuthInput
-                  {...register("last_name")}
-                  type="text"
-                  placeholder="Doe"
-                  label={"Last Name"}
-                  disabled={isSubmitting || isLoading}
-                  icon={errors.last_name ? <Icons.InfoCircle /> : null}
-                  className={errors.last_name ? "border-[#EF4444]" : ""}
-                />
-                {errors.last_name && (
-                  <p className="text-[#EF4444] text-xs mt-1">
-                    {errors.last_name.message}
-                  </p>
-                )}
-              </div>
-            </div>
+							<div className="w-full">
+								<AuthInput
+									{...register("last_name")}
+									type="text"
+									placeholder="Doe"
+									label={"Last name"}
+									disabled={isSubmitting || isLoading}
+									icon={errors.last_name ? <Icons.InfoCircle /> : null}
+									className={errors.last_name ? "border-[#EF4444]" : ""}
+								/>
+								{errors.last_name && (
+									<p className="text-[#EF4444] text-xs mt-1">
+										{errors.last_name.message}
+									</p>
+								)}
+							</div>
+						</div>
 
-            <div className="w-full">
-              <AuthInput
-                {...register("email")}
-                type="email"
-                disabled={isSubmitting || isLoading}
-                placeholder="usersocialbadge@hng.com"
-                label={"Email"}
-                id="email"
-                icon={errors.email ? <Icons.InfoCircle /> : null}
-                className={errors.email ? "border-[#EF4444]" : ""}
-              />
-              {errors.email && (
-                <p className="text-[#EF4444] text-xs mt-1">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
+						<div className="w-full">
+							<AuthInput
+								{...register("email")}
+								type="email"
+								disabled={isSubmitting || isLoading}
+								placeholder="usersocialbadge@hng.com"
+								label={"Email"}
+								id="email"
+								icon={errors.email ? <Icons.InfoCircle /> : null}
+								className={errors.email ? "border-[#EF4444]" : ""}
+							/>
+							{errors.email && (
+								<p className="text-[#EF4444] text-xs mt-1">
+									{errors.email.message}
+								</p>
+							)}
+						</div>
 
-            <div className="">
-              <AuthInput
-                {...register("password")}
-                disabled={isSubmitting || isLoading}
-                type="password"
-                placeholder="***********"
-                label={"Password"}
-                className={passwordInputClassName}
-              />
-              {errors.password && (
-                <p className="text-[#EF4444] text-xs mt-1">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
+						<div className="">
+							<AuthInput
+								{...register("password")}
+								disabled={isSubmitting || isLoading}
+								type="password"
+								placeholder="***********"
+								label={"Password"}
+								className={passwordInputClassName}
+							/>
+							{errors.password && (
+								<p className="text-[#EF4444] text-xs mt-1">
+									{errors.password.message}
+								</p>
+							)}
+						</div>
 
-            <div className="">
-              <div className="w-full">
-                <AuthInput
-                  {...register("confirmPassword")}
-                  disabled={isSubmitting || isLoading}
-                  type="password"
-                  placeholder="***********"
-                  label={"Confirm Password"}
-                  icon={errors.confirmPassword ? <Icons.InfoCircle /> : null}
-                  className={confirmPasswordInputClassName}
-                />
-                {errors.confirmPassword && (
-                  <p className="text-[#EF4444] text-xs mt-1">
-                    {errors.confirmPassword.message}
-                  </p>
-                )}
-              </div>
+						<div className="">
+							<div className="w-full">
+								<AuthInput
+									{...register("confirmPassword")}
+									disabled={isSubmitting || isLoading}
+									type="password"
+									placeholder="***********"
+									label={"Confirm password"}
+									icon={errors.confirmPassword ? <Icons.InfoCircle /> : null}
+									className={confirmPasswordInputClassName}
+								/>
+								{errors.confirmPassword && (
+									<p className="text-[#EF4444] text-xs mt-1">
+										{errors.confirmPassword.message}
+									</p>
+								)}
+							</div>
 
-              <div className="flex items-center gap-2 mt-2">
-                <input
-                  type="checkbox"
-                  className="h-3.5 w-3.5 rounded-[5px] border border-[#727272] accent-[#FA5424]"
-                  name="remember-me"
-                  id="remember-me"
-                  disabled={isSubmitting || isLoading}
-                  onChange={(e) => setIsChecked(e.target.checked)}
-                  checked={isChecked}
-                />
-                <label htmlFor="remember-me" className="text-xs text-[#978B8A]">
-                  I agree to Social Badge Terms of Service and Privacy Policy. I
-                  may receive product update emails.
-                </label>
-              </div>
-            </div>
-          </div>
+							<div className="flex items-center gap-2 mt-2">
+								<input
+									type="checkbox"
+									className="h-3.5 w-3.5 rounded-[5px] border border-[#727272] accent-[#FA5424]"
+									name="remember-me"
+									id="remember-me"
+									disabled={isSubmitting || isLoading}
+									onChange={(e) => setIsChecked(e.target.checked)}
+									checked={isChecked}
+								/>
+								<label htmlFor="remember-me" className="text-xs text-[#978B8A]">
+									I agree to Social Badge Terms of Service and Privacy Policy. I
+									may receive product update emails.
+								</label>
+							</div>
+						</div>
+					</div>
 
-          <Button
-            type="submit"
-            disabled={!isChecked || isSubmitting || isLoading}
-          >
-            {isLoading ? "Signing up..." : "Sign Up"}
-          </Button>
-        </form>
+					<Button
+						type="submit"
+						disabled={!isChecked || isSubmitting || isLoading}
+					>
+						{isLoading ? "Signing up..." : "Sign up"}
+					</Button>
+				</form>
 
-        <GoogleAuth />
+				<GoogleAuth />
 
-        <div className="text-center">
-          <p className="text-md">
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
-            >
-              Log in
-            </Link>
-          </p>
-        </div>
-      </div>
+				<div className="text-center">
+					<p className="text-md">
+						Already have an account?{" "}
+						<Link
+							href="/login"
+							className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
+						>
+							Log in
+						</Link>
+					</p>
+				</div>
+			</div>
 
-      {showModal && (
-        <AuthModal
-          closeModal={() => setShowModal(false)}
-          email={submittedEmail}
-          title="Verify your email address"
-          description={
-            modalMessage ? (
-              <p>{modalMessage}</p>
-            ) : (
-              <>
-                <p>We have sent a link to verify your email address.</p>
-                <p>
-                  Check your email for the link to verify your email address
-                </p>
-              </>
-            )
-          }
-        />
-      )}
-    </>
-  );
+			{showModal && (
+				<AuthModal
+					closeModal={() => setShowModal(false)}
+					email={submittedEmail}
+					title="Verify your email address"
+					description={
+						modalMessage ? (
+							<p>{modalMessage}</p>
+						) : (
+							<>
+								<p>We have sent a link to verify your email address.</p>
+								<p>
+									Check your email for the link to verify your email address
+								</p>
+							</>
+						)
+					}
+				/>
+			)}
+		</>
+	);
 };
