@@ -3,13 +3,14 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutTemplate } from "../../(dashboard)/types/dashboard";
+import { LayoutTemplate } from "../types/dashboard/dashboard";
 import { EXTENDED_MOCK_DB } from "../constants/dashboard";
 import { FILTER_TABS } from "../constants/dashboard";
 
 export default function TemplatesMarketplacePage() {
   const [templates, setTemplates] = useState<LayoutTemplate[]>([]);
-  const [selectedTemplate, setSelectedTemplate] = useState<LayoutTemplate | null>(null);
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<LayoutTemplate | null>(null);
   const [activeFilter, setActiveFilter] = useState("All layouts");
 
   useEffect(() => {
@@ -26,16 +27,17 @@ export default function TemplatesMarketplacePage() {
   const filteredTemplates = useMemo(() => {
     if (activeFilter === "All layouts") return templates;
     return templates.filter(
-      (tpl) => tpl.category.toLowerCase() === activeFilter.toLowerCase()
+      (tpl) => tpl.category.toLowerCase() === activeFilter.toLowerCase(),
     );
   }, [activeFilter, templates]);
 
-  
   const activeTemplate = useMemo(() => {
     if (filteredTemplates.length === 0) return null;
 
     // If the manually clicked template is inside the current filter tab, keep it active
-    const isStillVisible = filteredTemplates.some((tpl) => tpl.id === selectedTemplate?.id);
+    const isStillVisible = filteredTemplates.some(
+      (tpl) => tpl.id === selectedTemplate?.id,
+    );
     if (selectedTemplate && isStillVisible) {
       return selectedTemplate;
     }
@@ -53,7 +55,9 @@ export default function TemplatesMarketplacePage() {
         type="button"
         onClick={() => setSelectedTemplate(tpl)}
         className={`flex flex-col p-2.5 sm:p-4 rounded-[24px] transition-all duration-200 text-left group focus:outline-none focus:ring-0 border-2 w-full relative bg-white min-w-0 ${
-          isSelected ? "border-[#FF693E] shadow-sm" : "border-transparent hover:border-gray-200"
+          isSelected
+            ? "border-[#FF693E] shadow-sm"
+            : "border-transparent hover:border-gray-200"
         }`}
         aria-label={`Select layout structure for ${tpl.title}`}
       >
@@ -106,11 +110,23 @@ export default function TemplatesMarketplacePage() {
           {/* Metadata Row - Fixed with dynamic flex-wrap and inner boundary controls */}
           <div className="flex flex-row flex-wrap items-center justify-between gap-x-1.5 gap-y-1 text-[9px] sm:text-xs text-[#9CA3AF] font-[400] mt-1 select-none w-full min-w-0">
             <span className="flex items-center gap-1 min-w-0 shrink-0 truncate">
-              <Image src="/assets/dashboard/icons/made.svg" alt="Usage count icon" width={11} height={11} className="object-contain shrink-0" />
+              <Image
+                src="/assets/dashboard/icons/made.svg"
+                alt="Usage count icon"
+                width={11}
+                height={11}
+                className="object-contain shrink-0"
+              />
               <span className="truncate block">{tpl.usageCount}</span>
             </span>
             <span className="flex items-center gap-1 min-w-0 ">
-              <Image src="/assets/dashboard/icons/rate.svg" alt="Share rate icon" width={11} height={11} className="object-contain shrink-0" />
+              <Image
+                src="/assets/dashboard/icons/rate.svg"
+                alt="Share rate icon"
+                width={11}
+                height={11}
+                className="object-contain shrink-0"
+              />
               <span className="truncate block">{tpl.shareRate}</span>
             </span>
           </div>
@@ -124,7 +140,10 @@ export default function TemplatesMarketplacePage() {
     <div className="w-full flex flex-col items-center justify-center text-center p-8 sm:p-12 bg-white rounded-[24px] border border-[#E5E5E5] border-dashed py-16">
       <h3 className="text-base font-bold text-[#262626]">No templates found</h3>
       <p className="text-xs text-[#737373] mt-1 max-w-sm leading-relaxed">
-        We don&apos;t have any base structures under {"\""}{activeFilter}{"\""} just yet. Try selecting another filter track or upload your custom layout below.
+        We don&apos;t have any base structures under {'"'}
+        {activeFilter}
+        {'"'} just yet. Try selecting another filter track or upload your custom
+        layout below.
       </p>
       <button
         type="button"
@@ -140,15 +159,20 @@ export default function TemplatesMarketplacePage() {
     if (!activeTemplate) {
       return (
         <div className="w-full py-16 flex flex-col items-center justify-center text-center">
-          <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">No layout active</span>
-          <p className="text-xs text-[#737373] max-w-[200px] mt-1">Select a template framework from the gallery stream to preview.</p>
+          <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
+            No layout active
+          </span>
+          <p className="text-xs text-[#737373] max-w-[200px] mt-1">
+            Select a template framework from the gallery stream to preview.
+          </p>
         </div>
       );
     }
     return (
       <div className="w-full flex flex-col min-w-0">
         <div className="w-full text-left mb-4 flex items-center gap-2 text-xs font-bold text-[#AFAFAF] uppercase tracking-wider select-none font-sans">
-          <span className="inline-block w-2 h-2 rounded-full bg-[#22C55E]" /> Live Preview
+          <span className="inline-block w-2 h-2 rounded-full bg-[#22C55E]" />{" "}
+          Live Preview
         </div>
 
         {/* Dynamic Image : Height driven on mobile, aspect ratio stabilized for desktop views */}
@@ -172,7 +196,9 @@ export default function TemplatesMarketplacePage() {
           <span className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-wider block mb-0.5 font-sans">
             {activeTemplate.category}
           </span>
-          <h2 className="text-xl sm:text-[24px] font-bold text-[#1A1A1A] truncate">{activeTemplate.title}</h2>
+          <h2 className="text-xl sm:text-[24px] font-bold text-[#1A1A1A] truncate">
+            {activeTemplate.title}
+          </h2>
           <p className="text-xs sm:text-sm text-[#757575] mt-1.5 font-medium leading-relaxed font-sans break-words">
             {activeTemplate.description}
           </p>
@@ -180,14 +206,17 @@ export default function TemplatesMarketplacePage() {
 
         {/* Bullet Specs Checkbox Pipeline Row */}
         <div className="w-full py-4 text-left space-y-2.5 min-w-0">
-          {
-            activeTemplate.features.map((feature, idx) => (
-              <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#3A3A3A] font-normal font-sans break-words">
-                <span className="text-[#FF693E] font-bold select-none shrink-0">✓</span>
-                <span className="min-w-0">{feature}</span>
-              </div>
-            ))
-          }
+          {activeTemplate.features.map((feature, idx) => (
+            <div
+              key={idx}
+              className="flex items-start gap-3 text-xs sm:text-sm text-[#3A3A3A] font-normal font-sans break-words"
+            >
+              <span className="text-[#FF693E] font-bold select-none shrink-0">
+                ✓
+              </span>
+              <span className="min-w-0">{feature}</span>
+            </div>
+          ))}
         </div>
 
         {/* Structural Interface Customisation Action Row Buttons */}
@@ -227,7 +256,9 @@ export default function TemplatesMarketplacePage() {
           Pick a layout to start
         </h1>
         <p className="text-xs sm:text-sm md:text-[14.5px] text-[#5C5C5C] leading-relaxed max-w-2xl break-words">
-          You&apos;ll customise the colours, logo, and content next — this is just the starting structure. Each layout is designed for a specific event type.
+          You&apos;ll customise the colours, logo, and content next — this is
+          just the starting structure. Each layout is designed for a specific
+          event type.
         </p>
       </div>
 
@@ -241,7 +272,9 @@ export default function TemplatesMarketplacePage() {
                 type="button"
                 onClick={() => setActiveFilter(tab)}
                 className={`px-4 py-1.5 rounded-full text-xs md:text-sm font-medium transition-all duration-150 border ${
-                  isActive ? "bg-[#222222] text-white border-[#222222] hover:bg-[#222222]/50" : "bg-white text-[#5C5C5C] border-[#EEEEEE] hover:bg-white/50"
+                  isActive
+                    ? "bg-[#222222] text-white border-[#222222] hover:bg-[#222222]/50"
+                    : "bg-white text-[#5C5C5C] border-[#EEEEEE] hover:bg-white/50"
                 }`}
               >
                 {tab}
@@ -255,35 +288,42 @@ export default function TemplatesMarketplacePage() {
 
   return (
     <div className="w-full min-h-screen bg-[#FAF9F6] py-6 overflow-x-hidden">
-
       {/* LARGE DESKTOP MAIN WRAPPER COMPONENT (`lg:grid`)*/}
       <main className="hidden lg:grid grid-cols-12 gap-8 max-w-7xl mx-auto w-full items-start px-6 lg:px-8">
-
         {/* Left Child Container */}
         <section className="col-span-7 flex flex-col gap-6 w-full">
           {renderHeaderAndFilters()}
 
           {/* Main Gallery Container handling full width configurations or alternate Empty State */}
-          {
-            filteredTemplates.length > 0 ? (
-              <div className="grid grid-cols-2 gap-5 w-full">
-                {
-                  filteredTemplates.map((tpl, idx) => renderTemplateCard(tpl, idx))
-                }
-              </div>
-            ) : (
-              renderEmptyState()
-            )
-          }
+          {filteredTemplates.length > 0 ? (
+            <div className="grid grid-cols-2 gap-5 w-full">
+              {filteredTemplates.map((tpl, idx) =>
+                renderTemplateCard(tpl, idx),
+              )}
+            </div>
+          ) : (
+            renderEmptyState()
+          )}
 
           {/* Dashed Upload Section Conduit Bottom Bridge Box */}
           <div className="border-2 border-dashed border-[#EEEEEE] hover:border-[#EEEEEE]/80 bg-white rounded-2xl p-5 flex items-center gap-4 cursor-pointer transition-colors w-full mt-2">
             <div className="w-10 h-10 rounded-xl bg-[#FFF0EC] flex items-center justify-center text-[#FC5E24] text-lg font-bold select-none shrink-0">
-              <Image src="/assets/dashboard/icons/upload-icon.svg" alt="Upload icon" width={30} height={30} className="object-contain" />
+              <Image
+                src="/assets/dashboard/icons/upload-icon.svg"
+                alt="Upload icon"
+                width={30}
+                height={30}
+                className="object-contain"
+              />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-sm md:text-[16px] font-bold text-[#1A1A1A]">Upload your own template</span>
-              <span className="text-xs text-[#5C5C5C] font-normal mt-0.5">Have a custom design? Upload a PNG or SVG (1080 × 1440px recommended).</span>
+              <span className="text-sm md:text-[16px] font-bold text-[#1A1A1A]">
+                Upload your own template
+              </span>
+              <span className="text-xs text-[#5C5C5C] font-normal mt-0.5">
+                Have a custom design? Upload a PNG or SVG (1080 × 1440px
+                recommended).
+              </span>
             </div>
           </div>
         </section>
@@ -296,7 +336,6 @@ export default function TemplatesMarketplacePage() {
 
       {/* MOBILE LAYOUT MONITOR STREAM SYSTEM (`block lg:hidden`) */}
       <main className="block lg:hidden w-full max-w-md mx-auto space-y-5 px-4 sm:px-6 box-border min-w-0 overflow-x-hidden">
-        
         {/* Mobile Filter Headers Element Top Track */}
         {renderHeaderAndFilters()}
 
@@ -304,7 +343,9 @@ export default function TemplatesMarketplacePage() {
           <>
             {/* Track Track A: Display First Row Templates (Card 1 and 2 Only) */}
             <section className="grid grid-cols-1 min-[320px]:grid-cols-2 gap-2.5 sm:gap-4 w-full">
-              {filteredTemplates.slice(0, 2).map((tpl, idx) => renderTemplateCard(tpl, idx))}
+              {filteredTemplates
+                .slice(0, 2)
+                .map((tpl, idx) => renderTemplateCard(tpl, idx))}
             </section>
 
             {/* Track Track B: Inline Middle Intercept Live Preview Panel Frame */}
@@ -314,7 +355,9 @@ export default function TemplatesMarketplacePage() {
 
             {/* Track Track C: Remaining Cards Layer Mapping */}
             <section className="grid grid-cols-1 min-[320px]:grid-cols-2 gap-2.5 sm:gap-4 w-full">
-              {filteredTemplates.slice(2).map((tpl, idx) => renderTemplateCard(tpl, idx + 2))}
+              {filteredTemplates
+                .slice(2)
+                .map((tpl, idx) => renderTemplateCard(tpl, idx + 2))}
             </section>
           </>
         ) : (
@@ -330,11 +373,21 @@ export default function TemplatesMarketplacePage() {
         {/* Track Track D: Bottom Upload Box Border Link */}
         <div className="border-2 border-dashed border-[#EEEEEE] hover:border-[#EEEEEE]/80 bg-white rounded-2xl p-4 sm:p-5 flex flex-row items-center gap-3 text-left cursor-pointer w-full box-border">
           <div className="w-10 h-10 shrink-0 rounded-xl bg-[#FFF0EC] flex items-center justify-center text-[#FC5E24] text-lg font-bold select-none">
-            <Image src="/assets/dashboard/icons/upload-icon.svg" alt="Upload icon" width={30} height={30} className="object-contain" />
+            <Image
+              src="/assets/dashboard/icons/upload-icon.svg"
+              alt="Upload icon"
+              width={30}
+              height={30}
+              className="object-contain"
+            />
           </div>
           <div className="flex flex-col min-w-0">
-            <span className="text-sm font-bold text-[#1A1A1A]">Upload your own template</span>
-            <span className="text-[11px] text-[#5C5C5C] font-medium mt-0.5 break-words">Upload a PNG or SVG (1080 × 1440px recommended).</span>
+            <span className="text-sm font-bold text-[#1A1A1A]">
+              Upload your own template
+            </span>
+            <span className="text-[11px] text-[#5C5C5C] font-medium mt-0.5 break-words">
+              Upload a PNG or SVG (1080 × 1440px recommended).
+            </span>
           </div>
         </div>
       </main>

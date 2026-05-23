@@ -1,7 +1,7 @@
-import { Template, StatCard } from "../types/dashboard";
-import { TemplateData } from "../types/dashboard";
-import { LayoutTemplate } from "../types/dashboard";
-import { Badge, Filter, Status } from "../types/dashboard";
+import { Template, StatCard } from "../types/dashboard/dashboard";
+import { TemplateData } from "../types/dashboard/dashboard";
+import { LayoutTemplate } from "../types/dashboard/dashboard";
+import { Badge, Filter, Status } from "../types/dashboard/dashboard";
 
 export const templates: Template[] = [
   {

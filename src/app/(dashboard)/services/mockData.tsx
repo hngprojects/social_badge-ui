@@ -1,4 +1,4 @@
-import { OrganizerTemplateInstance } from "../types/organizer-template-instances";
+import { OrganizerTemplateInstance } from "../types/dashboard/organizer-template-instances";
 
 export const mockOrganizerTemplateInstances: OrganizerTemplateInstance[] = [
   {

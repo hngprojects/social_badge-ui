@@ -1,10 +1,10 @@
 "use client";
-import Analytics from "./components/analytics";
-import BrowseTemplate from "./components/browse-templates";
-import Steps from "./components/steps";
+import Analytics from "../components/dashboard/analytics";
+import BrowseTemplate from "../components/dashboard/browse-templates";
+import Steps from "../components/dashboard/steps";
 import Image from "next/image";
 import Link from "next/link";
-import RecentBadges from "./components/recent-badges";
+import RecentBadges from "../components/dashboard/recent-badges";
 import { useUserStore } from "@/stores/use-user-store";
 
 export default function Dashboard() {
