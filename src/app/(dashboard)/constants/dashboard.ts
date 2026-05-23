@@ -60,19 +60,19 @@ export const stats: StatCard[] = [
     bg: "#DCFCE7",
   },
   {
-    image: "/assets/dashboard/icons/CheckCircle.svg",
+    image: "/assets/dashboard/icons/active-badges.svg",
     title: "active badges",
     count: "0",
     bg: "#DCFCE7",
   },
   {
-    image: "/assets/dashboard/icons/total-links.svg",
+    image: "/assets/dashboard/icons/ui-link.svg",
     title: "total links",
     count: "0",
     bg: "#DCE6FD",
   },
   {
-    image: "/assets/dashboard/icons/total-shares.svg",
+    image: "/assets/dashboard/icons/ui-share.svg",
     title: "total shares",
     count: "0",
     bg: "#FEF3C7",

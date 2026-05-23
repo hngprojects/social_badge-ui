@@ -16,6 +16,7 @@ export async function apiClient<T>(
     url: endpoint,
     ...options,
   });
+  console.log("reached");
 
   return response.data;
 }

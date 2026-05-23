@@ -4,14 +4,14 @@ import { stats } from "../../constants/dashboard";
 
 export default function Analytics() {
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 xl:grid-cols-4">
       {stats.map((card) => (
         <article
-          className="p-5 border bg-[#F8F8F866] flex gap-4 rounded-[12px]"
           key={card.title}
+          className="flex min-w-0 items-center gap-3 rounded-[12px] border border-[#E8E8E8] bg-[#F8F8F866] p-3 sm:p-4 md:gap-4 md:p-5"
         >
           <div
-            className="w-12.5 h-12.5  grid rounded-full place-content-center"
+            className="grid h-8 w-8 shrink-0 place-content-center rounded-full sm:h-10 sm:w-10 md:h-[50px] md:w-[50px]"
             style={{ backgroundColor: card.bg }}
           >
             <Image
@@ -19,13 +19,16 @@ export default function Analytics() {
               width={24}
               height={24}
               alt={`${card.title} icon`}
+              className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6"
             />
           </div>
-          <div>
-            <p className="text-[#9B9B9B] capitalize text-[14px] font-medium">
+
+          <div className="min-w-0">
+            <p className="truncate text-[12px] font-medium capitalize text-[#757575] md:text-[14px]">
               {card.title}
             </p>
-            <p className="text-[32px] text-[#353535] font-medium">
+
+            <p className="text-[18px] font-bold text-[#3A3A3A] sm:text-[20px] md:text-[24px]">
               {card.count}
             </p>
           </div>

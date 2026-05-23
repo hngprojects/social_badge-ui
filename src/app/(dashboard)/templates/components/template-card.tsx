@@ -1,7 +1,7 @@
 import { Template } from "../../types/template";
 import Image from "next/image";
 
-const TemplateCard = ({
+export const TemplateCard = ({
   template,
   isAboveFold = false,
 }: {
@@ -10,7 +10,7 @@ const TemplateCard = ({
 }) => {
   return (
     <div
-      className={`relative flex flex-col cursor-pointer rounded-[12px] border border-[#EAEAE6] overflow-hidden`}
+      className={`relative flex h-full flex-col cursor-pointer rounded-[12px] border border-[#EAEAE6] overflow-hidden`}
     >
       {/* Tag */}
       {template.tag && (

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { navigationLinks } from "../navLinks";
+import { useUserStore } from "@/stores/use-user-store";
 
 export default function SideNav() {
   const [expanded, setExpanded] = useState(true);
@@ -11,6 +12,8 @@ export default function SideNav() {
   const navigation = navigationLinks;
   const topNav = navigation.slice(0, 3);
   const bottomNav = navigation.slice(3);
+  const user = useUserStore((state) => state.user);
+  const userName = user?.first_name ?? "there";
 
   return (
     <aside
@@ -87,7 +90,8 @@ export default function SideNav() {
             <div className="flex items-center gap-2">
               <div className="h-12 w-12 overflow-hidden rounded-full border">
                 <Image
-                  src="/assets/dashboard/pfp.jpg"
+                  className="object-cover h-full w-full"
+                  src="/assets/dashboard/user-avatar.png"
                   width={48}
                   height={48}
                   alt="profile image"
@@ -97,21 +101,21 @@ export default function SideNav() {
               {expanded && (
                 <div className="flex flex-col">
                   <p className="text-[16px] font-medium text-[#161616]">
-                    Joe Williams
+                    {userName}
                   </p>
                   <p className="text-[14px] text-[#6B7280]">Organizer</p>
                 </div>
               )}
             </div>
 
-            {expanded && (
+            {/* {expanded && (
               <Image
                 src="/assets/dashboard/icons/chevron-right.svg"
                 width={24}
                 height={24}
                 alt="open profile"
               />
-            )}
+            )} */}
           </div>
         </div>
       </div>
