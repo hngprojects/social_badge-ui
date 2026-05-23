@@ -9,6 +9,7 @@ export interface Plan {
   yearlyPrice: number;
   description: string;
   cta: string;
+  ctaHref: string;
   ctaVariant: CtaVariant;
   popular: boolean;
   features: string[];

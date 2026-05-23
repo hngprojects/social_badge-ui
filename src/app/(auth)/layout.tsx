@@ -30,12 +30,12 @@ const Layout = ({ children }: LayoutProps) => {
         {/* right — key re-triggers the slide-in on every route change */}
         <motion.div
           key={pathname}
-          className="w-full flex-1 h-full flex p-6"
+          className="w-full flex-1 h-full items-center flex p-6"
           initial={shouldReduceMotion ? false : { opacity: 0, x: 80 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
         >
-          <div className="login bg-white w-full rounded-lg overflow-y-auto scroll-smooth p-5 no-scrollbar flex flex-col gap-5">
+          <div className="login bg-white w-full rounded-lg overflow-y-auto scroll-smooth p-5 no-scrollbar flex flex-col gap-5 max-h-fit">
             {children}
           </div>
         </motion.div>

@@ -8,6 +8,7 @@ export const PLANS: Plan[] = [
     yearlyPrice: 0,
     description: 'Best for small or one-time events',
     cta: 'Get Started Free',
+    ctaHref: '/signup',
     ctaVariant: 'outline',
     popular: false,
     features: [
@@ -25,6 +26,7 @@ export const PLANS: Plan[] = [
     yearlyPrice: 24,
     description: 'For growing teams and organizers',
     cta: 'Upgrade to Pro',
+    ctaHref: '/coming_soon',
     ctaVariant: 'primary',
     popular: true,
     features: [
@@ -44,6 +46,7 @@ export const PLANS: Plan[] = [
     yearlyPrice: 40,
     description: 'For large events and organizations',
     cta: 'Upgrade to Team',
+    ctaHref: '/coming_soon',
     ctaVariant: 'outline',
     popular: false,
     features: [
