@@ -72,6 +72,7 @@ export function BrandSection({ editor, onChange, layoutCaps }: BrandSectionProps
           placeholder="e.g. AchieveHer Summit Badge"
           value={editor.title}
           onChange={(v) => onChange({ title: v })}
+          maxLength={50}
         />
         <HelperText>A name for this badge template in your dashboard.</HelperText>
       </div>
@@ -82,6 +83,7 @@ export function BrandSection({ editor, onChange, layoutCaps }: BrandSectionProps
           placeholder="e.g. AchieveHer Summit"
           value={editor.eventName}
           onChange={(v) => onChange({ eventName: v })}
+          maxLength={25}
         />
         <HelperText>Appears as the main title on the badge.</HelperText>
       </div>
@@ -100,6 +102,7 @@ export function BrandSection({ editor, onChange, layoutCaps }: BrandSectionProps
                 placeholder="e.g. 10am"
                 value={editor.eventTime}
                 onChange={(v) => onChange({ eventTime: v })}
+                maxLength={15}
               />
               <HelperText>Shown alongside the date on the badge.</HelperText>
             </div>

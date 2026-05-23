@@ -93,7 +93,7 @@ export function LivePreview({
       <div className="rounded-2xl bg-orange-50 p-5">
         <div
           style={backgroundStyle}
-          className="w-full max-w-79.5 h-106 rounded-[32px] relative overflow-hidden mx-auto"
+          className="w-full max-w-79.5 h-106 rounded-[18px] relative overflow-hidden mx-auto"
         >
           {editor.backgroundImageUrl && (
             <Image

@@ -47,19 +47,29 @@ export function TextInput({
   placeholder,
   value,
   onChange,
+  maxLength,
 }: {
   placeholder?: string;
   value?: string;
   onChange?: (v: string) => void;
+  maxLength?: number;
 }) {
   return (
-    <input
-      type="text"
-      placeholder={placeholder}
-      value={value ?? ""}
-      onChange={(e) => onChange?.(e.target.value)}
-      className="w-full h-12 px-4 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959] text-sm font-medium"
-    />
+    <div className="relative">
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={value ?? ""}
+        maxLength={maxLength}
+        onChange={(e) => onChange?.(e.target.value)}
+        className="w-full h-12 px-4 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959] text-sm font-medium"
+      />
+      {maxLength && (
+        <span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
+          {(value ?? "").length}/{maxLength}
+        </span>
+      )}
+    </div>
   );
 }
 
@@ -75,19 +85,29 @@ export function TextArea({
   placeholder,
   value,
   onChange,
+  maxLength,
 }: {
   placeholder?: string;
   value?: string;
   onChange?: (v: string) => void;
+  maxLength?: number;
 }) {
   return (
-    <textarea
-      rows={3}
-      placeholder={placeholder}
-      value={value ?? ""}
-      onChange={(e) => onChange?.(e.target.value)}
-      className="w-full px-4 py-3 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959] text-sm font-medium resize-none"
-    />
+    <div className="relative">
+      <textarea
+        rows={3}
+        placeholder={placeholder}
+        value={value ?? ""}
+        maxLength={maxLength}
+        onChange={(e) => onChange?.(e.target.value)}
+        className="w-full px-4 py-3 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959] text-sm font-medium resize-none"
+      />
+      {maxLength && (
+        <span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
+          {(value ?? "").length}/{maxLength}
+        </span>
+      )}
+    </div>
   );
 }
 

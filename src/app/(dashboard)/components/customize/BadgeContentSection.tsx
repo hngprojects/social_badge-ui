@@ -32,6 +32,7 @@ export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeConte
           placeholder="e.g. Your Name"
           value={editor.participantNameLabel}
           onChange={(v) => onChange({ participantNameLabel: v })}
+          maxLength={20}
         />
         <HelperText>What attendees see in the badge&apos;s name field.</HelperText>
       </div>
@@ -42,6 +43,7 @@ export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeConte
           placeholder="e.g. Your name"
           value={editor.participantNamePlaceholder}
           onChange={(v) => onChange({ participantNamePlaceholder: v })}
+          maxLength={25}
         />
         <HelperText>Hint text shown before attendees type their name.</HelperText>
       </div>
@@ -54,6 +56,7 @@ export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeConte
               placeholder="e.g. ROLE / TITLE"
               value={editor.roleTitleLabel}
               onChange={(v) => onChange({ roleTitleLabel: v })}
+              maxLength={20}
             />
           </div>
           <div>
@@ -62,6 +65,7 @@ export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeConte
               placeholder="e.g. Attendee"
               value={editor.roleTitlePlaceholder}
               onChange={(v) => onChange({ roleTitlePlaceholder: v })}
+              maxLength={25}
             />
           </div>
           <div className="flex items-start justify-between gap-4 pt-1">
