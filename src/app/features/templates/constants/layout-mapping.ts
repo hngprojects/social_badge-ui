@@ -3,13 +3,13 @@ import type { CanvasData, CanvasLayoutId } from "../types/canvas-data";
 const CANVAS_LAYOUT_IDS: CanvasLayoutId[] = [
 	"photo_gradient_v1",
 	"name_role_dark_v1",
-	"name_role_dark_v2",
+	"dev_summit_dark_v1",
 	"next_gen_mint_v1",
 ];
 
 export const PLATFORM_TEMPLATE_LAYOUT_MAP: Record<string, CanvasLayoutId> = {
 	tpl_achieveher: "photo_gradient_v1",
-	tpl_dev_summit_26: "name_role_dark_v2",
+	tpl_dev_summit_26: "dev_summit_dark_v1",
 	tpl_web3_summit: "name_role_dark_v1",
 	tpl_next_gen: "next_gen_mint_v1",
 };
@@ -52,7 +52,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 		defaultPaletteId: "bg_mesh_01",
 		previewColor: "",
 	},
-	name_role_dark_v2: {
+	dev_summit_dark_v1: {
 		staticFields: ["event_name"],
 		participantFields: ["participant_name", "participant_photo"],
 		hasHeaderLogo: false,

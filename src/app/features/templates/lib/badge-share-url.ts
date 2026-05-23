@@ -5,12 +5,12 @@ export function getAppOrigin(): string {
   return raw.replace(/\/$/, "");
 }
 
-/** Participant claim page — matches GET /p/{share_slug} in the product spec. */
+/** Participant claim page — matches GET /badges/{share_slug} in the product spec. */
 export function buildParticipantShareUrl(shareSlug: string): string {
-  return `${getAppOrigin()}/p/${encodeURIComponent(shareSlug)}`;
+  return `${getAppOrigin()}/badges/${encodeURIComponent(shareSlug)}`;
 }
 
-/** Host + path for the link card (e.g. `localhost:3000/p/my-event`). */
+/** Host + path for the link card (e.g. `localhost:3000/badges/my-event`). */
 export function formatShareUrlForDisplay(fullUrl: string): string {
   try {
     const { host, pathname } = new URL(fullUrl);

@@ -21,8 +21,8 @@ export interface PreviewLayoutConfig {
 }
 
 export const PREVIEW_LAYOUTS: Record<CanvasLayoutId, PreviewLayoutConfig> = {
-	name_role_dark_v2: {
-		layoutId: "name_role_dark_v2",
+	dev_summit_dark_v1: {
+		layoutId: "dev_summit_dark_v1",
 		hasHeaderLogo: false,
 		previewColor: "#0A0A0A",
 		photoFrame: {

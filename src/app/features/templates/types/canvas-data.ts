@@ -10,7 +10,7 @@ export type PreviewFieldKey = CanvasFieldKey | "brand_initials";
 export type CanvasLayoutId =
 	| "photo_gradient_v1"
 	| "name_role_dark_v1"
-	| "name_role_dark_v2"
+	| "dev_summit_dark_v1"
 	| "next_gen_mint_v1";
 
 export type CanvasFieldType =

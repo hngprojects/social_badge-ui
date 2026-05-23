@@ -9,7 +9,7 @@ const SECURITY_HEADERS: Record<string, string> = {
 
 const PROTECTED_ROUTES = [
   "/dashboard",
-  "/badges",
+  "/badges/published",
   "/create-badges",
   "/templates",
  "/settings",
