@@ -14,14 +14,14 @@ export default function SideNav() {
 
   return (
     <aside
-      className={`h-screen shrink-0 overflow-hidden border-r border-[#00000014]/80 pb-6 text-black transition-[width] duration-300 ${
+      className={`h-screen shrink-0 overflow-hidden border-r border-[#00000014]/80 pb-6  text-black transition-[width] duration-300 ${
         expanded ? "w-[241px]" : "w-[72px]"
       }`}
     >
-      <div className="flex h-full flex-col justify-between">
-        <div>
+      <div className="flex gap-[30px] h-full flex-col justify-between ">
+        <div className="">
           <header
-            className={`flex ${!expanded && "flex-col"} items-center justify-between gap-6 p-4 pb-6 whitespace-nowrap text-[#231F20]`}
+            className={`flex ${!expanded && "flex-col"} items-center justify-between gap-6 p-4 pt-[18px] mt-3 pb-6 mb-2 whitespace-nowrap text-[#231F20]`}
           >
             <div className="flex items-center gap-2">
               <Link href="/dashboard">
@@ -53,7 +53,7 @@ export default function SideNav() {
             </button>
           </header>
 
-          <nav>
+          <nav className="">
             <ul
               className={`m-0 flex list-none flex-col gap-2 p-0 ${expanded ? "px-2" : ""}`}
             >
@@ -137,7 +137,7 @@ function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
     <li
       className={`relative rounded-[8px] py-4 ${
         expanded ? "px-2" : ""
-      } ${isActive && expanded ? "bg-primary/10 text-primary" : "text-black"}`}
+      } ${isActive && expanded ? "bg-[#FAF4EC] text-primary" : "text-black"} whitespace-nowrap`}
     >
       {!expanded && isActive && (
         <div className="absolute bottom-0 left-0 top-0 w-[6px] rounded-l-[6px] bg-[#FA5424]" />

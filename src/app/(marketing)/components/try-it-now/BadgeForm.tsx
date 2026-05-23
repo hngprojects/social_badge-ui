@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { PhotoUpload } from "./PhotoUpload";
 import { StylePicker } from "./StylePicker";
 import { ColorSwatch } from "./ColorSwatch";
@@ -27,6 +26,8 @@ function Field({
 }
 
 export default function BadgeForm({ badge, update }: BadgeFormProps) {
+	//const isReady = badge.name.trim().length > 0;
+
 	return (
 		<div className="flex flex-col gap-4">
 			{/* Photo */}
@@ -107,12 +108,14 @@ export default function BadgeForm({ badge, update }: BadgeFormProps) {
 				/>
 			</Field>
 
-			<Button
-				className="w-full  bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-semibold py-3 rounded-full text-sm mt-2 transition-colors h-11"
-				disabled
+			{/* <Button
+				className="w-full bg-[#FF693E] hover:bg-[#E5532A] text-white font-semibold py-3 rounded-full text-sm mt-2 transition-colors h-11 disabled:opacity-50 disabled:cursor-not-allowed"
+				disabled={!isReady}
+				title={!isReady ? 'Enter your name to generate your badge' : undefined}
+				onClick={isReady ? onGenerate : undefined}
 			>
 				Generate and share
-			</Button>
+			</Button> */}
 		</div>
 	);
 }

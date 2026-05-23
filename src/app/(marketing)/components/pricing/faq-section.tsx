@@ -4,21 +4,58 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FAQ_DATA } from '../../constants/pricing';
 
+// ── Shared easing ─────────────────────────────────────────────────────────────
+const EASE = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
+
+// ── Header: slides up from bottom on scroll ───────────────────────────────────
+const headerVariants = {
+  hidden: { opacity: 0, y: 36 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, ease: EASE },
+  },
+};
+
+// ── Each FAQ item: slides up one by one with explicit delay per index ─────────
+const faqItemVariants = {
+  hidden: { opacity: 0, y: 28 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: EASE, delay: i * 0.15 },
+  }),
+};
+
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="px-6 pb-20 max-w-[1090px] mx-auto text-center">
-      <h2 className="text-[clamp(22px,3vw,32px)] tracking-tight mb-9 font-fraunces">
+      {/* ── Header ── */}
+      <motion.h2
+        className="text-[clamp(22px,3vw,32px)] tracking-tight mb-9 font-fraunces"
+        variants={headerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         Frequently Asked Question
-      </h2>
+      </motion.h2>
 
       <div className="text-left w-full max-w-220 mx-auto">
         {FAQ_DATA.map((item, i) => {
           const isOpen = openIndex === i;
 
           return (
-            <div key={i} className="border-b border-[#f0ece8]">
+            <motion.div
+              key={i}
+              custom={i}
+              variants={faqItemVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              className="border-b border-[#f0ece8]">
               <button
                 className="w-full flex justify-between items-center py-4.5 bg-transparent border-none cursor-pointer gap-4"
                 onClick={() => setOpenIndex(isOpen ? null : i)}
@@ -55,7 +92,7 @@ export default function FAQSection() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           );
         })}
       </div>
