@@ -31,7 +31,10 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="px-6 pb-20 max-w-[1090px] mx-auto text-center">
+    <section
+      id="pricing-faq"
+      className="scroll-mt-28 px-6 pb-20 max-w-[1090px] mx-auto text-center"
+    >
       {/* ── Header ── */}
       <motion.h2
         className="text-[clamp(22px,3vw,32px)] tracking-tight mb-9 font-fraunces"
@@ -40,7 +43,7 @@ export default function FAQSection() {
         whileInView="show"
         viewport={{ once: true, amount: 0.3 }}
       >
-        Frequently Asked Question
+        Frequently Asked Questions
       </motion.h2>
 
       <div className="text-left w-full max-w-220 mx-auto">

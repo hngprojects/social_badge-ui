@@ -1,13 +1,3 @@
-export const filterTabs = [
-  "all",
-  "trending",
-  "festivals",
-  "hackathons",
-  "conferences",
-  "community",
-  "bootcamp",
-  "meetups",
-  "speakers",
-] as const;
+export const filterTabs = ["all", "trending", "conferences"] as const;
 
 export type FilterTab = (typeof filterTabs)[number];
