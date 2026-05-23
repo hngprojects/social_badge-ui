@@ -15,12 +15,19 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { navigationLinks } from "../navLinks";
 import { useState, useEffect } from "react";
+import { useUserStore } from "@/stores/use-user-store";
+import { useLogout } from "@/app/features/auth/hooks/useLogout";
+import { getUserDisplayName } from "@/lib/api/auth-session";
+import { LogOut } from "lucide-react";
 
 export default function MobileHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const navigation = navigationLinks;
+  const user = useUserStore((state) => state.user);
+  const { logout, isLoggingOut } = useLogout();
+  const displayName = getUserDisplayName(user);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -153,6 +160,24 @@ export default function MobileHeader() {
                     );
                   })}
                 </nav>
+
+                <div className="mt-auto border-t border-border px-3 py-4">
+                  <p className="mb-3 truncate px-1 text-sm font-medium text-foreground">
+                    {displayName}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      logout();
+                      setMobileOpen(false);
+                    }}
+                    disabled={isLoggingOut}
+                    className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-60"
+                  >
+                    <LogOut className="h-5 w-5" strokeWidth={1.75} />
+                    {isLoggingOut ? "Logging out…" : "Log out"}
+                  </button>
+                </div>
               </nav>
             </div>
           </SheetContent>
