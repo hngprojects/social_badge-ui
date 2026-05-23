@@ -38,7 +38,7 @@ export const useLogin = () => {
 			}
 
 
-			if (status === 401 && message.toLowerCase() === "invalid credentials") {
+			if (status === 401 ) {
 				toast.error(
 					"Invalid Email or Password. Please try again.",
 				);

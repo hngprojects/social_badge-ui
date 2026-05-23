@@ -184,8 +184,13 @@ export const SignupForm = () => {
 						type="submit"
 						disabled={!isChecked || isSubmitting || isLoading || isRateLimited}
 					>
-						{isLoading ? "Signing up..." : "Sign up"}
-						{isRateLimited ? "Try again later" : "Sign Up"}
+						{
+							isRateLimited
+								? "Try again later"
+								: isLoading
+									? "Signing up..."
+									: "Sign up"
+						}
 					</Button>
 				</form>
 
