@@ -86,7 +86,7 @@ export const faqData = [
   },
   {
     id: 'item-3',
-    question: 'Can I customise the badge?',
+    question: 'Can I customize the badge?',
     answer:
       'Yes. Organisers can upload their logo, set their event name, choose a colour style, and write the caption that participants share.',
   },
