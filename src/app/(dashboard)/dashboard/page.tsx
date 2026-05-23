@@ -12,10 +12,11 @@ import { useRecentOrganizerBadges } from "../hooks/use-organizer-template-instan
 export default function Dashboard() {
   const user = useUserStore((state) => state.user);
   const userName = user?.first_name ?? "there";
-  const { templates, isLoading, isError } =
+
+  const { total, isLoading, isError } =
     useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
 
-  const hasBadges = templates.length > 0;
+  const hasBadges = total > 0;
   const canShowBadgeSection = !isLoading && !isError;
 
   return (
@@ -40,9 +41,9 @@ export default function Dashboard() {
 
       <Analytics />
 
-      {canShowBadgeSection && !hasBadges && <FirstBadgeCta />}
-
       {canShowBadgeSection && hasBadges && <RecentBadges />}
+
+      {canShowBadgeSection && !hasBadges && <FirstBadgeCta />}
 
       <Steps />
 
