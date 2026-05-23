@@ -24,17 +24,16 @@ export const navigationLinks: NavigationLink[] = [
     activeIcon: "/assets/dashboard/icons/template-active.svg",
     href: "/templates",
   },
-  // Not functional yet — re-enable when routes are ready.
-  // {
-  //   label: "Settings",
-  //   icon: "/assets/dashboard/icons/settings.svg",
-  //   activeIcon: "/assets/dashboard/icons/settings.svg",
-  //   href: "/settings",
-  // },
-  // {
-  //   label: "Support",
-  //   icon: "/assets/dashboard/icons/support.svg",
-  //   activeIcon: "/assets/dashboard/icons/support.svg",
-  //   href: "/support",
-  // },
+  {
+    label: "Settings",
+    icon: "/assets/dashboard/icons/settings.svg",
+    activeIcon: "/assets/dashboard/icons/settings.svg",
+    href: "/settings",
+  },
+  {
+    label: "Support",
+    icon: "/assets/dashboard/icons/support.svg",
+    activeIcon: "/assets/dashboard/icons/support.svg",
+    href: "/support",
+  },
 ];
