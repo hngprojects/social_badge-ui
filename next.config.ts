@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  experimental: {
-    authInterrupts: true,
-  },
-  images: {
+ 
+ const nextConfig: NextConfig = {
+   experimental: {
+     authInterrupts: true,
+   },
+   images: {
     remotePatterns: [
       {
         protocol: "https",
@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
-  },
-};
-
-export default nextConfig;
+   },
+ };
+ 
+ export default nextConfig;
