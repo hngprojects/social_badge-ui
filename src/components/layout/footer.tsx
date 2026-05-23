@@ -25,7 +25,7 @@ const PRODUCT_LINKS = [
 ] as const;
 
 const SUPPORT_LINKS = [
-	{ label: "FAQ", href: "#faq-section" },
+	{ label: "FAQ", href: "/pricing#pricing-faq" },
 	{ label: "Contact Us", href: "/contact" },
 ] as const;
 
@@ -108,12 +108,6 @@ export default function Footer() {
 									{isLoading ? "Subscribing..." : "Subscribe"}
 								</Button>
 							</div>
-
-							{/* Desktop subtext below input */}
-							<p className="hidden lg:block text-white text-sm mt-3">
-								Stay ahead with the latest updates, insights, and events from
-								Social Badge.
-							</p>
 						</div>
 					</div>
 				</div>
