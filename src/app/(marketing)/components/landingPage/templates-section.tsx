@@ -124,15 +124,6 @@ const Templates = () => {
                   </div>
 
                   {/* Link arrow */}
-                  {/* <span className="flex items-center justify-center w-5 h-5 bg-primary rounded-full">
-                    <Image
-                      src="/assets/landing-page/icons/Vector.svg"
-                      alt="Arrow"
-                      width={8}
-                      height={8}
-                      className="w-2 h-2"
-                    />
-                  </span> */}
                 </div>
               </div>
             </div>
