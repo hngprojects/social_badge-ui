@@ -165,7 +165,7 @@ export default function LegalLayout({
             </div>
 
             {/* Policy sections */}
-            <div className="text-sm md:text-[15px] leading-relaxed text-muted-foreground flex flex-col gap-10 pb-12 [&>section:not(:first-child)]:border-t [&>section:not(:first-child)]:border-border [&>section:not(:first-child)]:pt-10">
+            <div className="text-sm md:text-[15px] leading-relaxed text-muted-foreground flex flex-col gap-4 pb-12 [&>section:not(:first-child)]:border-t [&>section:not(:first-child)]:border-border [&>section:not(:first-child)]:pt-7">
               {children}
             </div>
           </div>

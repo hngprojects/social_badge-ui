@@ -1,38 +1,71 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
-import { TABS, BackgroundOption, TemplateConfig, UploadedFileMetadata } from "./constants";
+import { TABS, FONTS } from "./constants";
+import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
+import {
+  PREVIEW_LAYOUTS,
+  getPreviewValueForField,
+} from "@/app/features/templates/constants/preview-layouts";
+import { CANVAS_FIELD_KEYS } from "@/app/features/templates/constants/field-keys";
 
 interface LivePreviewProps {
   activeTab: typeof TABS[number];
   setActiveTab: (tab: typeof TABS[number]) => void;
-  template: TemplateConfig | null;
-  activeBackground: BackgroundOption;
-  eventName: string;
-  logoData: UploadedFileMetadata | null;
-  formData: Record<string, string>;
+  editor: CustomizeEditorState;
   shareCaption: string;
-  allowPhoto: boolean;
-  destinationUrl: string;
 }
 
 export function LivePreview({
   activeTab,
   setActiveTab,
-  template,
-  activeBackground,
-  eventName,
-  logoData,
-  formData,
+  editor,
   shareCaption,
-  allowPhoto,
-  destinationUrl,
 }: LivePreviewProps) {
+  const preview = PREVIEW_LAYOUTS[editor.layoutId];
+
+  const backgroundStyle = useMemo(() => {
+    if (editor.backgroundImageUrl) {
+      return undefined;
+    }
+    if (editor.bgMode === "gradient") {
+      return {
+        background: `linear-gradient(${editor.gradientDirection}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
+      };
+    }
+    if (editor.bgMode === "solid") {
+      return { backgroundColor: editor.solidColor };
+    }
+    if (preview.previewColor) {
+      return { backgroundColor: preview.previewColor };
+    }
+    return undefined;
+  }, [editor, preview.previewColor]);
+
+  const visibleFields = preview.fields.filter((slot) => {
+    if (slot.key === CANVAS_FIELD_KEYS.ROLE_TITLE) {
+      return editor.layoutId !== "photo_gradient_v1" ||
+        editor.roleTitleLabel.trim().length > 0;
+    }
+    return true;
+  });
+
+  const titleStyle = useMemo(() => {
+    const font = FONTS.find((f) => f.id === editor.fontId) || FONTS[0];
+    const sizeMap = {
+      SMALL: "16px",
+      MEDIUM: "22px",
+      LARGE: "32px",
+    };
+    return {
+      ...font.style,
+      fontSize: sizeMap[editor.titleSize] || "22px",
+    };
+  }, [editor.fontId, editor.titleSize]);
+
   return (
     <div className="space-y-3">
-
-      {/* ── Tab bar ── */}
       <div className="flex items-center bg-[#EEEEEE] rounded-xl p-1 shadow-sm border border-gray-100">
         {TABS.map((tab) => (
           <button
@@ -50,7 +83,6 @@ export function LivePreview({
         ))}
       </div>
 
-      {/* ── Live Preview label ── */}
       <div className="flex items-center gap-1.5 px-1">
         <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
         <span className="text-[11px] font-semibold tracking-widest text-gray-400 uppercase">
@@ -58,90 +90,88 @@ export function LivePreview({
         </span>
       </div>
 
-      {/* ── Badge card ── */}
       <div className="rounded-2xl bg-orange-50 p-5">
-        {template ? (
-          <div
-            style={
-              template.preview_color
-                ? { backgroundColor: template.preview_color }
-                : activeBackground.type === "gradient"
-                ? { background: activeBackground.value }
-                : activeBackground.type === "color"
-                ? { backgroundColor: activeBackground.value }
-                : undefined
-            }
-            className="w-full max-w-79.5 h-106 rounded-[32px] relative overflow-hidden mx-auto"
-          >
-            {/* Background image layer */}
-            {template.preview_url ? (
-              <Image
-                src={template.preview_url}
-                alt="Dynamic canvas theme background"
-                fill
-                priority
-                className="object-cover z-0 pointer-events-none"
-              />
-            ) : (
-              activeBackground.type === "image" && (
-                <Image
-                  src={activeBackground.value}
-                  alt="Dynamic canvas theme background"
-                  fill
-                  priority
-                  className="object-cover z-0 pointer-events-none"
-                />
-              )
-            )}
+        <div
+          style={backgroundStyle}
+          className="w-full max-w-79.5 h-106 rounded-[18px] relative overflow-hidden mx-auto"
+        >
+          {editor.backgroundImageUrl && (
+            <Image
+              src={editor.backgroundImageUrl}
+              alt="Badge background"
+              fill
+              priority
+              className="object-cover z-0 pointer-events-none"
+            />
+          )}
 
-            {/* CANVAS LAYER 1: Event name header */}
-            {template.layout.hasHeaderLogo && (
-              <header className="absolute top-4 left-0 right-0 h-10 px-6 z-10 flex items-center justify-center">
-                <h1 className="text-white text-2xl font-serif italic tracking-wide select-none opacity-80">
-                  {eventName || template.title}
-                </h1>
-              </header>
-            )}
-
-            {/* CANVAS LAYER 2: Attendee photo / upload preview */}
-            <div className="absolute top-22 left-6 right-6 aspect-square rounded-2xl border-2 border-white/20 z-10 overflow-hidden shadow-inner">
-              {allowPhoto && logoData?.blobUrl ? (
-                <div className="relative w-full h-full animate-in fade-in duration-200">
+          {preview.hasHeaderLogo && (
+            <header className="absolute top-4 left-0 right-0 h-10 px-6 z-10 flex items-center justify-center gap-2">
+              {editor.logoPreviewUrl && (
+                <div className="relative w-8 h-8 shrink-0">
                   <Image
-                    src={logoData.blobUrl}
-                    alt="Uploaded logo preview"
+                    src={editor.logoPreviewUrl}
+                    alt="Event logo"
                     fill
-                    className="object-cover"
+                    className="object-contain"
                   />
                 </div>
-              ) : (
-                <div className="w-full h-full bg-[#E5E7EB] flex items-center justify-center">
-                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center px-4 select-none">
-                    Attendee Photograph Frame
-                  </span>
-                </div>
               )}
-            </div>
-
-            {/* CANVAS LAYER 3: Dynamic absolute field placement */}
-            {template.layout.fields.map((field) => (
-              <div
-                key={field.token}
-                style={field.style}
-                className="z-10 select-none transition-all duration-150"
+              <h1
+                className="text-white tracking-wide select-none opacity-80 truncate"
+                style={titleStyle}
               >
-                {formData[field.token] || field.placeholder}
+                {editor.eventName || "Your event"}
+              </h1>
+            </header>
+          )}
+
+          {editor.allowParticipantPhoto && preview.photoFrame && (
+            <div
+              style={preview.photoFrame.style}
+              className={`z-10 overflow-hidden shadow-inner border-2 ${
+                preview.photoFrame.shape === "circle"
+                  ? "rounded-full border-white/30"
+                  : "rounded-2xl border-white/20"
+              } ${preview.previewColor === "#F5F5F0" ? "border-gray-200" : ""}`}
+            >
+              <div
+                className={`w-full h-full flex items-center justify-center ${
+                  preview.previewColor === "#F5F5F0" ? "bg-[#D4F5DC]" : "bg-[#E5E7EB]"
+                }`}
+              >
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center px-4 select-none">
+                  {preview.photoFrame.placeholder}
+                </span>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="w-full aspect-3/4 flex items-center justify-center">
-            <p className="font-bold font-fraunces animate-pulse">Loading Live Template....</p>
-          </div>
-        )}
+            </div>
+          )}
+
+          {visibleFields.map((slot) => {
+            const display =
+              getPreviewValueForField(slot.key, editor) || slot.placeholder;
+            const isParticipant =
+              slot.key === CANVAS_FIELD_KEYS.PARTICIPANT_NAME ||
+              slot.key === CANVAS_FIELD_KEYS.ROLE_TITLE;
+
+            const isEventName = slot.key === CANVAS_FIELD_KEYS.EVENT_NAME;
+            const combinedStyle = isEventName ? { ...slot.style, ...titleStyle } : slot.style;
+
+            return (
+              <div
+                key={slot.key}
+                style={combinedStyle}
+                className={`z-10 select-none transition-all duration-150 ${
+                  isParticipant ? "opacity-70 italic" : ""
+                }`}
+              >
+                {display}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* ── Attendee preview – LinkedIn ── */}
       <div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-4 space-y-2">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
@@ -157,33 +187,21 @@ export function LivePreview({
           </div>
         </div>
         <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">
-          {shareCaption || (
+          {shareCaption || editor.defaultCaption || (
             <>
-              I&apos;m at #{eventName ? eventName.replace(/\s+/g, "") + "26" : "AchieveherSummit26"} this weekend — building the next
-              chapter with founders I admire. Who&apos;s joining?{" "}
-              <span className="text-blue-600">badge.build/{eventName || "DesignLagos"}</span>
+              I&apos;m at #{editor.hashtags[0] ?? "Summit26"} this weekend — who&apos;s joining?{" "}
+              <span className="text-blue-600">{editor.destinationLink}</span>
             </>
           )}
         </p>
       </div>
 
-      {/* ── Clicks lead to ── */}
       <div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-3.5 flex items-center gap-2">
         <span className="text-sm text-gray-500">Clicks lead to</span>
-        <span className="flex items-center gap-1 text-orange-500">
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 shrink-0">
-            <path
-              fillRule="evenodd"
-              d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 0 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </span>
         <span className="text-sm font-medium text-gray-800 truncate">
-          {destinationUrl || "achieveher.com/register"}
+          {editor.destinationLink || "achieveher.com/register"}
         </span>
       </div>
-
     </div>
   );
 }

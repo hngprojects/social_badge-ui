@@ -3,7 +3,29 @@ import { ArrowOrange } from "../../badges/published/icons/arrow-up";
 import { NextAction } from "../../types/badge-published/badge";
 import { NEXT_ACTIONS } from "../../constants/badges-published/next-action";
 
-export default function WhatsNext() {
+interface WhatsNextProps {
+	fullUrl: string;
+	templateId?: string;
+}
+
+export default function WhatsNext({ fullUrl, templateId }: WhatsNextProps) {
+	const actions = NEXT_ACTIONS.map((action) => {
+		if (action.id === "preview") {
+			return { ...action, href: fullUrl, cta: "Open link" };
+		}
+		if (action.id === "edit" && templateId) {
+			return {
+				...action,
+				href: `/create-badges/customize?id=${encodeURIComponent(templateId)}`,
+				cta: "Edit badge",
+			};
+		}
+		if (action.id === "analytics") {
+			return { ...action, href: "/dashboard", cta: "View dashboard" };
+		}
+		return action;
+	});
+
 	return (
 		<section>
 			<h2 className="text-[1.375rem] font-bold text-gray-900 mb-1">
@@ -14,7 +36,7 @@ export default function WhatsNext() {
 			</p>
 
 			<div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
-				{NEXT_ACTIONS.map((action) => (
+				{actions.map((action) => (
 					<NextActionCard key={action.id} action={action} />
 				))}
 			</div>
@@ -38,6 +60,8 @@ function NextActionCard({ action }: { action: NextAction }) {
 			</p>
 			<a
 				href={action.href}
+				target={action.href.startsWith("http") ? "_blank" : undefined}
+				rel={action.href.startsWith("http") ? "noopener noreferrer" : undefined}
 				className="inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-[#e8511a] hover:gap-2.5 transition-all"
 				aria-label={`${action.cta} — ${action.title}`}
 			>
