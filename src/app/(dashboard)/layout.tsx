@@ -1,6 +1,7 @@
 import MobileHeader from "@/components/layout/dashBoard/MobileHeader";
 import SideNav from "@/components/layout/dashBoard/SideBar";
 import TopBar from "@/components/layout/dashBoard/TopBar";
+import AuthSessionProvider from "@/components/providers/AuthSessionProvider";
 import LenisProvider from "@/components/providers/LenisProvider";
 
 export default function DashboardLayout({
@@ -10,7 +11,8 @@ export default function DashboardLayout({
 }) {
   return (
     <LenisProvider>
-      <section className="flex min-h-screen">
+      <AuthSessionProvider>
+        <section className="flex min-h-screen">
         <div className="hidden lg:block sticky top-0 self-start">
           <SideNav />
         </div>
@@ -30,7 +32,8 @@ export default function DashboardLayout({
             {children}
           </section>
         </main>
-      </section>
+        </section>
+      </AuthSessionProvider>
     </LenisProvider>
   );
 }
