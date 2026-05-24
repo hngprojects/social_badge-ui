@@ -11,10 +11,11 @@ import { ShareMessageSection } from "../../../components/customize/ShareMessageS
 import { LivePreview } from "../../../components/customize/LivePreview";
 import { TABS } from "../../../components/customize/constants";
 
+import { customizeBadgeSchema } from "@/schemas/template";
+
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
 import { useSaveOrganiserTemplate } from "@/app/features/templates/hooks/useSaveOrganiserTemplate";
 import { buildOrganiserTemplatePayload } from "@/app/features/templates/lib/build-canvas-data";
-import { uploadLogo } from "@/app/features/templates/services/templates";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 interface CustomizeBadgeFormProps {
@@ -30,66 +31,43 @@ export function CustomizeBadgeForm({
     useCustomizeEditorState(initialEditor);
   const { saveTemplateAsync, isSaving } = useSaveOrganiserTemplate();
   const [activeTab, setActiveTab] = useState<typeof TABS[number]>("Badge");
-  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
 
   const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!editor.eventName.trim()) {
-      toast.error("Event name is required.");
+    const validation = customizeBadgeSchema.safeParse({
+      eventName: editor.eventName,
+      destinationLink: editor.destinationLink,
+      title: editor.title,
+      defaultCaption: editor.defaultCaption,
+      hashtags: editor.hashtags,
+      accessType: editor.accessType,
+    });
+
+    if (!validation.success) {
+      toast.error(validation.error.issues[0].message);
       return;
     }
 
-    if (!editor.destinationLink.trim()) {
-      toast.error("Destination link is required.");
-      return;
-    }
-
-    let state = editor;
-
-    if (editor.pendingLogoFile) {
-      if (!organiserTemplateId) {
-        toast.error("Badge Instance ID is missing, please refresh and try agian")
-      }
-      try {
-        setIsUploadingLogo(true);
-        const uploaded = await uploadLogo(editor.pendingLogoFile, organiserTemplateId);
-        state = {
-          ...editor,
-          logo: {
-            url: uploaded.url,
-            public_id: uploaded.public_id,
-            position: layoutCaps.defaultLogoPosition,
-          },
-          pendingLogoFile: null,
-        };
-        patch({
-          logo: state.logo,
-          pendingLogoFile: null,
-        });
-      } catch {
-        toast.error("Logo upload failed. Please try again.");
-        return;
-      } finally {
-        setIsUploadingLogo(false);
-      }
-    }
-
-    const payload = buildOrganiserTemplatePayload(state);
+    const payload = buildOrganiserTemplatePayload({
+      ...editor,
+      destinationLink: validation.data.destinationLink,
+    });
 
     try {
       await saveTemplateAsync({
         payload,
         organiserTemplateId,
+        pendingLogoFile: editor.pendingLogoFile,
       });
     } catch {
       /* toast handled in hook */
     }
   };
 
-  const isPublishing = isSaving || isUploadingLogo;
+  const isPublishing = isSaving;
 
   return (
     <main className="grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-8 max-w-360 mx-auto w-full items-start">
