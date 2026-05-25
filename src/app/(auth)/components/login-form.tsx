@@ -3,14 +3,17 @@ import { AuthInput } from "@/app/features/auth/components/auth-input";
 import { GoogleAuth } from "@/app/features/auth/components/google-auth";
 import { useLogin } from "@/app/features/auth/hooks/useLogin";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Icons } from "@/components/ui/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { loginSchema, LoginFormValues } from "@/schemas/auth";
 
 export const LoginForm = () => {
   const { login, isLoading } = useLogin();
+  const [rememberMe, setRememberMe] = useState(false);
   const {
     register,
     handleSubmit,
@@ -51,11 +54,10 @@ export const LoginForm = () => {
             />
             <div className="flex items-center justify-between flex-wrap-reverse gap-2 mt-2">
               <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  className="h-6 w-6 rounded-[5px] border cursor-pointer border-[#727272] accent-[#FA5424]"
-                  name="remember-me"
+                <Checkbox
                   id="remember-me"
+                  checked={rememberMe}
+                  onCheckedChange={(checked) => setRememberMe(!!checked)}
                 />
                 <label
                   htmlFor="remember-me"

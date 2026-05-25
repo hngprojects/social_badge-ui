@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, buttonVariants } from "./button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export const VerifyEmailModal = () => {
   return (
@@ -22,14 +22,14 @@ export const VerifyEmailModal = () => {
           <div className="text-base text-[#4D4645]  ">
             <p>Great! Your email address has been verified</p>
           </div>
-          <Button type="button" disabled>
+          <Button variant="cta" type="button" className="w-full py-4 text-base font-semibold" disabled>
             Set up profile
           </Button>
           <Link
             href="/dashboard"
             className={cn(
               buttonVariants({ variant: "outline" }),
-              "inline-flex w-full items-center justify-center no-underline",
+              "inline-flex w-full items-center justify-center no-underline border-[#FA5424] text-[#FA5424] bg-transparent hover:bg-transparent",
             )}
           >
             Go to dashboard

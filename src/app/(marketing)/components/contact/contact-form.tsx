@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { ContactFormValues } from "../../types/contact";
 import {
@@ -13,6 +13,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const contactSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -41,6 +49,7 @@ export default function ContactForm() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -230,19 +239,28 @@ export default function ContactForm() {
           >
             Subject
           </Label>
-          <select
-            id="subject"
-            aria-invalid={!!errors.subject}
-            className="h-12 w-full rounded-[12px] border border-[#EAEAE6] bg-[#F4F4F2] px-3 text-base text-[#0A0A0A] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-invalid:border-red-400"
-            {...register("subject")}
-          >
-            <option value="">Select a topic...</option>
-            <option value="general">General Inquiry</option>
-            <option value="partnership">Partnership</option>
-            <option value="bug">Bug Report</option>
-            <option value="feedback">Feedback</option>
-            <option value="billing">Billing</option>
-          </select>
+          <Controller
+            control={control}
+            name="subject"
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger
+                  id="subject"
+                  aria-invalid={!!errors.subject}
+                  className="h-12 w-full rounded-[12px] border-[#EAEAE6] bg-[#F4F4F2] text-base aria-invalid:border-red-400"
+                >
+                  <SelectValue placeholder="Select a topic..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="general">General Inquiry</SelectItem>
+                  <SelectItem value="partnership">Partnership</SelectItem>
+                  <SelectItem value="bug">Bug Report</SelectItem>
+                  <SelectItem value="feedback">Feedback</SelectItem>
+                  <SelectItem value="billing">Billing</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
           {errors.subject && (
             <p className="text-xs text-red-500">{errors.subject.message}</p>
           )}
@@ -256,12 +274,12 @@ export default function ContactForm() {
           >
             Message
           </Label>
-          <textarea
+          <Textarea
             id="message"
             rows={6}
             placeholder="Tell us what's on your mind. The more detail the better — we'll actually read it."
             aria-invalid={!!errors.message}
-            className="resize-none w-full rounded-[12px] border border-[#EAEAE6] bg-[#F4F4F2] px-3 py-3 text-base placeholder:text-[#757575] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-invalid:border-red-400"
+            className="min-h-[144px] rounded-[12px] border-[#EAEAE6] bg-[#F4F4F2] text-base placeholder:text-[#757575] aria-invalid:border-red-400"
             {...register("message")}
           />
           {errors.message && (
