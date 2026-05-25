@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useTemplateGallery } from "../create-badges/lib/use-template-gallery";
 import FilterTabs from "./components/filter-tabs";
-import MockTemplates from "./components/mock-templates";
+import MockTemplates from "./components/all-templates";
 import TemplatePagination from "./components/pagination";
 
 export default function Templates() {
