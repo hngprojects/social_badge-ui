@@ -41,7 +41,7 @@ export default function SideNav() {
               </Link>
               {expanded && (
                 <p className="text-[19px] font-medium tracking-normal">
-                  Social Badge
+                  Flare Tag
                 </p>
               )}
             </div>

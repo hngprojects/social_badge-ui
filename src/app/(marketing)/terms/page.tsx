@@ -3,7 +3,7 @@ import LegalLayout from '../components/legal-layout';
 import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'Read the terms and conditions for using Social Badge.',
+  description: 'Read the terms and conditions for using Flare Tag.',
 };
 
 import { toc } from '../constants/terms';
@@ -19,7 +19,7 @@ export default function TermsOfServicePage() {
           <strong className="font-semibold text-primary-800 dark:text-primary-300">
             Plain English summary:
           </strong>{' '}
-          Use Social Badge for legitimate events and communities. Don&apos;t upload illegal or harmful
+          Use Flare Tag for legitimate events and communities. Don&apos;t upload illegal or harmful
           content. You own your designs. We can suspend accounts that abuse the platform.
         </p>
       }
@@ -31,8 +31,8 @@ export default function TermsOfServicePage() {
         </h2>
         <div className="flex flex-col gap-2">
           <p>
-            By creating an account or using Social Badge (badge.build), you agree to these Terms of Service
-            (&quot;Terms&quot;). If you are using Social Badge on behalf of an organisation, you
+            By creating an account or using Flare Tag (badge.build), you agree to these Terms of Service
+            (&quot;Terms&quot;). If you are using Flare Tag on behalf of an organisation, you
             represent that you have authority to bind that organisation to these Terms.
           </p>
           <p>
@@ -46,7 +46,7 @@ export default function TermsOfServicePage() {
         <h2 className="text-[28px] font-semibold font-fraunces text-foreground">2. The service</h2>
         <div className="flex flex-col gap-2">
           <p>
-            Social Badge is a self-serve web platform that enables event organisers to create
+            Flare Tag is a self-serve web platform that enables event organisers to create
             branded digital badge templates and enables participants to personalise and share those
             badges. We reserve the right to modify, suspend, or discontinue any part of the service
             at any time with reasonable notice.
@@ -77,7 +77,7 @@ export default function TermsOfServicePage() {
         <h2 className="text-[28px] font-semibold font-fraunces text-foreground">
           4. Acceptable use
         </h2>
-        <p>You may not use Social Badge to:</p>
+        <p>You may not use Flare Tag to:</p>
         <ul className="list-disc pl-5 flex flex-col gap-2 marker:text-muted-foreground">
           <li>
             Create, distribute, or promote content that is illegal, harmful, threatening, abusive,
@@ -111,7 +111,7 @@ export default function TermsOfServicePage() {
           <div className="flex flex-col gap-2">
             <h3 className="text-lg font-semibold text-foreground">5.2 Our platform</h3>
             <p>
-              Social Badge&apos;s platform, code, design, and documentation are owned by Badge
+              Flare Tag&apos;s platform, code, design, and documentation are owned by Badge
               Build Ltd and protected by copyright. You may not copy, reverse-engineer, or create
               derivative works without our written permission.
             </p>
@@ -182,7 +182,7 @@ export default function TermsOfServicePage() {
             months preceding the claim.
           </p>
           <p>
-            Social Badge is provided &quot;as is&quot;. We make no warranties, express or implied,
+            Flare Tag is provided &quot;as is&quot;. We make no warranties, express or implied,
             about fitness for a particular purpose or uninterrupted service.
           </p>
         </div>

@@ -25,14 +25,15 @@ export async function uploadLogo(file: File, instanceId: string | null) : Promis
   if (!instanceId) {
     throw new Error("Missing organizer template istance id.")
   }
-  const formData = new FormData();
-  formData.append("file", file);
 
   return apiClient<LogoUploadResponse>(
     `/templates/organizer/instances/${instanceId}/logo`,
     {
       method: "PUT",
-      data: formData,
+      data: { file },
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     },
   );
 }

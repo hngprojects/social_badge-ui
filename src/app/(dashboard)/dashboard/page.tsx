@@ -13,7 +13,7 @@ import BrowseTemplate from "./components/browse-templates";
  
          <div className="my-[16px]">
            <p className="text-[28px] font-bold text-[#1A1A1A]">
-             Welcome to Social Badge,{" "}
+             Welcome to Flare Tag,{" "}
              <span className="italic text-[#FF693E]">{userName}</span>
            </p>
            <p className="text-[14px] text-[#9B9B9B]">

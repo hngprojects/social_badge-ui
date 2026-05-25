@@ -82,7 +82,7 @@ export const FAQ_DATA: FaqItem[] = [
   {
     question: 'Will my badges have watermark?',
     answer:
-      'Badges on the Free plan include a Social Badge watermark. Upgrading to Pro or Team removes the watermark entirely.',
+      'Badges on the Free plan include a Flare Tag watermark. Upgrading to Pro or Team removes the watermark entirely.',
   },
   {
     question: 'Can I customize my badge design?',
