@@ -21,7 +21,7 @@ export const TemplateCard = ({
 
       <div
         className={`relative w-full h-64 shrink-0 overflow-hidden`}
-        style={{ backgroundColor: template.bg }}
+        style={{ background: template.bg ?? "#F4F4F2" }}
       >
         <Image
           src={template.image}
@@ -33,7 +33,7 @@ export const TemplateCard = ({
        (max-width: 768px) 50vw,
        (max-width: 1024px) 33vw,
        25vw"
-          className={`object-contain ${template.hasShadow ? "p-0 pt-2" : "p-4"}`}
+          className={`object-contain ${template.hasShadow ? "p-2" : "p-0"}`}
         />
       </div>
 

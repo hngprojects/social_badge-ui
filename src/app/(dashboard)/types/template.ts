@@ -1,5 +1,5 @@
 export type Template = {
-  id: number;
+  id: number | string;
   title: string;
   type: string;
   creator: string;
