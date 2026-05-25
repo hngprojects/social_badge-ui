@@ -1,11 +1,34 @@
 import Image from "next/image";
+import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
 
 import { stats } from "../../constants/dashboard";
 
-export default function Analytics() {
+type AnalyticsProps = {
+  templates: OrganizerTemplateInstance[];
+};
+
+export default function Analytics({ templates }: AnalyticsProps) {
+  const analyticsStats = [
+    {
+      ...stats[0],
+      count: templates.length,
+    },
+    {
+      ...stats[1],
+      count: templates.filter((template) => template.status === "live").length,
+    },
+    {
+      ...stats[2],
+      count: 0,
+    },
+    {
+      ...stats[3],
+      count: 0,
+    },
+  ];
   return (
     <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 xl:grid-cols-4">
-      {stats.map((card) => (
+      {analyticsStats.map((card) => (
         <article
           key={card.title}
           className="flex min-w-0 items-center gap-3 rounded-[12px] border border-[#E8E8E8] bg-[#F8F8F866] p-3 sm:p-4 md:gap-4 md:p-5"
