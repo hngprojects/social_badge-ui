@@ -10,20 +10,23 @@ import { MoreMenu } from "./more-menu";
 import { RecentBadgesListProps } from "./recent-badges-types";
 import { formatDate } from "./recent-badges-utils";
 import { StatusPill } from "./status-pill";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const TABLE_COLUMNS = [
-  "BADGE",
-  "STATUS",
-  "LAST EDITED",
-  "LINK CLICKS",
-  "SHARES",
-  "",
+  { label: "BADGE", className: "w-[36%]" },
+  { label: "STATUS" },
+  { label: "LAST EDITED" },
+  { label: "LINK CLICKS" },
+  { label: "SHARES" },
+  { label: "", className: "w-[40px]" },
 ];
 
 export function RecentBadgesTable({
   templates,
   loading,
   isError,
+  getTemplateThumbnail,
   onSelectTemplate,
   onRequestDelete,
 }: RecentBadgesListProps) {
@@ -31,15 +34,17 @@ export function RecentBadgesTable({
     <div className="hidden md:block">
       <Table className="border-collapse text-[13px]">
         <TableHeader>
-          <TableRow className="bg-[#ECE9E4] hover:bg-[#ECE9E4]">
+          <TableRow className="bg-[#FBF9F6]">
             {TABLE_COLUMNS.map((col, i) => (
               <TableHead
-                key={col}
-                className={`whitespace-nowrap border-b border-t border-[#F0F0EE] px-[16px] py-[10px] text-left text-[11px] font-semibold tracking-[0.05em] text-gray-400 ${
-                  i === 0 ? "w-[36%]" : i === 5 ? "w-[40px]" : ""
-                }`}
+                key={col.label}
+                className={cn(
+                  `whitespace-nowrap border-b border-t border-[#F0F0EE] px-[16px] py-[10px] text-left text-[11px] font-semibold tracking-[0.05em] text-gray-400 ${
+                    i === 0 ? "w-[36%]" : i === 5 ? "w-[40px]" : ""
+                  }`,
+                )}
               >
-                {col}
+                {col.label}
               </TableHead>
             ))}
           </TableRow>
@@ -47,16 +52,22 @@ export function RecentBadgesTable({
 
         <TableBody>
           {loading ? (
-            <RecentBadgesTableMessage>Loading recent badges...</RecentBadgesTableMessage>
+            <RecentBadgesTableMessage>
+              Loading recent badges...
+            </RecentBadgesTableMessage>
           ) : isError ? (
             <RecentBadgesTableMessage className="text-red-500">
               Could not load recent badges.
             </RecentBadgesTableMessage>
           ) : templates.length === 0 ? (
-            <RecentBadgesTableMessage>No badges match this filter.</RecentBadgesTableMessage>
+            <RecentBadgesTableMessage>
+              No badges match this filter.
+            </RecentBadgesTableMessage>
           ) : (
             templates.map((template) => {
               const isPublished = template.status === "live";
+              const thumbnailUrl = getTemplateThumbnail?.(template);
+              console.log(template);
 
               return (
                 <TableRow
@@ -64,19 +75,33 @@ export function RecentBadgesTable({
                   onClick={() => onSelectTemplate(template)}
                   className="cursor-pointer border-b border-[#F0F0EE] transition-colors hover:bg-[#FAFAF8]"
                 >
-                  <TableCell className="px-[16px] py-[14px] whitespace-normal">
-                    <div className="font-semibold text-[14px] leading-[1.3] text-gray-900">
-                      {template.title}
+                  <TableCell className="px-[16px] py-[14px] whitespace-normal flex items-center gap-[12px]">
+                    <div className="rounded-[10px] overflow-hidden">
+                      {thumbnailUrl && (
+                        <Image
+                          src={thumbnailUrl}
+                          height={44}
+                          width={44}
+                          alt="badge thumbnail"
+                        />
+                      )}
                     </div>
-                    <div className="mt-[2px] text-[12px] text-gray-400">
-                      Template instance &middot;{" "}
-                      <span
-                        className={
-                          template.share_slug ? "text-gray-400" : "text-gray-300"
-                        }
-                      >
-                        {template.share_slug ?? "Not yet published"}
-                      </span>
+                    <div>
+                      <div className="font-semibold text-[14px] leading-[1.3] text-gray-900">
+                        {template.title}
+                      </div>
+                      <div className="mt-[2px] text-[12px] text-gray-400">
+                        Template instance &middot;{" "}
+                        <span
+                          className={
+                            template.share_slug
+                              ? "text-gray-400"
+                              : "text-gray-300"
+                          }
+                        >
+                          {template.share_slug ?? "Not yet published"}
+                        </span>
+                      </div>
                     </div>
                   </TableCell>
 
@@ -103,6 +128,7 @@ export function RecentBadgesTable({
                     <MoreMenu
                       onViewInfo={() => onSelectTemplate(template)}
                       onDelete={() => onRequestDelete(template)}
+                      editHref={`/create-badges/customize?id=${encodeURIComponent(template.id)}`}
                     />
                   </TableCell>
                 </TableRow>
@@ -124,14 +150,17 @@ function RecentBadgesTableMessage({
 }) {
   return (
     <TableRow className="hover:bg-transparent">
-      <TableCell colSpan={6} className={`px-[16px] py-[40px] text-center text-[14px] ${className}`}>
+      <TableCell
+        colSpan={TABLE_COLUMNS.length}
+        className={`px-[16px] py-[40px] text-center text-[14px] ${className}`}
+      >
         {children}
       </TableCell>
     </TableRow>
   );
 }
 
-function MetricPlaceholder({ isPublished }: { isPublished: boolean }) {
+export function MetricPlaceholder({ isPublished }: { isPublished: boolean }) {
   return (
     <>
       <div className="text-[15px] leading-none text-gray-700">&mdash;</div>

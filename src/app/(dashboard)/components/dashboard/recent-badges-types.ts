@@ -4,6 +4,9 @@ export type TemplateFilter = "All" | "Draft" | "Live";
 
 export type RecentBadgesListProps = {
   templates: OrganizerTemplateInstance[];
+  getTemplateThumbnail?: (
+    template: OrganizerTemplateInstance,
+  ) => string | undefined;
   onSelectTemplate: (template: OrganizerTemplateInstance) => void;
   onRequestDelete: (template: OrganizerTemplateInstance) => void;
   loading?: boolean;
