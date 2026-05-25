@@ -120,7 +120,7 @@ export function TemplateInfoModal({
                 />
               }
               label="Created badges"
-              value={""}
+              value="&mdash;"
             />
             <InfoRow
               icon={
@@ -132,7 +132,7 @@ export function TemplateInfoModal({
                 />
               }
               label="Total shares"
-              value={""}
+              value="&mdash;"
             />
           </div>
 
