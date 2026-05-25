@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
 import { StatusPill } from "./status-pill";
+import { formatDate } from "./recent-badges-utils";
+import Link from "next/link";
+import { toast } from "sonner";
 
 export function TemplateInfoModal({
   template,
@@ -50,18 +53,12 @@ export function TemplateInfoModal({
           onClick={onClose}
           className="absolute right-4 top-4 grid h-[40px] w-[40px] place-content-center rounded-full border border-[#E8E8E8]  text-[#757575] hover:bg-gray-50 cursor-pointer"
         >
-          <svg
-            width="15"
-            height="15"
-            viewBox="0 0 15 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.781 13.7198C14.8507 13.7895 14.906 13.8722 14.9437 13.9632C14.9814 14.0543 15.0008 14.1519 15.0008 14.2504C15.0008 14.349 14.9814 14.4465 14.9437 14.5376C14.906 14.6286 14.8507 14.7114 14.781 14.781C14.7114 14.8507 14.6286 14.906 14.5376 14.9437C14.4465 14.9814 14.349 15.0008 14.2504 15.0008C14.1519 15.0008 14.0543 15.0008 13.9632 14.9437C13.8722 14.906 13.7895 14.8507 13.7198 14.781L7.50042 8.56073L1.28104 14.781C1.14031 14.9218 0.94944 15.0008 0.750417 15.0008C0.551394 15.0008 0.360523 14.9218 0.219792 14.781C0.0790615 14.6403 0 14.4494 0 14.2504C0 14.0514 0.0790615 13.8605 0.219792 13.7198L6.4401 7.50042L0.219792 1.28104C0.0790615 1.14031 0 0.94944 0 0.750417C0 0.551394 0.0790615 0.360523 0.219792 0.219792C0.360523 0.0790615 0.551394 0 0.750417 0C0.94944 0 1.14031 0.0790615 1.28104 0.219792L7.50042 6.4401L13.7198 0.219792C13.8605 0.0790615 14.0514 0 14.2504 0C14.4494 0 14.6403 0.0790615 14.781 0.219792C14.9218 0.360523 15.0008 0.551394 15.0008 0.750417C15.0008 0.94944 14.9218 1.14031 14.781 1.28104L8.56073 7.50042L14.781 13.7198Z"
-              fill="#7A7A7A"
-            />
-          </svg>
+          <Image
+            src="/assets/dashboard/X.svg"
+            height={24}
+            width={24}
+            alt="cancel button"
+          />
         </button>
 
         <div className="overflow-hidden rounded-[12px] bg-[#F4F4F2]">
@@ -83,11 +80,6 @@ export function TemplateInfoModal({
 
             <StatusPill status={template.status} />
           </div>
-
-          <span className="mt-2 inline-flex rounded-md border border-[#E8E8E8] px-2 py-1 text-[12px] text-[#333]">
-            Creative
-          </span>
-
           <p className="mt-5 border-b border-[#E8E8E8] pb-5 text-[14px] leading-[1.7] text-[#757575]">
             The badge is live and sharable. Participants can claim this badge
             and share it on social media
@@ -104,7 +96,7 @@ export function TemplateInfoModal({
                 />
               }
               label="Created"
-              value="May 3rd, 2026"
+              value={formatDate(template.created_at)}
             />
             <InfoRow
               icon={
@@ -116,7 +108,7 @@ export function TemplateInfoModal({
                 />
               }
               label="Last used"
-              value="2 hours ago"
+              value={formatDate(template.updated_at)}
             />
             <InfoRow
               icon={
@@ -124,11 +116,11 @@ export function TemplateInfoModal({
                   src="/assets/dashboard/_ui-award-02.svg"
                   height={20}
                   width={20}
-                  alt="badge icon"
+                  alt="clock icon"
                 />
               }
               label="Created badges"
-              value="734"
+              value={""}
             />
             <InfoRow
               icon={
@@ -136,11 +128,11 @@ export function TemplateInfoModal({
                   src="/assets/dashboard/_ui-share-06.svg"
                   height={20}
                   width={20}
-                  alt="share icon"
+                  alt="clock icon"
                 />
               }
               label="Total shares"
-              value="400"
+              value={""}
             />
           </div>
 
@@ -149,7 +141,15 @@ export function TemplateInfoModal({
               Shareable link
             </p>
 
-            <div className="flex gap-[8px] items-center rounded-lg border border-[#E8E8E8] px-[16px] py-[8px] text-[13px] text-[#121217]">
+            <div
+              onClick={async () => {
+                if (!template.share_slug) return;
+
+                await navigator.clipboard.writeText(template.share_slug);
+                toast.success("Link copied to clipboard");
+              }}
+              className="flex gap-[8px] items-center rounded-lg border border-[#E8E8E8] px-[16px] py-[8px] text-[13px] text-[#121217] cursor-pointer"
+            >
               <Image
                 src="/assets/dashboard/_ui-copy-02.svg"
                 height={20}
@@ -163,14 +163,17 @@ export function TemplateInfoModal({
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <button
               onClick={() => onRequestDelete(template)}
-              className="rounded-full border border-[#F6B6C8] px-5 py-3 text-[14px] font-semibold text-[#F43F72] cursor-pointer hover:bg-[#F43F72] hover:text-white"
+              className="rounded-full border border-[#F6B6C8] px-5 py-3 text-[14px] font-semibold text-[#F43F72] cursor-pointer hover:bg-[#EF4444] hover:text-white"
             >
               Delete badge
             </button>
 
-            <button className="rounded-full bg-[#242424] px-5 py-3 text-[14px] font-semibold text-white cursor-pointer">
+            <Link
+              href={`/create-badges/customize?id=${encodeURIComponent(template.id)}`}
+              className="flex items-center justify-center rounded-full bg-[#242424] px-5 py-3 text-[14px] font-semibold text-white cursor-pointer hover:opacity-[95%]"
+            >
               Edit badge
-            </button>
+            </Link>
           </div>
         </div>
       </div>

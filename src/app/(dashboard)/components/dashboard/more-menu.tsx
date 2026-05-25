@@ -2,15 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 
 export function MoreMenu({
   onEdit,
   onViewInfo,
   onDelete,
+  editHref,
 }: {
   onEdit?: () => void;
   onViewInfo?: () => void;
   onDelete?: () => void;
+  editHref?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
@@ -108,14 +111,17 @@ export function MoreMenu({
             }}
             className="w-[190px] rounded-2xl border border-[#E5E7EB] bg-white p-2 text-left shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
           >
-            <button
-              type="button"
-              role="menuitem"
-              onClick={() => handleAction(onEdit)}
-              className="w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
-            >
-              Edit
-            </button>
+            {editHref && (
+              <Link
+                href={editHref}
+                type="button"
+                role="menuitem"
+                onClick={() => handleAction(onEdit)}
+                className="inline-flex w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
+              >
+                Edit
+              </Link>
+            )}
 
             <button
               type="button"
