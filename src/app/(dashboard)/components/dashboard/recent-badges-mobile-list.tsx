@@ -27,6 +27,12 @@ export function RecentBadgesMobileList({
         <div
           key={template.id}
           onClick={() => onSelectTemplate(template)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onSelectTemplate(template);
+            }
+          }}
           className="grid grid-cols-[1.3fr_1fr_1fr_32px] items-center border-b border-[#F0F0EE] px-3 py-5"
         >
           <div className="min-w-0">
