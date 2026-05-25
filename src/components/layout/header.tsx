@@ -34,9 +34,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
-  const user = useUserStore((state) => state.user);
-
-  const { isLoading } = useQuery({
+  const { data: authUser, isLoading } = useQuery({
     queryKey: ["auth", "me"],
     queryFn: async () => {
       const response = await getCurrentUser();
@@ -132,7 +130,7 @@ export default function Header() {
           <div className="hidden min-[1084px]:flex items-center gap-3 shrink-0">
             {isLoading ? (
               <div className="w-[162px] h-11 bg-muted animate-pulse rounded-lg" />
-            ) : user ? (
+            ) : authUser ? (
               <Button asChild variant="cta" size="xl" className="w-[180px] h-11">
                 <Link href="/dashboard">Back to Dashboard</Link>
               </Button>
@@ -252,7 +250,7 @@ export default function Header() {
                 <div className="flex flex-col gap-3 px-5 py-5 border-t border-border">
                   {isLoading ? (
                     <div className="w-full h-11 bg-muted animate-pulse rounded-full" />
-                  ) : user ? (
+                  ) : authUser ? (
                     <Button
                       asChild
                       className={cn(

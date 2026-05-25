@@ -170,11 +170,10 @@ export default function MobileHeader() {
                           src={user.profile_photo_url}
                           width={40}
                           height={40}
-                          alt=""
+                          alt={displayName || "Profile picture"}
                           className="h-full w-full object-cover"
                         />
-                      ) : (
-                        <span>
+                      ) : (                        <span>
                           {getInitials(user?.first_name, user?.last_name)}
                         </span>
                       )}

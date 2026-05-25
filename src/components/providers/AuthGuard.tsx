@@ -19,10 +19,10 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
-    if (!isLoading && (isError || !data)) {
+    if (!isLoading && !data) {
       router.replace("/login");
     }
-  }, [data, isLoading, isError, router]);
+  }, [data, isLoading, router]);
 
   if (isLoading) {
     return <Loading />;

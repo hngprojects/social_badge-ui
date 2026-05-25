@@ -90,11 +90,10 @@ export default function SideNav() {
                       src={user.profile_photo_url}
                       width={48}
                       height={48}
-                      alt=""
+                      alt={displayName || "Profile picture"}
                       className="h-full w-full object-cover"
                     />
-                  ) : (
-                    <span>{getInitials(user?.first_name, user?.last_name)}</span>
+                  ) : (                    <span>{getInitials(user?.first_name, user?.last_name)}</span>
                   )}
                 </div>
 
