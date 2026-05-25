@@ -12,8 +12,8 @@ const PROTECTED_ROUTES = [
   "/badges/published",
   "/create-badges",
   "/templates",
- "/settings",
-"/support",
+  "/settings",
+  "/support",
   "/coming-soon",
 ];
 

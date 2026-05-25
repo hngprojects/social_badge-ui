@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import type { LayoutTemplate } from "../../types/dashboard";
+import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 
 interface TemplateLivePreviewProps {
   template: LayoutTemplate | null;
@@ -25,7 +25,8 @@ export function TemplateLivePreview({ template }: TemplateLivePreviewProps) {
   return (
     <div className="w-full flex flex-col min-w-0">
       <div className="w-full text-left mb-4 flex items-center gap-2 text-xs font-bold text-[#AFAFAF] uppercase tracking-wider select-none font-sans">
-        <span className="inline-block w-2 h-2 rounded-full bg-[#22C55E]" /> Live Preview
+        <span className="inline-block w-2 h-2 rounded-full bg-[#22C55E]" /> Live
+        Preview
       </div>
 
       <div
@@ -47,7 +48,9 @@ export function TemplateLivePreview({ template }: TemplateLivePreviewProps) {
         <span className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-wider block mb-0.5 font-sans">
           {template.category}
         </span>
-        <h2 className="text-xl sm:text-[24px] font-bold text-[#1A1A1A] truncate">{template.title}</h2>
+        <h2 className="text-xl sm:text-[24px] font-bold text-[#1A1A1A] truncate">
+          {template.title}
+        </h2>
         <p className="text-xs sm:text-sm text-[#757575] mt-1.5 font-medium leading-relaxed font-sans break-words">
           {template.description}
         </p>
@@ -59,7 +62,9 @@ export function TemplateLivePreview({ template }: TemplateLivePreviewProps) {
             key={idx}
             className="flex items-start gap-3 text-xs sm:text-sm text-[#3A3A3A] font-normal font-sans break-words"
           >
-            <span className="text-[#FF693E] font-bold select-none shrink-0">✓</span>
+            <span className="text-[#FF693E] font-bold select-none shrink-0">
+              ✓
+            </span>
             <span className="min-w-0">{feature}</span>
           </div>
         ))}

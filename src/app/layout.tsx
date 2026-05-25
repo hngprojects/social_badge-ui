@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { DM_Sans} from "next/font/google";
+import { DM_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 export const dmSans = DM_Sans({
@@ -8,7 +9,10 @@ export const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   weight: ["400", "500", "600"],
 });
-
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-plus-jakarta",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -31,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} bg-page text-ink antialiased`}
+        className={`${dmSans.variable} ${plusJakartaSans.variable} bg-page text-ink antialiased`}
       >
         <Providers>{children}</Providers>
         <Toaster

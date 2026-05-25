@@ -1,0 +1,20 @@
+import { useUserStore } from "@/stores/use-user-store";
+
+export function UserWelcome() {
+  const user = useUserStore((state) => state.user);
+  const userName = user?.first_name.trim() || "there";
+
+  return (
+    <div className="my-2">
+      <p className="text-[28px] font-bold text-[#1A1A1A]">
+        Welcome to Flare Tag,{" "}
+        <span className="italic font-fraunces text-[#FF693E]">{userName}</span>
+      </p>
+
+      <p className="text-[14px] text-[#9B9B9B]">
+        Let&apos;s design your first badge - your attendees will be sharing it
+        before the day&apos;s out.
+      </p>
+    </div>
+  );
+}

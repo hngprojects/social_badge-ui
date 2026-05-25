@@ -1,6 +1,6 @@
 "use client";
 
-import type { LayoutTemplate } from "../../types/dashboard";
+import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 import { TemplateCard } from "./template-card";
 
 interface TemplateGalleryGridProps {

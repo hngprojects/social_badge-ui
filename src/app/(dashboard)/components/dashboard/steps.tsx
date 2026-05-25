@@ -26,7 +26,7 @@ export default function Steps() {
   ];
 
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <section className="grid grid-cols sm:grid-cols-2 md:grid-cols-3 gap-6">
       {steps.map((step) => (
         <article
           key={step.number}
@@ -48,28 +48,6 @@ export default function Steps() {
           <p>{step.body}</p>
         </article>
       ))}
-
-      {/* <article className="p-[16px] border flex flex-col gap-4 rounded-[16px]">
-        <div className="flex justify-between">
-          <div className="h-[40px] w-[40px] grid place-content-center  bg-[#FFF0EC] rounded-[8px]">
-            <Image
-              alt="layout icon"
-              src="/assets/dashboard/icons/layout-icon.svg"
-              width={20}
-              height={20}
-            />
-          </div>
-
-          <p className="font-[Fraunces] text-[32px] italic font-semibold text-[#FF693E] opacity-[.4]">
-            1
-          </p>
-        </div>
-        <p className="font-bold text-[15px] text-[#3A3A3A]">Pick a layout</p>
-        <p>
-          Start from one of 4 pre-built layouts designed for high-engagement
-          events.
-        </p>
-      </article> */}
     </section>
   );
 }
