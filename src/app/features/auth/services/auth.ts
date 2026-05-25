@@ -81,12 +81,19 @@ export const resendVerifyEmail = async ({ email }: { email: string }) => {
 //   });
 // };
 
-// export const logout = async () => {
-//   return apiClient('/auth/logout', {
-//     method: 'POST',
-//   });
-// };
+export const logout = async () => {
+	return apiClient<{ status: string; message: string }>("/auth/logout", {
+		method: "POST",
+	});
+};
 
-// export const getCurrentUser = async () => {
-//   return apiClient<AuthResponse>('/auth/me');
-// };
+/** Uses the httpOnly refresh_token cookie to issue a new access_token cookie. */
+export const refreshSession = async () => {
+	return apiClient<{ status: string; message: string }>("/auth/refresh", {
+		method: "POST",
+	});
+};
+
+export const getCurrentUser = async () => {
+	return apiClient<{ status: string; message: string; data: User }>("/auth/me");
+};

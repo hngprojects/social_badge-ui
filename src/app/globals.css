@@ -33,7 +33,7 @@ html:hover::-webkit-scrollbar-thumb {
 }
 @font-face {
   font-family: "Fraunces";
-  src: url("/fonts/fraunces/Fraunces-Variable.ttf") format("truetype");
+  src: url("/fonts/fraunces/Fraunces-Variable.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -41,7 +41,7 @@ html:hover::-webkit-scrollbar-thumb {
 
 @font-face {
   font-family: "Fraunces";
-  src: url("/fonts/fraunces/Fraunces-Italic-Variable.ttf") format("truetype");
+  src: url("/fonts/fraunces/Fraunces-Italic-Variable.woff2") format("woff2");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;

@@ -173,7 +173,7 @@ export const SignupForm = () => {
 									checked={isChecked}
 								/>
 								<label htmlFor="remember-me" className="text-xs text-[#978B8A]">
-									I agree to Social Badge Terms of Service and Privacy Policy. I
+									I agree to Flare Tag Terms of Service and Privacy Policy. I
 									may receive product update emails.
 								</label>
 							</div>

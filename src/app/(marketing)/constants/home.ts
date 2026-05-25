@@ -82,11 +82,11 @@ export const faqData = [
     id: 'item-2',
     question: 'Is it free?',
     answer:
-      'Yes, Social Badge is completely free to use. Organisers can create and publish badge templates, and participants can generate and share their badges all at no cost.',
+      'Yes, Flare Tag is completely free to use. Organisers can create and publish badge templates, and participants can generate and share their badges all at no cost.',
   },
   {
     id: 'item-3',
-    question: 'Can I customise the badge?',
+    question: 'Can I customize the badge?',
     answer:
       'Yes. Organisers can upload their logo, set their event name, choose a colour style, and write the caption that participants share.',
   },
@@ -105,7 +105,7 @@ export const faqData = [
     id: 'item-6',
     question: 'Do I need design skills?',
     answer:
-      'Absolutely not. Social Badge is created with non designers in mind and built around pre-design templates. Pick one, fill in your details and it is ready to share!',
+      'Absolutely not. Flare Tag is created with non-designers in mind and built around pre-designed templates. Pick one, fill in your details and it is ready to share!',
   },
 ];
 

@@ -10,25 +10,27 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { items } from "@/app/(marketing)/constants/waitlist";
 
+import { useSubscribe } from "@/app/(marketing)/hooks/newsletter";
+
 export default function WaitlistHero() {
 	const [email, setEmail] = useState("");
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isFocused, setIsFocused] = useState(false);
 	const router = useRouter();
+	const { subscribeToNewsletter, isLoading: isSubmitting } = useSubscribe();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!email) return;
 
-		setIsSubmitting(true);
-		try {
-			// Mock API call
-			await new Promise((resolve) => setTimeout(resolve, 2000));
-			// Use an existing route (or create /success before redirecting there)
-			router.push("/waitlist/success?from=waitlist");
-		} finally {
-			setIsSubmitting(false);
-		}
+		subscribeToNewsletter(
+			{ email },
+			{
+				onSuccess: () => {
+					setEmail("");
+					router.push("/waitlist/success?from=waitlist");
+				},
+			},
+		);
 	};
 
 	return (
@@ -58,17 +60,17 @@ export default function WaitlistHero() {
 				<Link
 					href="/"
 					className="flex items-center gap-2 group w-fit"
-					aria-label="Social Badge home"
+					aria-label="Flare Tag home"
 				>
 					<Image
 						src="/assets/logo.svg"
-						alt="Social Badge logo"
+						alt="Flare Tag logo"
 						width={32}
 						height={32}
 						className="w-8 h-8 transition-transform duration-200 group-hover:scale-105"
 					/>
 					<span className="text-xl md:text-2xl font-semibold tracking-tight text-[#121217]">
-						Social Badge
+						Flare Tag
 					</span>
 				</Link>
 			</header>
@@ -133,7 +135,7 @@ export default function WaitlistHero() {
 					<div className="w-full max-w-5xl mt-4 px-2 md:px-0">
 						<Image
 							src="/assets/waitlist/waitlist-hero-demo.svg"
-							alt="Social Badge Application Interface"
+							alt="Flare Tag Application Interface"
 							width={1200}
 							height={800}
 							className="w-full h-auto drop-shadow-2xl rounded-lg md:rounded-none"

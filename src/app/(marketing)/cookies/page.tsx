@@ -3,7 +3,7 @@ import LegalLayout from '../components/legal-layout';
 
 export const metadata: Metadata = {
   title: 'Data & Cookies',
-  description: 'Learn how Social Badge uses cookies and similar technologies.',
+  description: 'Learn how Flare Tag uses cookies and similar technologies.',
 };
 
 import { toc } from '../constants/cookies';
@@ -28,10 +28,10 @@ export default function CookiePolicyPage() {
     >
       <section id="acceptance" className="scroll-mt-32 flex flex-col gap-4">
         <h2 className="text-[28px] font-semibold font-fraunces text-foreground">
-          How Social Badge Uses Cookies
+          How Flare Tag Uses Cookies
         </h2>
         <p>
-          Social Badge sets one cookie. That is it. We do not use advertising cookies, analytics
+          Flare Tag sets one cookie. That is it. We do not use advertising cookies, analytics
           cookies, or any form of behavioural tracking.
         </p>
       </section>
@@ -127,7 +127,7 @@ export default function CookiePolicyPage() {
           <strong className="font-semibold text-foreground">
             no cookies are set on your device at all.
           </strong>{' '}
-          You access Social Badge without signing in, and nothing is stored in your browser.
+          You access Flare Tag without signing in, and nothing is stored in your browser.
         </p>
       </section>
 
@@ -160,7 +160,7 @@ export default function CookiePolicyPage() {
           Third-Party Services
         </h2>
         <p>
-          Social Badge works with the following third-party services that may process your data as
+          Flare Tag works with the following third-party services that may process your data as
           part of delivering the platform. These are processors only — they do not receive your data
           for their own purposes.
         </p>
@@ -252,7 +252,7 @@ export default function CookiePolicyPage() {
             Cookies and site permissions
           </li>
         </ul>
-        <p>Note that deleting the refresh_token cookie will sign you out of Social Badge.</p>
+        <p>Note that deleting the refresh_token cookie will sign you out of Flare Tag.</p>
       </section>
 
       <section id="governing-law" className="scroll-mt-32 flex flex-col gap-4">

@@ -15,12 +15,19 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { navigationLinks } from "../navLinks";
 import { useState, useEffect } from "react";
+import { useUserStore } from "@/stores/use-user-store";
+import { useLogout } from "@/app/features/auth/hooks/useLogout";
+import { getUserDisplayName } from "@/lib/api/auth-session";
+import { LogOut } from "lucide-react";
 
 export default function MobileHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const navigation = navigationLinks;
+  const user = useUserStore((state) => state.user);
+  const { logout, isLoggingOut } = useLogout();
+  const displayName = getUserDisplayName(user);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -40,19 +47,19 @@ export default function MobileHeader() {
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2.5 group"
-          aria-label="Social Badge home"
+          aria-label="Flare Tag home"
         >
           <span className="transition-transform duration-200 group-hover:scale-105">
             <Image
               src="/assets/logo.svg"
-              alt="Social Badge logo"
+              alt="Flare Tag logo"
               width={27}
               height={27}
               className="w-6.75 h-6.75"
             />
           </span>
           <span className="text-xl font-medium tracking-tight text-[#231F20]">
-            Social Badge
+            Flare Tag
           </span>
         </Link>
 
@@ -82,7 +89,7 @@ export default function MobileHeader() {
             <VisuallyHidden>
               <SheetTitle>Navigation menu</SheetTitle>
               <SheetDescription>
-                Main navigation links for Social Badge
+                Main navigation links for Flare Tag
               </SheetDescription>
             </VisuallyHidden>
 
@@ -91,13 +98,13 @@ export default function MobileHeader() {
               <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
                 <Image
                   src="/assets/logo.svg"
-                  alt="Social Badge logo"
+                  alt="Flare Tag logo"
                   width={28}
                   height={28}
                   className="w-6.75 h-6.75"
                 />
                 <span className="text-[17px] font-semibold tracking-tight text-foreground">
-                  Social Badge
+                  Flare Tag
                 </span>
               </div>
 
@@ -153,6 +160,24 @@ export default function MobileHeader() {
                     );
                   })}
                 </nav>
+
+                <div className="mt-auto border-t border-border px-3 py-4">
+                  <p className="mb-3 truncate px-1 text-sm font-medium text-foreground">
+                    {displayName}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      logout();
+                      setMobileOpen(false);
+                    }}
+                    disabled={isLoggingOut}
+                    className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-60"
+                  >
+                    <LogOut className="h-5 w-5" strokeWidth={1.75} />
+                    {isLoggingOut ? "Logging out…" : "Log out"}
+                  </button>
+                </div>
               </nav>
             </div>
           </SheetContent>
