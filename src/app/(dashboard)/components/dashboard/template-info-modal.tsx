@@ -7,6 +7,10 @@ import { StatusPill } from "./status-pill";
 import { formatDate } from "./recent-badges-utils";
 import Link from "next/link";
 import { toast } from "sonner";
+import {
+  buildParticipantShareUrl,
+  formatShareUrlForDisplay,
+} from "@/app/features/templates/lib/badge-share-url";
 
 export function TemplateInfoModal({
   template,
@@ -19,6 +23,13 @@ export function TemplateInfoModal({
   onClose: () => void;
   // onRequestDelete: (template: OrganizerTemplateInstance) => void;
 }) {
+  const fullUrl = template.share_slug
+    ? buildParticipantShareUrl(template.share_slug)
+    : null;
+  const displayUrl = fullUrl
+    ? formatShareUrlForDisplay(fullUrl)
+    : "Not yet published";
+
   useEffect(() => {
     const scrollY = window.scrollY;
 
@@ -144,9 +155,9 @@ export function TemplateInfoModal({
             <button
               type="button"
               onClick={async () => {
-                if (!template.share_slug) return;
+                if (!fullUrl) return;
 
-                await navigator.clipboard.writeText(template.share_slug);
+                await navigator.clipboard.writeText(fullUrl);
                 toast.success("Link copied to clipboard");
               }}
               className="flex gap-[8px] inline-flex w-full items-center rounded-lg border border-[#E8E8E8] px-[16px] py-[8px] text-[13px] text-[#121217] cursor-pointer"
@@ -157,7 +168,7 @@ export function TemplateInfoModal({
                 width={20}
                 alt="copy icon"
               />
-              <p>{template.share_slug ?? "Not yet published"}</p>
+              <p>{displayUrl}</p>
             </button>
           </div>
 
