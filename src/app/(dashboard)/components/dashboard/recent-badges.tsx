@@ -45,10 +45,11 @@ export default function RecentBadges() {
     );
   }
 
-  async function handleDeleteTemplate() {
+  function handleDeleteTemplate() {
     if (!templateToDelete) return;
-    deleteMutation.mutate(templateToDelete.id);
-    setTemplateToDelete(null);
+    deleteMutation.mutate(templateToDelete.id, {
+      onSuccess: () => setTemplateToDelete(null),
+    });
   }
 
   return (
