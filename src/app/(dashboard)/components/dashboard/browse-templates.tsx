@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTemplateGallery } from "../../create-badges/lib/use-template-gallery";
-import MockTemplates from "../../templates/components/mock-templates";
+import MockTemplates from "../../templates/components/all-templates";
 
 export default function BrowseTemplate() {
   const { filteredTemplates, isLoading } = useTemplateGallery();
