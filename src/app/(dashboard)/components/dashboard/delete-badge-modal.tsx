@@ -13,6 +13,9 @@ export function DeleteBadgeModal({
   return (
     <div
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-badge-title"
       className="fixed inset-0 z-[10000] grid place-items-center bg-black/40 p-[24px]"
     >
       <div
@@ -22,7 +25,7 @@ export function DeleteBadgeModal({
         <div className="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#FFF1F1]">
           <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#FFE4E4]">
             <Image
-              src="/public/assets/dashboard/_ui-trash-03.svg"
+              src="/assets/dashboard/_ui-trash-03.svg"
               height={28}
               width={28}
               alt="trash icon"
@@ -30,7 +33,10 @@ export function DeleteBadgeModal({
           </div>
         </div>
 
-        <h2 className="mt-[24px] text-center text-[22px] font-bold text-[#3A3A3A]">
+        <h2
+          id="delete-badge-title"
+          className="mt-[24px] text-center text-[22px] font-bold text-[#3A3A3A]"
+        >
           Delete Badge
         </h2>
 
