@@ -1,23 +1,6 @@
 import { Template } from "../../types/templates/template";
 import Image from "next/image";
 
-function getSafeBackgroundColor(value?: string) {
-  if (!value) return "#F4F4F2";
-
-  const trimmedValue = value.trim();
-  const colorPatterns = [
-    /^#[0-9a-f]{3,8}$/i,
-    /^rgb\(\s*(\d{1,3}\s*,\s*){2}\d{1,3}\s*\)$/i,
-    /^rgba\(\s*(\d{1,3}\s*,\s*){3}(0|1|0?\.\d+)\s*\)$/i,
-    /^hsl\(\s*\d{1,3}(deg)?\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%\s*\)$/i,
-    /^hsla\(\s*\d{1,3}(deg)?\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%\s*,\s*(0|1|0?\.\d+)\s*\)$/i,
-  ];
-
-  return colorPatterns.some((pattern) => pattern.test(trimmedValue))
-    ? trimmedValue
-    : "#F4F4F2";
-}
-
 export const TemplateCard = ({
   template,
   isAboveFold = false,
@@ -37,8 +20,8 @@ export const TemplateCard = ({
       )}
 
       <div
+        style={{ background: template.bg ?? "#F4F4F2" }}
         className={`relative w-full h-64 shrink-0 overflow-hidden`}
-        style={{ backgroundColor: getSafeBackgroundColor(template.bg) }}
       >
         <Image
           src={template.image}

@@ -12,9 +12,9 @@ export default function Templates() {
     filterTabs,
   } = useTemplateGallery();
 
-  const handleFilterChange = (tab: string) => {
-    setActiveFilter(tab);
-  };
+const handleFilterChange = (tab: string) => {
+  setActiveFilter(tab.trim());
+};
 
   return (
     <div className="flex min-w-0 flex-col space-y-8">
