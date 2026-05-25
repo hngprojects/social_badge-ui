@@ -33,7 +33,7 @@ export const BadgeUI = () => {
       >
         <Link href={"/"} className="flex justify-center items-center gap-3">
           <Icons.Logo />
-          <span>Social Badge</span>
+          <span>Flare Tag</span>
         </Link>
       </motion.div>
 

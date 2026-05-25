@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const customizeBadgeSchema = z.object({
-  eventName: z.string().min(1, "Event name is required"),
+  eventName: z.string().trim().min(1, "Event name is required"),
   destinationLink: z
     .string()
     .min(1, "Destination link is required")

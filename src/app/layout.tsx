@@ -12,13 +12,13 @@ export const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Social Badge — Digital Badge Builder",
-    template: "%s | Social Badge",
+    default: "Flare Tag — Digital Badge Builder",
+    template: "%s | Flare Tag",
   },
   description:
     "Create customizable digital badge templates that participants can personalize and share on social media.",
   openGraph: {
-    title: "Social Badge",
+    title: "Flare Tag",
     description:
       "Turn participants into active promoters with shareable digital badges.",
     type: "website",
