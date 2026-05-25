@@ -72,7 +72,7 @@ export default function Testimonials({
 				<div className="relative ">
 					<div className="overflow-y-auto overflow-x-hidden scrollbar-hide md:overflow-hidden max-h-150 md:max-h-none">
 						<div
-							className="flex flex-col md:flex-row md:transition-transform md:duration-500 md:ease-out gap-6"
+							className="flex flex-col md:flex-row md:transition-transform md:duration-500 md:ease-out gap-4 pb-2"
 							style={{
 								transform:
 									slidesPerView > 1
@@ -83,13 +83,13 @@ export default function Testimonials({
 							{testimonials.map((testimonial, index) => (
 								<div
 									key={testimonial.id}
-									className="w-full md:w-1/2 shrink-0 px-2 h-auto md:h-75"
+									className="w-full md:w-[calc((100%-1.5rem)/2)] shrink-0 px-2 h-auto md:h-75"
 								>
 									<div
 										className={`${getCardColor(index)} rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full`}
 									>
 										{/* Quote */}
-										<p className="text-base md:text-[22px] text-[#3d3d3d] leading-relaxed mb-8 font-sans">
+										<p className="text-base md:text-[18px] lg:text-[20px] text-[#3d3d3d] leading-[30px] mb-8 font-sans">
 											{testimonial.quote}
 										</p>
 
@@ -121,7 +121,7 @@ export default function Testimonials({
 					</div>
 
 					{/* Navigation Controls */}
-					<div className="hidden md:flex items-center justify-between mt-10">
+					<div className="hidden md:flex items-center justify-center mt-10">
 						{/* Dot Indicators */}
 						<div className="flex gap-2">
 							{Array.from({
