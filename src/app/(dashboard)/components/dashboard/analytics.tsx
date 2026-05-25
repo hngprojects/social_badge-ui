@@ -26,7 +26,6 @@ export default function Analytics({ templates }: AnalyticsProps) {
       count: 0,
     },
   ];
-  console.log("this", templates);
   return (
     <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 xl:grid-cols-4">
       {analyticsStats.map((card) => (

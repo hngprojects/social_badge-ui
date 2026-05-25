@@ -67,7 +67,6 @@ export function RecentBadgesTable({
             templates.map((template) => {
               const isPublished = template.status === "live";
               const thumbnailUrl = getTemplateThumbnail?.(template);
-              console.log(template);
 
               return (
                 <TableRow
