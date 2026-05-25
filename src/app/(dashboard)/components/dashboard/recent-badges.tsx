@@ -1,15 +1,9 @@
 "use client";
-
-import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
-import { deleteOrganizerTemplate } from "../../services/delete-template";
-import {
-  organizerTemplateInstancesKey,
-  useRecentOrganizerBadges,
-} from "../../hooks/use-organizer-template-instances";
+import { useRecentOrganizerBadges } from "../../hooks/use-organizer-template-instances";
+import { useDeleteOrganizerTemplate } from "../../hooks/use-delete-template";
 import { usePlatformTemplates } from "../../hooks/use-platform-templates";
-import { OrganizerTemplateInstancesResult } from "../../services/get-template-instances";
 import { DeleteBadgeModal } from "./delete-badge-modal";
 import { RecentBadgesHeader } from "./recent-badges-header";
 import { RecentBadgesMobileList } from "./recent-badges-mobile-list";
@@ -18,19 +12,21 @@ import { RECENT_BADGES_LIMIT, TemplateFilter } from "./recent-badges-types";
 import { TemplateInfoModal } from "./template-info-modal";
 
 export default function RecentBadges() {
-  const queryClient = useQueryClient();
+  const deleteMutation = useDeleteOrganizerTemplate();
+
+  // GET RECENT ORGANIZERS BADGES WITH HOOK
   const {
     templates,
     isLoading: loading,
     isError,
   } = useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
+
   const { templates: platformTemplates } = usePlatformTemplates();
   const [activeFilter, setActiveFilter] = useState<TemplateFilter>("All");
   const [selectedTemplate, setSelectedTemplate] =
     useState<OrganizerTemplateInstance | null>(null);
   const [templateToDelete, setTemplateToDelete] =
     useState<OrganizerTemplateInstance | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const filtered =
     activeFilter === "All"
@@ -43,36 +39,16 @@ export default function RecentBadges() {
   );
 
   function getTemplateThumbnail(template: OrganizerTemplateInstance) {
-    return platformTemplatesById.get(template.platform_template_id)
-      ?.thumbnail_url;
+    return (
+      platformTemplatesById.get(template.platform_template_id)?.thumbnail_url ??
+      undefined
+    );
   }
 
   async function handleDeleteTemplate() {
     if (!templateToDelete) return;
-
-    try {
-      setIsDeleting(true);
-      await deleteOrganizerTemplate(templateToDelete.id);
-
-      queryClient.setQueryData<OrganizerTemplateInstancesResult>(
-        organizerTemplateInstancesKey(1, RECENT_BADGES_LIMIT),
-        (prev) =>
-          prev
-            ? {
-                ...prev,
-                total: Math.max(0, prev.total - 1),
-                templates: prev.templates.filter(
-                  (template) => template.id !== templateToDelete.id,
-                ),
-              }
-            : prev,
-      );
-      setTemplateToDelete(null);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsDeleting(false);
-    }
+    deleteMutation.mutate(templateToDelete.id);
+    setTemplateToDelete(null);
   }
 
   return (
@@ -90,6 +66,7 @@ export default function RecentBadges() {
 
       <RecentBadgesTable
         templates={filtered}
+        getTemplateThumbnail={getTemplateThumbnail}
         loading={loading}
         isError={isError}
         onSelectTemplate={setSelectedTemplate}
@@ -113,7 +90,7 @@ export default function RecentBadges() {
           title={templateToDelete.title}
           onClose={() => setTemplateToDelete(null)}
           onDelete={handleDeleteTemplate}
-          isDeleting={isDeleting}
+          isDeleting={deleteMutation.isPending}
         />
       )}
     </div>
