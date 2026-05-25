@@ -37,6 +37,11 @@ export const useLogin = () => {
         return;
       }
 
+      if (status === 401) {
+        toast.error("Invalid Email or Password. Please try again.");
+        return;
+      }
+
       toast.error(message);
     },
   });

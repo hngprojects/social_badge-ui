@@ -3,6 +3,7 @@ import { Icons } from "@/components/ui/icons";
 import { ReactNode } from "react";
 import { getEmailProviderUrl } from "@/lib/utils";
 import { Button } from "./button";
+import Link from "next/link";
 
 export const AuthModal = ({
   imageSrc = "/assets/auth-flow/mail-img.png",
@@ -51,6 +52,17 @@ export const AuthModal = ({
             >
               Go to mail
             </Button>
+            <div className="text-center">
+              <p className="text-sm">
+                back to{" "}
+                <Link
+                  href="/login"
+                  className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
+                >
+                  Log in
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>
