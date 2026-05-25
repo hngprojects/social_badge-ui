@@ -21,7 +21,6 @@ export const TemplateCard = ({
 
       <div
         className={`relative w-full h-64 shrink-0 overflow-hidden`}
-        style={{ background: template.bg ?? "#F4F4F2" }}
       >
         <Image
           src={template.image}

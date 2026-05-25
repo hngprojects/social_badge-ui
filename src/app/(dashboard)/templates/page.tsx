@@ -1,13 +1,9 @@
 "use client";
-import { useState } from "react";
 import { useTemplateGallery } from "../create-badges/lib/use-template-gallery";
 import FilterTabs from "./components/filter-tabs";
 import AllTemplates from "./components/all-templates";
-import TemplatePagination from "./components/pagination";
 
 export default function Templates() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(8);
   const {
     filteredTemplates,
     activeFilter,
@@ -18,7 +14,6 @@ export default function Templates() {
 
   const handleFilterChange = (tab: string) => {
     setActiveFilter(tab);
-    setCurrentPage(1);
   };
 
   return (
@@ -41,20 +36,7 @@ export default function Templates() {
         templates={filteredTemplates}
         isLoading={isLoading}
         activeTab={activeFilter}
-        currentPage={currentPage}
-        postsPerPage={postsPerPage}
       />
-
-      {filteredTemplates.length > postsPerPage && (
-        <div className="flex justify-center mt-8">
-          <TemplatePagination
-            totalPosts={filteredTemplates.length}
-            postsPerPage={postsPerPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
-      )}
     </div>
   );
 }
