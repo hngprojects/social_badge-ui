@@ -32,8 +32,6 @@ const AllTemplates = ({
   templates: layoutTemplates,
   isLoading = false,
   activeTab,
-  currentPage = 1,
-  postsPerPage,
   limit,
 }: AllTemplatesProps) => {
   const templates = useMemo(
@@ -42,16 +40,15 @@ const AllTemplates = ({
   );
 
   const visibleTemplates = useMemo(() => {
-    if (limit) return templates.slice(0, limit);
-    if (!postsPerPage) return templates;
+    if (limit !== undefined) {
+      return templates.slice(0, limit);
+    }
 
-    const lastPostIndex = currentPage * postsPerPage;
-    const firstPostIndex = lastPostIndex - postsPerPage;
-    return templates.slice(firstPostIndex, lastPostIndex);
-  }, [currentPage, limit, postsPerPage, templates]);
+    return templates;
+  }, [limit, templates]);
 
   if (isLoading) {
-    const placeholderCount = limit ?? postsPerPage ?? 4;
+    const placeholderCount = limit ?? 4;
 
     return (
       <div className="grid grid-cols-1 min-[350px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -71,8 +68,9 @@ const AllTemplates = ({
         <p className="text-[#0A0A0A] font-semibold text-lg">No templates yet</p>
         <p className="text-[#8A8A85] text-sm max-w-xs">
           There are no{" "}
-          <span className="font-medium capitalize">{activeTab}</span> templates
-          available at the moment. Check back soon or browse another category.
+          <span className="font-medium capitalize">{activeTab || "No"}</span>{" "}
+          templates available at the moment. Check back soon or browse another
+          category.
         </p>
       </div>
     );

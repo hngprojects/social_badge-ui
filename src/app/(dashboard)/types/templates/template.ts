@@ -17,7 +17,5 @@ export type AllTemplatesProps = {
   templates: LayoutTemplate[];
   isLoading?: boolean;
   activeTab?: string;
-  currentPage?: number;
-  postsPerPage?: number;
   limit?: number;
 };
