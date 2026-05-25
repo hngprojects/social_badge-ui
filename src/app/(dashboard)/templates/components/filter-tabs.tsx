@@ -1,10 +1,6 @@
 "use client";
 
-type TemplateTabsProps = {
-  activeTab: string;
-  tabs: readonly string[];
-  onTabChange: (tab: string) => void;
-};
+import type { TemplateTabsProps } from "../../types/templates/filters";
 
 const FilterTabs = ({ activeTab, tabs, onTabChange }: TemplateTabsProps) => {
   return (
