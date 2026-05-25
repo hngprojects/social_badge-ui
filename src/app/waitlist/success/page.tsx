@@ -64,7 +64,7 @@ export default function WaitlistSuccessPage() {
 								You&apos;ve Joined the Waitlist!
 							</h1>
 							<p className="text-[#757575] text-[18px] font-semibold max-w-sm">
-								We&apos;ll notify you as soon as Social Badge Builder is ready.
+								We&apos;ll notify you as soon as Flare Tag Builder is ready.
 							</p>
 						</div>
 						<ReturnButton onClick={() => router.push("/")} />

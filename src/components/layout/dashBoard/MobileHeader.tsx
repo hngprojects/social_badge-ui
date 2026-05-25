@@ -47,19 +47,19 @@ export default function MobileHeader() {
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2.5 group"
-          aria-label="Social Badge home"
+          aria-label="Flare Tag home"
         >
           <span className="transition-transform duration-200 group-hover:scale-105">
             <Image
               src="/assets/logo.svg"
-              alt="Social Badge logo"
+              alt="Flare Tag logo"
               width={27}
               height={27}
               className="w-6.75 h-6.75"
             />
           </span>
           <span className="text-xl font-medium tracking-tight text-[#231F20]">
-            Social Badge
+            Flare Tag
           </span>
         </Link>
 
@@ -89,7 +89,7 @@ export default function MobileHeader() {
             <VisuallyHidden>
               <SheetTitle>Navigation menu</SheetTitle>
               <SheetDescription>
-                Main navigation links for Social Badge
+                Main navigation links for Flare Tag
               </SheetDescription>
             </VisuallyHidden>
 
@@ -98,13 +98,13 @@ export default function MobileHeader() {
               <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
                 <Image
                   src="/assets/logo.svg"
-                  alt="Social Badge logo"
+                  alt="Flare Tag logo"
                   width={28}
                   height={28}
                   className="w-6.75 h-6.75"
                 />
                 <span className="text-[17px] font-semibold tracking-tight text-foreground">
-                  Social Badge
+                  Flare Tag
                 </span>
               </div>
 

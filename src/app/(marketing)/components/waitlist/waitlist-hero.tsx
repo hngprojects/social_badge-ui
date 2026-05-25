@@ -60,17 +60,17 @@ export default function WaitlistHero() {
 				<Link
 					href="/"
 					className="flex items-center gap-2 group w-fit"
-					aria-label="Social Badge home"
+					aria-label="Flare Tag home"
 				>
 					<Image
 						src="/assets/logo.svg"
-						alt="Social Badge logo"
+						alt="Flare Tag logo"
 						width={32}
 						height={32}
 						className="w-8 h-8 transition-transform duration-200 group-hover:scale-105"
 					/>
 					<span className="text-xl md:text-2xl font-semibold tracking-tight text-[#121217]">
-						Social Badge
+						Flare Tag
 					</span>
 				</Link>
 			</header>
@@ -135,7 +135,7 @@ export default function WaitlistHero() {
 					<div className="w-full max-w-5xl mt-4 px-2 md:px-0">
 						<Image
 							src="/assets/waitlist/waitlist-hero-demo.svg"
-							alt="Social Badge Application Interface"
+							alt="Flare Tag Application Interface"
 							width={1200}
 							height={800}
 							className="w-full h-auto drop-shadow-2xl rounded-lg md:rounded-none"
