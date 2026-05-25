@@ -39,9 +39,7 @@ export function RecentBadgesTable({
               <TableHead
                 key={col.label}
                 className={cn(
-                  `whitespace-nowrap border-b border-t border-[#F0F0EE] px-[16px] py-[10px] text-left text-[11px] font-semibold tracking-[0.05em] text-gray-400 ${
-                    i === 0 ? "w-[36%]" : i === 5 ? "w-[40px]" : ""
-                  }`,
+                  "whitespace-nowrap border-b border-t border-[#F0F0EE] px-4 py-[10px] text-left text-[11px] font-semibold tracking-[0.05em] text-gray-400 col.className",
                 )}
               >
                 {col.label}
@@ -74,32 +72,34 @@ export function RecentBadgesTable({
                   onClick={() => onSelectTemplate(template)}
                   className="cursor-pointer border-b border-[#F0F0EE] transition-colors hover:bg-[#FAFAF8]"
                 >
-                  <TableCell className="px-[16px] py-[14px] whitespace-normal flex items-center gap-[12px]">
-                    <div className="rounded-[10px] overflow-hidden">
-                      {thumbnailUrl && (
-                        <Image
-                          src={thumbnailUrl}
-                          height={44}
-                          width={44}
-                          alt="badge thumbnail"
-                        />
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-[14px] leading-[1.3] text-gray-900">
-                        {template.title}
+                  <TableCell className="px-[16px] py-[14px] whitespace-normal">
+                    <div className="flex items-center gap-[12px]">
+                      <div className="rounded-[10px] overflow-hidden">
+                        {thumbnailUrl && (
+                          <Image
+                            src={thumbnailUrl}
+                            height={44}
+                            width={44}
+                            alt="badge thumbnail"
+                          />
+                        )}
                       </div>
-                      <div className="mt-[2px] text-[12px] text-gray-400">
-                        Template instance &middot;{" "}
-                        <span
-                          className={
-                            template.share_slug
-                              ? "text-gray-400"
-                              : "text-gray-300"
-                          }
-                        >
-                          {template.share_slug ?? "Not yet published"}
-                        </span>
+                      <div>
+                        <div className="font-semibold text-[14px] leading-[1.3] text-gray-900">
+                          {template.title}
+                        </div>
+                        <div className="mt-[2px] text-[12px] text-gray-400">
+                          Template instance &middot;{" "}
+                          <span
+                            className={
+                              template.share_slug
+                                ? "text-gray-400"
+                                : "text-gray-300"
+                            }
+                          >
+                            {template.share_slug ?? "Not yet published"}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </TableCell>

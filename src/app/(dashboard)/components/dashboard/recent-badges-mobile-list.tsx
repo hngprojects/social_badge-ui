@@ -26,6 +26,8 @@ export function RecentBadgesMobileList({
       {templates.map((template) => (
         <div
           key={template.id}
+          role="button"
+          tabIndex={0}
           onClick={() => onSelectTemplate(template)}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {

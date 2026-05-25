@@ -37,9 +37,9 @@ export function RecentBadgesHeader({
               </button>
             ))}
           </div>
-          <button className="cursor-pointer shrink-0 whitespace-nowrap px-[2px] py-[6px] text-[13px] font-medium text-[#FF693E]">
+          {/* <button className="cursor-pointer shrink-0 whitespace-nowrap px-[2px] py-[6px] text-[13px] font-medium text-[#FF693E]">
             View all &rsaquo;
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

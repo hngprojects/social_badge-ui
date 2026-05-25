@@ -114,7 +114,6 @@ export function MoreMenu({
             {editHref && (
               <Link
                 href={editHref}
-                type="button"
                 role="menuitem"
                 onClick={() => handleAction(onEdit)}
                 className="inline-flex w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
