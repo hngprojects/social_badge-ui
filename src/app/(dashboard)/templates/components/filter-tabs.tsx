@@ -1,17 +1,17 @@
 "use client";
-import { filterTabs } from "../../constants/filter-tabs";
 
 type TemplateTabsProps = {
   activeTab: string;
+  tabs: readonly string[];
   onTabChange: (tab: string) => void;
 };
 
-const FilterTabs = ({ activeTab, onTabChange }: TemplateTabsProps) => {
+const FilterTabs = ({ activeTab, tabs, onTabChange }: TemplateTabsProps) => {
   return (
     <div className="w-full min-w-0 max-w-[calc(100vw-3rem)] overflow-x-auto scrollbar-hide lg:max-w-[calc(100vw-241px-3.5rem)]">
       <div className="flex flex-nowrap items-center gap-3 py-3 md:py-7 min-w-max">
-        {filterTabs.map((tab) => {
-          const isActive = activeTab === tab;
+        {tabs.map((tab) => {
+          const isActive = activeTab.toLowerCase() === tab.toLowerCase();
 
           return (
             <button
