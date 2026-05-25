@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
 import { useRecentOrganizerBadges } from "../../hooks/use-organizer-template-instances";
 import { usePlatformTemplates } from "../../hooks/use-platform-templates";
@@ -29,16 +29,20 @@ export default function RecentBadges() {
           (template) => template.status === activeFilter.toLowerCase(),
         );
 
-  const platformTemplatesById = new Map(
-    platformTemplates.map((template) => [template.id, template]),
+  const platformTemplatesById = useMemo(
+    () => new Map(platformTemplates.map((template) => [template.id, template])),
+    [platformTemplates],
   );
 
-  function getTemplateThumbnail(template: OrganizerTemplateInstance) {
-    return (
-      platformTemplatesById.get(template.platform_template_id)?.thumbnail_url ??
-      undefined
-    );
-  }
+  const getTemplateThumbnail = useCallback(
+    (template: OrganizerTemplateInstance) => {
+      return (
+        platformTemplatesById.get(template.platform_template_id)
+          ?.thumbnail_url ?? undefined
+      );
+    },
+    [platformTemplatesById],
+  );
 
   return (
     <div className="w-full overflow-hidden overflow-y-visible rounded-2xl border border-[#F0F0EE]">
