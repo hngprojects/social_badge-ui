@@ -75,6 +75,12 @@ export function useSaveOrganiserTemplate() {
     },
     onError: (error: unknown) => {
       const axiosError = error as AxiosError<{ message?: string }>;
+
+      if (axiosError.response?.status === 413) {
+        toast.error("Logo file is too large. Please upload a smaller image.");
+        return;
+      }
+
       const message =
         axiosError.response?.data?.message ??
         "Failed to publish template. Please try again.";
