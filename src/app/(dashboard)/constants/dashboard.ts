@@ -1,6 +1,5 @@
 import { StatCard } from "../types/dashboard/dashboard";
 import { Badge, Filter, Status } from "../types/dashboard/dashboard";
-import { OrganizerTemplateInstance } from "../types/dashboard/organizer-template-instances";
 
 export const stats: StatCard[] = [
   {

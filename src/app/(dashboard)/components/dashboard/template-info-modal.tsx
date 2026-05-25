@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
 import { StatusPill } from "./status-pill";
 import { formatDate } from "./recent-badges-utils";
