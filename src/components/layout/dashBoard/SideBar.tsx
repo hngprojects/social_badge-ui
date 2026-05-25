@@ -22,7 +22,7 @@ export default function SideNav() {
 
   return (
     <aside
-      className={`h-screen shrink-0 overflow-hidden border-r border-[#00000014]/80 pb-6 text-black transition-[width] duration-300 ${
+      className={`h-dvh shrink-0 overflow-hidden border-r border-[#00000014]/80 pb-6 text-black transition-[width] duration-300 ${
         expanded ? "w-[241px]" : "w-[72px]"
       }`}
     >

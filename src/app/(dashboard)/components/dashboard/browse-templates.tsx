@@ -23,7 +23,7 @@ export default function BrowseTemplate() {
         </Link>
       </div>
 
-      <div className="p-5 grid w-full w-full gap-4.5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="p-5 grid w-full w-full gap-[18px] grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {templates.map((template, index) => (
           <Link key={template.id} href="/templates" className="h-full">
             <TemplateCard template={template} isAboveFold={index < 4} />
