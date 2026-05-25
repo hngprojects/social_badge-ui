@@ -19,6 +19,7 @@ import { useUserStore } from "@/stores/use-user-store";
 import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
 import { LogOut } from "lucide-react";
+import { getInitials } from "@/lib/utils";
 
 export default function MobileHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -162,9 +163,26 @@ export default function MobileHeader() {
                 </nav>
 
                 <div className="mt-auto border-t border-border px-3 py-4">
-                  <p className="mb-3 truncate px-1 text-sm font-medium text-foreground">
-                    {displayName}
-                  </p>
+                  <div className="flex items-center gap-3 mb-3 px-1">
+                    <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
+                      {user?.profile_photo_url ? (
+                        <Image
+                          src={user.profile_photo_url}
+                          width={40}
+                          height={40}
+                          alt=""
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span>
+                          {getInitials(user?.first_name, user?.last_name)}
+                        </span>
+                      )}
+                    </div>
+                    <p className="truncate text-sm font-medium text-foreground">
+                      {displayName}
+                    </p>
+                  </div>
                   <button
                     type="button"
                     onClick={() => {
