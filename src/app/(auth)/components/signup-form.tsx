@@ -2,9 +2,10 @@
 
 import { AuthInput } from "@/app/features/auth/components/auth-input";
 import { AuthModal } from "@/app/features/auth/components/auth-modal";
-import { Button } from "@/app/features/auth/components/button";
 import { GoogleAuth } from "@/app/features/auth/components/google-auth";
 import { useSignup } from "@/app/features/auth/hooks/useSignup";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Icons } from "@/components/ui/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -163,13 +164,10 @@ export const SignupForm = () => {
 							</div>
 
 							<div className="flex items-center gap-2 mt-2">
-								<input
-									type="checkbox"
-									className="h-3.5 w-3.5 rounded-[5px] border border-[#727272] accent-[#FA5424]"
-									name="remember-me"
+								<Checkbox
 									id="remember-me"
 									disabled={isSubmitting || isLoading || isRateLimited}
-									onChange={(e) => setIsChecked(e.target.checked)}
+									onCheckedChange={(checked) => setIsChecked(!!checked)}
 									checked={isChecked}
 								/>
 								<label htmlFor="remember-me" className="text-xs text-[#978B8A]">
@@ -182,6 +180,8 @@ export const SignupForm = () => {
 
 					<Button
 						type="submit"
+						variant="cta"
+						className="w-full py-4 text-base sm:text-[20px] font-semibold"
 						disabled={!isChecked || isSubmitting || isLoading || isRateLimited}
 					>
 						{
