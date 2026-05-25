@@ -10,11 +10,10 @@ import Steps from "../components/dashboard/steps";
 import { useRecentOrganizerBadges } from "../hooks/use-organizer-template-instances";
 
 export default function Dashboard() {
-  const { templates } = useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
+  const { totalBadges, activeBadges } =
+    useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
 
-  // count of badge numbe. This should be wired to get total badge count
-  // const hasBadges = templates.length > 0;
-  const hasBadges = templates.length > 0;
+  const hasBadges = totalBadges > 0;
 
   return (
     <section className="flex flex-col gap-6 pt-[32px]">
@@ -23,7 +22,7 @@ export default function Dashboard() {
         <UserWelcome />
       </header>
 
-      <Analytics templates={templates} />
+      <Analytics totalBadges={totalBadges} activeBadges={activeBadges} />
 
       {hasBadges ? <RecentBadges /> : <FirstBadgeCta />}
 

@@ -1,21 +1,21 @@
 import Image from "next/image";
-import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
 
 import { stats } from "../../constants/dashboard";
 
 type AnalyticsProps = {
-  templates: OrganizerTemplateInstance[];
+  totalBadges: number;
+  activeBadges: number;
 };
 
-export default function Analytics({ templates }: AnalyticsProps) {
+export default function Analytics({ totalBadges, activeBadges }: AnalyticsProps) {
   const analyticsStats = [
     {
       ...stats[0],
-      count: templates.length,
+      count: totalBadges,
     },
     {
       ...stats[1],
-      count: templates.filter((template) => template.status === "live").length,
+      count: activeBadges,
     },
     {
       ...stats[2],

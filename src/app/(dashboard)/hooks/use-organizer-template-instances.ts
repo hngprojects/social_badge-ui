@@ -16,10 +16,20 @@ export function useOrganizerTemplateInstances(page = 1, limit = 20) {
 
 export function useRecentOrganizerBadges(limit = 20) {
   const query = useOrganizerTemplateInstances(1, limit);
+  const totalBadges = query.data?.total ?? 0;
+  const countsQuery = useQuery({
+    queryKey: ["organizer-template-instance-counts", totalBadges],
+    queryFn: () => getOrganizerTemplateInstances(1, totalBadges),
+    enabled: totalBadges > 0,
+  });
+  const countTemplates = countsQuery.data?.templates ?? [];
 
   return {
     ...query,
     templates: query.data?.templates ?? [],
-    total: query.data?.total ?? 0,
+    total: totalBadges,
+    totalBadges,
+    activeBadges: countTemplates.filter((template) => template.status === "live")
+      .length,
   };
 }
