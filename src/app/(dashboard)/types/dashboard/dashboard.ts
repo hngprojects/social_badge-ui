@@ -16,7 +16,6 @@ export type Template = {
 export type StatCard = {
   image: string;
   title: string;
-  count: string;
   metrics?: string;
   bg: string;
 };

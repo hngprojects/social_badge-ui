@@ -1,78 +1,26 @@
-import { Template, StatCard } from "../types/dashboard/dashboard";
+import { StatCard } from "../types/dashboard/dashboard";
 import { Badge, Filter, Status } from "../types/dashboard/dashboard";
-
-export const templates: Template[] = [
-  {
-    id: 1,
-    title: "Achieveher",
-    type: "summit",
-    creator: "@techevents",
-    target: "High engagement",
-    badgeCount: "4,230",
-    image: "/assets/landing-page/template-10.png",
-    tag: "Trending",
-    hasShadow: true,
-    bg: "linear-gradient(rgb(255,240,244), rgb(255,228,218))",
-  },
-  {
-    id: 2,
-    title: "Dev Summit '26",
-    type: "Conference",
-    creator: "@techevents",
-    target: "High engagement",
-    badgeCount: "4,230",
-    image: "/assets/landing-page/template-2.png",
-    tag: "Trending",
-    hasShadow: true,
-    bg: "linear-gradient(rgb(180,180,180), rgb(241,239,232))",
-  },
-  {
-    id: 3,
-    title: "Next Gen Meetup",
-    type: "meetup",
-    creator: "@techevents",
-    target: "Newcomer",
-    badgeCount: "1,650",
-    image: "/assets/landing-page/template-9.png",
-    tag: null,
-    bg: "linear-gradient(rgb(202, 200, 204), rgb(202, 197, 209))",
-  },
-  {
-    id: 4,
-    title: "Founder's Circle",
-    type: "vip event",
-    creator: "@techevents",
-    target: "VIP audience",
-    badgeCount: "980",
-    image: "/assets/landing-page/template-17.png",
-    tag: null,
-    bg: "linear-gradient(rgb(231, 255, 235), rgb(138, 181, 144))",
-  },
-];
+import { OrganizerTemplateInstance } from "../types/dashboard/organizer-template-instances";
 
 export const stats: StatCard[] = [
   {
     image: "/assets/dashboard/icons/CheckCircle.svg",
     title: "total badges",
-    count: "0",
     bg: "#DCFCE7",
   },
   {
     image: "/assets/dashboard/icons/active-badges.svg",
     title: "active badges",
-    count: "0",
     bg: "#DCFCE7",
   },
   {
     image: "/assets/dashboard/icons/ui-link.svg",
     title: "total links",
-    count: "0",
     bg: "#DCE6FD",
   },
   {
     image: "/assets/dashboard/icons/ui-share.svg",
     title: "total shares",
-    count: "0",
     bg: "#FEF3C7",
   },
 ];
