@@ -68,7 +68,9 @@ const AllTemplates = ({
         <p className="text-[#0A0A0A] font-semibold text-lg">No templates yet</p>
         <p className="text-[#8A8A85] text-sm max-w-xs">
           There are no{" "}
-          <span className="font-medium capitalize">{activeTab || "No"}</span>{" "}
+          <span className="font-medium capitalize">
+            {activeTab ?? "selected"}
+          </span>{" "}
           templates available at the moment. Check back soon or browse another
           category.
         </p>
