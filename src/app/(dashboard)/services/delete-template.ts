@@ -1,7 +1,18 @@
+import { apiClient } from "@/lib/api/client";
+
 const ORGANIZER_TEMPLATE_ENDPOINT = "/templates/organizer";
 
 export async function deleteOrganizerTemplate(templateId: string) {
-  void `${ORGANIZER_TEMPLATE_ENDPOINT}/${templateId}`;
+  const id = templateId.trim();
 
-  return Promise.resolve();
+  if (!id) {
+    throw new Error("Template id is required");
+  }
+
+  await apiClient<void>(
+    `${ORGANIZER_TEMPLATE_ENDPOINT}/${encodeURIComponent(id)}`,
+    {
+      method: "DELETE",
+    },
+  );
 }
