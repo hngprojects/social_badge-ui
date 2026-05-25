@@ -71,7 +71,7 @@ export function TemplatesMobileLayout({
         </>
       )}
 
-      <UploadTemplateBox variant="mobile" />
+      {/* <UploadTemplateBox variant="mobile" /> */}
     </main>
   );
 }
