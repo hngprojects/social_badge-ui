@@ -141,7 +141,8 @@ export function TemplateInfoModal({
               Shareable link
             </p>
 
-            <div
+            <button
+              type="button"
               onClick={async () => {
                 if (!template.share_slug) return;
 
@@ -157,7 +158,7 @@ export function TemplateInfoModal({
                 alt="copy icon"
               />
               <p>{template.share_slug ?? "Not yet published"}</p>
-            </div>
+            </button>
           </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
