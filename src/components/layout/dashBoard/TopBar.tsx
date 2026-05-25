@@ -26,7 +26,7 @@ export default function TopBar() {
       </div>
 
       <div className="flex shrink-0 gap-5 items-center">
-        {/* <button
+        <button
           type="button"
           aria-label="Open notifications"
           className="grid h-11 w-11 place-content-center rounded-full bg-[#F7F7F8] cursor-pointer"
@@ -39,7 +39,7 @@ export default function TopBar() {
               height={22}
             />
           </div>
-        </button> */}
+        </button>
 
         <Button className="cursor-pointer h-auto! px-6 py-3.5! text-[14px] font-semibold">
           <Link href="/create-badges">Create new badge</Link>

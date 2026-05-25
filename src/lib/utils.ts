@@ -21,7 +21,7 @@ export const getEmailProviderUrl = (email?: string) => {
       return "https://mail.yahoo.com";
 
     default:
-      return "https://mail.google.com"; ;
+      return null;
   }
 };
 

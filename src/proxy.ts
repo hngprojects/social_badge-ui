@@ -12,21 +12,14 @@ const PROTECTED_ROUTES = [
   "/badges/published",
   "/create-badges",
   "/templates",
- "/settings",
-"/support",
+  "/settings",
+  "/support",
   "/coming-soon",
 ];
 
 export const proxy: NextProxy = (request) => {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("access_token")?.value;
-
-  const AUTH_ROUTES = ["/login", "/signup", "/forgot-password"];
-
-  // Logged-in users should not be able to access auth pages
-  if (AUTH_ROUTES.some((route) => pathname.startsWith(route)) && token) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
 
   if (PROTECTED_ROUTES.some((route) => pathname.startsWith(route)) && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
