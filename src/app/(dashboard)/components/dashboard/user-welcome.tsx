@@ -2,10 +2,10 @@ import { useUserStore } from "@/stores/use-user-store";
 
 export function UserWelcome() {
   const user = useUserStore((state) => state.user);
-  const userName = user?.first_name;
+  const userName = user?.first_name.trim() || "there";
 
   return (
-    <div className="my-[8px]">
+    <div className="my-2">
       <p className="text-[28px] font-bold text-[#1A1A1A]">
         Welcome to Social Badge,{" "}
         <span className="italic font-fraunces text-[#FF693E]">{userName}</span>
