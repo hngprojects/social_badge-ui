@@ -3,10 +3,14 @@
 import { useCallback, useMemo, useState } from "react";
 import { usePlatformTemplates } from "@/app/features/templates/hooks/usePlatformTemplates";
 import { EXTENDED_MOCK_DB, FILTER_TABS } from "../../constants/dashboard";
-import type { LayoutTemplate } from "../../types/dashboard";
+import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 
 export function useTemplateGallery() {
-  const { data: apiTemplates, isLoading, isError } = usePlatformTemplates({
+  const {
+    data: apiTemplates,
+    isLoading,
+    isError,
+  } = usePlatformTemplates({
     page: 1,
     limit: 50,
   });

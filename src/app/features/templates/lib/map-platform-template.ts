@@ -1,4 +1,4 @@
-import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard";
+import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard/dashboard";
 import type { PlatformTemplate } from "../types/platform-template";
 
 const DEFAULT_CARD_BG = "linear-gradient(to bottom, #FFF0F4, #FFE4DA)";
@@ -15,14 +15,23 @@ function formatShareRate(rate?: number): string {
 }
 
 export function extractPlatformTemplates(
-  data: PlatformTemplate[] | { templates?: PlatformTemplate[]; items?: PlatformTemplate[]; results?: PlatformTemplate[] } | undefined,
+  data:
+    | PlatformTemplate[]
+    | {
+        templates?: PlatformTemplate[];
+        items?: PlatformTemplate[];
+        results?: PlatformTemplate[];
+      }
+    | undefined,
 ): PlatformTemplate[] {
   if (!data) return [];
   if (Array.isArray(data)) return data;
   return data.templates ?? data.items ?? data.results ?? [];
 }
 
-export function mapPlatformTemplateToLayout(template: PlatformTemplate): LayoutTemplate {
+export function mapPlatformTemplateToLayout(
+  template: PlatformTemplate,
+): LayoutTemplate {
   return {
     id: template.id,
     title: template.title,
@@ -36,7 +45,9 @@ export function mapPlatformTemplateToLayout(template: PlatformTemplate): LayoutT
     usageCount: formatUsageCount(template.usage_count),
     shareRate: formatShareRate(template.share_rate),
     isMostPicked: Boolean(template.is_most_picked),
-    description: template.description ?? "Customize colours, logo, and content for your event.",
+    description:
+      template.description ??
+      "Customize colours, logo, and content for your event.",
     features: template.features ?? [
       "Customisable accent colour",
       "Logo upload",
