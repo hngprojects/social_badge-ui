@@ -1,13 +1,14 @@
 "use client";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
+
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
-import { navigationLinks } from "../navLinks";
-import { useUserStore } from "@/stores/use-user-store";
 import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
+import { useUserStore } from "@/stores/use-user-store";
+import { navigationLinks } from "../navLinks";
 
 const DEFAULT_AVATAR = "/assets/dashboard/pfp.png";
 
@@ -21,14 +22,14 @@ export default function SideNav() {
 
   return (
     <aside
-      className={`h-screen shrink-0 overflow-hidden border-r border-[#00000014]/80 pb-6  text-black transition-[width] duration-300 ${
+      className={`h-dvh shrink-0 overflow-hidden border-r border-[#00000014]/80 pb-6 text-black transition-[width] duration-300 ${
         expanded ? "w-[241px]" : "w-[72px]"
       }`}
     >
-      <div className="flex gap-[30px] h-full flex-col justify-between ">
-        <div className="">
+      <div className="flex h-full flex-col justify-between gap-[30px]">
+        <div>
           <header
-            className={`flex ${!expanded && "flex-col"} items-center justify-between gap-6 p-4 pt-[18px] mt-3 pb-6 mb-2 whitespace-nowrap text-[#231F20]`}
+            className={`flex ${!expanded && "flex-col"} mt-3 mb-2 items-center justify-between gap-6 p-4 pt-[18px] pb-6 whitespace-nowrap text-[#231F20]`}
           >
             <div className="flex items-center gap-2">
               <Link href="/dashboard">
@@ -61,7 +62,7 @@ export default function SideNav() {
             </button>
           </header>
 
-          <nav className="">
+          <nav>
             <ul
               className={`m-0 flex list-none flex-col gap-2 p-0 ${expanded ? "px-2" : ""}`}
             >
@@ -84,7 +85,7 @@ export default function SideNav() {
             <div
               className={`flex items-center ${expanded ? "justify-between gap-2" : "justify-center"}`}
             >
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex min-w-0 items-center gap-2">
                 <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border">
                   <Image
                     src={avatarSrc}
@@ -118,7 +119,7 @@ export default function SideNav() {
               <LogOut className="h-6 w-6 shrink-0" strokeWidth={1.75} />
               {expanded && (
                 <span className="text-sm font-medium">
-                  {isLoggingOut ? "Logging out…" : "Log out"}
+                  {isLoggingOut ? "Logging out..." : "Log out"}
                 </span>
               )}
             </button>
@@ -155,7 +156,7 @@ function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
 
       <Link
         href={nav.href}
-        className={`cursor-pointer flex w-full items-center gap-2 ${
+        className={`flex w-full cursor-pointer items-center gap-2 ${
           expanded ? "justify-start" : "justify-center"
         }`}
       >

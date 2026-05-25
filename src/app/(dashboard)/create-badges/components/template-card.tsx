@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { LayoutTemplate } from "../../types/dashboard";
+import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 
 interface TemplateCardProps {
   template: LayoutTemplate;
@@ -21,7 +21,9 @@ export function TemplateCard({
       type="button"
       onClick={() => onSelect(template)}
       className={`flex flex-col p-2.5 sm:p-4 rounded-[24px] transition-all duration-200 text-left group focus:outline-none focus:ring-0 border-2 w-full relative bg-white min-w-0 ${
-        isSelected ? "border-[#FF693E] shadow-sm" : "border-transparent hover:border-gray-200"
+        isSelected
+          ? "border-[#FF693E] shadow-sm"
+          : "border-transparent hover:border-gray-200"
       }`}
       aria-label={`Select layout structure for ${template.title}`}
     >
