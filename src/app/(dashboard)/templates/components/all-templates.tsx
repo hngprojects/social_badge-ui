@@ -3,17 +3,11 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import type { LayoutTemplate } from "../../types/dashboard/dashboard";
-import type { Template } from "../../types/template";
+import type {
+  AllTemplatesProps,
+  Template,
+} from "../../types/templates/template";
 import TemplateCard from "./template-card";
-
-type MockTemplatesProps = {
-  templates: LayoutTemplate[];
-  isLoading?: boolean;
-  activeTab?: string;
-  currentPage?: number;
-  postsPerPage?: number;
-  limit?: number;
-};
 
 function formatBadgeCount(usageCount: string) {
   return usageCount.replace(/\s*made$/i, "");
@@ -34,14 +28,14 @@ function layoutTemplateToTemplate(template: LayoutTemplate): Template {
   };
 }
 
-const MockTemplates = ({
+const AllTemplates = ({
   templates: layoutTemplates,
   isLoading = false,
   activeTab,
   currentPage = 1,
   postsPerPage,
   limit,
-}: MockTemplatesProps) => {
+}: AllTemplatesProps) => {
   const templates = useMemo(
     () => layoutTemplates.map(layoutTemplateToTemplate),
     [layoutTemplates],
@@ -99,4 +93,4 @@ const MockTemplates = ({
   );
 };
 
-export default MockTemplates;
+export default AllTemplates;

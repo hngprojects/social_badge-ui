@@ -1,4 +1,4 @@
-import { Template } from "../../types/template";
+import { Template } from "../../types/templates/template";
 import Image from "next/image";
 
 export const TemplateCard = ({
