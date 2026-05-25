@@ -1,27 +1,12 @@
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
-
-const STATUS_STYLES = {
-  draft: {
-    bg: "#F3F4F6",
-    text: "#6B7280",
-    dot: "#9CA3AF",
-  },
-  live: {
-    bg: "#DCFCE7",
-    text: "#16A34A",
-    dot: "#16A34A",
-  },
-} satisfies Record<
-  OrganizerTemplateInstance["status"],
-  { bg: string; text: string; dot: string }
->;
+import { STATUS_STYLES_LOWERCASE } from "../../constants/dashboard";
 
 export function StatusPill({
   status,
 }: {
   status: OrganizerTemplateInstance["status"];
 }) {
-  const s = STATUS_STYLES[status];
+  const s = STATUS_STYLES_LOWERCASE[status];
 
   return (
     <span

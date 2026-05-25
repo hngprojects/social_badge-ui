@@ -2,6 +2,7 @@ import { Template, StatCard } from "../types/dashboard/dashboard";
 import { TemplateData } from "../types/dashboard/dashboard";
 import { LayoutTemplate } from "../types/dashboard/dashboard";
 import { Badge, Filter, Status } from "../types/dashboard/dashboard";
+import { OrganizerTemplateInstance } from "../types/dashboard/organizer-template-instances";
 
 export const templates: Template[] = [
   {
@@ -298,3 +299,11 @@ export const STATUS_STYLES: Record<
     dot: "#F59E0B",
   },
 };
+
+export const STATUS_STYLES_LOWERCASE = {
+  draft: STATUS_STYLES.Draft,
+  live: STATUS_STYLES.Live,
+} satisfies Record<
+  OrganizerTemplateInstance["status"],
+  { bg: string; text: string; dot: string; border?: string }
+>;
