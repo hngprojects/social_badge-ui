@@ -239,7 +239,7 @@ export default function ContactForm() {
             <option value="">Select a topic...</option>
             <option value="general">General Inquiry</option>
             <option value="partnership">Partnership</option>
-            <option value="bug">Bug Report</option>
+            <option value="bug_report">Bug Report</option>
             <option value="feedback">Feedback</option>
             <option value="billing">Billing</option>
           </select>
