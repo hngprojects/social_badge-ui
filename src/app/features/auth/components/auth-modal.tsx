@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Icons } from "@/components/ui/icons";
 import { ReactNode } from "react";
 import { getEmailProviderUrl } from "@/lib/utils";
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const AuthModal = ({
@@ -43,6 +43,8 @@ export const AuthModal = ({
             <h2 className="font-semibold text-[20px] ">{title}</h2>
             <div className="text-base text-[#4D4645]  ">{description}</div>
             <Button
+              variant="cta"
+              className="w-full py-4 text-base font-semibold"
               onClick={() => {
                 const mailUrl = getEmailProviderUrl(email);
                 if (!mailUrl) return;

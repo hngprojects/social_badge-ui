@@ -8,7 +8,7 @@ import {
   TemplateLoadingState,
 } from "./template-gallery-states";
 import { TemplateLivePreview } from "./template-live-preview";
-import { UploadTemplateBox } from "./upload-template-box";
+//import { UploadTemplateBox } from "./upload-template-box";
 
 interface TemplatesDesktopLayoutProps {
   filterTabs: string[];
@@ -53,7 +53,7 @@ export function TemplatesDesktopLayout({
           />
         )}
 
-        <UploadTemplateBox />
+        {/* <UploadTemplateBox /> */}
       </section>
 
       <aside className="col-span-5 w-full sticky top-6 bg-white rounded-[32px] p-6 border border-[#E5E5E5] flex flex-col shadow-sm">

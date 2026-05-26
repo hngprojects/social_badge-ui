@@ -77,7 +77,7 @@ export function TemplateLivePreview({ template }: TemplateLivePreviewProps) {
         >
           Continue to customize
         </Link>
-        <div className="w-full flex items-center justify-center gap-2 text-[10px] text-[#9CA3AF] font-sans font-normal uppercase select-none">
+        {/* <div className="w-full flex items-center justify-center gap-2 text-[10px] text-[#9CA3AF] font-sans font-normal uppercase select-none">
           <div className="h-px bg-gray-200 flex-1" />
           <span>OR</span>
           <div className="h-px bg-gray-200 flex-1" />
@@ -87,7 +87,7 @@ export function TemplateLivePreview({ template }: TemplateLivePreviewProps) {
           className="w-full h-11 bg-white border border-[#E5E7EB] hover:border-[#E5E7EB]/60 hover:text-[#FF693E] text-[#161616] font-semibold rounded-xl text-sm transition-colors"
         >
           Upload my own template
-        </button>
+        </button> */}
       </div>
     </div>
   );

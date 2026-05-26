@@ -8,8 +8,8 @@ import {
   TemplateLoadingState,
 } from "./template-gallery-states";
 import { TemplateLivePreview } from "./template-live-preview";
-import { UploadTemplateBox } from "./upload-template-box";
-
+//import { UploadTemplateBox } from "./upload-template-box";
+ 
 interface TemplatesMobileLayoutProps {
   filterTabs: string[];
   activeFilter: string;
@@ -71,7 +71,7 @@ export function TemplatesMobileLayout({
         </>
       )}
 
-      <UploadTemplateBox variant="mobile" />
+      {/* <UploadTemplateBox variant="mobile" /> */}
     </main>
   );
 }

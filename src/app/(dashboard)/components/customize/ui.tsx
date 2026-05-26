@@ -2,6 +2,17 @@
 
 import React, { useState } from "react";
 import { MONTHS, ordinal } from "./constants";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 /* ── SectionCard ────────────────────────────────────────────────────────── */
 
@@ -34,10 +45,10 @@ export function SectionCard({
 
 export function FieldLabel({ label, required }: { label: string; required?: boolean }) {
   return (
-    <label className="block text-xs font-bold uppercase tracking-wider text-[#595959] mb-1.5">
+    <Label className="block text-xs font-bold uppercase tracking-wider text-[#595959] mb-1.5">
       {label}
       {required && <span className="text-[#FB3748] ml-0.5">*</span>}
-    </label>
+    </Label>
   );
 }
 
@@ -56,13 +67,13 @@ export function TextInput({
 }) {
   return (
     <div className="relative">
-      <input
+      <Input
         type="text"
         placeholder={placeholder}
         value={value ?? ""}
         maxLength={maxLength}
         onChange={(e) => onChange?.(e.target.value)}
-        className="w-full h-12 px-4 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959] text-sm font-medium"
+        className="h-12 px-4 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
       />
       {maxLength && (
         <span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
@@ -94,13 +105,13 @@ export function TextArea({
 }) {
   return (
     <div className="relative">
-      <textarea
+      <Textarea
         rows={3}
         placeholder={placeholder}
         value={value ?? ""}
         maxLength={maxLength}
         onChange={(e) => onChange?.(e.target.value)}
-        className="w-full px-4 py-3 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959] text-sm font-medium resize-none"
+        className="px-4 py-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
       />
       {maxLength && (
         <span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
@@ -115,21 +126,10 @@ export function TextArea({
 
 export function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void }) {
   return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      onClick={onChange}
-      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 ${
-        checked ? "bg-orange-500" : "bg-gray-200"
-      }`}
-    >
-      <span
-        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ${
-          checked ? "translate-x-5" : "translate-x-0"
-        }`}
-      />
-    </button>
+    <Switch
+      checked={checked}
+      onCheckedChange={() => onChange()}
+    />
   );
 }
 
@@ -153,15 +153,14 @@ export function BadgeDatePicker({
     }
   };
 
-  const selectClass =
-    "flex-1 h-12 px-3 border border-[#BDBDBD] rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all bg-[#F6F6F6] text-[#595959] text-sm font-medium appearance-none cursor-pointer";
+  const triggerClass =
+    "flex-1 h-12 px-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500";
 
   return (
     <div className="flex gap-2">
-      <select
+      <Select
         value={month}
-        onChange={(e) => {
-          const newMonth = e.target.value;
+        onValueChange={(newMonth) => {
           setMonth(newMonth);
           if (newMonth && day) {
             const dm = new Date(new Date().getFullYear(), MONTHS.indexOf(newMonth) + 1, 0).getDate();
@@ -172,24 +171,30 @@ export function BadgeDatePicker({
             handleChange(newMonth, day);
           }
         }}
-        className={selectClass}
       >
-        <option value="">Month</option>
-        {MONTHS.map((m) => (
-          <option key={m} value={m}>{m}</option>
-        ))}
-      </select>
+        <SelectTrigger className={triggerClass}>
+          <SelectValue placeholder="Month" />
+        </SelectTrigger>
+        <SelectContent>
+          {MONTHS.map((m) => (
+            <SelectItem key={m} value={m}>{m}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
-      <select
+      <Select
         value={day}
-        onChange={(e) => { setDay(e.target.value); handleChange(month, e.target.value); }}
-        className={`${selectClass} max-w-22.5`}
+        onValueChange={(val) => { setDay(val); handleChange(month, val); }}
       >
-        <option value="">Day</option>
-        {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => (
-          <option key={d} value={d}>{d}</option>
-        ))}
-      </select>
+        <SelectTrigger className={`${triggerClass} max-w-22.5`}>
+          <SelectValue placeholder="Day" />
+        </SelectTrigger>
+        <SelectContent>
+          {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => (
+            <SelectItem key={d} value={String(d)}>{d}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }
