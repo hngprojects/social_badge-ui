@@ -6,7 +6,7 @@ import { StatusPill } from "./status-pill";
 export function RecentBadgesMobileList({
   templates,
   onSelectTemplate,
-  // onRequestDelete,
+  onRequestDelete,
 }: RecentBadgesListProps) {
   return (
     <div className="md:hidden">
@@ -57,7 +57,7 @@ export function RecentBadgesMobileList({
           <div onClick={(event) => event.stopPropagation()}>
             <MoreMenu
               onViewInfo={() => onSelectTemplate(template)}
-              // onDelete={() => onRequestDelete(template)}
+              onDelete={() => onRequestDelete(template)}
             />
           </div>
         </div>
