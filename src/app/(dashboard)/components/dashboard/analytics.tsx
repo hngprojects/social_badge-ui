@@ -1,13 +1,12 @@
 import Image from "next/image";
+import { AnalyticsProps } from "../../types/dashboard/analytics";
 
 import { stats } from "../../constants/dashboard";
 
-type AnalyticsProps = {
-  totalBadges: number;
-  activeBadges: number;
-};
-
-export default function Analytics({ totalBadges, activeBadges }: AnalyticsProps) {
+export default function Analytics({
+  totalBadges,
+  activeBadges,
+}: AnalyticsProps) {
   const analyticsStats = [
     {
       ...stats[0],
