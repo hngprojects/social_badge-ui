@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Icons } from "@/components/ui/icons";
 import { ReactNode } from "react";
 import { getEmailProviderUrl } from "@/lib/utils";
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const AuthModal = ({

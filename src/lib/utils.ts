@@ -32,3 +32,13 @@ export const initiateGoogleAuth = (): void => {
 
 	globalThis.location.href = `${BASE}/auth/google`;
 };
+
+export function getInitials(
+	firstName?: string | null,
+	lastName?: string | null,
+) {
+	const f = firstName?.trim().charAt(0) || "";
+	const l = lastName?.trim().charAt(0) || "";
+	const initials = (f + l).toUpperCase();
+	return initials || "U";
+}

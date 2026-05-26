@@ -16,6 +16,9 @@ import {
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { useUserStore } from '@/stores/use-user-store';
+import { useQuery } from '@tanstack/react-query';
+import { getCurrentUser } from '@/app/features/auth/services/auth';
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
@@ -31,6 +34,15 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
+  const { data: authUser, isLoading } = useQuery({
+    queryKey: ["auth", "me"],
+    queryFn: async () => {
+      const response = await getCurrentUser();
+      return response.data;
+    },
+    retry: false,
+    staleTime: 5 * 60 * 1000,
+  });
 
   useMotionValueEvent(scrollY, 'change', (current) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -116,30 +128,40 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden min-[1084px]:flex items-center gap-3 shrink-0">
-            <Link
-              href="/login"
-              className={cn(
-                'px-4 py-2 text-base font-medium rounded-lg',
-                'text-foreground hover:bg-muted',
-                'transition-colors duration-150',
-              )}
-            >
-              Log In
-            </Link>
+            {isLoading ? (
+              <div className="w-[162px] h-11 bg-muted animate-pulse rounded-lg" />
+            ) : authUser ? (
+              <Button asChild variant="cta" size="xl" className="w-[180px] h-11">
+                <Link href="/dashboard">Back to Dashboard</Link>
+              </Button>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className={cn(
+                    'px-4 py-2 text-base font-medium rounded-lg',
+                    'text-foreground hover:bg-muted',
+                    'transition-colors duration-150',
+                  )}
+                >
+                  Log In
+                </Link>
 
-            <Button asChild variant="cta" size="xl" className="w-[162px] h-11">
-              <Link href="/signup">
-                Start Building
-                <span className="inline-flex items-center justify-center">
-                  <Image
-                    src="/assets/icons/round-arrow-right-up.svg"
-                    alt="arrow"
-                    width={20}
-                    height={20}
-                  />
-                </span>
-              </Link>
-            </Button>
+                <Button asChild variant="cta" size="xl" className="w-[162px] h-11">
+                  <Link href="/signup">
+                    Start Building
+                    <span className="inline-flex items-center justify-center">
+                      <Image
+                        src="/assets/icons/round-arrow-right-up.svg"
+                        alt="arrow"
+                        width={20}
+                        height={20}
+                      />
+                    </span>
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Hamburger */}
@@ -226,39 +248,59 @@ export default function Header() {
 
                 {/* Mobile CTAs */}
                 <div className="flex flex-col gap-3 px-5 py-5 border-t border-border">
-                  <Link
-                    href="/login"
-                    onClick={() => setMobileOpen(false)}
-                    className={cn(
-                      'w-full text-center px-4 py-2.5 text-[15px] font-medium rounded-full',
-                      'text-foreground border border-border',
-                      'hover:bg-muted transition-colors duration-150',
-                    )}
-                  >
-                    Log In
-                  </Link>
+                  {isLoading ? (
+                    <div className="w-full h-11 bg-muted animate-pulse rounded-full" />
+                  ) : authUser ? (
+                    <Button
+                      asChild
+                      className={cn(
+                        'w-full h-11 rounded-full text-[15px] font-semibold',
+                        'bg-primary text-primary-foreground',
+                        'hover:opacity-90 active:opacity-80',
+                        'shadow-sm transition-all duration-150',
+                      )}
+                    >
+                      <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
+                        Back to Dashboard
+                      </Link>
+                    </Button>
+                  ) : (
+                    <>
+                      <Link
+                        href="/login"
+                        onClick={() => setMobileOpen(false)}
+                        className={cn(
+                          'w-full text-center px-4 py-2.5 text-[15px] font-medium rounded-full',
+                          'text-foreground border border-border',
+                          'hover:bg-muted transition-colors duration-150',
+                        )}
+                      >
+                        Log In
+                      </Link>
 
-                  <Button
-                    asChild
-                    className={cn(
-                      'w-full h-11 rounded-full text-[15px] font-semibold',
-                      'bg-primary text-primary-foreground',
-                      'hover:opacity-90 active:opacity-80',
-                      'shadow-sm transition-all duration-150',
-                    )}
-                  >
-                    <Link href="/signup" onClick={() => setMobileOpen(false)}>
-                      Start Building
-                      <span className="inline-flex items-center justify-center">
-                        <Image
-                          src="/assets/icons/round-arrow-right-up.svg"
-                          alt="arrow"
-                          width={20}
-                          height={20}
-                        />
-                      </span>
-                    </Link>
-                  </Button>
+                      <Button
+                        asChild
+                        className={cn(
+                          'w-full h-11 rounded-full text-[15px] font-semibold',
+                          'bg-primary text-primary-foreground',
+                          'hover:opacity-90 active:opacity-80',
+                          'shadow-sm transition-all duration-150',
+                        )}
+                      >
+                        <Link href="/signup" onClick={() => setMobileOpen(false)}>
+                          Start Building
+                          <span className="inline-flex items-center justify-center">
+                            <Image
+                              src="/assets/icons/round-arrow-right-up.svg"
+                              alt="arrow"
+                              width={20}
+                              height={20}
+                            />
+                          </span>
+                        </Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </SheetContent>

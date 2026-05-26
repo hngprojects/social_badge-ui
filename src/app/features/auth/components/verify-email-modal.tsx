@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { buttonVariants } from "./button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export const VerifyEmailModal = () => {
 	return (

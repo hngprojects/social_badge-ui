@@ -9,8 +9,7 @@ import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
 import { useUserStore } from "@/stores/use-user-store";
 import { navigationLinks } from "../navLinks";
-
-const DEFAULT_AVATAR = "/assets/dashboard/pfp.png";
+import { getInitials } from "@/lib/utils";
 
 export default function SideNav() {
   const [expanded, setExpanded] = useState(true);
@@ -18,7 +17,6 @@ export default function SideNav() {
   const user = useUserStore((state) => state.user);
   const { logout, isLoggingOut } = useLogout();
   const displayName = getUserDisplayName(user);
-  const avatarSrc = user?.profile_photo_url || DEFAULT_AVATAR;
 
   return (
     <aside
@@ -86,14 +84,17 @@ export default function SideNav() {
               className={`flex items-center ${expanded ? "justify-between gap-2" : "justify-center"}`}
             >
               <div className="flex min-w-0 items-center gap-2">
-                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border">
-                  <Image
-                    src={avatarSrc}
-                    width={48}
-                    height={48}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
+                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                  {user?.profile_photo_url ? (
+                    <Image
+                      src={user.profile_photo_url}
+                      width={48}
+                      height={48}
+                      alt={displayName || "Profile picture"}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (                    <span>{getInitials(user?.first_name, user?.last_name)}</span>
+                  )}
                 </div>
 
                 {expanded && (
