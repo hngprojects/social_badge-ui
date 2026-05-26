@@ -28,14 +28,14 @@ export function RecentBadgesTable({
   isError,
   getTemplateThumbnail,
   onSelectTemplate,
-  // onRequestDelete,
+  onRequestDelete,
 }: RecentBadgesListProps) {
   return (
     <div className="hidden md:block">
       <Table className="border-collapse text-[13px]">
         <TableHeader>
           <TableRow className="bg-[#FBF9F6]">
-            {TABLE_COLUMNS.map((col, i) => (
+            {TABLE_COLUMNS.map((col) => (
               <TableHead
                 key={col.label}
                 className={cn(
@@ -127,7 +127,7 @@ export function RecentBadgesTable({
                   >
                     <MoreMenu
                       onViewInfo={() => onSelectTemplate(template)}
-                      // onDelete={() => onRequestDelete(template)}
+                      onDelete={() => onRequestDelete(template)}
                       editHref={`/create-badges/customize?id=${encodeURIComponent(template.id)}`}
                     />
                   </TableCell>
