@@ -8,7 +8,7 @@ import Loading from "@/app/loading";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
 	const router = useRouter();
-	const { data, isLoading, isError, fetchStatus } = useQuery({
+	const { data, isLoading, isFetching } = useQuery({
 		queryKey: ["auth", "me"],
 		queryFn: async () => {
 			const response = await getCurrentUser();
@@ -20,20 +20,18 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 		refetchOnWindowFocus: false,
 	});
 
-	const isFetching = fetchStatus === "fetching";
-
 	useEffect(() => {
-		if (!isFetching && (isError || !data)) {
+		if (!isLoading && !isFetching && !data) {
 			router.replace("/login");
 		}
-	}, [data, isFetching, isError, router]);
+	}, [data, isLoading, isFetching, router]);
 
-	if (isLoading || isFetching) {
+	if (isLoading) {
 		return <Loading />;
 	}
 
 	if (!data) {
-		return <Loading />;
+		return null;
 	}
 
 	return <>{children}</>;

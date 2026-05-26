@@ -4,15 +4,15 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "@/app/features/auth/services/auth";
 import { useUserStore } from "@/stores/use-user-store";
+import { clearAuthSession } from "@/lib/api/auth-session";
 
 /** Hydrates the user store from /auth/me when dashboard cookies are valid. */
 export default function AuthSessionProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const setUser = useUserStore((state) => state.setUser);
-  const clearUser = useUserStore((state) => state.clearUser);
 
-  const { data, isError } = useQuery({
+  const { data, isError, isFetching } = useQuery({
     queryKey: ["auth", "me"],
     queryFn: async () => {
       const response = await getCurrentUser();
@@ -27,8 +27,10 @@ export default function AuthSessionProvider({
   }, [data, setUser]);
 
   useEffect(() => {
-    if (isError) clearUser();
-  }, [isError, clearUser]);
+    if (isError && !data && !isFetching) {
+      clearAuthSession();
+    }
+  }, [isError, data, isFetching]);
 
   return children;
 }

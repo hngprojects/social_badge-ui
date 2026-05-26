@@ -1,8 +1,6 @@
-import { useUserStore } from "@/stores/use-user-store";
+import { clearAuthSession } from "./client";
 
-export function clearAuthSession(): void {
-  useUserStore.getState().clearUser();
-}
+export { clearAuthSession };
 
 export function getUserDisplayName(
   user: { first_name: string; last_name?: string | null; email: string } | null,

@@ -3,7 +3,7 @@ import axios, {
   type AxiosRequestConfig,
   type InternalAxiosRequestConfig,
 } from "axios";
-import { clearAuthSession } from "./auth-session";
+import { useUserStore } from "@/stores/use-user-store";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -12,6 +12,20 @@ const instance = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+/**
+ * Clears the user session both locally (Zustand) and on the backend (Cookies).
+ * This is called when a refresh token attempt fails or when an explicit logout is needed.
+ */
+export async function clearAuthSession(): Promise<void> {
+  useUserStore.getState().clearUser();
+  try {
+    // Call the backend to clear HTTP-only cookies
+    await instance.post("/auth/logout");
+  } catch (error) {
+    console.error("Failed to clear backend session:", error);
+  }
+}
 
 let isRefreshing = false;
 let refreshQueue: Array<{
