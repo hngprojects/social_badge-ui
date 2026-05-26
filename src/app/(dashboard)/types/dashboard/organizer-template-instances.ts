@@ -10,7 +10,10 @@ export type OrganizerTemplateInstanceRaw = {
   updated_at: string;
 };
 
-export type OrganizerTemplateInstance = Omit<OrganizerTemplateInstanceRaw, "status"> & {
+export type OrganizerTemplateInstance = Omit<
+  OrganizerTemplateInstanceRaw,
+  "status"
+> & {
   status: "draft" | "live";
 };
 
