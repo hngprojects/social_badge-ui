@@ -23,7 +23,6 @@ html::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.25);
   border-radius: 999px;
 }
-
 @font-face {
   font-family: "Fraunces";
   src: url("/fonts/fraunces/Fraunces-Variable.woff2") format("woff2");
@@ -56,6 +55,7 @@ html::-webkit-scrollbar-thumb {
   --font-heading: var(--font-dm-sans);
   --font-fraunces: var(--font-fraunces);
   --font-jakarta: var(--font-plus-jakarta);
+  --font-league-gothic: var(--font-league-gothic);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);

@@ -1,17 +1,7 @@
 import { useUserStore } from "@/stores/use-user-store";
 
-export function clearAuthSession(redirectToLogin = true): void {
+export function clearAuthSession(): void {
   useUserStore.getState().clearUser();
-
-  if (!redirectToLogin || typeof window === "undefined") return;
-
-  const isAuthPage =
-    window.location.pathname.startsWith("/login") ||
-    window.location.pathname.startsWith("/signup");
-
-  if (!isAuthPage) {
-    window.location.assign("/login");
-  }
 }
 
 export function getUserDisplayName(
