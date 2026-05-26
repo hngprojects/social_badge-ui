@@ -46,7 +46,7 @@ export default function MobileHeader() {
     >
       <div className="flex items-center justify-between px-4 p-4">
         <Link
-          href="/"
+          href="/dashboard"
           className="flex shrink-0 items-center gap-2.5 group"
           aria-label="Flare Tag home"
         >
@@ -173,7 +173,8 @@ export default function MobileHeader() {
                           alt={displayName || "Profile picture"}
                           className="h-full w-full object-cover"
                         />
-                      ) : (                        <span>
+                      ) : (
+                        <span>
                           {getInitials(user?.first_name, user?.last_name)}
                         </span>
                       )}
