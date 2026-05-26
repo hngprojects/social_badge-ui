@@ -10,27 +10,16 @@ export function StatusPill({
 
   return (
     <span
+      className="inline-flex items-center gap-[6px] rounded-[20px] px-[10px] py-[4px] text-[12px] font-medium whitespace-nowrap"
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 6,
-        padding: "4px 10px",
-        borderRadius: 20,
-        fontSize: 12,
-        fontWeight: 500,
         background: s.bg,
         color: s.text,
-        whiteSpace: "nowrap",
-        textTransform: "capitalize",
       }}
     >
       <span
+        className="w-[6px] h-[6px] rounded-full shrink-0"
         style={{
-          width: 6,
-          height: 6,
-          borderRadius: "50%",
           background: s.dot,
-          flexShrink: 0,
         }}
       />
       {status}
