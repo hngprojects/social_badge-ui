@@ -1,31 +1,30 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, useScroll, useMotionValueEvent } from 'motion/react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetTitle,
   SheetDescription,
-} from '@/components/ui/sheet';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
-import { useUserStore } from '@/stores/use-user-store';
-import { useQuery } from '@tanstack/react-query';
-import { getCurrentUser } from '@/app/features/auth/services/auth';
+} from "@/components/ui/sheet";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { getCurrentUser } from "@/app/features/auth/services/auth";
 
 const NAV_LINKS = [
-  { label: 'Home', href: '/' },
-  { label: 'Explore', href: '/explore' },
-  { label: 'Features', href: '/#feature-section' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Contact us', href: '/contact' },
+  { label: "Home", href: "/" },
+  { label: "Explore", href: "/explore" },
+  { label: "Features", href: "/#feature-section" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Contact us", href: "/contact" },
 ] as const;
 
 export default function Header() {
@@ -44,7 +43,7 @@ export default function Header() {
     staleTime: 5 * 60 * 1000,
   });
 
-  useMotionValueEvent(scrollY, 'change', (current) => {
+  useMotionValueEvent(scrollY, "change", (current) => {
     const previous = scrollY.getPrevious() ?? 0;
     setScrolled(current > 8);
     if (current > previous && current > 150) {
@@ -57,18 +56,18 @@ export default function Header() {
   return (
     <motion.header
       variants={{
-        visible: { y: 0, pointerEvents: 'auto' as const },
-        hidden: { y: '-100%', pointerEvents: 'none' as const },
+        visible: { y: 0, pointerEvents: "auto" as const },
+        hidden: { y: "-100%", pointerEvents: "none" as const },
       }}
-      animate={hidden ? 'hidden' : 'visible'}
-      transition={{ duration: 0.35, ease: 'easeInOut' }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
       aria-hidden={hidden}
       onFocusCapture={() => setHidden(false)}
       className={cn(
-        'fixed inset-x-0 top-0 z-50 bg-background',
+        "fixed inset-x-0 top-0 z-50 bg-background",
         scrolled
-          ? 'shadow-sm border-b border-border backdrop-blur-md bg-background/95'
-          : 'border-b border-border shadow-sm',
+          ? "shadow-sm border-b border-border backdrop-blur-md bg-background/95"
+          : "border-b border-border shadow-sm",
       )}
     >
       <div className="mx-auto max-w-360 px-4 md:px-10 lg:px-30 py-2">
@@ -88,21 +87,26 @@ export default function Header() {
                 className="w-6.75 h-6.75"
               />
             </span>
-            <span className="text-xl font-medium tracking-tight text-foreground">Flare Tag</span>
+            <span className="text-xl font-medium tracking-tight text-foreground">
+              Flare Tag
+            </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden min-[1084px]:flex items-center gap-1" aria-label="Primary navigation">
+          <nav
+            className="hidden min-[1084px]:flex items-center gap-1"
+            aria-label="Primary navigation"
+          >
             {NAV_LINKS.map(({ label, href }) => {
               const isActive = pathname === href;
-              const isFeatures = href === '/#feature-section';
+              const isFeatures = href === "/#feature-section";
 
               const handleClick = (e: React.MouseEvent) => {
-                if (isFeatures && pathname === '/') {
+                if (isFeatures && pathname === "/") {
                   e.preventDefault();
                   document
-                    .getElementById('feature-section')
-                    ?.scrollIntoView({ behavior: 'smooth' });
+                    .getElementById("feature-section")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }
               };
 
@@ -112,9 +116,11 @@ export default function Header() {
                   href={href}
                   onClick={handleClick}
                   className={cn(
-                    'relative px-4 py-2 text-base font-medium rounded-lg whitespace-nowrap',
-                    'transition-colors duration-150',
-                    isActive ? 'text-primary' : 'text-foreground hover:bg-muted',
+                    "relative px-4 py-2 text-base font-medium rounded-lg whitespace-nowrap",
+                    "transition-colors duration-150",
+                    isActive
+                      ? "text-primary"
+                      : "text-foreground hover:bg-muted",
                   )}
                 >
                   {label}
@@ -131,7 +137,12 @@ export default function Header() {
             {isLoading ? (
               <div className="w-[162px] h-11 bg-muted animate-pulse rounded-lg" />
             ) : authUser ? (
-              <Button asChild variant="cta" size="xl" className="w-[180px] h-11">
+              <Button
+                asChild
+                variant="cta"
+                size="xl"
+                className="w-[180px] h-11"
+              >
                 <Link href="/dashboard">Back to Dashboard</Link>
               </Button>
             ) : (
@@ -139,15 +150,20 @@ export default function Header() {
                 <Link
                   href="/login"
                   className={cn(
-                    'px-4 py-2 text-base font-medium rounded-lg',
-                    'text-foreground hover:bg-muted',
-                    'transition-colors duration-150',
+                    "px-4 py-2 text-base font-medium rounded-lg",
+                    "text-foreground hover:bg-muted",
+                    "transition-colors duration-150",
                   )}
                 >
                   Log In
                 </Link>
 
-                <Button asChild variant="cta" size="xl" className="w-[162px] h-11">
+                <Button
+                  asChild
+                  variant="cta"
+                  size="xl"
+                  className="w-[162px] h-11"
+                >
                   <Link href="/signup">
                     Start Building
                     <span className="inline-flex items-center justify-center">
@@ -169,9 +185,9 @@ export default function Header() {
             <SheetTrigger asChild>
               <button
                 className={cn(
-                  'min-[1084px]:hidden flex items-center justify-center w-10 h-10 rounded-lg',
-                  'text-foreground hover:bg-muted',
-                  'transition-colors duration-150',
+                  "min-[1084px]:hidden flex items-center justify-center w-10 h-10 rounded-lg",
+                  "text-foreground hover:bg-muted",
+                  "transition-colors duration-150",
                 )}
                 aria-label="Open menu"
               >
@@ -189,7 +205,9 @@ export default function Header() {
             >
               <VisuallyHidden>
                 <SheetTitle>Navigation menu</SheetTitle>
-                <SheetDescription>Main navigation links for Flare Tag</SheetDescription>
+                <SheetDescription>
+                  Main navigation links for Flare Tag
+                </SheetDescription>
               </VisuallyHidden>
 
               <div className="flex flex-col h-full">
@@ -213,15 +231,15 @@ export default function Header() {
                   <nav className="flex flex-col gap-1 px-3 py-4 flex-1">
                     {NAV_LINKS.map(({ label, href }) => {
                       const isActive = pathname === href;
-                      const isFeatures = href === '/#feature-section';
+                      const isFeatures = href === "/#feature-section";
 
                       const handleClick = () => {
                         setMobileOpen(false);
-                        if (isFeatures && pathname === '/') {
+                        if (isFeatures && pathname === "/") {
                           setTimeout(() => {
                             document
-                              .getElementById('feature-section')
-                              ?.scrollIntoView({ behavior: 'smooth' });
+                              .getElementById("feature-section")
+                              ?.scrollIntoView({ behavior: "smooth" });
                           }, 300);
                         }
                       };
@@ -232,11 +250,11 @@ export default function Header() {
                           href={href}
                           onClick={handleClick}
                           className={cn(
-                            'px-4 py-3 text-[15px] font-medium rounded-xl',
-                            'transition-colors duration-150',
+                            "px-4 py-3 text-[15px] font-medium rounded-xl",
+                            "transition-colors duration-150",
                             isActive
-                              ? 'text-primary bg-secondary'
-                              : 'text-foreground hover:bg-muted',
+                              ? "text-primary bg-secondary"
+                              : "text-foreground hover:bg-muted",
                           )}
                         >
                           {label}
@@ -254,13 +272,16 @@ export default function Header() {
                     <Button
                       asChild
                       className={cn(
-                        'w-full h-11 rounded-full text-[15px] font-semibold',
-                        'bg-primary text-primary-foreground',
-                        'hover:opacity-90 active:opacity-80',
-                        'shadow-sm transition-all duration-150',
+                        "w-full h-11 rounded-full text-[15px] font-semibold",
+                        "bg-primary text-primary-foreground",
+                        "hover:opacity-90 active:opacity-80",
+                        "shadow-sm transition-all duration-150",
                       )}
                     >
-                      <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setMobileOpen(false)}
+                      >
                         Back to Dashboard
                       </Link>
                     </Button>
@@ -270,9 +291,9 @@ export default function Header() {
                         href="/login"
                         onClick={() => setMobileOpen(false)}
                         className={cn(
-                          'w-full text-center px-4 py-2.5 text-[15px] font-medium rounded-full',
-                          'text-foreground border border-border',
-                          'hover:bg-muted transition-colors duration-150',
+                          "w-full text-center px-4 py-2.5 text-[15px] font-medium rounded-full",
+                          "text-foreground border border-border",
+                          "hover:bg-muted transition-colors duration-150",
                         )}
                       >
                         Log In
@@ -281,13 +302,16 @@ export default function Header() {
                       <Button
                         asChild
                         className={cn(
-                          'w-full h-11 rounded-full text-[15px] font-semibold',
-                          'bg-primary text-primary-foreground',
-                          'hover:opacity-90 active:opacity-80',
-                          'shadow-sm transition-all duration-150',
+                          "w-full h-11 rounded-full text-[15px] font-semibold",
+                          "bg-primary text-primary-foreground",
+                          "hover:opacity-90 active:opacity-80",
+                          "shadow-sm transition-all duration-150",
                         )}
                       >
-                        <Link href="/signup" onClick={() => setMobileOpen(false)}>
+                        <Link
+                          href="/signup"
+                          onClick={() => setMobileOpen(false)}
+                        >
                           Start Building
                           <span className="inline-flex items-center justify-center">
                             <Image
