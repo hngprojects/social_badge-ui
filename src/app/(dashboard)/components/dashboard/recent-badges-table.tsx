@@ -35,7 +35,7 @@ export function RecentBadgesTable({
       <Table className="border-collapse text-[13px]">
         <TableHeader>
           <TableRow className="bg-[#FBF9F6]">
-            {TABLE_COLUMNS.map((col, i) => (
+            {TABLE_COLUMNS.map((col) => (
               <TableHead
                 key={col.label}
                 className={cn(
