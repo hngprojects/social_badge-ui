@@ -14,17 +14,19 @@ const instance = axios.create({
 });
 
 /**
+ * Clears only the local Zustand store.
+ */
+export function clearLocalAuthState(): void {
+  useUserStore.getState().clearUser();
+}
+
+/**
  * Clears the user session both locally (Zustand) and on the backend (Cookies).
  * This is called when a refresh token attempt fails or when an explicit logout is needed.
  */
 export async function clearAuthSession(): Promise<void> {
-  useUserStore.getState().clearUser();
-  try {
-    // Call the backend to clear HTTP-only cookies
-    await instance.post("/auth/logout");
-  } catch (error) {
-    console.error("Failed to clear backend session:", error);
-  }
+  clearLocalAuthState();
+  await instance.post("/auth/logout");
 }
 
 let isRefreshing = false;

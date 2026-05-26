@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
 import { getCurrentUser } from "@/app/features/auth/services/auth";
 import { useUserStore } from "@/stores/use-user-store";
 import { clearAuthSession } from "@/lib/api/auth-session";
@@ -12,7 +13,7 @@ export default function AuthSessionProvider({
 }: Readonly<{ children: React.ReactNode }>) {
   const setUser = useUserStore((state) => state.setUser);
 
-  const { data, isError, isFetching } = useQuery({
+  const { data, error, isError, isFetching } = useQuery({
     queryKey: ["auth", "me"],
     queryFn: async () => {
       const response = await getCurrentUser();
@@ -27,10 +28,11 @@ export default function AuthSessionProvider({
   }, [data, setUser]);
 
   useEffect(() => {
-    if (isError && !data && !isFetching) {
+    const status = (error as AxiosError | undefined)?.response?.status;
+    if (isError && !data && !isFetching && (status === 401 || status === 403)) {
       clearAuthSession();
     }
-  }, [isError, data, isFetching]);
+  }, [isError, data, isFetching, error]);
 
   return children;
 }

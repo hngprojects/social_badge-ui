@@ -1,6 +1,6 @@
-import { clearAuthSession } from "./client";
+import { clearAuthSession, clearLocalAuthState } from "./client";
 
-export { clearAuthSession };
+export { clearAuthSession, clearLocalAuthState };
 
 export function getUserDisplayName(
   user: { first_name: string; last_name?: string | null; email: string } | null,
