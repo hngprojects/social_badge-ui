@@ -134,7 +134,7 @@ export function Template4Right({ className }: { className?: string }) {
 	return (
 		<svg
 			width="196"
-			height="339"
+			height="230"
 			viewBox="0 0 196 339"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +190,7 @@ export function Template4Left({ className }: { className?: string }) {
 	return (
 		<svg
 			width="200"
-			height="339"
+			height="230"
 			viewBox="0 0 200 339"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"

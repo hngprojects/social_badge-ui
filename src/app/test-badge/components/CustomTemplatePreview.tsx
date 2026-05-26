@@ -5,6 +5,8 @@ import { CustomizeEditorState } from "@/app/features/templates/types/canvas-data
 import {
 	Template1,
 	Template4,
+	Template4Left,
+	Template4Right,
 	Template5,
 	Template7,
 	Template9,
@@ -68,9 +70,15 @@ export function Layout4({ editor }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			<Template4 className="w-full h-full" />
+			<div  className="absolute top-[22%] left-0 w-full h-[60%] flex">
+				{" "}
+				<Template4Left />
+				<Template4Right />
+			</div>
+
 			{/*This div below will be rendered as a placeholder if the chosen badge as a space for organizer logo */}
 			<div className="h-[77%] w-full absolute top-0">
-				<div className="flex gap-2 w-full items-center justify-center text-white my-12">
+				<div className="flex gap-2 w-full items-center justify-center text-white mt-12 mb-6">
 					<PlaceholderLogo />
 					<span className="text-sm flex flex-col gap-0">
 						<span className="leading-none">YOUR</span>{" "}
@@ -80,14 +88,13 @@ export function Layout4({ editor }: TemplateLayoutProps) {
 				<div className="w-35 h-35 rounded-full bg-white mx-auto"></div>
 			</div>
 
-			<div className="absolute bottom-12 left-8 border">
-				<div className="">
-					<h2 className="text-xl font-bold text-white tracking-widest uppercase">
-						<span>Sandra</span> Robinson
-					</h2>
-				</div>
-				<p className="text-lg font-bold text-[#222]">
-					{editor.participantNamePlaceholder || "Your Name"}
+			<div className="absolute bottom-0 h-[23%] w-full pl-12 text-black">
+				<h2 className="text-xl mt-4 ">
+					<span className="font-semibold">Sandra</span> Robinson{" "}
+					{/*User name will be placed here by users*/}
+				</h2>
+				<p className="text-sm">
+					Product designer {/*User role will be placed here by users*/}
 				</p>
 			</div>
 		</div>
