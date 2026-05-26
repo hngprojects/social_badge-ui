@@ -6,13 +6,9 @@
 
 html {
   scroll-behavior: auto;
-  scrollbar-width: none;
-  scrollbar-color: transparent transparent;
-}
-
-html:hover {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+  scrollbar-gutter: stable;
 }
 
 html::-webkit-scrollbar {
@@ -24,13 +20,10 @@ html::-webkit-scrollbar-track {
 }
 
 html::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.25);
   border-radius: 999px;
 }
 
-html:hover::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.25);
-}
 @font-face {
   font-family: "Fraunces";
   src: url("/fonts/fraunces/Fraunces-Variable.woff2") format("woff2");
