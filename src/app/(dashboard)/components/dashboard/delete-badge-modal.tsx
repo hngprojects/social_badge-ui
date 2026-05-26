@@ -12,7 +12,9 @@ export function DeleteBadgeModal({
 }) {
   return (
     <div
-      onClick={onClose}
+      onClick={() => {
+        if (!isDeleting) onClose();
+      }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="delete-badge-title"
