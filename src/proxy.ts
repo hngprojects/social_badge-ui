@@ -20,33 +20,39 @@ const PROTECTED_ROUTES = [
 export const proxy: NextProxy = (request) => {
 	const { pathname } = request.nextUrl;
 	const token = request.cookies.get("access_token")?.value;
+	const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
 
 	const AUTH_ROUTES = ["/login", "/signup", "/forgot-password"];
 
+	const withCommonHeaders = (response: NextResponse) => {
+		for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+			response.headers.set(key, value);
+		}
+		response.headers.set("x-request-id", requestId);
+		return response;
+	};
+
 	// Logged-in users should not be able to access auth pages
 	if (AUTH_ROUTES.some((route) => pathname.startsWith(route)) && token) {
-		return NextResponse.redirect(new URL("/dashboard", request.url));
+		return withCommonHeaders(
+			NextResponse.redirect(new URL("/dashboard", request.url)),
+		);
 	}
 
 	if (PROTECTED_ROUTES.some((route) => pathname.startsWith(route)) && !token) {
-		return NextResponse.redirect(new URL("/login", request.url));
+		return withCommonHeaders(
+			NextResponse.redirect(new URL("/login", request.url)),
+		);
 	}
-
-	const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
 
 	const requestHeaders = new Headers(request.headers);
 	requestHeaders.set("x-request-id", requestId);
 
-	const response = NextResponse.next({
-		request: { headers: requestHeaders },
-	});
-
-	for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
-		response.headers.set(key, value);
-	}
-	response.headers.set("x-request-id", requestId);
-
-	return response;
+	return withCommonHeaders(
+		NextResponse.next({
+			request: { headers: requestHeaders },
+		}),
+	);
 };
 
 export const config = {

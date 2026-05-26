@@ -23,6 +23,8 @@ export const AuthModal = ({
 			<div className="bg-white rounded-lg p-5 w-full max-w-md">
 				<div className="flex justify-end">
 					<button
+						type="button"
+						aria-label="Close modal"
 						className="text-gray-500 hover:text-gray-700"
 						onClick={closeModal}
 					>
@@ -48,7 +50,7 @@ export const AuthModal = ({
 								const mailUrl = getEmailProviderUrl(email);
 								if (!mailUrl) return;
 
-								window.open(mailUrl, "_blank");
+								window.open(mailUrl, "_blank", "noopener,noreferrer");
 							}}
 						>
 							Go to mail

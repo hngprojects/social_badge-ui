@@ -40,8 +40,10 @@ export default function TopBar() {
             />
           </div>
         </button> */}
-
-				<Button className="cursor-pointer h-auto! px-6 py-3.5! text-[14px] font-semibold">
+				<Button
+					asChild
+					className="cursor-pointer h-auto! px-6 py-3.5! text-[14px] font-semibold"
+				>
 					<Link href="/create-badges">Create new badge</Link>
 				</Button>
 			</div>
