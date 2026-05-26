@@ -39,7 +39,8 @@ export function RecentBadgesTable({
               <TableHead
                 key={col.label}
                 className={cn(
-                  "whitespace-nowrap border-b border-t border-[#F0F0EE] px-4 py-[10px] text-left text-[11px] font-semibold tracking-[0.05em] text-gray-400 col.className",
+                  "whitespace-nowrap border-b border-t border-[#F0F0EE] px-4 py-[10px] text-left text-[11px] font-semibold tracking-[0.05em] text-gray-400",
+                  col.className,
                 )}
               >
                 {col.label}
