@@ -245,10 +245,11 @@ function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
     isBadgesPublishedPage;
 
   return (
-    <li className="relative whitespace-nowrap">
+    <li className={`relative whitespace-nowrap ${expanded ? "" : "flex justify-center"}`}>
       {!expanded && isActive && (
-        <div
-          className={`absolute bottom-0 left-0 top-0 w-[7px] rounded-r-full bg-[#FF693E] ${expanded ? "" : "hidden"}`}
+        <span
+          aria-hidden="true"
+          className="absolute -left-3 top-1/2 h-8 w-1 -translate-y-1/2 rounded-r-full bg-[#FF693E] shadow-[0_0_0_3px_rgba(255,105,62,0.12)]"
         />
       )}
 
@@ -258,7 +259,7 @@ function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
           expanded ? "gap-4 px-4" : "justify-center px-0"
         } ${
           isActive
-            ? "bg-[#FFF0ED] text-[#FF693E]"
+            ? `${expanded ? "bg-[#FFF0ED] shadow-[inset_0_0_0_1px_rgba(255,105,62,0.10)]" : ""} text-[#FF693E]`
             : "text-[#AFAFAF] hover:bg-[#F8F8F8] hover:text-[#6F6F6F]"
         }`}
         aria-current={isActive ? "page" : undefined}

@@ -1,6 +1,7 @@
 export type TopBarAction = {
   label: string;
-  href: string;
+  href?: string;
+  onClick?: () => void;
   icon?: string;
   isOrange?: boolean;
 };

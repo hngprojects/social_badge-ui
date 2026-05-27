@@ -1,7 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { getActionButtonClass } from "./ActionButton";
+import { ActionButton } from "./ActionButton";
 import { TopBarConfigItem } from "../../types/dashboard/topbar";
 
 export function DashboardBar({ config }: { config: TopBarConfigItem }) {
@@ -28,14 +26,7 @@ export function DashboardBar({ config }: { config: TopBarConfigItem }) {
 
       {config.action && (
         <div className="flex shrink-0 items-center">
-          <Button className={getActionButtonClass(config.action.isOrange)}>
-            <Link href={config.action.href} className="flex items-center gap-2">
-              {config.action.icon && (
-                <Image src={config.action.icon} alt="" width={16} height={16} />
-              )}
-              <span>{config.action.label}</span>
-            </Link>
-          </Button>
+          <ActionButton action={config.action} />
         </div>
       )}
     </>

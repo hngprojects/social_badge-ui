@@ -72,7 +72,10 @@ function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
               <button
                 key={action.label}
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  action.onClick?.();
+                  setOpen(false);
+                }}
                 className={className}
               >
                 {action.label}

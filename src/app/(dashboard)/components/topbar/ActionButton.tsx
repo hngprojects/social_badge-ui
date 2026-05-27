@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TopBarAction } from "../../types/dashboard/topbar";
 
-const baseClass = "cursor-pointer h-auto! gap-2 px-4 py-2 text-[14px] font-semibold";
+const baseClass = "cursor-pointer h-auto gap-2 px-4 py-2 text-[14px] font-semibold";
 
 export function getActionButtonClass(isOrange?: boolean) {
   return cn(
@@ -36,7 +36,11 @@ export function ActionButton({ action }: { action: TopBarAction }) {
   }
 
   return (
-    <Button className={getActionButtonClass(action.isOrange)}>
+    <Button
+      type="button"
+      onClick={action.onClick}
+      className={getActionButtonClass(action.isOrange)}
+    >
       <ActionContent icon={action.icon} label={action.label} />
     </Button>
   );

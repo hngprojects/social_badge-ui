@@ -26,10 +26,10 @@ export const topBarConfig: TopBarConfigItem[] = [
     actions: [
       {
         label: "Preview as attendee",
-        href: "",
+        href: "/coming_soon",
         icon: "/assets/dashboard/icons/arrow-left.svg",
       },
-      { label: "Save draft", href: "" },
+      { label: "Save draft", href: "/coming_soon" },
       {
         label: "Publish",
         isOrange: true,
