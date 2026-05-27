@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 import { BrandSection } from "../../../components/customize/BrandSection";
 import { StyleSection } from "../../../components/customize/StyleSection";
@@ -101,23 +102,23 @@ export function CustomizeBadgeForm({
           <ShareMessageSection editor={editor} onChange={handleChange} />
 
           <div className="hidden lg:block pb-4">
-            <button
+            <Button
               type="submit"
               disabled={isPublishing}
               className="w-full rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 transition-colors shadow-sm"
             >
               {isPublishing ? "Publishing…" : "Publish Badge"}
-            </button>
+            </Button>
           </div>
 
           <div className="pb-8 lg:hidden">
-            <button
+            <Button
               type="submit"
               disabled={isPublishing}
               className="w-full rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 transition-colors shadow-sm"
             >
               {isPublishing ? "Publishing…" : "Publish Badge"}
-            </button>
+            </Button>
           </div>
         </form>
       </section>

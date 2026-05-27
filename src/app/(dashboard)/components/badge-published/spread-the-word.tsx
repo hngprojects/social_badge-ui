@@ -3,6 +3,7 @@ import Image from "next/image";
 import Qr from "../../badges/published/icons/qr";
 import { Share } from "../../badges/published/icons/share-icon";
 import { SocialPlatform } from "../../types/badge-published/badge";
+import { Button } from "@/components/ui/button";
 
 
 const SOCIAL_PLATFORMS: SocialPlatform[] = [
@@ -97,15 +98,16 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 			</p>
 			<div className="flex gap-1.5 flex-wrap">
 				{SOCIAL_PLATFORMS.map((platform) => (
-					<button
+					<Button
 						key={platform.id}
+						variant="outline"
 						onClick={() => handleShare(platform)}
-						className="w-14 h-14 md:w-18.5 md:h-18.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 flex items-center justify-center text-gray-600 transition-colors cursor-pointer"
+						className="w-14 h-14 md:w-18.5 md:h-18.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 flex items-center justify-center text-gray-600 transition-colors"
 						aria-label={`Share on ${platform.label}`}
 						title={platform.label}
 					>
 						<platform.Icon />
-					</button>
+					</Button>
 				))}
 			</div>
 		</div>
@@ -162,12 +164,12 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 			</div>
 
 			<div className="flex gap-2 justify-between">
-				<button className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer">
+				<Button variant="outline" className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors">
 					Preview
-				</button>
-				<button className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold text-white bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors cursor-pointer">
+				</Button>
+				<Button className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold text-white bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors">
 					Download
-				</button>
+				</Button>
 			</div>
 		</div>
 	);
