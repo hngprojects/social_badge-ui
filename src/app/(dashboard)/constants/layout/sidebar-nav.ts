@@ -13,28 +13,28 @@ export const navigationLinks: NavigationLink[] = [
     href: "/dashboard",
   },
   {
-    label: "Create Badges",
+    label: "Badges",
     icon: "/assets/dashboard/icons/badges.svg",
     activeIcon: "/assets/dashboard/icons/badges-active.svg",
     href: "/create-badges",
   },
   {
-    label: "Templates",
-    icon: "/assets/dashboard/icons/template.svg",
-    activeIcon: "/assets/dashboard/icons/template-active.svg",
-    href: "/templates",
+    label: "Settings",
+    icon: "/assets/dashboard/icons/settings.svg",
+    activeIcon: "/assets/dashboard/icons/settings-active.svg",
+    href: "/settings",
+  },
+  {
+    label: "Support",
+    icon: "/assets/dashboard/icons/support.svg",
+    activeIcon: "/assets/dashboard/icons/support.svg",
+    href: "/support",
   },
   // Not functional yet — re-enable when routes are ready.
   // {
-  //   label: "Settings",
-  //   icon: "/assets/dashboard/icons/settings.svg",
-  //   activeIcon: "/assets/dashboard/icons/settings.svg",
-  //   href: "/settings",
-  // },
-  // {
-  //   label: "Support",
-  //   icon: "/assets/dashboard/icons/support.svg",
-  //   activeIcon: "/assets/dashboard/icons/support.svg",
-  //   href: "/support",
+  //   label: "Templates",
+  //   icon: "/assets/dashboard/icons/template.svg",
+  //   activeIcon: "/assets/dashboard/icons/template-active.svg",
+  //   href: "/templates",
   // },
 ];
