@@ -4,7 +4,7 @@ import Image from "next/image";
 import { LogOut, Menu, MoreVertical, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Sheet,
   SheetContent,
@@ -19,13 +19,7 @@ import { useUserStore } from "@/stores/use-user-store";
 import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
 import { getInitials } from "@/lib/utils";
-import {
-  getPublishedStatusLabel,
-  getTopBarConfig,
-} from "@/app/(dashboard)/constants/layout/topbar-utils";
-import { useLoadOrganiserTemplate } from "@/app/features/templates/hooks/useLoadOrganiserTemplate";
-import { useLoadPlatformTemplate } from "@/app/features/templates/hooks/useLoadPlatformTemplate";
-import { usePublishedBadge } from "@/app/features/templates/hooks/usePublishedBadge";
+import { useDashboardTopbarState } from "@/app/(dashboard)/hooks/use-dashboard-topbar-state";
 import type { TopBarAction } from "@/app/(dashboard)/types/dashboard/topbar";
 
 function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
@@ -55,7 +49,7 @@ function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
                 : "text-[#303030] hover:bg-[#F7F7F7]",
             );
 
-            if (action.href) {
+            if (typeof action.href === "string") {
               return (
                 <Link
                   key={action.label}
@@ -73,7 +67,7 @@ function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
                 key={action.label}
                 type="button"
                 onClick={() => {
-                  action.onClick?.();
+                  action.onClick();
                   setOpen(false);
                 }}
                 className={className}
@@ -90,51 +84,23 @@ function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
 
 export default function MobileHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const config = getTopBarConfig(pathname);
   const [scrolled, setScrolled] = useState(false);
   const navigation = navigationLinks;
   const user = useUserStore((state) => state.user);
   const { logout, isLoggingOut } = useLogout();
   const displayName = getUserDisplayName(user);
-  const isCreatePage = config.match === "/create-badges";
-  const isCustomizePage = config.match === "/create-badges/customize";
-  const isPublishedPage = config.match === "/badges/published";
-  const isFlowPage = isCreatePage || isCustomizePage || isPublishedPage;
-
-  const platformTemplateId = searchParams.get("template");
-  const organiserTemplateId = searchParams.get("id");
-  const shareSlug = searchParams.get("slug");
-  const platformId = platformTemplateId ?? "tpl_achieveher";
-
-  const { data: organiserTemplate } = useLoadOrganiserTemplate(
-    isCustomizePage ? organiserTemplateId : isPublishedPage ? organiserTemplateId : null,
-  );
-  const { data: platformTemplate } = useLoadPlatformTemplate(
-    isCustomizePage && !organiserTemplateId ? platformId : null,
-  );
-  const { data: publishedBadge } = usePublishedBadge(
-    isPublishedPage ? shareSlug : null,
-  );
-
-  const flowTitle = isPublishedPage
-    ? publishedBadge?.title || organiserTemplate?.title || config.title || ""
-    : organiserTemplate?.title || platformTemplate?.title || config.title || "";
-  const publishedStatus = getPublishedStatusLabel(publishedBadge?.publishedAt);
-  const publishedEditHref =
-    publishedBadge?.templateId || organiserTemplateId
-      ? `/create-badges/customize?id=${encodeURIComponent(
-          publishedBadge?.templateId || organiserTemplateId || "",
-        )}`
-      : "/dashboard";
-  const menuActions = isPublishedPage
-    ? [
-        { label: "Edit badge", href: publishedEditHref },
-        { label: "View analytics", href: "#analytics" },
-      ]
-    : config.actions ?? [];
+  const {
+    pathname,
+    config,
+    isCreatePage,
+    isCustomizePage,
+    isPublishedPage,
+    isFlowPage,
+    flowTitle,
+    publishedStatus,
+    menuActions,
+  } = useDashboardTopbarState();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);

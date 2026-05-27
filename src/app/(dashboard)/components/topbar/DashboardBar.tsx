@@ -3,6 +3,9 @@ import { ActionButton } from "./ActionButton";
 import { TopBarConfigItem } from "../../types/dashboard/topbar";
 
 export function DashboardBar({ config }: { config: TopBarConfigItem }) {
+  const searchPlaceholder =
+    config.search ?? "Search for events, badges, attendees";
+
   return (
     <>
       <div className="flex w-full max-w-[70%] items-center gap-[4.35px] rounded-[10.41px] bg-[#F8F8F8] py-2.5 pl-[12.5px] text-[14px] font-medium">
@@ -13,14 +16,14 @@ export function DashboardBar({ config }: { config: TopBarConfigItem }) {
           alt="search icon"
         />
         <label htmlFor="dashboard-search" className="sr-only">
-          Search for events, badges, attendees
+          {searchPlaceholder}
         </label>
         <input
           id="dashboard-search"
-          aria-label="Search for events, badges, attendees"
+          aria-label={searchPlaceholder}
           className="w-full bg-transparent outline-none"
           type="text"
-          placeholder="Search for Events, Badges, Attendees..."
+          placeholder={searchPlaceholder}
         />
       </div>
 

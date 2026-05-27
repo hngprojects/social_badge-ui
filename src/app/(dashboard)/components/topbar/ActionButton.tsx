@@ -25,7 +25,7 @@ function ActionContent({ icon, label }: { icon?: string; label: string }) {
 }
 
 export function ActionButton({ action }: { action: TopBarAction }) {
-  if (action.href) {
+  if (typeof action.href === "string") {
     return (
       <Button asChild className={getActionButtonClass(action.isOrange)}>
         <Link href={action.href}>

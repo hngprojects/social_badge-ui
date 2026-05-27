@@ -5,7 +5,10 @@ export function getTopBarConfig(pathname: string): TopBarConfigItem {
   return (
     [...topBarConfig]
       .sort((a, b) => b.match.length - a.match.length)
-      .find((item) => pathname.startsWith(item.match)) ?? topBarConfig[0]
+      .find(
+        (item) =>
+          pathname === item.match || pathname.startsWith(`${item.match}/`),
+      ) ?? topBarConfig[0]
   );
 }
 

@@ -1,10 +1,18 @@
-export type TopBarAction = {
+type TopBarActionBase = {
   label: string;
-  href?: string;
-  onClick?: () => void;
   icon?: string;
   isOrange?: boolean;
 };
+
+export type TopBarAction =
+  | (TopBarActionBase & {
+      href: string;
+      onClick?: never;
+    })
+  | (TopBarActionBase & {
+      href?: never;
+      onClick: () => void;
+    });
 
 export type TopBarConfigItem = {
   match: string;
