@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const BuildYourOwn = () => {
 	const router = useRouter();
@@ -28,7 +29,7 @@ const BuildYourOwn = () => {
 				</p>
 
 				{/* CTA button */}
-				<button
+				<Button
 					type="button"
 					onClick={() => router.push("/signup")}
 					className="mt-2 flex items-center cursor-pointer gap-2 bg-primary text-white text-[16px] font-medium px-6 py-3 rounded-full hover:bg-primary/90 transition-colors"
@@ -43,7 +44,7 @@ const BuildYourOwn = () => {
 							className="w-2 h-2"
 						/>
 					</span>
-				</button>
+				</Button>
 			</div>
 		</section>
 	);
