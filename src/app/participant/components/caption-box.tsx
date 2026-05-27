@@ -13,16 +13,18 @@ export default function CaptionBox({
 			<div className="flex items-center justify-between">
 				<h3 className="font-medium font-sans">Caption</h3>
 
-				<Button
-					type="button"
-					className="border-2 border-gray-200"
-					variant="ghost"
-					size="sm"
-					onClick={onEditClick}
-				>
-					<Pen className="mr-2 h-4 w-4" />
-					Edit caption
-				</Button>
+				{onEditClick && (
+					<Button
+						type="button"
+						className="border-2 border-gray-200"
+						variant="ghost"
+						size="sm"
+						onClick={onEditClick}
+					>
+						<Pen className="mr-2 h-4 w-4" />
+						Edit caption
+					</Button>
+				)}
 			</div>
 
 			<Textarea

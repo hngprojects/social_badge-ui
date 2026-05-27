@@ -227,7 +227,6 @@ export default function Header() {
 
 								{/* Mobile nav links */}
 								<nav className="flex flex-col gap-1 px-3 py-4 flex-1">
-									{/* Mobile nav links */}
 									<nav className="flex flex-col gap-1 px-3 py-4 flex-1">
 										{NAV_LINKS.map(({ label, href }) => {
 											const isActive = pathname === href;
