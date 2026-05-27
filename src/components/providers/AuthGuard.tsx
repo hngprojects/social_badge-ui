@@ -8,7 +8,7 @@ import Loading from "@/app/loading";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
 	const router = useRouter();
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError } = useQuery({
 		queryKey: ["auth", "me"],
 		queryFn: async () => {
 			const response = await getCurrentUser();
@@ -19,16 +19,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 	});
 
 	useEffect(() => {
-		if (!isLoading && !data) {
+		if (!isLoading && (isError || !data)) {
 			router.replace("/login");
 		}
-	}, [data, isLoading, router]);
+	}, [data, isLoading, isError, router]);
 
-	if (isLoading) {
-		return <Loading />;
-	}
-
-	if (!data) {
+	if (isLoading || isError || !data) {
 		return <Loading />;
 	}
 

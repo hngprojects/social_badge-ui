@@ -16,12 +16,12 @@ export function TemplateInfoModal({
   template,
   thumbnailUrl,
   onClose,
-  // onRequestDelete,
+  onRequestDelete,
 }: {
   template: OrganizerTemplateInstance;
   thumbnailUrl?: string | null;
   onClose: () => void;
-  // onRequestDelete: (template: OrganizerTemplateInstance) => void;
+  onRequestDelete: (template: OrganizerTemplateInstance) => void;
 }) {
   const fullUrl = template.share_slug
     ? buildParticipantShareUrl(template.share_slug)
@@ -174,7 +174,7 @@ export function TemplateInfoModal({
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <button
-              // onClick={() => onRequestDelete(template)}
+              onClick={() => onRequestDelete(template)}
               className="rounded-full border border-[#F6B6C8] px-5 py-3 text-[14px] font-semibold text-[#F43F72] cursor-pointer hover:bg-[#EF4444] hover:text-white"
             >
               Delete badge
