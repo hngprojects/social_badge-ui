@@ -13,12 +13,12 @@ export default function DashboardLayout({
     <LenisProvider>
       <AuthGuard>
         <section className="flex min-h-screen">
-        <div className="hidden lg:block sticky top-0 self-start">
+        <div className="sticky top-0 z-30 hidden self-start lg:block">
           <SideNav />
         </div>
 
         <main className="flex flex-1 flex-col">
-          <header className="lg:sticky lg:top-0 lg:z-20 lg:flex lg:items-center lg:py-[18px] lg:pl-[24px] lg:pr-[32px] lg:border-b lg:border-black/8 lg:bg-background">
+          <header className="lg:sticky lg:top-0 lg:z-20 lg:flex lg:items-center lg:py-[18px] lg:pl-[30px] lg:pr-[32px] lg:border-b lg:border-black/8 lg:bg-background">
             <div className="lg:hidden">
               <MobileHeader />
             </div>
