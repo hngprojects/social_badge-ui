@@ -38,17 +38,33 @@ export default function SettingTabs() {
         </TabsList>
       </div>
 
-      <TabsContent value="profile">
+      <TabsContent
+        forceMount
+        className="data-[state=inactive]:hidden"
+        value="profile"
+      >
         <ProfileCard />
       </TabsContent>
 
-      <TabsContent value="security">
+      <TabsContent
+        forceMount
+        className="data-[state=inactive]:hidden"
+        value="security"
+      >
         <TabSecurity />
       </TabsContent>
-      <TabsContent value="notifications">
+      <TabsContent
+        forceMount
+        className="data-[state=inactive]:hidden"
+        value="notifications"
+      >
         <TabNotifications />
       </TabsContent>
-      <TabsContent value="account">
+      <TabsContent
+        forceMount
+        className="data-[state=inactive]:hidden"
+        value="account"
+      >
         <TabAccount />
       </TabsContent>
     </Tabs>
