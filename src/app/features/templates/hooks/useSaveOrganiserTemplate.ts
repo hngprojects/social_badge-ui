@@ -11,24 +11,27 @@ import {
   createOrganiserTemplateInstance,
   publishOrganiserTemplate,
   updateOrganiserTemplate,
+  uploadLogo,
 } from "../services/templates";
 
 interface SaveVariables {
   payload: OrganiserTemplatePayload;
   organiserTemplateId?: string | null;
+  pendingLogoFile?: File | null;
 }
 
 /**
  * Publish flow (per API):
  * 1. POST /templates/organizer/instances — create instance from platform template (new only)
- * 2. PATCH /templates/organizer/{id} — persist canvas_data and metadata
- * 3. POST /templates/organizer/{id}/publish — go live and receive share_slug
+ * 2. PUT /templates/organizer/instances/{id}/logo — upload logo if pendingLogoFile is provided
+ * 3. PATCH /templates/organizer/{id} — persist canvas_data and metadata
+ * 4. POST /templates/organizer/{id}/publish — go live and receive share_slug
  */
 export function useSaveOrganiserTemplate() {
   const router = useRouter();
 
   const mutation = useMutation({
-    mutationFn: async ({ payload, organiserTemplateId }: SaveVariables) => {
+    mutationFn: async ({ payload, organiserTemplateId, pendingLogoFile }: SaveVariables) => {
       let templateId = organiserTemplateId ?? null;
 
       if (!templateId) {
@@ -38,7 +41,24 @@ export function useSaveOrganiserTemplate() {
         templateId = created.data.instance_id;
       }
 
-      await updateOrganiserTemplate(templateId, buildEditTemplateRequest(payload));
+      let finalPayload = payload;
+
+      if (pendingLogoFile) {
+        const uploaded = await uploadLogo(pendingLogoFile, templateId);
+        finalPayload = {
+          ...payload,
+          canvas_data: {
+            ...payload.canvas_data,
+            logo: {
+              url: uploaded.url,
+              public_id: uploaded.public_id,
+              position: payload.canvas_data.logo?.position ?? "top-center",
+            },
+          },
+        };
+      }
+
+      await updateOrganiserTemplate(templateId, buildEditTemplateRequest(finalPayload));
 
       const published = await publishOrganiserTemplate(templateId);
       return published.data;
@@ -55,6 +75,12 @@ export function useSaveOrganiserTemplate() {
     },
     onError: (error: unknown) => {
       const axiosError = error as AxiosError<{ message?: string }>;
+
+      if (axiosError.response?.status === 413) {
+        toast.error("Logo file is too large. Please upload a smaller image.");
+        return;
+      }
+
       const message =
         axiosError.response?.data?.message ??
         "Failed to publish template. Please try again.";

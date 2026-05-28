@@ -3,7 +3,7 @@ import LegalLayout from '../components/legal-layout';
 import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'Learn how we collect, use, and protect your data at Social Badge.',
+  description: 'Learn how we collect, use, and protect your data at Flare Tag.',
 };
 
 import { toc } from '../constants/privacy';

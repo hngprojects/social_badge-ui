@@ -66,7 +66,7 @@ export const ForgotPasswordForm = () => {
 						Go back to{" "}
 						<Link
 							href="/login"
-							className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
+							className="font-bold text-[#B53D00] hover:text-[#8f2e00]"
 						>
 							Log in
 						</Link>
@@ -74,22 +74,21 @@ export const ForgotPasswordForm = () => {
 				</div>
 			</div>
 
-			{showModal && (
-				<AuthModal
-					closeModal={() => setShowModal(false)}
-					email={email}
-					imageSrc="/assets/auth-flow/mail-img.png"
-					title="We've sent you a reset link"
-					description={
-						<>
-							<p>
-								We&apos;ve sent instructions to your registered email address.
-							</p>
-							<p>Click the link in the email to reset your password.</p>
-						</>
-					}
-				/>
-			)}
+			<AuthModal
+				open={showModal}
+				onOpenChange={setShowModal}
+				email={email}
+				imageSrc="/assets/auth-flow/mail-img.png"
+				title="We've sent you a reset link"
+				description={
+					<>
+						<p>
+							We&apos;ve sent instructions to your registered email address.
+						</p>
+						<p>Click the link in the email to reset your password.</p>
+					</>
+				}
+			/>
 		</>
 	);
 };

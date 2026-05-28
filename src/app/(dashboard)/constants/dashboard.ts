@@ -1,7 +1,8 @@
-import { Template, StatCard } from "../types/dashboard";
-import { TemplateData } from "../types/dashboard";
-import { LayoutTemplate } from "../types/dashboard";
-import { Badge, Filter, Status } from "../types/dashboard";
+import { Template, StatCard } from "../types/dashboard/dashboard";
+import { TemplateData } from "../types/dashboard/dashboard";
+import { LayoutTemplate } from "../types/dashboard/dashboard";
+import { Badge, Filter, Status } from "../types/dashboard/dashboard";
+import { OrganizerTemplateInstance } from "../types/dashboard/organizer-template-instances";
 
 export const templates: Template[] = [
   {
@@ -11,10 +12,10 @@ export const templates: Template[] = [
     creator: "@techevents",
     target: "High engagement",
     badgeCount: "4,230",
-    image: "/assets/landing-page/template-1.png",
+    image: "/assets/landing-page/template-10.png",
     tag: "Trending",
     hasShadow: true,
-    bg: "#E2E7D5",
+    bg: "linear-gradient(rgb(255,240,244), rgb(255,228,218))",
   },
   {
     id: 2,
@@ -26,7 +27,7 @@ export const templates: Template[] = [
     image: "/assets/landing-page/template-2.png",
     tag: "Trending",
     hasShadow: true,
-    bg: "#F0F0E8",
+    bg: "linear-gradient(rgb(180,180,180), rgb(241,239,232))",
   },
   {
     id: 3,
@@ -35,9 +36,9 @@ export const templates: Template[] = [
     creator: "@techevents",
     target: "Newcomer",
     badgeCount: "1,650",
-    image: "/assets/landing-page/template-7.png",
+    image: "/assets/landing-page/template-9.png",
     tag: null,
-    bg: "#B1F4E7",
+    bg: "linear-gradient(rgb(202, 200, 204), rgb(202, 197, 209))",
   },
   {
     id: 4,
@@ -46,9 +47,9 @@ export const templates: Template[] = [
     creator: "@techevents",
     target: "VIP audience",
     badgeCount: "980",
-    image: "/assets/landing-page/template-5.png",
+    image: "/assets/landing-page/template-17.png",
     tag: null,
-    bg: "#ECE3F7",
+    bg: "linear-gradient(rgb(231, 255, 235), rgb(138, 181, 144))",
   },
 ];
 
@@ -60,19 +61,19 @@ export const stats: StatCard[] = [
     bg: "#DCFCE7",
   },
   {
-    image: "/assets/dashboard/icons/CheckCircle.svg",
+    image: "/assets/dashboard/icons/active-badges.svg",
     title: "active badges",
     count: "0",
     bg: "#DCFCE7",
   },
   {
-    image: "/assets/dashboard/icons/total-links.svg",
+    image: "/assets/dashboard/icons/ui-link.svg",
     title: "total links",
     count: "0",
     bg: "#DCE6FD",
   },
   {
-    image: "/assets/dashboard/icons/total-shares.svg",
+    image: "/assets/dashboard/icons/ui-share.svg",
     title: "total shares",
     count: "0",
     bg: "#FEF3C7",
@@ -298,3 +299,11 @@ export const STATUS_STYLES: Record<
     dot: "#F59E0B",
   },
 };
+
+export const STATUS_STYLES_LOWERCASE = {
+  draft: STATUS_STYLES.Draft,
+  live: STATUS_STYLES.Live,
+} satisfies Record<
+  OrganizerTemplateInstance["status"],
+  { bg: string; text: string; dot: string; border?: string }
+>;

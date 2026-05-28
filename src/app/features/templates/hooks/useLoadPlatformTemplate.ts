@@ -1,12 +1,15 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard";
+import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard/dashboard";
 import {
   extractPlatformTemplates,
   mapPlatformTemplateToLayout,
 } from "../lib/map-platform-template";
-import { getPlatformTemplate, getPlatformTemplates } from "../services/templates";
+import {
+  getPlatformTemplate,
+  getPlatformTemplates,
+} from "../services/templates";
 
 function findInPlatformTemplateCache(
   queryClient: ReturnType<typeof useQueryClient>,
@@ -34,14 +37,20 @@ export function useLoadPlatformTemplate(platformTemplateId: string | null) {
     queryFn: async (): Promise<LayoutTemplate | null> => {
       if (!platformTemplateId) return null;
 
-      const cached = findInPlatformTemplateCache(queryClient, platformTemplateId);
+      const cached = findInPlatformTemplateCache(
+        queryClient,
+        platformTemplateId,
+      );
       if (cached) return cached;
 
       try {
         const response = await getPlatformTemplate(platformTemplateId);
         return mapPlatformTemplateToLayout(response.data);
       } catch {
-        const listResponse = await getPlatformTemplates({ page: 1, limit: 100 });
+        const listResponse = await getPlatformTemplates({
+          page: 1,
+          limit: 100,
+        });
         const items = extractPlatformTemplates(listResponse.data);
         const match = items.find((tpl) => tpl.id === platformTemplateId);
         return match ? mapPlatformTemplateToLayout(match) : null;

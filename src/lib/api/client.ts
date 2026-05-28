@@ -6,11 +6,11 @@ import axios, {
 import { clearAuthSession } from "./auth-session";
 
 const instance = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_API_URL,
-	withCredentials: true,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 let isRefreshing = false;
@@ -81,15 +81,15 @@ instance.interceptors.response.use(
 );
 
 export async function apiClient<T>(
-	endpoint: string,
-	options?: AxiosRequestConfig,
+  endpoint: string,
+  options?: AxiosRequestConfig,
 ): Promise<T> {
-	const response = await instance.request<T>({
-		url: endpoint,
-		...options,
-	});
+  const response = await instance.request<T>({
+    url: endpoint,
+    ...options,
+  });
 
-	return response.data;
+  return response.data;
 }
 
 export { instance as apiAxios };

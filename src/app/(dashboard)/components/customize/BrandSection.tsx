@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { toast } from "sonner";
 import {
 	SectionCard,
 	FieldLabel,
@@ -64,8 +65,12 @@ export function BrandSection({
 								const validType =
 									file.type.startsWith("image/") ||
 									file.type === "image/svg+xml";
-								const validSize = file.size <= 5 * 1024 * 1024;
-								if (!validType || !validSize) return;
+								const validSize = file.size <= 2 * 1024 * 1024;
+								if (!validType || !validSize) {
+									if (!validType) toast.error("Only images and SVGs are allowed.");
+									if (!validSize) toast.error("Logo must be 2MB or less.");
+									return;
+								}
 								if (currentBlobUrl.current)
 									URL.revokeObjectURL(currentBlobUrl.current);
 								const blobUrl = URL.createObjectURL(file);

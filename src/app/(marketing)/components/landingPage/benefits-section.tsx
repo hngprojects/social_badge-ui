@@ -130,7 +130,7 @@ const BenefitSection = () => {
                 <div className="relative w-full h-full">
                   <Image
                     src="/assets/landing-page/benefit-cards.png"
-                    alt="Social badges showing user profiles"
+                    alt="Flare Tags showing user profiles"
                     fill
                     priority
                     className="object-contain"

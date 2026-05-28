@@ -1,49 +1,68 @@
 import { NextResponse, type NextProxy } from "next/server";
 
 const SECURITY_HEADERS: Record<string, string> = {
-  "X-Frame-Options": "DENY",
-  "X-Content-Type-Options": "nosniff",
-  "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+	"X-Frame-Options": "DENY",
+	"X-Content-Type-Options": "nosniff",
+	"Referrer-Policy": "strict-origin-when-cross-origin",
+	"Permissions-Policy": "camera=(), microphone=(), geolocation=()",
 };
 
 const PROTECTED_ROUTES = [
-  "/dashboard",
-  "/badges/published",
-  "/create-badges",
-  "/templates",
- "/settings",
-"/support",
-  "/coming-soon",
+	"/dashboard",
+	"/badges/published",
+	"/create-badges",
+	"/templates",
+	"/settings",
+	"/support",
+	"/coming-soon",
 ];
 
 export const proxy: NextProxy = (request) => {
-  const { pathname } = request.nextUrl;
-  const token = request.cookies.get("access_token")?.value;
+	const { pathname } = request.nextUrl;
+	const token = request.cookies.get("access_token")?.value;
+	const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
 
-  if (PROTECTED_ROUTES.some((route) => pathname.startsWith(route)) && !token) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+	const AUTH_ROUTES = ["/login", "/signup", "/forgot-password"];
 
-  const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
+	const withCommonHeaders = (response: NextResponse) => {
+		for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+			response.headers.set(key, value);
+		}
+		response.headers.set("x-request-id", requestId);
+		return response;
+	};
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-request-id", requestId);
+	const matchesRoute = (path: string, route: string) =>
+		path === route || path.startsWith(`${route}/`);
 
-  const response = NextResponse.next({
-    request: { headers: requestHeaders },
-  });
+	// Logged-in users should not be able to access auth pages
+	if (AUTH_ROUTES.some((route) => matchesRoute(pathname, route)) && token) {
+		return withCommonHeaders(
+			NextResponse.redirect(new URL("/dashboard", request.url)),
+		);
+	}
 
-  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
-    response.headers.set(key, value);
-  }
-  response.headers.set("x-request-id", requestId);
+	if (
+		PROTECTED_ROUTES.some((route) => matchesRoute(pathname, route)) &&
+		!token
+	) {
+		return withCommonHeaders(
+			NextResponse.redirect(new URL("/login", request.url)),
+		);
+	}
 
-  return response;
+	const requestHeaders = new Headers(request.headers);
+	requestHeaders.set("x-request-id", requestId);
+
+	return withCommonHeaders(
+		NextResponse.next({
+			request: { headers: requestHeaders },
+		}),
+	);
 };
 
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|eot)$).*)",
-  ],
+	matcher: [
+		"/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|eot)$).*)",
+	],
 };

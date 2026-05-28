@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FAQ_DATA } from '../../constants/pricing';
+import { Plus } from 'lucide-react';
 
 // ── Shared easing ─────────────────────────────────────────────────────────────
 const EASE = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
@@ -71,14 +72,13 @@ export default function FAQSection() {
                   {item.question}
                 </span>
 
-                <motion.span
-                  animate={{ rotate: isOpen ? 45 : 0 }}
-                  transition={{ duration: 0.2, ease: 'easeInOut' }}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xl font-light shrink-0"
-                  style={{ background: isOpen ? '#FF5236' : '#0A0A0A' }}
-                >
-                  +
-                </motion.span>
+                <div className="flex h-8 w-8 md:h-10 md:w-10 bg-black items-center text-white justify-center rounded-full border shrink-0 transition-all duration-300">
+                  <Plus
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      isOpen ? 'rotate-45' : 'rotate-0'
+                    }`}
+                  />
+                </div>
               </button>
 
               <AnimatePresence initial={false}>
