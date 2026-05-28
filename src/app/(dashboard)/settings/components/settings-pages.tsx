@@ -7,7 +7,7 @@ import TabAccount from "./tab-account";
 
 export default function SettingTabs() {
   return (
-    <Tabs defaultValue="profile" className="w-full  flex gap-4.5">
+    <Tabs defaultValue="profile" className="w-full flex flex-col gap-4.5">
       <div className="w-full border rounded-[12px] bg-white">
         <TabsList className="flex gap-1.5 bg-transparent  p-1.5">
           <TabsTrigger
