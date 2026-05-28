@@ -13,6 +13,7 @@ export default function TabSecurity() {
           detail="Change your password and protect your account."
           bg="#FFF0EC"
           showIcon={true}
+          isHeader={true}
         />
       </CardHeader>
 

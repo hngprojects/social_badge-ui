@@ -18,6 +18,7 @@ export default function TabNotifications() {
           head="Notifications"
           detail="Choose which emails you'd like to receive"
           showIcon={true}
+          isHeader={true}
         />
       </CardHeader>
 
@@ -27,7 +28,7 @@ export default function TabNotifications() {
 
         <SettingsSubCard
           id="badge-icon"
-          bg="#FFF0C9"
+          bg="#FFEDDC"
           src="/assets/dashboard/icons/badges-active.svg"
           alt="Badge icon"
           head="Badge claims"

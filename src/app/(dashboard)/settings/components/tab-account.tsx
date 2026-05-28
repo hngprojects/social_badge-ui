@@ -14,6 +14,7 @@ export default function TabAccount() {
           head="Account"
           detail="Sign out or close your account"
           showIcon={true}
+          isHeader={true}
         />
       </CardHeader>
 

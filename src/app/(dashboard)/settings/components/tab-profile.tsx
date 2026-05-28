@@ -21,6 +21,7 @@ export default function ProfileCard() {
           detail="Your personal info and how you appear"
           bg="#FFF0EC"
           showIcon={true}
+          isHeader={true}
         />
       </CardHeader>
 
