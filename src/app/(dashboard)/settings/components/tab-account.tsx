@@ -20,11 +20,12 @@ export default function TabAccount() {
 
       {/* CONTENT */}
       <CardContent className="flex flex-col gap-0">
-        <div className="flex justify-between items-center gap-2 pb-2.5">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-0.5 pt-[10px] pb-[24px]">
           <SettingsSubCard
             bg="#FFF0C9"
             head="Log out"
             detail="Log out of this device. You can sign back in any time."
+            isHeader={true}
           />{" "}
           <Button
             variant="cta"
@@ -37,13 +38,16 @@ export default function TabAccount() {
 
       <CardContent>
         <RowSeparator />
-        <SettingsSubCard
-          bg="#EEEEEE"
-          head="Danger Zone"
-          detail="Permanent and irreversible actions"
-        />
+        <div className="py-2.5">
+          <SettingsSubCard
+            bg="#EEEEEE"
+            head="Danger Zone"
+            detail="Permanent and irreversible actions"
+            isHeader={true}
+          />
+        </div>
 
-        <div className="bg-[#FEF2F2] p-4 border rounded-[12px] border-[#FEE2E2] flex justify-between items-center gap-4 mb-6 mt-2.5">
+        <div className="bg-[#FEF2F2] p-4 pt-0.5 border rounded-[12px] border-[#FEE2E2] flex flex-col sm:flex-row items-start sm:items-center sm:gap-4 justify-between mb-6">
           <SettingsSubCard
             bg="#EEEEEE"
             src="/assets/dashboard/settings/megaphone.svg"
@@ -51,8 +55,9 @@ export default function TabAccount() {
             head="Delete your account"
             detail="Permanently delete your account, all your badges, and engagement data. This action can't be undone."
             danger={true}
+            isHeader={true}
           />
-          <Button className="bg-[#DC2626] border-none text-[14px] py-2 px-4 text-white shadow-[0px_4px_12px_-4px_rgba(220,38,38,0.4),0px_1px_0px_0px_rgba(0,0,0,0.08)] hover:opacity-90 hover:bg-[bg-[#DC2626]">
+          <Button className="bg-[#DC2626] border-none text-[14px] py-2 px-4 text-white font-medium shadow-[0px_4px_12px_-4px_rgba(220,38,38,0.4),0px_1px_0px_0px_rgba(0,0,0,0.08)] hover:opacity-90 hover:bg-[bg-[#DC2626]">
             Delete account
           </Button>
         </div>
