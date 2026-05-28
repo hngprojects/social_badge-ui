@@ -20,7 +20,7 @@ export default function TabAccount() {
 
       {/* CONTENT */}
       <CardContent className="flex flex-col gap-0">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-0.5 pt-[10px] pb-[24px]">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-0.5 pt-2.5 pb-6">
           <SettingsSubCard
             bg="#FFF0C9"
             head="Log out"
