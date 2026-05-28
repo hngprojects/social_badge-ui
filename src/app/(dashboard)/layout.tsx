@@ -12,6 +12,12 @@ export default function DashboardLayout({
   return (
     <LenisProvider>
       <AuthGuard>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[#1a1a1a] focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          Skip to main content
+        </a>
         <section className="flex min-h-screen">
         <div className="sticky top-0 z-30 hidden self-start lg:block">
           <SideNav />

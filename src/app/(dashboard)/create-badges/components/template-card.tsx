@@ -51,7 +51,7 @@ export function TemplateCard({
 
       <div className="w-full mt-2 sm:mt-3 flex flex-col gap-0.5 pl-0.5 min-w-0">
         <div className="flex flex-row items-center justify-between w-full gap-1">
-          <span className="text-[9px] sm:text-[12px] font-semibold text-[#AFAFAF] uppercase tracking-wider block truncate min-w-0">
+          <span className="text-[9px] sm:text-[12px] font-semibold text-[#595959] uppercase tracking-wider block truncate min-w-0">
             {template.category}
           </span>
           {template.isMostPicked && (
@@ -67,7 +67,7 @@ export function TemplateCard({
           </span>
         </div>
 
-        <div className="flex flex-row flex-wrap items-center justify-between gap-x-1.5 gap-y-1 text-[9px] sm:text-xs text-[#9CA3AF] font-[400] mt-1 select-none w-full min-w-0">
+        <div className="flex flex-row flex-wrap items-center justify-between gap-x-1.5 gap-y-1 text-[9px] sm:text-xs text-[#595959] font-[400] mt-1 select-none w-full min-w-0">
           <span className="flex items-center gap-1 min-w-0 shrink-0 truncate">
             <Image
               src="/assets/dashboard/icons/made.svg"
