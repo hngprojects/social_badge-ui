@@ -1,30 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
 } from "@/components/ui/card";
-import { UserAvatar } from "./avatar";
 import { Button } from "@/components/ui/button";
-import { UploadIcon } from "lucide-react";
 import { ProfileInput } from "./input-profile";
+import { ProfileAvatarUpload } from "./profile-avatar-upload";
 import { SettingsSubCard } from "./settings-subcard";
 import { useUserStore } from "@/stores/use-user-store";
 import { getUserDisplayName } from "@/lib/api/auth-session";
 import { getUserMail } from "@/lib/api/auth-session";
 
 export default function ProfileCard() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const user = useUserStore((state) => state.user);
   const displayName = getUserDisplayName(user);
   const emailAddress = getUserMail(user);
-  const [formData, setFormData] = useState({
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string>("");
+
+  const [formData, setFormData] = useState(() => ({
     fullName: displayName,
     email: emailAddress,
     role: "",
-  });
+  }));
+  const [savedFormData, setSavedFormData] = useState(() => ({
+    fullName: displayName,
+    email: emailAddress,
+    role: "",
+  }));
+
+  const hasTextChanges =
+    formData.fullName !== savedFormData.fullName ||
+    formData.role !== savedFormData.role;
+
+  const hasAvatarChange = avatarFile !== null;
+
+  const isFormValid = formData.fullName.trim().length > 0;
+  const canSubmit = isFormValid && (hasTextChanges || hasAvatarChange);
 
   function handleChange(field: keyof typeof formData, value: string) {
     setFormData((prev) => ({
@@ -33,9 +51,53 @@ export default function ProfileCard() {
     }));
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(formData);
+
+    try {
+      setIsSubmitting(true);
+
+      // Build form payload for text fields and avatar upload.
+      const body = new FormData();
+      body.append("fullName", formData.fullName);
+      body.append("role", formData.role);
+
+      if (avatarFile) {
+        body.append("avatar", avatarFile);
+      }
+
+      // await updateProfile(body)
+      setSavedFormData(formData);
+      setAvatarFile(null);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  function handleUploadClick() {
+    fileInputRef.current?.click();
+  }
+
+  function handleAvatarChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (avatarPreview) {
+      URL.revokeObjectURL(avatarPreview);
+    }
+    const previewUrl = URL.createObjectURL(file);
+    setAvatarFile(file);
+    setAvatarPreview(previewUrl);
+
+    event.target.value = "";
+  }
+
+  function handleRemovePhoto() {
+    if (avatarPreview) {
+      URL.revokeObjectURL(avatarPreview);
+    }
+    setAvatarFile(null);
+    setAvatarPreview("");
   }
 
   return (
@@ -55,31 +117,13 @@ export default function ProfileCard() {
 
         {/* CONTENT */}
         <CardContent className="flex flex-col gap-6">
-          <div className="flex flex-col items-start md:flex-row md:items-center gap-6 border-b pb-4 md:pb-6.75">
-            {/* USER AVATAR */}
-            <div className="h-24 w-24">
-              <UserAvatar />
-            </div>
-
-            <div className="flex-col flex gap-3">
-              <div className="max-w-[60%] md:max-w-none flex flex-col gap-3 md:gap-0">
-                <h2 className="text-[#3A3A3A] text-[16px] font-bold">
-                  Profile Photo
-                </h2>
-                <p>Jpg or Png. Square ratio recommended. Max 2MB.</p>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <Button variant="outline" className="bg-[#FFF3F0] text-[14px]">
-                  <UploadIcon />
-                  Upload new photo
-                </Button>
-                <Button variant="ghost" className="text-[#3A3A3A] text-[14px]">
-                  Remove
-                </Button>
-              </div>
-            </div>
-          </div>
+          <ProfileAvatarUpload
+            previewUrl={avatarPreview}
+            inputRef={fileInputRef}
+            onUploadClick={handleUploadClick}
+            onAvatarChange={handleAvatarChange}
+            onRemove={handleRemovePhoto}
+          />
           {/* FIELD INPUTS */}
           <div>
             <ProfileInput values={formData} onChange={handleChange} />
@@ -87,8 +131,13 @@ export default function ProfileCard() {
           {/* SUBMIT BUTTON */}
         </CardContent>
         <CardAction className="py-3.5 px-6 flex justify-end w-full bg-[#FBFAF7]">
-          <Button type="submit" variant="cta" className="text-[14px] py-2 px-4">
-            Save changes
+          <Button
+            disabled={!canSubmit || isSubmitting}
+            type="submit"
+            variant="cta"
+            className="text-[14px] py-2 px-4"
+          >
+            {isSubmitting ? "Saving..." : "Save changes"}
           </Button>
         </CardAction>
       </Card>
