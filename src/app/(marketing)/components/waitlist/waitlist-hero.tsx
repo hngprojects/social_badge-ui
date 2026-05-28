@@ -18,7 +18,7 @@ export default function WaitlistHero() {
 	const router = useRouter();
 	const { subscribeToNewsletter, isLoading: isSubmitting } = useSubscribe();
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.SubmitEvent) => {
 		e.preventDefault();
 		if (!email) return;
 
@@ -89,7 +89,7 @@ export default function WaitlistHero() {
 						</span>
 					</h1>
 
-					<p className="text-base md:text-[18px] text-[#121217] max-w-[340px] md:max-w-xl mb-8 leading-relaxed px-4">
+					<p className="text-base md:text-[18px] text-[#121217] max-w-85 md:max-w-xl mb-8 leading-relaxed px-4">
 						Turn your attendees into promoters with personalized badges they can
 						generate and post in seconds, Let your community do the marketing
 						for you.
@@ -98,7 +98,7 @@ export default function WaitlistHero() {
 					{/* Waitlist Form */}
 					<form
 						onSubmit={handleSubmit}
-						className="flex flex-col md:flex-row w-full max-w-[372px] items-center gap-4 md:gap-1 bg-transparent md:bg-white md:border md:border-[#E5E5E5] md:rounded-full md:p-1 md:shadow-sm mb-16 md:focus-within:ring-2 md:focus-within:ring-[#FA5424]/20 transition-all mx-auto"
+						className="flex flex-col md:flex-row w-full max-w-93 items-center gap-4 md:gap-1 bg-transparent md:bg-white md:border md:border-[#E5E5E5] md:rounded-full md:p-1 md:shadow-sm mb-16 md:focus-within:ring-2 md:focus-within:ring-[#FA5424]/20 transition-all mx-auto"
 					>
 						<label htmlFor="waitlist-email" className="sr-only">
 							Email address
@@ -118,7 +118,7 @@ export default function WaitlistHero() {
 						<Button
 							type="submit"
 							disabled={isSubmitting}
-							className="w-full md:w-auto bg-[#FA5424] hover:bg-[#FA5424]/90 text-white rounded-full px-4 md:px-6 min-w-[120px] md:max-w-[163px] py-6 md:py-3 text-sm md:text-[16px] font-sans h-12 md:h-auto transition-all flex items-center justify-center gap-2"
+							className="w-full md:w-auto bg-[#FA5424] hover:bg-[#FA5424]/90 text-white rounded-full px-4 md:px-6 min-w-30 md:max-w-40.75 py-6 md:py-3 text-sm md:text-[16px] font-sans h-12 md:h-auto transition-all flex items-center justify-center gap-2"
 						>
 							{isSubmitting ? (
 								<>
@@ -145,7 +145,7 @@ export default function WaitlistHero() {
 				</main>
 			</div>
 			{/* Bottom strip */}
-			<div className="w-full max-h-[121px] bg-[#2B2A2A] border-b border-gray-400 flex items-center justify-center px-2 py-8 md:px-10">
+			<div className="w-full max-h-30.25 bg-[#2B2A2A] border-b border-gray-400 flex items-center justify-center px-2 py-8 md:px-10">
 				<div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center text-center md:text-left">
 					{items.map((item, index) => (
 						<Fragment key={index}>
@@ -160,7 +160,7 @@ export default function WaitlistHero() {
 									alt={item.title}
 									width={40}
 									height={40}
-									className="md:w-[50px] md:h-[50px]"
+									className="md:w-12.5 md:h-12.5"
 								/>
 								<h2 className="text-[#E5E7EB] text-base md:text-lg font-semibold">
 									{item.title}
