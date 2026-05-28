@@ -7,11 +7,11 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetTitle,
-  SheetDescription,
+	Sheet,
+	SheetContent,
+	SheetTrigger,
+	SheetTitle,
+	SheetDescription,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { cn } from "@/lib/utils";
@@ -20,317 +20,316 @@ import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "@/app/features/auth/services/auth";
 
 const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Explore", href: "/explore" },
-  { label: "Features", href: "/#feature-section" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Contact us", href: "/contact" },
+	{ label: "Home", href: "/" },
+	{ label: "Explore", href: "/explore" },
+	{ label: "Features", href: "/#feature-section" },
+	{ label: "Pricing", href: "/pricing" },
+	{ label: "Contact us", href: "/contact" },
 ] as const;
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const pathname = usePathname();
-  const { scrollY } = useScroll();
-  const { data: authUser, isLoading } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: async () => {
-      const response = await getCurrentUser();
-      return response.data;
-    },
-    retry: false,
-    staleTime: 5 * 60 * 1000,
-  });
+	const [scrolled, setScrolled] = useState(false);
+	const [hidden, setHidden] = useState(false);
+	const [mobileOpen, setMobileOpen] = useState(false);
+	const pathname = usePathname();
+	const { scrollY } = useScroll();
+	const { data: authUser, isLoading } = useQuery({
+		queryKey: ["auth", "me"],
+		queryFn: async () => {
+			const response = await getCurrentUser();
+			return response.data;
+		},
+		retry: false,
+		staleTime: 5 * 60 * 1000,
+	});
 
-  useMotionValueEvent(scrollY, "change", (current) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    setScrolled(current > 8);
-    if (current > previous && current > 150) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-  });
+	useMotionValueEvent(scrollY, "change", (current) => {
+		const previous = scrollY.getPrevious() ?? 0;
+		setScrolled(current > 8);
+		if (current > previous && current > 150) {
+			setHidden(true);
+		} else {
+			setHidden(false);
+		}
+	});
 
-  return (
-    <motion.header
-      variants={{
-        visible: { y: 0, pointerEvents: "auto" as const },
-        hidden: { y: "-100%", pointerEvents: "none" as const },
-      }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
-      aria-hidden={hidden}
-      onFocusCapture={() => setHidden(false)}
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 bg-background",
-        scrolled
-          ? "shadow-sm border-b border-border backdrop-blur-md bg-background/95"
-          : "border-b border-border shadow-sm",
-      )}
-    >
-      <div className="mx-auto max-w-360 px-4 md:px-10 lg:px-30 py-2">
-        <div className="flex h-17 items-center justify-between gap-6">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex shrink-0 items-center gap-2.5 group"
-            aria-label="Flare Tag home"
-          >
-            <span className="transition-transform duration-200 group-hover:scale-105">
-              <Image
-                src="/assets/logo.svg"
-                alt="Flare Tag logo"
-                width={27}
-                height={27}
-                className="w-6.75 h-6.75"
-              />
-            </span>
-            <span className="text-xl font-medium tracking-tight text-foreground">
-              Flare Tag
-            </span>
-          </Link>
+	return (
+		<motion.header
+			variants={{
+				visible: { y: 0, pointerEvents: "auto" as const },
+				hidden: { y: "-100%", pointerEvents: "none" as const },
+			}}
+			animate={hidden ? "hidden" : "visible"}
+			transition={{ duration: 0.35, ease: "easeInOut" }}
+			aria-hidden={hidden}
+			onFocusCapture={() => setHidden(false)}
+			className={cn(
+				"fixed inset-x-0 top-0 z-50 bg-background",
+				scrolled
+					? "shadow-sm border-b border-border backdrop-blur-md bg-background/95"
+					: "border-b border-border shadow-sm",
+			)}
+		>
+			<div className="mx-auto max-w-360 px-4 md:px-10 lg:px-30 py-2">
+				<div className="flex h-17 items-center justify-between gap-6">
+					{/* Logo */}
+					<Link
+						href="/"
+						className="flex shrink-0 items-center gap-2.5 group"
+						aria-label="Flare Tag home"
+					>
+						<span className="transition-transform duration-200 group-hover:scale-105">
+							<Image
+								src="/assets/logo.svg"
+								alt="Flare Tag logo"
+								width={27}
+								height={27}
+								className="w-6.75 h-6.75"
+							/>
+						</span>
+						<span className="text-xl font-medium tracking-tight text-foreground">
+							Flare Tag
+						</span>
+					</Link>
 
-          {/* Desktop Nav */}
-          <nav
-            className="hidden min-[1084px]:flex items-center gap-1"
-            aria-label="Primary navigation"
-          >
-            {NAV_LINKS.map(({ label, href }) => {
-              const isActive = pathname === href;
-              const isFeatures = href === "/#feature-section";
+					{/* Desktop Nav */}
+					<nav
+						className="hidden min-[1084px]:flex items-center gap-1"
+						aria-label="Primary navigation"
+					>
+						{NAV_LINKS.map(({ label, href }) => {
+							const isActive = pathname === href;
+							const isFeatures = href === "/#feature-section";
 
-              const handleClick = (e: React.MouseEvent) => {
-                if (isFeatures && pathname === "/") {
-                  e.preventDefault();
-                  document
-                    .getElementById("feature-section")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }
-              };
+							const handleClick = (e: React.MouseEvent) => {
+								if (isFeatures && pathname === "/") {
+									e.preventDefault();
+									document
+										.getElementById("feature-section")
+										?.scrollIntoView({ behavior: "smooth" });
+								}
+							};
 
-              return (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={handleClick}
-                  className={cn(
-                    "relative px-4 py-2 text-base font-medium rounded-lg whitespace-nowrap",
-                    "transition-colors duration-150",
-                    isActive
-                      ? "text-primary"
-                      : "text-foreground hover:bg-muted",
-                  )}
-                >
-                  {label}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-0.5 rounded-full bg-primary" />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+							return (
+								<Link
+									key={label}
+									href={href}
+									onClick={handleClick}
+									className={cn(
+										"relative px-4 py-2 text-base font-medium rounded-lg whitespace-nowrap",
+										"transition-colors duration-150",
+										isActive
+											? "text-primary"
+											: "text-foreground hover:bg-muted",
+									)}
+								>
+									{label}
+									{isActive && (
+										<span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-0.5 rounded-full bg-primary" />
+									)}
+								</Link>
+							);
+						})}
+					</nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden min-[1084px]:flex items-center gap-3 shrink-0">
-            {isLoading ? (
-              <div className="w-[162px] h-11 bg-muted animate-pulse rounded-lg" />
-            ) : authUser ? (
-              <Button
-                asChild
-                variant="cta"
-                size="xl"
-                className="w-[180px] h-11"
-              >
-                <Link href="/dashboard">Back to Dashboard</Link>
-              </Button>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className={cn(
-                    "px-4 py-2 text-base font-medium rounded-lg",
-                    "text-foreground hover:bg-muted",
-                    "transition-colors duration-150",
-                  )}
-                >
-                  Log In
-                </Link>
+					{/* Desktop CTA */}
+					<div className="hidden min-[1084px]:flex items-center gap-3 shrink-0">
+						{isLoading ? (
+							<div className="w-[162px] h-11 bg-muted animate-pulse rounded-lg" />
+						) : authUser ? (
+							<Button
+								asChild
+								variant="cta"
+								size="xl"
+								className="w-[180px] h-11"
+							>
+								<Link href="/dashboard">Back to Dashboard</Link>
+							</Button>
+						) : (
+							<>
+								<Link
+									href="/login"
+									className={cn(
+										"px-4 py-2 text-base font-medium rounded-lg",
+										"text-foreground hover:bg-muted",
+										"transition-colors duration-150",
+									)}
+								>
+									Log In
+								</Link>
 
-                <Button
-                  asChild
-                  variant="cta"
-                  size="xl"
-                  className="w-[162px] h-11"
-                >
-                  <Link href="/signup">
-                    Start Building
-                    <span className="inline-flex items-center justify-center">
-                      <Image
-                        src="/assets/icons/round-arrow-right-up.svg"
-                        alt="arrow"
-                        width={20}
-                        height={20}
-                      />
-                    </span>
-                  </Link>
-                </Button>
-              </>
-            )}
-          </div>
+								<Button
+									asChild
+									variant="cta"
+									size="xl"
+									className="w-[162px] h-11"
+								>
+									<Link href="/signup">
+										Start Building
+										<span className="inline-flex items-center justify-center">
+											<Image
+												src="/assets/icons/round-arrow-right-up.svg"
+												alt="arrow"
+												width={20}
+												height={20}
+											/>
+										</span>
+									</Link>
+								</Button>
+							</>
+						)}
+					</div>
 
-          {/* Mobile Hamburger */}
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>
-              <button
-                className={cn(
-                  "min-[1084px]:hidden flex items-center justify-center w-10 h-10 rounded-lg",
-                  "text-foreground hover:bg-muted",
-                  "transition-colors duration-150",
-                )}
-                aria-label="Open menu"
-              >
-                {mobileOpen ? (
-                  <X className="w-5 h-5" />
-                ) : (
-                  <Menu className="w-5 h-5" strokeWidth={2.2} />
-                )}
-              </button>
-            </SheetTrigger>
+					{/* Mobile Hamburger */}
+					<Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+						<SheetTrigger asChild>
+							<button
+								className={cn(
+									"min-[1084px]:hidden flex items-center justify-center w-10 h-10 rounded-lg",
+									"text-foreground hover:bg-muted",
+									"transition-colors duration-150",
+								)}
+								aria-label="Open menu"
+							>
+								{mobileOpen ? (
+									<X className="w-5 h-5" />
+								) : (
+									<Menu className="w-5 h-5" strokeWidth={2.2} />
+								)}
+							</button>
+						</SheetTrigger>
 
-            <SheetContent
-              side="right"
-              className="w-70 sm:w-[320px] p-0 bg-background border-l border-border"
-            >
-              <VisuallyHidden>
-                <SheetTitle>Navigation menu</SheetTitle>
-                <SheetDescription>
-                  Main navigation links for Flare Tag
-                </SheetDescription>
-              </VisuallyHidden>
+						<SheetContent
+							side="right"
+							className="w-70 sm:w-[320px] p-0 bg-background border-l border-border"
+						>
+							<VisuallyHidden>
+								<SheetTitle>Navigation menu</SheetTitle>
+								<SheetDescription>
+									Main navigation links for Flare Tag
+								</SheetDescription>
+							</VisuallyHidden>
 
-              <div className="flex flex-col h-full">
-                {/* Mobile sheet header */}
-                <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
-                  <Image
-                    src="/assets/logo.svg"
-                    alt="Flare Tag logo"
-                    width={28}
-                    height={28}
-                    className="w-6.75 h-6.75"
-                  />
-                  <span className="text-[17px] font-semibold tracking-tight text-foreground">
-                    Flare Tag
-                  </span>
-                </div>
+							<div className="flex flex-col h-full">
+								{/* Mobile sheet header */}
+								<div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
+									<Image
+										src="/assets/logo.svg"
+										alt="Flare Tag logo"
+										width={28}
+										height={28}
+										className="w-6.75 h-6.75"
+									/>
+									<span className="text-[17px] font-semibold tracking-tight text-foreground">
+										Flare Tag
+									</span>
+								</div>
 
-                {/* Mobile nav links */}
-                <nav className="flex flex-col gap-1 px-3 py-4 flex-1">
-                  {/* Mobile nav links */}
-                  <nav className="flex flex-col gap-1 px-3 py-4 flex-1">
-                    {NAV_LINKS.map(({ label, href }) => {
-                      const isActive = pathname === href;
-                      const isFeatures = href === "/#feature-section";
+								{/* Mobile nav links */}
+								<nav className="flex flex-col gap-1 px-3 py-4 flex-1">
+									<nav className="flex flex-col gap-1 px-3 py-4 flex-1">
+										{NAV_LINKS.map(({ label, href }) => {
+											const isActive = pathname === href;
+											const isFeatures = href === "/#feature-section";
 
-                      const handleClick = () => {
-                        setMobileOpen(false);
-                        if (isFeatures && pathname === "/") {
-                          setTimeout(() => {
-                            document
-                              .getElementById("feature-section")
-                              ?.scrollIntoView({ behavior: "smooth" });
-                          }, 300);
-                        }
-                      };
+											const handleClick = () => {
+												setMobileOpen(false);
+												if (isFeatures && pathname === "/") {
+													setTimeout(() => {
+														document
+															.getElementById("feature-section")
+															?.scrollIntoView({ behavior: "smooth" });
+													}, 300);
+												}
+											};
 
-                      return (
-                        <Link
-                          key={label}
-                          href={href}
-                          onClick={handleClick}
-                          className={cn(
-                            "px-4 py-3 text-[15px] font-medium rounded-xl",
-                            "transition-colors duration-150",
-                            isActive
-                              ? "text-primary bg-secondary"
-                              : "text-foreground hover:bg-muted",
-                          )}
-                        >
-                          {label}
-                        </Link>
-                      );
-                    })}
-                  </nav>
-                </nav>
+											return (
+												<Link
+													key={label}
+													href={href}
+													onClick={handleClick}
+													className={cn(
+														"px-4 py-3 text-[15px] font-medium rounded-xl",
+														"transition-colors duration-150",
+														isActive
+															? "text-primary bg-secondary"
+															: "text-foreground hover:bg-muted",
+													)}
+												>
+													{label}
+												</Link>
+											);
+										})}
+									</nav>
+								</nav>
 
-                {/* Mobile CTAs */}
-                <div className="flex flex-col gap-3 px-5 py-5 border-t border-border">
-                  {isLoading ? (
-                    <div className="w-full h-11 bg-muted animate-pulse rounded-full" />
-                  ) : authUser ? (
-                    <Button
-                      asChild
-                      className={cn(
-                        "w-full h-11 rounded-full text-[15px] font-semibold",
-                        "bg-primary text-primary-foreground",
-                        "hover:opacity-90 active:opacity-80",
-                        "shadow-sm transition-all duration-150",
-                      )}
-                    >
-                      <Link
-                        href="/dashboard"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        Back to Dashboard
-                      </Link>
-                    </Button>
-                  ) : (
-                    <>
-                      <Link
-                        href="/login"
-                        onClick={() => setMobileOpen(false)}
-                        className={cn(
-                          "w-full text-center px-4 py-2.5 text-[15px] font-medium rounded-full",
-                          "text-foreground border border-border",
-                          "hover:bg-muted transition-colors duration-150",
-                        )}
-                      >
-                        Log In
-                      </Link>
+								{/* Mobile CTAs */}
+								<div className="flex flex-col gap-3 px-5 py-5 border-t border-border">
+									{isLoading ? (
+										<div className="w-full h-11 bg-muted animate-pulse rounded-full" />
+									) : authUser ? (
+										<Button
+											asChild
+											className={cn(
+												"w-full h-11 rounded-full text-[15px] font-semibold",
+												"bg-primary text-primary-foreground",
+												"hover:opacity-90 active:opacity-80",
+												"shadow-sm transition-all duration-150",
+											)}
+										>
+											<Link
+												href="/dashboard"
+												onClick={() => setMobileOpen(false)}
+											>
+												Back to Dashboard
+											</Link>
+										</Button>
+									) : (
+										<>
+											<Link
+												href="/login"
+												onClick={() => setMobileOpen(false)}
+												className={cn(
+													"w-full text-center px-4 py-2.5 text-[15px] font-medium rounded-full",
+													"text-foreground border border-border",
+													"hover:bg-muted transition-colors duration-150",
+												)}
+											>
+												Log In
+											</Link>
 
-                      <Button
-                        asChild
-                        className={cn(
-                          "w-full h-11 rounded-full text-[15px] font-semibold",
-                          "bg-primary text-primary-foreground",
-                          "hover:opacity-90 active:opacity-80",
-                          "shadow-sm transition-all duration-150",
-                        )}
-                      >
-                        <Link
-                          href="/signup"
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          Start Building
-                          <span className="inline-flex items-center justify-center">
-                            <Image
-                              src="/assets/icons/round-arrow-right-up.svg"
-                              alt="arrow"
-                              width={20}
-                              height={20}
-                            />
-                          </span>
-                        </Link>
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </motion.header>
-  );
+											<Button
+												asChild
+												className={cn(
+													"w-full h-11 rounded-full text-[15px] font-semibold",
+													"bg-primary text-primary-foreground",
+													"hover:opacity-90 active:opacity-80",
+													"shadow-sm transition-all duration-150",
+												)}
+											>
+												<Link
+													href="/signup"
+													onClick={() => setMobileOpen(false)}
+												>
+													Start Building
+													<span className="inline-flex items-center justify-center">
+														<Image
+															src="/assets/icons/round-arrow-right-up.svg"
+															alt="arrow"
+															width={20}
+															height={20}
+														/>
+													</span>
+												</Link>
+											</Button>
+										</>
+									)}
+								</div>
+							</div>
+						</SheetContent>
+					</Sheet>
+				</div>
+			</div>
+		</motion.header>
+	);
 }

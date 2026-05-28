@@ -1,6 +1,7 @@
 "use client";
 
 import { SectionCard, FieldLabel, TextArea, HelperText } from "./ui";
+import { Input } from "@/components/ui/input";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 interface ShareMessageSectionProps {
@@ -72,11 +73,11 @@ export function ShareMessageSection({ editor, onChange }: ShareMessageSectionPro
           <span className="px-3 py-2.5 text-sm text-gray-400 bg-gray-50 border-r border-gray-200 select-none whitespace-nowrap">
             https://
           </span>
-          <input
+          <Input
             type="text"
             value={editor.destinationLink}
             onChange={(e) => onChange({ destinationLink: e.target.value })}
-            className="flex-1 px-3 py-2.5 text-sm text-gray-800 focus:outline-none bg-white"
+            className="flex-1 h-auto px-3 py-2.5 text-sm text-gray-800 bg-white border-0 rounded-none shadow-none focus-visible:ring-0 focus-visible:border-transparent"
           />
         </div>
         <HelperText>Use a UTM-tagged URL if you want to track conversions in your analytics tool.</HelperText>

@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 // --- Tab 4 UI Component: Comprehensive Analytics ---
 
@@ -44,6 +46,7 @@ const fromRightVariants = {
 
 export default function Feature() {
   const [activeId, setActiveId] = useState('01');
+  const router = useRouter();
   const activeFeature = FEATURES.find((f) => f.id === activeId) || FEATURES[0];
 
   return (
@@ -156,9 +159,9 @@ export default function Feature() {
 
             {/* ── Mobile CTA Button (between steps & visual, hidden on min-900) ── */}
             <div className="flex min-[900px]:hidden w-full px-1">
-              <button className="w-full bg-[#ff4f1f] hover:bg-[#e54519] active:scale-[0.98] transition-all text-white font-bold text-base py-4.5 rounded-full shadow-lg">
+              <Button onClick={() => router.push('/signup')} variant="cta" className="w-full active:scale-[0.98] font-bold text-base py-4.5 shadow-lg">
                 {activeId === '03' ? 'Generate and share' : 'Publish and share'}
-              </button>
+              </Button>
             </div>
 
             {/* ── RIGHT COLUMN: Visual Stage — slides in from right on entry ── */}
