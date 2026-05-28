@@ -8,6 +8,7 @@ import { useState } from "react";
 import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
+import { shareService } from "../services/share";
 
 export default function BadgeReady() {
 	const [captionText, setCaptionText] = useState(DEFAULT_CAPTION);
@@ -15,7 +16,7 @@ export default function BadgeReady() {
 
 	const handleSocialShare = (platform: string) => {
 		console.log(platform);
-		//shareService
+		shareService.share(platform as any, captionText);
 	};
 
 	return (

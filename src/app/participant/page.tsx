@@ -51,12 +51,13 @@ export default function ParticipantPov() {
 			</header>
 
 			{/* main section */}
-			<div className="flex flex-col lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10">
+			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10">
 				{isBadgeReady ? (
 					<BadgeReady />
 				) : (
 					<ParticipantForm onSuccess={() => setIsBadgeReady(true)} />
 				)}
+
 				<div className="preview-section bg-primary-300 w-full max-w-135 h-125 lg:h-155 rounded-3xl shrink-0"></div>
 			</div>
 		</div>
