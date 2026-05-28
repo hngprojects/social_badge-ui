@@ -209,25 +209,24 @@ export const SignupForm = () => {
 				</div>
 			</div>
 
-			{showModal && (
-				<AuthModal
-					closeModal={() => setShowModal(false)}
-					email={submittedEmail}
-					title="Verify your email address"
-					description={
-						modalMessage ? (
-							<p>{modalMessage}</p>
-						) : (
-							<>
-								<p>We have sent a link to verify your email address.</p>
-								<p>
-									Check your email for the link to verify your email address
-								</p>
-							</>
-						)
-					}
-				/>
-			)}
+			<AuthModal
+				open={showModal}
+				onOpenChange={setShowModal}
+				email={submittedEmail}
+				title="Verify your email address"
+				description={
+					modalMessage ? (
+						<p>{modalMessage}</p>
+					) : (
+						<>
+							<p>We have sent a link to verify your email address.</p>
+							<p>
+								Check your email for the link to verify your email address
+							</p>
+						</>
+					)
+				}
+			/>
 		</>
 	);
 };

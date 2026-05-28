@@ -74,22 +74,21 @@ export const ForgotPasswordForm = () => {
 				</div>
 			</div>
 
-			{showModal && (
-				<AuthModal
-					closeModal={() => setShowModal(false)}
-					email={email}
-					imageSrc="/assets/auth-flow/mail-img.png"
-					title="We've sent you a reset link"
-					description={
-						<>
-							<p>
-								We&apos;ve sent instructions to your registered email address.
-							</p>
-							<p>Click the link in the email to reset your password.</p>
-						</>
-					}
-				/>
-			)}
+			<AuthModal
+				open={showModal}
+				onOpenChange={setShowModal}
+				email={email}
+				imageSrc="/assets/auth-flow/mail-img.png"
+				title="We've sent you a reset link"
+				description={
+					<>
+						<p>
+							We&apos;ve sent instructions to your registered email address.
+						</p>
+						<p>Click the link in the email to reset your password.</p>
+					</>
+				}
+			/>
 		</>
 	);
 };

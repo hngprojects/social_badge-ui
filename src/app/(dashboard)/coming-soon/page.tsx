@@ -2,6 +2,7 @@
 
 import { useUserStore } from "@/stores/use-user-store";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
 	const { user, clearUser } = useUserStore();
@@ -19,12 +20,13 @@ export default function Page() {
 			<p className="text-muted-foreground max-w-md text-sm">
 				We&apos;re working hard to bring you something amazing!
 			</p>
-			<button
+			<Button
 				onClick={handleLogout}
-				className="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700"
+				variant="indigo"
+				className="px-4 py-2 text-sm"
 			>
 				Logout
-			</button>
+			</Button>
 		</main>
 	);
 }
