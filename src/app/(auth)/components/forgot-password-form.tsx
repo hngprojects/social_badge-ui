@@ -66,7 +66,7 @@ export const ForgotPasswordForm = () => {
 						Go back to{" "}
 						<Link
 							href="/login"
-							className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
+							className="font-bold text-[#B53D00] hover:text-[#8f2e00]"
 						>
 							Log in
 						</Link>

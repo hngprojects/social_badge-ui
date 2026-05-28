@@ -61,6 +61,8 @@ export default function SideNav() {
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
               aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
+              aria-expanded={expanded}
+              aria-controls="sidebar-nav"
             >
               <Image
                 alt="sidebar toggle"
@@ -73,6 +75,7 @@ export default function SideNav() {
           </header>
 
           <nav
+            id="sidebar-nav"
             className={`pt-0 ${expanded ? "px-6" : "px-3"}`}
             aria-label="Dashboard navigation"
           >

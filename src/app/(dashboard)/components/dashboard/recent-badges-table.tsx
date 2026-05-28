@@ -38,8 +38,9 @@ export function RecentBadgesTable({
 						{TABLE_COLUMNS.map((col) => (
 							<TableHead
 								key={col.label}
+								scope="col"
 								className={cn(
-									"whitespace-nowrap border-b border-t border-[#F0F0EE] px-4 py-[10px] text-left text-[11px] font-semibold tracking-[0.05em] text-gray-400",
+									"whitespace-nowrap border-b border-t border-[#F0F0EE] px-4 py-[10px] text-left text-[12px] font-semibold tracking-[0.05em] text-[#595959]",
 									col.className,
 								)}
 							>
@@ -89,13 +90,13 @@ export function RecentBadgesTable({
 												<div className="font-semibold text-[14px] leading-[1.3] text-gray-900">
 													{template.title}
 												</div>
-												<div className="mt-[2px] text-[12px] text-gray-400">
+												<div className="mt-[2px] text-[12px] text-gray-600">
 													Template instance &middot;{" "}
 													<span
 														className={
 															template.share_slug
-																? "text-gray-400"
-																: "text-gray-300"
+																? "text-gray-600"
+																: "text-gray-500"
 														}
 													>
 														{template.share_slug ?? "Not yet published"}

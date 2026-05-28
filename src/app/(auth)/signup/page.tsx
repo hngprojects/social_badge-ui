@@ -7,7 +7,7 @@ const Page = () => {
         <h1 className="page-title font-semibold text-[40px] sm:text-[52px]">
           Create Account
         </h1>
-        <p className="font-medium text-base sm:text-[18px] text-[#978B8A]">
+        <p className="font-medium text-base sm:text-[18px] text-[#595959]">
           Sign up and create an account with Flare Tag
         </p>
       </div>

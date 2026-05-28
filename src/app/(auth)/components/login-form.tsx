@@ -61,7 +61,7 @@ export const LoginForm = () => {
                 />
                 <label
                   htmlFor="remember-me"
-                  className="text-sm cursor-pointer text-[#978B8A]"
+                  className="text-sm cursor-pointer text-[#595959]"
                 >
                   Remember me
                 </label>
@@ -69,7 +69,7 @@ export const LoginForm = () => {
 
               <Link
                 href={"/forgot-password"}
-                className="text-sm text-[#978B8A] hover:filter hover:brightness-70"
+                className="text-sm text-[#595959] hover:filter hover:brightness-70"
               >
                 Forgot password?
               </Link>
@@ -93,7 +93,7 @@ export const LoginForm = () => {
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"
-            className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
+            className="font-bold text-[#B53D00] hover:text-[#8f2e00]"
           >
             Sign up
           </Link>

@@ -8,7 +8,7 @@ const Page = () => {
         <h1 className="page-title font-semibold text-[40px] sm:text-[52px]">
           Reset Password
         </h1>
-        <p className="font-medium text-base sm:text-[18px] text-[#978B8A] w-[70%]">
+        <p className="font-medium text-base sm:text-[18px] text-[#595959] w-[70%]">
           Enter your new password below. Ensure the password matches
         </p>
       </div>
