@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
 import { StatusPill } from "./status-pill";
 import { formatDate } from "./recent-badges-utils";
@@ -11,6 +11,8 @@ import {
   buildParticipantShareUrl,
   formatShareUrlForDisplay,
 } from "@/app/features/templates/lib/badge-share-url";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export function TemplateInfoModal({
   template,
@@ -30,48 +32,12 @@ export function TemplateInfoModal({
     ? formatShareUrlForDisplay(fullUrl)
     : "Not yet published";
 
-  useEffect(() => {
-    const scrollY = window.scrollY;
-
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
-
-    return () => {
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.width = "";
-
-      window.scrollTo(0, scrollY);
-    };
-  }, []);
-
   return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-[9999] grid place-items-center overflow-y-auto bg-black/40 p-4"
-    >
-      <div
-        onClick={(event) => event.stopPropagation()}
-        className="relative grid w-full max-w-[939px] gap-[24px] rounded-[16px] bg-white p-[24px] shadow-xl md:grid-cols-[0.95fr_1.1fr]"
+    <Dialog open={true} onOpenChange={(open) => { if (!open) onClose(); }}>
+      <DialogContent
+        className="max-w-[939px] rounded-[16px] p-[24px] grid gap-[24px] md:grid-cols-[0.95fr_1.1fr]"
+        showCloseButton
       >
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-4 top-4 grid h-[40px] w-[40px] place-content-center rounded-full border border-[#E8E8E8]  text-[#757575] hover:bg-gray-50 cursor-pointer"
-        >
-          <Image
-            src="/assets/dashboard/X.svg"
-            height={24}
-            width={24}
-            alt="cancel button"
-          />
-        </button>
-
         <div className="overflow-hidden rounded-[12px] bg-[#F4F4F2]">
           <div className="relative aspect-[4/5] w-full">
             <Image
@@ -152,15 +118,15 @@ export function TemplateInfoModal({
               Shareable link
             </p>
 
-            <button
+            <Button
               type="button"
+              variant="outline"
               onClick={async () => {
                 if (!fullUrl) return;
-
                 await navigator.clipboard.writeText(fullUrl);
                 toast.success("Link copied to clipboard");
               }}
-              className="flex gap-[8px] inline-flex w-full items-center rounded-lg border border-[#E8E8E8] px-[16px] py-[8px] text-[13px] text-[#121217] cursor-pointer"
+              className="flex gap-[8px] w-full items-center justify-start rounded-lg border border-[#E8E8E8] px-[16px] py-[8px] h-auto text-[13px] text-[#121217]"
             >
               <Image
                 src="/assets/dashboard/_ui-copy-02.svg"
@@ -169,27 +135,27 @@ export function TemplateInfoModal({
                 alt="copy icon"
               />
               <p>{displayUrl}</p>
-            </button>
+            </Button>
           </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            <button
+            <Button
+              variant="outline"
               onClick={() => onRequestDelete(template)}
-              className="rounded-full border border-[#F6B6C8] px-5 py-3 text-[14px] font-semibold text-[#F43F72] cursor-pointer hover:bg-[#EF4444] hover:text-white"
+              className="rounded-full border border-[#F6B6C8] px-5 py-3 h-auto text-[14px] font-semibold text-[#F43F72] hover:bg-[#EF4444] hover:text-white hover:border-[#EF4444]"
             >
               Delete badge
-            </button>
+            </Button>
 
-            <Link
-              href={`/create-badges/customize?id=${encodeURIComponent(template.id)}`}
-              className="flex items-center justify-center rounded-full bg-[#242424] px-5 py-3 text-[14px] font-semibold text-white cursor-pointer hover:opacity-[95%]"
-            >
-              Edit badge
-            </Link>
+            <Button asChild className="rounded-full bg-[#242424] px-5 py-3 h-auto text-[14px] font-semibold text-white hover:bg-[#242424]/90">
+              <Link href={`/create-badges/customize?id=${encodeURIComponent(template.id)}`}>
+                Edit badge
+              </Link>
+            </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 
