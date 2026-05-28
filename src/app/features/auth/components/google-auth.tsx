@@ -8,7 +8,7 @@ export const GoogleAuth = () => {
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center gap-3">
 				<span className="h-px flex-1 bg-[#D1D1DB]" />
-				<p className="text-[#978B8A] text-sm">or continue with</p>
+				<p className="text-[#595959] text-sm">or continue with</p>
 				<span className="h-px flex-1 bg-[#D1D1DB]" />
 			</div>
 

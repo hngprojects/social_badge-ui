@@ -37,9 +37,9 @@ const Layout = ({ children }: LayoutProps) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
           >
-            <div className="login bg-white w-full rounded-lg overflow-y-auto scroll-smooth p-5 no-scrollbar flex flex-col gap-5 max-h-fit">
+            <main id="main-content" className="login bg-white w-full rounded-lg overflow-y-auto scroll-smooth p-5 no-scrollbar flex flex-col gap-5 max-h-fit">
               {children}
-            </div>
+            </main>
           </motion.div>
         </div>
       </div>

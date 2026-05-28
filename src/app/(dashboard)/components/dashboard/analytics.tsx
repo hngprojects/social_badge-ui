@@ -30,6 +30,7 @@ export default function Analytics({
       {analyticsStats.map((card) => (
         <article
           key={card.title}
+          aria-label={`${card.title}: ${card.count}`}
           className="flex min-w-0 items-center gap-3 rounded-[12px] border border-[#E8E8E8] bg-[#F8F8F866] p-3 sm:p-4 md:gap-4 md:p-5"
         >
           <div

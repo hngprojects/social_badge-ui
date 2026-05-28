@@ -54,6 +54,8 @@ const PasswordEyeIcon = ({
       type="button"
       className="cursor-pointer"
       onClick={() => setIsVisible(!isVisible)}
+      aria-label={isVisible ? "Hide password" : "Show password"}
+      aria-pressed={isVisible}
     >
       {isVisible ? <Icons.EyeClosed /> : <Icons.EyeOpen />}
     </button>

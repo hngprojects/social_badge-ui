@@ -15,7 +15,7 @@ export function RecentBadgesHeader({
             Recent badges
           </h2>
 
-          <p className="mt-0.5 text-[12.5px] leading-[1.5] text-[#9CA3AF]">
+          <p className="mt-0.5 text-[12.5px] leading-[1.5] text-[#595959]">
             Your latest events and their performance.
           </p>
         </div>
@@ -30,7 +30,7 @@ export function RecentBadgesHeader({
                 className={`hover:bg-white/90 cursor-pointer rounded-md px-3 py-2 text-[13px] font-semibold transition-colors ${
                   activeFilter === filter
                     ? "bg-white text-[#3A3A3A] shadow-[inset_0_0_0_1px_#E5E7EB]"
-                    : "bg-transparent text-[#757575]"
+                    : "bg-transparent text-[#595959]"
                 }`}
               >
                 {filter}

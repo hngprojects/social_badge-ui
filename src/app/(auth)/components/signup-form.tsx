@@ -170,7 +170,7 @@ export const SignupForm = () => {
 									onCheckedChange={(checked) => setIsChecked(!!checked)}
 									checked={isChecked}
 								/>
-								<label htmlFor="remember-me" className="text-xs text-[#978B8A]">
+								<label htmlFor="remember-me" className="text-xs text-[#595959]">
 									I agree to Flare Tag Terms of Service and Privacy Policy. I
 									may receive product update emails.
 								</label>
@@ -201,7 +201,7 @@ export const SignupForm = () => {
 						Already have an account?{" "}
 						<Link
 							href="/login"
-							className="font-bold text-[#FA5424] hover:text-[#e14b1c]"
+							className="font-bold text-[#B53D00] hover:text-[#8f2e00]"
 						>
 							Log in
 						</Link>
