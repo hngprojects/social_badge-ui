@@ -41,7 +41,7 @@ export const AuthModal = ({
 							onClick={() => {
 								const mailUrl = getEmailProviderUrl(email);
 								if (!mailUrl) return;
-								window.open(mailUrl, "_blank");
+								window.open(mailUrl, "_blank", "noopener,noreferrer");
 							}}
 						>
 							Go to mail

@@ -32,14 +32,20 @@ export const proxy: NextProxy = (request) => {
 		return response;
 	};
 
+	const matchesRoute = (path: string, route: string) =>
+		path === route || path.startsWith(`${route}/`);
+
 	// Logged-in users should not be able to access auth pages
-	if (AUTH_ROUTES.some((route) => pathname.startsWith(route)) && token) {
+	if (AUTH_ROUTES.some((route) => matchesRoute(pathname, route)) && token) {
 		return withCommonHeaders(
 			NextResponse.redirect(new URL("/dashboard", request.url)),
 		);
 	}
 
-	if (PROTECTED_ROUTES.some((route) => pathname.startsWith(route)) && !token) {
+	if (
+		PROTECTED_ROUTES.some((route) => matchesRoute(pathname, route)) &&
+		!token
+	) {
 		return withCommonHeaders(
 			NextResponse.redirect(new URL("/login", request.url)),
 		);
