@@ -27,10 +27,14 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
             className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] font-medium bg-[#E7E8E94D]/30"
             id="firstName"
             type="text"
+            required
+            aria-required="true"
+            autoComplete="given-name"
             value={values.firstName}
             onChange={(e) => onChange("firstName", e.target.value)}
           />
         </Field>
+        {/* LAST NAME */}
         <Field className="w-full gap-2">
           <FieldLabel
             className="w-full text-[#3A3A3A] gap-0 font-medium"
@@ -42,6 +46,9 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
           <Input
             className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] font-medium bg-[#E7E8E94D]/30"
             id="lastName"
+            required
+            aria-required="true"
+            autoComplete="family-name"
             type="text"
             value={values.lastName}
             onChange={(e) => onChange("lastName", e.target.value)}
@@ -59,9 +66,10 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
           <Input
             className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] bg-[#E7E8E94D]/30"
             id="email"
-            type="text"
+            type="email"
+            readOnly
+            aria-readonly="true"
             value={values.email}
-            disabled
           />
           <FieldDescription>
             Your email address cannot be changed
