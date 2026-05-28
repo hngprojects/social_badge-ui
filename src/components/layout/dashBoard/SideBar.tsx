@@ -75,6 +75,7 @@ export default function SideNav() {
           </header>
 
           <nav
+            id="sidebar-nav"
             className={`pt-0 ${expanded ? "px-6" : "px-3"}`}
             aria-label="Dashboard navigation"
           >
