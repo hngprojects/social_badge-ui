@@ -23,14 +23,14 @@ export default function TabAccount() {
         <div className="flex justify-between items-center gap-2 pb-2.5">
           <SettingsSubCard
             bg="#FFF0C9"
-            head="Sign out"
-            detail="Sign out of this device. You can sign back in any time."
+            head="Log out"
+            detail="Log out of this device. You can sign back in any time."
           />{" "}
           <Button
             variant="cta"
             className="text-[14px] text-[#3A3A3A] py-2 px-4 bg-white shadow-none border-[#EEEEEE] hover:bg-[#f2f2f2]"
           >
-            Sign out
+            Log out
           </Button>
         </div>
       </CardContent>
