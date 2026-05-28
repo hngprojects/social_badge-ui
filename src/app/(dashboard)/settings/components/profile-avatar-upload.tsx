@@ -12,14 +12,6 @@ export function ProfileAvatarUpload({
 }: ProfileAvatarUploadProps) {
   return (
     <>
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/png,image/jpeg"
-        className="hidden"
-        onChange={onAvatarChange}
-      />
-
       <div className="flex flex-col items-start md:flex-row md:items-center gap-6 border-b pb-4 md:pb-6.75">
         {/* USER AVATAR */}
         <div className="h-24 w-24">
