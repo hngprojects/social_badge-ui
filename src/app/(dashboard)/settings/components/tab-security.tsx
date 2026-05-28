@@ -17,7 +17,7 @@ export default function TabSecurity() {
         />
       </CardHeader>
 
-      <CardAction className="w-full py-6 px-6 flex items-center justify-between">
+      <CardAction className="w-full py-6 px-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 justify-between">
         <p className="text-[#3A3A3A] font-semibold">Change password</p>
         <Button
           variant="outline"
