@@ -16,16 +16,23 @@ export default function SettingTabs() {
           >
             Profile
           </TabsTrigger>
+
           <TabsTrigger
             value="security"
-            className="h-auto flex-none rounded-[12px] px-3.5 py-1.75 text-[14px] font-medium leading-5"
+            className="py-2 px-3.5 leading-[19.5px] rounded-[12px]"
           >
             Security
           </TabsTrigger>
-          <TabsTrigger value="notifications" className="py-1.75 px-3.5">
+          <TabsTrigger
+            value="notifications"
+            className="py-2 px-3.5 leading-[19.5px] rounded-[12px]"
+          >
             Notifications
           </TabsTrigger>
-          <TabsTrigger value="account" className="py-1.75 px-3.5">
+          <TabsTrigger
+            value="account"
+            className="py-2 px-3.5 leading-[19.5px] rounded-[12px]"
+          >
             Account
           </TabsTrigger>
         </TabsList>
