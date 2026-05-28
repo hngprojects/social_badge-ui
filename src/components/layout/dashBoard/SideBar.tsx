@@ -61,6 +61,8 @@ export default function SideNav() {
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
               aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
+              aria-expanded={expanded}
+              aria-controls="sidebar-nav"
             >
               <Image
                 alt="sidebar toggle"
