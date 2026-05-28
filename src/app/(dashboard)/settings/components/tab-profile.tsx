@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Card,
   CardAction,
@@ -34,13 +34,25 @@ export default function ProfileCard() {
     email: emailAddress,
     role: "",
   }));
+  useEffect(() => {
+    const nextFormData = {
+      firstName: user?.first_name ?? "",
+      lastName: user?.last_name ?? "",
+      email: emailAddress,
+      role: "",
+    };
+
+    setFormData(nextFormData);
+    setSavedFormData(nextFormData);
+  }, [user?.first_name, user?.last_name, emailAddress]);
 
   const hasTextChanges =
     formData.firstName !== savedFormData.firstName ||
     formData.lastName !== savedFormData.lastName ||
     formData.role !== savedFormData.role;
 
-  const hasAvatarChange = avatarFile !== null;
+  const [removeAvatar, setRemoveAvatar] = useState(false);
+  const hasAvatarChange = avatarFile !== null || removeAvatar;
 
   const isFormValid =
     formData.firstName.trim().length > 0 && formData.lastName.trim().length > 0;
@@ -73,6 +85,7 @@ export default function ProfileCard() {
       // await updateProfile(body)
       setSavedFormData(formData);
       setAvatarFile(null);
+      setRemoveAvatar(false);
     } finally {
       setIsSubmitting(false);
     }
@@ -86,12 +99,21 @@ export default function ProfileCard() {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    const allowed = new Set(["image/jpeg", "image/png"]);
+    const maxSize = 2 * 1024 * 1024;
+
+    if (!allowed.has(file.type) || file.size > maxSize) {
+      event.target.value = "";
+      return;
+    }
+
     if (avatarPreview) {
       URL.revokeObjectURL(avatarPreview);
     }
     const previewUrl = URL.createObjectURL(file);
     setAvatarFile(file);
     setAvatarPreview(previewUrl);
+    setRemoveAvatar(false);
 
     event.target.value = "";
   }
@@ -102,6 +124,7 @@ export default function ProfileCard() {
     }
     setAvatarFile(null);
     setAvatarPreview("");
+    setRemoveAvatar(true);
   }
 
   return (
