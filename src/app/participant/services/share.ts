@@ -1,17 +1,13 @@
-export type SharePlatform =
-	| "x"
-	| "whatsapp"
-	| "telegram"
-	| "facebook"
-	| "linkedin"
-	| "instagram";
-
+import { toast } from "sonner";
+import { SharePlatform } from "../types";
+import { log } from "node:console";
 const encode = (text: string) => encodeURIComponent(text);
 
 export const shareService = {
 	async share(platform: SharePlatform, caption: string) {
 		const text = caption || "";
 		const encodedText = encode(text);
+		const encodedUrl = encode(window.location.href);
 
 		// best universal fallback (mobile)
 		if (navigator.share) {
@@ -27,40 +23,59 @@ export const shareService = {
 
 		switch (platform) {
 			case "whatsapp":
-				window.open(`https://wa.me/?text=${encodedText}`, "_blank");
+				window.open(
+					`https://wa.me/?text=${encodedText}`,
+					"_blank",
+					"noopener,noreferrer",
+				);
 				break;
 
 			case "telegram":
-				window.open(`https://t.me/share/url?text=${encodedText}`, "_blank");
+				window.open(
+					`https://t.me/share/url?text=${encodedText}`,
+					"_blank",
+					"noopener,noreferrer",
+				);
 				break;
 
 			case "x":
 				window.open(
 					`https://twitter.com/intent/tweet?text=${encodedText}`,
 					"_blank",
+					"noopener,noreferrer",
 				);
 				break;
 
 			case "facebook":
 				window.open(
-					`https://www.facebook.com/sharer/sharer.php?quote=${encodedText}`,
+					`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
 					"_blank",
+					"noopener,noreferrer",
 				);
 				break;
 
 			case "linkedin":
 				window.open(
-					`https://www.linkedin.com/sharing/share-offsite/`,
+					`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
 					"_blank",
+					"noopener,noreferrer",
 				);
 				break;
 
 			case "instagram":
-				if (navigator.share) {
-					await navigator.share({ text });
-				} else {
-					navigator.clipboard.writeText(text);
-					alert("Caption copied. Paste it into Instagram.");
+				try {
+					if (navigator.share) {
+						await navigator.share({ text });
+						break;
+					}
+				} catch {}
+				if (navigator.clipboard?.writeText) {
+					try {
+						await navigator.clipboard.writeText(text);
+						toast.message("Caption copied. Paste it into Instagram.");
+					} catch (error) {
+						toast.error("Failed to write in clipboard");
+					}
 				}
 				break;
 

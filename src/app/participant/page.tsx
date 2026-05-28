@@ -58,7 +58,10 @@ export default function ParticipantPov() {
 					<ParticipantForm onSuccess={() => setIsBadgeReady(true)} />
 				)}
 
-				<div className="preview-section bg-primary-300 w-full max-w-135 h-125 lg:h-155 rounded-3xl shrink-0"></div>
+				<div
+					aria-hidden="true"
+					className="preview-section bg-primary-300 w-full max-w-135 h-125 lg:h-155 rounded-3xl shrink-0"
+				></div>
 			</div>
 		</div>
 	);

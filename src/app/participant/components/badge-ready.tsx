@@ -9,14 +9,15 @@ import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import { shareService } from "../services/share";
+import { SharePlatform } from "../types";
 
 export default function BadgeReady() {
 	const [captionText, setCaptionText] = useState(DEFAULT_CAPTION);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-	const handleSocialShare = (platform: string) => {
+	const handleSocialShare = (platform: SharePlatform) => {
 		console.log(platform);
-		shareService.share(platform as any, captionText);
+		shareService.share(platform, captionText);
 	};
 
 	return (
@@ -74,14 +75,14 @@ export default function BadgeReady() {
 				<hr className="flex-1 border-t border-[#e5e5e5]" />
 			</motion.div>
 			<motion.div
-				className="grid grid-cols-3 gap-y-6 gap-x-2 w-full place-items-center sm:gap-y-8 px-10"
+				className="grid grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-2 w-full place-items-center sm:gap-y-8 px-10"
 				variants={containerVariants}
 			>
 				{SOCIAL_PLATFORMS.map((platform) => (
 					<motion.button
 						key={platform.id}
 						variants={itemVariants}
-						onClick={() => handleSocialShare(platform.id)}
+						onClick={() => handleSocialShare(platform.name as SharePlatform)}
 						className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
