@@ -100,9 +100,9 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 				{SOCIAL_PLATFORMS.map((platform) => (
 					<Button
 						key={platform.id}
-						variant="outline"
+						variant="social"
 						onClick={() => handleShare(platform)}
-						className="w-14 h-14 md:w-18.5 md:h-18.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 flex items-center justify-center text-gray-600 transition-colors"
+						className="w-14 h-14 md:w-18.5 md:h-18.5 rounded-lg"
 						aria-label={`Share on ${platform.label}`}
 						title={platform.label}
 					>
@@ -164,10 +164,10 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 			</div>
 
 			<div className="flex gap-2 justify-between">
-				<Button variant="outline" className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors">
+				<Button variant="outline" className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold">
 					Preview
 				</Button>
-				<Button className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold text-white bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors">
+				<Button variant="dark" className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold">
 					Download
 				</Button>
 			</div>

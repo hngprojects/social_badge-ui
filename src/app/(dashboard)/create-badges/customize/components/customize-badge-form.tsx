@@ -105,7 +105,8 @@ export function CustomizeBadgeForm({
             <Button
               type="submit"
               disabled={isPublishing}
-              className="w-full rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 transition-colors shadow-sm"
+              variant="cta"
+              className="w-full rounded-xl font-semibold text-sm py-3"
             >
               {isPublishing ? "Publishing…" : "Publish Badge"}
             </Button>
@@ -115,7 +116,8 @@ export function CustomizeBadgeForm({
             <Button
               type="submit"
               disabled={isPublishing}
-              className="w-full rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm py-3 transition-colors shadow-sm"
+              variant="cta"
+              className="w-full rounded-xl font-semibold text-sm py-3"
             >
               {isPublishing ? "Publishing…" : "Publish Badge"}
             </Button>

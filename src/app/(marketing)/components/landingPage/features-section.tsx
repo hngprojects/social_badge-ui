@@ -159,7 +159,7 @@ export default function Feature() {
 
             {/* ── Mobile CTA Button (between steps & visual, hidden on min-900) ── */}
             <div className="flex min-[900px]:hidden w-full px-1">
-              <Button onClick={() => router.push('/signup')} className="w-full bg-[#ff4f1f] hover:bg-[#e54519] active:scale-[0.98] transition-all text-white font-bold text-base py-4.5 rounded-full shadow-lg">
+              <Button onClick={() => router.push('/signup')} variant="cta" className="w-full active:scale-[0.98] font-bold text-base py-4.5 shadow-lg">
                 {activeId === '03' ? 'Generate and share' : 'Publish and share'}
               </Button>
             </div>

@@ -22,7 +22,8 @@ export default function Page() {
 			</p>
 			<Button
 				onClick={handleLogout}
-				className="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700"
+				variant="indigo"
+				className="px-4 py-2 text-sm"
 			>
 				Logout
 			</Button>
