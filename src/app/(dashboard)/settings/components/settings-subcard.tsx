@@ -13,27 +13,28 @@ export function SettingsSubCard({
   showSwitch,
   showIcon,
   danger,
+  isHeader,
 }: SettingsSubCardProps) {
   return (
     <div className={`flex justify-between ${id && "border-b"}`}>
       {/* LEFT */}
-      <div className="flex gap-[14px] py-[14px]">
+      <div className="flex gap-3.5 items-center py-3.5">
         {showIcon && (
           <div
-            className="grid place-items-center h-[40px] w-[40px] rounded-[8px]"
+            className="grid place-items-center h-10 w-10 shrink-0 rounded-[8px]"
             style={{ backgroundColor: bg }}
           >
             {alt && src && <Image height={20} width={20} alt={alt} src={src} />}
           </div>
         )}
-        <div>
+        <div className={`${!isHeader && "max-w-46.75 sm:max-w-none"}`}>
           <h2
             className={`${danger ? "text-[#991B1B]" : "text-[#3A3A3A]"} text-[16px] font-bold`}
           >
             {head}
           </h2>
           <CardDescription
-            className={`${danger ? "text-[#991B1B]" : "text-[#9CA3AF]"} font-normal text-[14px] `}
+            className={`${danger ? "text-[#991B1B]" : "text-[#9CA3AF]"} font-normal text-[14px] text-pretty`}
           >
             {detail}
           </CardDescription>

@@ -8,4 +8,5 @@ export type SettingsSubCardProps = {
   showSwitch?: boolean;
   showIcon?: boolean;
   danger?: boolean;
+  isHeader?: boolean;
 };
