@@ -12,36 +12,39 @@ import { ProfileInput } from "./input-profile";
 import { ProfileAvatarUpload } from "./profile-avatar-upload";
 import { SettingsSubCard } from "./settings-subcard";
 import { useUserStore } from "@/stores/use-user-store";
-import { getUserDisplayName } from "@/lib/api/auth-session";
 import { getUserMail } from "@/lib/api/auth-session";
 
 export default function ProfileCard() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const user = useUserStore((state) => state.user);
-  const displayName = getUserDisplayName(user);
   const emailAddress = getUserMail(user);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string>("");
 
   const [formData, setFormData] = useState(() => ({
-    fullName: displayName,
+    firstName: user?.first_name ?? "",
+    lastName: user?.last_name ?? "",
     email: emailAddress,
     role: "",
   }));
   const [savedFormData, setSavedFormData] = useState(() => ({
-    fullName: displayName,
+    firstName: user?.first_name ?? "",
+    lastName: user?.last_name ?? "",
     email: emailAddress,
     role: "",
   }));
 
   const hasTextChanges =
-    formData.fullName !== savedFormData.fullName ||
+    formData.firstName !== savedFormData.firstName ||
+    formData.lastName !== savedFormData.lastName ||
     formData.role !== savedFormData.role;
 
   const hasAvatarChange = avatarFile !== null;
 
-  const isFormValid = formData.fullName.trim().length > 0;
+  const isFormValid =
+    formData.firstName.trim().length > 0 && formData.lastName.trim().length > 0;
+
   const canSubmit = isFormValid && (hasTextChanges || hasAvatarChange);
 
   function handleChange(field: keyof typeof formData, value: string) {
@@ -59,7 +62,8 @@ export default function ProfileCard() {
 
       // Build form payload for text fields and avatar upload.
       const body = new FormData();
-      body.append("fullName", formData.fullName);
+      body.append("first_name", formData.firstName);
+      body.append("last_name", formData.lastName);
       body.append("role", formData.role);
 
       if (avatarFile) {

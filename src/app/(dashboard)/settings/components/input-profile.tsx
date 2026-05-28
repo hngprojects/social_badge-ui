@@ -14,21 +14,37 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
   return (
     <FieldSet className="w-full text-[14px] font-normal text-[#B5B7BC]">
       <FieldGroup className="gap-4">
-        {/* FULL NAME */}
+        {/* FIRST NAME */}
         <Field className="w-full gap-2">
           <FieldLabel
             className="w-full text-[#3A3A3A] gap-0 font-medium"
-            htmlFor="fullname"
+            htmlFor="firstName"
           >
-            Full name
+            First name
             <Asterisk className="w-2 h-auto text-error-500 font-medium tracking-normal leading-0" />
           </FieldLabel>
           <Input
             className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] font-medium bg-[#E7E8E94D]/30"
-            id="fullname"
+            id="firstName"
             type="text"
-            value={values.fullName}
-            onChange={(e) => onChange("fullName", e.target.value)}
+            value={values.firstName}
+            onChange={(e) => onChange("firstName", e.target.value)}
+          />
+        </Field>
+        <Field className="w-full gap-2">
+          <FieldLabel
+            className="w-full text-[#3A3A3A] gap-0 font-medium"
+            htmlFor="lastName"
+          >
+            Last name
+            <Asterisk className="w-2 h-auto text-error-500 font-medium tracking-normal leading-0" />
+          </FieldLabel>
+          <Input
+            className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] font-medium bg-[#E7E8E94D]/30"
+            id="lastName"
+            type="text"
+            value={values.lastName}
+            onChange={(e) => onChange("lastName", e.target.value)}
           />
         </Field>
         {/* EMAIL ADDRESS*/}
@@ -42,7 +58,7 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
           </FieldLabel>
           <Input
             className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] bg-[#E7E8E94D]/30"
-            id="role"
+            id="email"
             type="text"
             value={values.email}
             disabled
@@ -55,7 +71,7 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
         <Field className="w-full gap-2">
           <FieldLabel
             className="w-full text-[#121217] gap-0 font-medium"
-            htmlFor="email"
+            htmlFor="role"
           >
             Role / Title
           </FieldLabel>
