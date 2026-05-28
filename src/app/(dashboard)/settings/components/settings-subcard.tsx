@@ -1,7 +1,7 @@
 import { CardDescription } from "@/components/ui/card";
 import { CardSwitch } from "./setting-switch";
 import Image from "next/image";
-import { SettingsSubCardProps } from "../types/tab-switch";
+import { SettingsSubCardProps } from "../types/settings-subcard";
 
 export function SettingsSubCard({
   id,
