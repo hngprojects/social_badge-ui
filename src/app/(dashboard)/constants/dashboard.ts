@@ -68,7 +68,7 @@ export const stats: StatCard[] = [
   },
   {
     image: "/assets/dashboard/icons/ui-link.svg",
-    title: "total link clicked",
+    title: "total link clicks",
     count: "0",
     bg: "#DCE6FD",
   },
