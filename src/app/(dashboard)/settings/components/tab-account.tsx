@@ -5,23 +5,22 @@ import { SettingsSubCard } from "./settings-subcard";
 import { Button } from "@/components/ui/button";
 import { RowSeparator } from "./row-seperator";
 import { useDeleteProfile } from "@/app/features/settings/hooks/useDeleteProfile";
-import { useLogout } from "@/app/features/auth/hooks/useLogout";
-import { AlertDialogDestructive } from "./delete-profile-modal";
-import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Trash2Icon } from "lucide-react";
 
 export default function TabAccount() {
   const { deleteProfile, isDeleting } = useDeleteProfile();
-  const { logout, isLoggingOut } = useLogout();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleDeleteAccount = () => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete your account? This action cannot be undone.",
-    );
-    if (!confirmed) return;
-
-    deleteProfile();
-  };
   return (
     <Card className="text-[14px] text-[#9CA3AF] font-normal py-0 gap-0">
       <CardHeader className="border-b pt-1">
@@ -46,13 +45,10 @@ export default function TabAccount() {
             isHeader={true}
           />{" "}
           <Button
-            type="button"
-            onClick={() => logout()}
-            disabled={isLoggingOut}
             variant="cta"
             className="text-[14px] text-[#3A3A3A] py-2 px-4 bg-white shadow-none border-[#EEEEEE] hover:bg-[#f2f2f2]"
           >
-            {isLoggingOut ? "Logging out..." : "Log out"}
+            Log out
           </Button>
         </div>
       </CardContent>
@@ -78,18 +74,59 @@ export default function TabAccount() {
             danger={true}
             isHeader={true}
           />
-          <Button
-            disabled={isDeleting}
-            onClick={() => {
-              deleteProfile();
-            }}
-            className="bg-[#DC2626] border-none text-[14px] py-2 px-4 text-white font-medium shadow-[0px_4px_12px_-4px_rgba(220,38,38,0.4),0px_1px_0px_0px_rgba(0,0,0,0.08)] hover:opacity-90 hover:bg-[#DC2626]"
-          >
-            {isDeleting ? "Deleting" : "Delete account"}
-          </Button>
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className="bg-[#DC2626] border-none text-[14px] py-2 px-4 text-white font-medium shadow-[0px_4px_12px_-4px_rgba(220,38,38,0.4),0px_1px_0px_0px_rgba(0,0,0,0.08)] hover:opacity-90 hover:bg-[#DC2626]">
+                Delete account
+              </Button>
+            </AlertDialogTrigger>
+
+            <AlertDialogContent
+              size="lg"
+              className="w-[calc(100%-32px)] max-w-105 rounded-2xl p-5 sm:p-6"
+            >
+              <AlertDialogHeader>
+                <AlertDialogMedia className="bg-destructive/10 text-destructive gap-0">
+                  <Trash2Icon />
+                </AlertDialogMedia>
+
+                <AlertDialogTitle className="text-center">
+                  Delete account?
+                </AlertDialogTitle>
+              </AlertDialogHeader>
+
+              <AlertDialogDescription className="text-center text-sm leading-5">
+                This will permanently delete your account, all your badges, and
+                engagement data. This action cannot be undone.
+              </AlertDialogDescription>
+
+              <AlertDialogFooter className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-center">
+                <AlertDialogCancel
+                  size="lg"
+                  className="w-full sm:flex-1"
+                  variant="secProfile"
+                >
+                  Cancel
+                </AlertDialogCancel>
+
+                <AlertDialogAction
+                  size="lg"
+                  className="w-full sm:flex-1 bg-[#EF4444] border-none"
+                  disabled={isDeleting}
+                  variant="profileDel"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    deleteProfile();
+                  }}
+                >
+                  {isDeleting ? "Deleting..." : "Delete account"}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </CardContent>
-      {isModalOpen && <AlertDialogDestructive />}
     </Card>
   );
 }
