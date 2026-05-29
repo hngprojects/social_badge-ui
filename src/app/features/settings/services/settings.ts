@@ -27,5 +27,8 @@ export async function updateProfilePhoto(file: File) {
   return apiClient<UpdateProfileResponse>("/profile/photo", {
     method: "PUT",
     data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
 }
