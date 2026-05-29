@@ -24,35 +24,46 @@ export const useUpdateProfile = () => {
       role?: string;
     };
     photoFile?: File | null;
-  }) => {
-    try {
-      let latestUser = null;
+  }): Promise<boolean> => {
+    const hasProfileChanges =
+      !!profilePayload && Object.keys(profilePayload).length > 0;
 
-      if (profilePayload && Object.keys(profilePayload).length > 0) {
+    const hasPhotoChanges = !!photoFile;
+
+    if (!hasProfileChanges && !hasPhotoChanges) {
+      toast.info("No changes to save.");
+      return false;
+    }
+
+    try {
+      if (hasProfileChanges) {
         const response =
           await updateProfileMutation.mutateAsync(profilePayload);
 
-        latestUser = response.data;
+        setUser(response.data);
       }
 
-      if (photoFile) {
+      if (hasPhotoChanges) {
         const response = await updatePhotoMutation.mutateAsync(photoFile);
 
-        latestUser = response.data;
+        setUser(response.data);
       }
 
-      if (latestUser) {
-        setUser(latestUser);
-        toast.success("Profile updated successfully.");
-        return true;
-      }
-
-      toast.info("No changes to save.");
+      toast.success("Profile updated successfully.");
+      return true;
     } catch {
-      toast.error("Could not update profile. Please try again.");
+      if (hasProfileChanges && hasPhotoChanges) {
+        toast.error(
+          "Some profile changes may have been saved, but the photo update failed.",
+        );
+      } else {
+        toast.error("Could not update profile. Please try again.");
+      }
+
       return false;
     }
   };
+
   return {
     saveProfile,
     isLoading: updateProfileMutation.isPending || updatePhotoMutation.isPending,
