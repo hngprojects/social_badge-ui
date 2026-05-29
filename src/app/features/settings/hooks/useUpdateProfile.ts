@@ -44,12 +44,13 @@ export const useUpdateProfile = () => {
       if (latestUser) {
         setUser(latestUser);
         toast.success("Profile updated successfully.");
-        return;
+        return true;
       }
 
       toast.info("No changes to save.");
     } catch {
       toast.error("Could not update profile. Please try again.");
+      return false;
     }
   };
   return {
