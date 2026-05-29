@@ -19,7 +19,11 @@ export const useDeleteProfile = () => {
     onSuccess: () => {
       clearUser();
       toast.success("Profile deleted successfully");
-      router.push("/login");
+
+      // DELAY A NIT BEFORE REDIRECTING
+      setTimeout(() => {
+        router.replace("/login");
+      }, 1500);
     },
     onError: (error) => {
       const axiosError = error as AxiosError<ApiError>;
