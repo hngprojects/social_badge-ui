@@ -35,7 +35,7 @@ export const useDeleteProfile = () => {
       if (status === 401) {
         clearUser();
         toast.error("You are not authenticated. Please log in again.");
-        router.push("/login");
+        router.replace("/login");
         return;
       }
 

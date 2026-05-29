@@ -93,10 +93,6 @@ export function useProfileForm() {
     event.target.value = "";
   }
 
-  function handleRemovePhoto() {
-    clearSelectedAvatar();
-  }
-
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
