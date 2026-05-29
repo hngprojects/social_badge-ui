@@ -6,7 +6,7 @@ export interface CreateTemplateInstanceRequest {
 }
 
 export interface TemplateInstanceResponse {
-  instance_id: string;
+  id: string;
   platform_template_id: string;
   organiser_id: string;
   created_at: string;
