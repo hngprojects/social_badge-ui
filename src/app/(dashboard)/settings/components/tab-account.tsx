@@ -1,9 +1,27 @@
+"use client";
+
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SettingsSubCard } from "./settings-subcard";
 import { Button } from "@/components/ui/button";
 import { RowSeparator } from "./row-seperator";
+import { useDeleteProfile } from "@/app/features/settings/hooks/useDeleteProfile";
+import { useLogout } from "@/app/features/auth/hooks/useLogout";
+import { AlertDialogDestructive } from "./delete-profile-modal";
+import { useState } from "react";
 
 export default function TabAccount() {
+  const { deleteProfile, isDeleting } = useDeleteProfile();
+  const { logout, isLoggingOut } = useLogout();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleDeleteAccount = () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete your account? This action cannot be undone.",
+    );
+    if (!confirmed) return;
+
+    deleteProfile();
+  };
   return (
     <Card className="text-[14px] text-[#9CA3AF] font-normal py-0 gap-0">
       <CardHeader className="border-b pt-1">
@@ -28,10 +46,13 @@ export default function TabAccount() {
             isHeader={true}
           />{" "}
           <Button
+            type="button"
+            onClick={() => logout()}
+            disabled={isLoggingOut}
             variant="cta"
             className="text-[14px] text-[#3A3A3A] py-2 px-4 bg-white shadow-none border-[#EEEEEE] hover:bg-[#f2f2f2]"
           >
-            Log out
+            {isLoggingOut ? "Logging out..." : "Log out"}
           </Button>
         </div>
       </CardContent>
@@ -57,11 +78,18 @@ export default function TabAccount() {
             danger={true}
             isHeader={true}
           />
-          <Button className="bg-[#DC2626] border-none text-[14px] py-2 px-4 text-white font-medium shadow-[0px_4px_12px_-4px_rgba(220,38,38,0.4),0px_1px_0px_0px_rgba(0,0,0,0.08)] hover:opacity-90 hover:bg-[#DC2626]">
-            Delete account
+          <Button
+            disabled={isDeleting}
+            onClick={() => {
+              deleteProfile();
+            }}
+            className="bg-[#DC2626] border-none text-[14px] py-2 px-4 text-white font-medium shadow-[0px_4px_12px_-4px_rgba(220,38,38,0.4),0px_1px_0px_0px_rgba(0,0,0,0.08)] hover:opacity-90 hover:bg-[#DC2626]"
+          >
+            {isDeleting ? "Deleting" : "Delete account"}
           </Button>
         </div>
       </CardContent>
+      {isModalOpen && <AlertDialogDestructive />}
     </Card>
   );
 }

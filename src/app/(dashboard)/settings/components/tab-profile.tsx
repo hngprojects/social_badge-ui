@@ -13,9 +13,10 @@ import { ProfileAvatarUpload } from "./profile-avatar-upload";
 import { SettingsSubCard } from "./settings-subcard";
 import { useUserStore } from "@/stores/use-user-store";
 import { getUserMail } from "@/lib/api/auth-session";
+import { useUpdateProfile } from "@/app/features/settings/hooks/useUpdateProfile";
 
 export default function ProfileCard() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { saveProfile, isLoading } = useUpdateProfile();
   const user = useUserStore((state) => state.user);
   const emailAddress = getUserMail(user);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -69,26 +70,32 @@ export default function ProfileCard() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    try {
-      setIsSubmitting(true);
+    const profilePayload: {
+      first_name?: string;
+      last_name?: string;
+      role?: string;
+    } = {};
 
-      // Build form payload for text fields and avatar upload.
-      const body = new FormData();
-      body.append("first_name", formData.firstName);
-      body.append("last_name", formData.lastName);
-      body.append("role", formData.role);
-
-      if (avatarFile) {
-        body.append("avatar", avatarFile);
-      }
-
-      // await updateProfile(body)
-      setSavedFormData(formData);
-      setAvatarFile(null);
-      setRemoveAvatar(false);
-    } finally {
-      setIsSubmitting(false);
+    if (formData.firstName !== savedFormData.firstName) {
+      profilePayload.first_name = formData.firstName;
     }
+
+    if (formData.lastName !== savedFormData.lastName) {
+      profilePayload.last_name = formData.lastName;
+    }
+
+    if (formData.role !== savedFormData.role) {
+      profilePayload.role = formData.role;
+    }
+
+    await saveProfile({
+      profilePayload,
+      photoFile: avatarFile,
+    });
+
+    setSavedFormData(formData);
+    setAvatarFile(null);
+    setRemoveAvatar(false);
   }
 
   function handleUploadClick() {
@@ -99,7 +106,7 @@ export default function ProfileCard() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const allowed = new Set(["image/jpeg", "image/png"]);
+    const allowed = new Set(["image/jpeg", "image/png", "image/gif"]);
     const maxSize = 2 * 1024 * 1024;
 
     if (!allowed.has(file.type) || file.size > maxSize) {
@@ -159,12 +166,12 @@ export default function ProfileCard() {
         </CardContent>
         <CardAction className="py-3.5 px-6 flex justify-end w-full bg-[#FBFAF7]">
           <Button
-            disabled={!canSubmit || isSubmitting}
+            disabled={!canSubmit || isLoading}
             type="submit"
             variant="cta"
             className="text-[14px] py-2 px-4"
           >
-            {isSubmitting ? "Saving..." : "Save changes"}
+            {isLoading ? "Saving..." : "Save changes"}
           </Button>
         </CardAction>
       </Card>
