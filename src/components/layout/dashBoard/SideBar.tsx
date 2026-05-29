@@ -8,10 +8,8 @@ import { usePathname } from "next/navigation";
 import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
 import { useUserStore } from "@/stores/use-user-store";
-import {
-  navigationLinks,
-  type NavigationLink,
-} from "../../../app/(dashboard)/constants/layout/sidebar-nav";
+import { navigationLinks } from "../../../app/(dashboard)/constants/layout/sidebar-nav";
+import type { NavigationLink } from "../../../app/(dashboard)/types/dashboard/sidebar-nav";
 import { getInitials } from "@/lib/utils";
 
 const mainLinks = navigationLinks.filter((nav) =>
