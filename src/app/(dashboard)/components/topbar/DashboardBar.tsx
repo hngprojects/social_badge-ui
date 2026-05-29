@@ -50,9 +50,9 @@ export function TopBarSearch({
     if (!normalizedQuery) return [];
 
     return SEARCH_ITEMS.filter((item) =>
-      normalizeSearch(`${item.title} ${item.searchText}`).includes(
-        normalizedQuery,
-      ),
+      normalizeSearch(
+        `${item.title} ${item.description} ${item.searchText}`,
+      ).includes(normalizedQuery),
     ).slice(0, 8);
   }, [normalizedQuery]);
 

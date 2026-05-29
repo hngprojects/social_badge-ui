@@ -4,8 +4,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ActionButton } from "./ActionButton";
 import type { CustomizeBarProps } from "../../types/dashboard/topbar";
+import { cn } from "@/lib/utils";
 
-export function CustomizeBar({ config, savedStatus, title }: CustomizeBarProps) {
+export function CustomizeBar({
+  config,
+  isSaved,
+  savedStatus,
+  title,
+}: CustomizeBarProps) {
   const router = useRouter();
 
   return (
@@ -33,7 +39,12 @@ export function CustomizeBar({ config, savedStatus, title }: CustomizeBarProps) 
               {title}
             </p>
             <p className="flex shrink-0 items-center gap-2 text-[13px] font-medium leading-[17px] text-[#AFAFAF]">
-              <span className="size-1.5 rounded-full bg-[#18C68A]" />
+              <span
+                className={cn(
+                  "size-1.5 rounded-full",
+                  isSaved ? "bg-[#18C68A]" : "bg-[#AFAFAF]",
+                )}
+              />
               <span>{savedStatus}</span>
             </p>
           </div>

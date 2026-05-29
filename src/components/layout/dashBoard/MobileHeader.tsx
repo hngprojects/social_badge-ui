@@ -99,6 +99,7 @@ export default function MobileHeader() {
     isPublishedPage,
     isFlowPage,
     flowTitle,
+    isSaved,
     savedStatus,
     publishedStatus,
     menuActions,
@@ -162,7 +163,12 @@ export default function MobileHeader() {
                 </p>
                 {isCustomizePage ? (
                   <p className="flex min-w-0 shrink items-center gap-1.5 text-[12px] font-medium leading-[15px] text-[#AFAFAF]">
-                    <span className="size-1.5 shrink-0 rounded-full bg-[#139C69] shadow-[0_0_0_3px_rgba(19,156,105,0.12)]" />
+                    <span
+                      className={cn(
+                        "size-1.5 shrink-0 rounded-full shadow-[0_0_0_3px_rgba(19,156,105,0.12)]",
+                        isSaved ? "bg-[#139C69]" : "bg-[#AFAFAF]",
+                      )}
+                    />
                     <span className="truncate">{savedStatus}</span>
                   </p>
                 ) : null}

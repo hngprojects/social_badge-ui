@@ -40,6 +40,7 @@ export function useDashboardTopbarState() {
 
   const customizeTitle =
     organiserTemplate?.title || platformTemplate?.title || config.title || "";
+  const isSaved = Boolean(organiserTemplate?.savedAt);
   const savedStatus = getSavedStatusLabel(organiserTemplate?.savedAt, now);
 
   const publishedTemplateId = publishedBadge?.templateId || organiserTemplateId;
@@ -79,6 +80,7 @@ export function useDashboardTopbarState() {
     isPublishedPage,
     isFlowPage,
     customizeTitle,
+    isSaved,
     savedStatus,
     flowTitle,
     publishedTitle,
