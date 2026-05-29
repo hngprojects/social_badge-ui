@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { DM_Sans } from "next/font/google";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, League_Gothic} from "next/font/google";
 import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 export const dmSans = DM_Sans({
@@ -13,7 +13,11 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta",
 });
-
+const leagueGothic = League_Gothic({
+  subsets: ["latin"],
+  variable: "--font-league-gothic-font",
+  weight: "400",
+});
 export const metadata: Metadata = {
   title: {
     default: "Flare Tag — Digital Badge Builder",
@@ -35,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} ${plusJakartaSans.variable} bg-page text-ink antialiased`}
+        className={`${dmSans.variable} ${plusJakartaSans.variable} ${leagueGothic.variable} bg-page text-ink antialiased`}
       >
         <Providers>{children}</Providers>
         <Toaster
