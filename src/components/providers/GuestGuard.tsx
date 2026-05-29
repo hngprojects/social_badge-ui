@@ -6,27 +6,33 @@ import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "@/app/features/auth/services/auth";
 import Loading from "@/app/loading";
 
-export default function GuestGuard({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const { data, isLoading } = useQuery({
-    queryKey: ["auth", "me"],
-    queryFn: async () => {
-      const response = await getCurrentUser();
-      return response.data;
-    },
-    retry: false,
-    staleTime: 5 * 60 * 1000,
-  });
+export default function GuestGuard({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
+	const router = useRouter();
+	const { data, isLoading, isFetching } = useQuery({
+		queryKey: ["auth", "me"],
+		queryFn: async () => {
+			const response = await getCurrentUser();
+			return response.data;
+		},
+		retry: false,
+		staleTime: 5 * 60 * 1000,
+		gcTime: 10 * 60 * 1000,
+		refetchOnWindowFocus: false, 
+	});
 
-  useEffect(() => {
-    if (!isLoading && data) {
-      router.replace("/dashboard");
-    }
-  }, [data, isLoading, router]);
+	useEffect(() => {
+		if (!isLoading && !isFetching && data) {
+			router.replace("/dashboard");
+		}
+	}, [data, isLoading, isFetching, router]);
 
-  if (isLoading || data) {
-    return <Loading />;
-  }
+	if (isLoading || isFetching || data) {
+		return <Loading />;
+	}
 
-  return <>{children}</>;
+	return <>{children}</>;
 }
