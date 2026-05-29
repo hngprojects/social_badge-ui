@@ -15,7 +15,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
-  variable: "--font-league-gothic",
+  variable: "--font-league-gothic-font",
   weight: "400",
 });
 export const metadata: Metadata = {

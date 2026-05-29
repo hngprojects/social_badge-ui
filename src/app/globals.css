@@ -53,9 +53,9 @@ html::-webkit-scrollbar-thumb {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-dm-sans);
   --font-heading: var(--font-dm-sans);
-  --font-fraunces: var(--font-fraunces);
+  --font-fraunces: var(--ff-fraunces);
   --font-jakarta: var(--font-plus-jakarta);
-  --font-league-gothic: var(--font-league-gothic);
+  --font-league-gothic: var(--font-league-gothic-font);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -164,7 +164,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 :root {
-  --font-fraunces: "Fraunces", serif;
+  --ff-fraunces: "Fraunces", serif;
   /* Backgrounds & Foregrounds */
   --background: #ffffff;
   --foreground: #4b4b4b; /* neutral-900 */

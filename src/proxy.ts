@@ -20,7 +20,11 @@ export const proxy: NextProxy = (request) => {
 	const { pathname } = request.nextUrl;
 	const token = request.cookies.get("access_token")?.value;
 
-	if (PROTECTED_ROUTES.some((route) => pathname.startsWith(route)) && !token) {
+	const isProtectedRoute = PROTECTED_ROUTES.some(
+		(route) => pathname === route || pathname.startsWith(`${route}/`),
+	);
+
+	if (isProtectedRoute && !token) {
 		return NextResponse.redirect(new URL("/login", request.url));
 	}
 

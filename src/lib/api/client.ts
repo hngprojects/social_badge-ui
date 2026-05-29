@@ -26,7 +26,11 @@ export function clearLocalAuthState(): void {
  */
 export async function clearAuthSession(): Promise<void> {
   clearLocalAuthState();
-  await instance.post("/auth/logout");
+  try {
+    await instance.post("/auth/logout");
+  } catch {
+    // Best-effort backend cleanup. Local auth state is already cleared.
+  }
 }
 
 let isRefreshing = false;
