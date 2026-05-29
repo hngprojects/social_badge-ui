@@ -49,15 +49,23 @@ export function Layout9({ editor }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			<Template9 className="w-full h-full" />
-			<div className="absolute top-10 left-10 right-10">
-				<h2 className="text-3xl font-black text-white leading-none">
-					{editor.eventName || "SUMMIT 2026"}
-				</h2>
-			</div>
-			<div className="absolute bottom-20 left-10">
-				<p className="text-lg font-bold text-[#68C4B9]">
-					{editor.participantNamePlaceholder || "Attendee Name"}
-				</p>
+			<div className="absolute w-full h-full top-0 py-8">
+				<div className="flex border-white  justify-between items-start px-8">
+					{" "}
+					<LogoPlaceholder isHidden={true} />
+					<div>Event Name</div>
+				</div>
+
+				<div className="px-8 my-6">
+					<h2 className="text-3xl">
+						<span>Sandra</span> Robinson{" "}
+						{/*User name will be placed here by users*/}
+					</h2>
+					<p className="text-base">
+						Product designer {/*User role will be placed here by users*/}
+					</p>
+				</div>
+				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto"></div>
 			</div>
 		</div>
 	);
@@ -70,7 +78,7 @@ export function Layout4({ editor }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			<Template4 className="w-full h-full" />
-			<div  className="absolute top-[22%] left-0 w-full h-[60%] flex">
+			<div className="absolute top-[22%] left-0 w-full h-[60%] flex">
 				{" "}
 				<Template4Left />
 				<Template4Right />
@@ -78,13 +86,7 @@ export function Layout4({ editor }: TemplateLayoutProps) {
 
 			{/*This div below will be rendered as a placeholder if the chosen badge as a space for organizer logo */}
 			<div className="h-[77%] w-full absolute top-0">
-				<div className="flex gap-2 w-full items-center justify-center text-white mt-12 mb-6">
-					<PlaceholderLogo />
-					<span className="text-sm flex flex-col gap-0">
-						<span className="leading-none">YOUR</span>{" "}
-						<span className="leading-none">LOGO</span>
-					</span>
-				</div>
+				<LogoPlaceholder isHidden={false} className="mt-12 mb-6  w-full" />
 				<div className="w-35 h-35 rounded-full bg-white mx-auto"></div>
 			</div>
 
@@ -101,6 +103,17 @@ export function Layout4({ editor }: TemplateLayoutProps) {
 	);
 }
 
+export function LogoPlaceholder({isHidden, className}: {isHidden: boolean, className?:string}) {
+	return (
+		<div className={`flex gap-2 items-center justify-center text-white  ${className}`}>
+			<PlaceholderLogo />
+			<span className={`text-sm flex flex-col gap-0 ${isHidden ? "hidden" : "block"}`}>
+				<span className="leading-none">YOUR</span>{" "}
+				<span className="leading-none">LOGO</span>
+			</span>
+		</div>
+	);
+}
 // Placeholder for Template 5 Layout
 export function Layout5({ editor }: TemplateLayoutProps) {
 	return (
@@ -122,15 +135,25 @@ export function Layout5({ editor }: TemplateLayoutProps) {
 // Placeholder for Template 7 Layout
 export function Layout7({ editor }: TemplateLayoutProps) {
 	return (
-		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
 			<Template7 className="w-full h-full" />
-			<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center px-6">
-				<h2 className="text-4xl font-black text-white tracking-tighter mb-2">
-					{editor.eventName || "2026"}
-				</h2>
-				<p className="text-sm font-medium text-white/40 uppercase tracking-[0.3em]">
-					{editor.participantNamePlaceholder || "CLAIMED BY YOU"}
-				</p>
+			<div className="absolute w-full h-full top-0 py-8">
+				<div className="flex border-white  justify-between items-start px-8">
+					{" "}
+					<LogoPlaceholder isHidden={true} />
+					<div>Event Name</div>
+				</div>
+			
+				<div className="px-8 my-6">
+					<h2 className="text-3xl">
+						<span>Sandra</span> Robinson{" "}
+						{/*User name will be placed here by users*/}
+					</h2>
+					<p className="text-base">
+						Product designer {/*User role will be placed here by users*/}
+					</p>
+				</div>
+				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto"></div>
 			</div>
 		</div>
 	);
