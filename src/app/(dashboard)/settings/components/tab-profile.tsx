@@ -23,7 +23,7 @@ export default function ProfileCard() {
     handleSubmit,
     handleUploadClick,
     handleAvatarChange,
-    handleRemovePhoto,
+    // handleRemovePhoto,
   } = useProfileForm();
 
   return (
@@ -47,7 +47,6 @@ export default function ProfileCard() {
             inputRef={fileInputRef}
             onUploadClick={handleUploadClick}
             onAvatarChange={handleAvatarChange}
-            onRemove={handleRemovePhoto}
           />
 
           <ProfileInput values={formData} onChange={handleChange} />
