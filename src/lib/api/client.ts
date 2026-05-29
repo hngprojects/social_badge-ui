@@ -13,6 +13,14 @@ const instance = axios.create({
   },
 });
 
+instance.interceptors.request.use((config) => {
+  if (config.data instanceof FormData) {
+    delete config.headers["Content-Type"];
+  }
+
+  return config;
+});
+
 /**
  * Clears only the local Zustand store.
  */

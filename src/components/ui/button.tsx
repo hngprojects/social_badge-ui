@@ -23,8 +23,11 @@ const buttonVariants = cva(
         indigo: "bg-indigo-600 text-white rounded-md hover:bg-indigo-700",
         social:
           "bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300",
+        profileDel: "bg-[#EF4444] text-white hover:bg-[#EF4444]/10",
+        secProfile: "bg-[#F3F4F6] text-grey/700 hover:bg-[#F3F4F6]",
         dark: "bg-[#1a1a1a] text-white hover:bg-[#2a2a2a]",
       },
+
       size: {
         default:
           "h-9 gap-1.5 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",

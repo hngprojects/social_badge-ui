@@ -6,7 +6,7 @@ import { UploadIcon } from "lucide-react";
 export function ProfileAvatarUpload({
   previewUrl,
   onUploadClick,
-  onRemove,
+  // onRemove,
   inputRef,
   onAvatarChange,
 }: ProfileAvatarUploadProps) {
@@ -43,14 +43,14 @@ export function ProfileAvatarUpload({
               <UploadIcon />
               Upload new photo
             </Button>
-            <Button
+            {/* <Button
               type="button"
               onClick={onRemove}
               variant="ghost"
               className="text-[#3A3A3A] text-[14px]"
             >
               Remove
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>
