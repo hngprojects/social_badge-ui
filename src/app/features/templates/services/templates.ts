@@ -27,7 +27,7 @@ export async function uploadLogo(file: File, instanceId: string | null) : Promis
   }
 
   return apiClient<LogoUploadResponse>(
-    `/templates/organizer/instances/${instanceId}/logo`,
+    `/badges/${instanceId}/logo`,
     {
       method: "PUT",
       data: { file },
@@ -43,7 +43,7 @@ export async function createOrganiserTemplateInstance(
   platformTemplateId: string,
 ): Promise<CreateTemplateInstanceApiResponse> {
   return apiClient<CreateTemplateInstanceApiResponse>(
-    "/templates/organizer/instances",
+    "/badges",
     {
       method: "POST",
       data: { platform_template_id: platformTemplateId },
@@ -57,7 +57,7 @@ export async function updateOrganiserTemplate(
   payload: EditTemplateRequest,
 ): Promise<EditTemplateApiResponse> {
   return apiClient<EditTemplateApiResponse>(
-    `/templates/organizer/${templateId}`,
+    `/badges/${templateId}`,
     {
       method: "PATCH",
       data: payload,
@@ -70,9 +70,42 @@ export async function publishOrganiserTemplate(
   templateId: string,
 ): Promise<PublishTemplateApiResponse> {
   return apiClient<PublishTemplateApiResponse>(
-    `/templates/organizer/${templateId}/publish`,
+    `/badges/${templateId}/publish`,
     {
       method: "POST",
+    },
+  );
+}
+
+export async function unpublishOrganiserTemplate(
+  templateId: string,
+): Promise<PublishTemplateApiResponse> {
+  return apiClient<PublishTemplateApiResponse>(
+    `/badges/${templateId}/unpublish`,
+    {
+      method: "POST",
+    },
+  );
+}
+
+export async function duplicateOrganiserTemplate(
+  templateId: string,
+): Promise<CreateTemplateInstanceApiResponse> {
+  return apiClient<CreateTemplateInstanceApiResponse>(
+    `/badges/${templateId}/duplicate`,
+    {
+      method: "POST",
+    },
+  );
+}
+
+export async function deleteOrganiserTemplate(
+  templateId: string,
+): Promise<ApiEnvelope<void>> {
+  return apiClient<ApiEnvelope<void>>(
+    `/badges/${templateId}`,
+    {
+      method: "DELETE",
     },
   );
 }
@@ -82,7 +115,7 @@ export async function getOrganiserTemplateInstances(query?: {
   limit?: number;
 }): Promise<OrganiserTemplateListApiResponse> {
   return apiClient<OrganiserTemplateListApiResponse>(
-    "/templates/organizer/instances",
+    "/badges",
     {
       method: "GET",
       params: {
@@ -105,7 +138,7 @@ export async function getPublicParticipantPage(
   shareSlug: string,
 ): Promise<PublicParticipantPageResponse> {
   return apiClient<PublicParticipantPageResponse>(
-    `/templates/organizer/public/${encodeURIComponent(shareSlug)}`,
+    `/badges/public/${encodeURIComponent(shareSlug)}`,
   );
 }
 
