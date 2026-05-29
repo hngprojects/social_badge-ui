@@ -144,6 +144,5 @@ export function useProfileForm() {
     handleSubmit,
     handleUploadClick,
     handleAvatarChange,
-    handleRemovePhoto,
   };
 }

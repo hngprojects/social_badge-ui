@@ -23,7 +23,6 @@ export default function ProfileCard() {
     handleSubmit,
     handleUploadClick,
     handleAvatarChange,
-    // handleRemovePhoto,
   } = useProfileForm();
 
   return (
