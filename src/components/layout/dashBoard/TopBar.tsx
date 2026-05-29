@@ -10,6 +10,7 @@ export default function TopBar() {
   const {
     config,
     customizeTitle,
+    savedStatus,
     publishedTitle,
     publishedStatus,
     publishedEditHref,
@@ -22,7 +23,11 @@ export default function TopBar() {
       )}
       {config.match === "/create-badges" && <CreateBadgeBar config={config} />}
       {config.match === "/create-badges/customize" && (
-        <CustomizeBar config={config} title={customizeTitle} />
+        <CustomizeBar
+          config={config}
+          savedStatus={savedStatus}
+          title={customizeTitle}
+        />
       )}
       {config.match === "/badges/published" && (
         <PublishedBar

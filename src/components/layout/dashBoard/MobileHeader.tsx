@@ -21,6 +21,7 @@ import { getUserDisplayName } from "@/lib/api/auth-session";
 import { getInitials } from "@/lib/utils";
 import { useDashboardTopbarState } from "@/app/(dashboard)/hooks/use-dashboard-topbar-state";
 import type { TopBarAction } from "@/app/(dashboard)/types/dashboard/topbar";
+import { TopBarSearch } from "@/app/(dashboard)/components/topbar/DashboardBar";
 
 function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
   const [open, setOpen] = useState(false);
@@ -98,6 +99,7 @@ export default function MobileHeader() {
     isPublishedPage,
     isFlowPage,
     flowTitle,
+    savedStatus,
     publishedStatus,
     menuActions,
   } = useDashboardTopbarState();
@@ -117,12 +119,12 @@ export default function MobileHeader() {
       )}
     >
       {isFlowPage ? (
-        <div className="flex min-h-[76px] items-center justify-between gap-3 bg-white px-5 py-4">
-          <div className="flex min-w-0 items-center gap-5">
+        <div className="flex min-h-[64px] items-center justify-between gap-3 bg-white px-4 py-3">
+          <div className="flex min-w-0 flex-1 items-center gap-3">
             {isPublishedPage ? (
               <Link
                 href="/dashboard"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[#E5E7EB] bg-white px-4 py-2.5 text-[14px] font-medium text-[#3A3A3A]"
+                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[#E5E7EB] bg-white px-3 py-2 text-[13px] font-medium text-[#3A3A3A]"
               >
                 <Image
                   src="/assets/dashboard/icons/arrow-left.svg"
@@ -136,7 +138,7 @@ export default function MobileHeader() {
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[#E5E7EB] bg-white px-4 py-2.5 text-[14px] font-medium text-[#3A3A3A]"
+                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[#E5E7EB] bg-white px-3 py-2 text-[13px] font-medium text-[#3A3A3A]"
               >
                 <Image
                   src="/assets/dashboard/icons/arrow-left.svg"
@@ -148,21 +150,23 @@ export default function MobileHeader() {
               </button>
             )}
 
-            <div className="min-w-0">
-              <p className="truncate text-[12px] font-semibold uppercase leading-[14px] tracking-[1.6px] text-[#A5ABBA]">
+            <div className="min-w-0 shrink">
+              <p className="truncate text-[11px] font-semibold uppercase leading-[13px] tracking-[1.2px] text-[#A5ABBA]">
                 {isCreatePage
                   ? `Step ${config.step} of ${config.stepCount}`
                   : `Step ${config.step ?? 2} of ${config.stepCount ?? 2} · ${config.title}`}
               </p>
-              <p className="mt-1 truncate text-[18px] font-bold leading-[22px] tracking-[-0.18px] text-[#242424]">
-                {flowTitle}
-              </p>
-              {isCustomizePage ? (
-                <p className="mt-2 flex items-center gap-2 text-[14px] font-medium leading-[17px] text-[#AFAFAF]">
-                  <span className="size-2 rounded-full bg-[#139C69] shadow-[0_0_0_4px_rgba(19,156,105,0.12)]" />
-                  <span>Saved 12 seconds ago</span>
+              <div className="mt-1 flex min-w-0 items-center gap-2">
+                <p className="truncate text-[17px] font-bold leading-[20px] tracking-[-0.17px] text-[#242424]">
+                  {flowTitle}
                 </p>
-              ) : null}
+                {isCustomizePage ? (
+                  <p className="flex min-w-0 shrink items-center gap-1.5 text-[12px] font-medium leading-[15px] text-[#AFAFAF]">
+                    <span className="size-1.5 shrink-0 rounded-full bg-[#139C69] shadow-[0_0_0_3px_rgba(19,156,105,0.12)]" />
+                    <span className="truncate">{savedStatus}</span>
+                  </p>
+                ) : null}
+              </div>
               {isPublishedPage ? (
                 <p className="mt-1 truncate text-[11px] font-semibold uppercase leading-[13px] tracking-[0.84px] text-[#AFAFAF]">
                   {publishedStatus}
@@ -171,12 +175,17 @@ export default function MobileHeader() {
             </div>
           </div>
 
-          {!isCreatePage ? (
+          {isCreatePage ? (
+            <TopBarSearch
+              placeholder="search badge layouts..."
+              className="min-w-[150px] max-w-[340px] flex-1"
+            />
+          ) : (
             <MobileActionMenu actions={menuActions} />
-          ) : null}
+          )}
         </div>
       ) : (
-      <div className="flex items-center justify-between px-4 p-4">
+      <div className="flex items-center justify-between gap-3 px-4 p-4">
         <Link
           href="/dashboard"
           className="flex shrink-0 items-center gap-2.5 group"
@@ -191,10 +200,15 @@ export default function MobileHeader() {
               className="w-6.75 h-6.75"
             />
           </span>
-          <span className="text-xl font-medium tracking-tight text-[#231F20]">
+          <span className="text-xl font-medium tracking-tight text-[#231F20] max-[460px]:sr-only">
             Flare Tag
           </span>
         </Link>
+
+        <TopBarSearch
+          placeholder="search badge layouts..."
+          className="min-w-0 flex-1"
+        />
 
         {/* Mobile Hamburger */}
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -239,29 +253,6 @@ export default function MobileHeader() {
                 <span className="text-[17px] font-semibold tracking-tight text-foreground">
                   Flare Tag
                 </span>
-              </div>
-
-              <div className="px-3 py-4">
-                {/* Search Field */}
-                <div className="flex w-full items-center gap-[2px] rounded-[10.41px] bg-[#F8F8F8] py-2.5 pl-[12.5px] text-[14px] font-medium">
-                  <Image
-                    src="/assets/dashboard/icons/search-icon.svg"
-                    height={24}
-                    width={24}
-                    alt="search icon"
-                  />
-
-                  <label htmlFor="dashboard-search" className="sr-only">
-                    Search for events, badges, attendees
-                  </label>
-                  <input
-                    id="dashboard-search"
-                    aria-label="Search for events, badges, attendees"
-                    className="w-full bg-transparent outline-none text-[11px]"
-                    type="text"
-                    placeholder="Search for Events, Badges, Attendees..."
-                  />
-                </div>
               </div>
 
               {/* Mobile nav links */}

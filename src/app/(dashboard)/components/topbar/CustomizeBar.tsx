@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ActionButton } from "./ActionButton";
 import type { CustomizeBarProps } from "../../types/dashboard/topbar";
 
-export function CustomizeBar({ config, title }: CustomizeBarProps) {
+export function CustomizeBar({ config, savedStatus, title }: CustomizeBarProps) {
   const router = useRouter();
 
   return (
@@ -34,7 +34,7 @@ export function CustomizeBar({ config, title }: CustomizeBarProps) {
             </p>
             <p className="flex shrink-0 items-center gap-2 text-[13px] font-medium leading-[17px] text-[#AFAFAF]">
               <span className="size-1.5 rounded-full bg-[#18C68A]" />
-              <span>Saved 12 seconds ago</span>
+              <span>{savedStatus}</span>
             </p>
           </div>
         </div>

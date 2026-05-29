@@ -35,6 +35,7 @@ export interface OrganiserTemplateDetail {
   is_published?: boolean;
   share_slug?: string | null;
   published_at?: string | null;
+  updated_at?: string | null;
   hashtags?: string[];
 }
 

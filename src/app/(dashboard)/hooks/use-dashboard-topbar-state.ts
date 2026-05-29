@@ -1,8 +1,10 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   getPublishedStatusLabel,
+  getSavedStatusLabel,
   getTopBarConfig,
 } from "@/app/(dashboard)/constants/layout/topbar-utils";
 import { useLoadOrganiserTemplate } from "@/app/features/templates/hooks/useLoadOrganiserTemplate";
@@ -19,6 +21,7 @@ export function useDashboardTopbarState() {
   const isCustomizePage = config.match === "/create-badges/customize";
   const isPublishedPage = config.match === "/badges/published";
   const isFlowPage = isCreatePage || isCustomizePage || isPublishedPage;
+  const [now, setNow] = useState(() => Date.now());
 
   const platformTemplateId = searchParams.get("template");
   const organiserTemplateId = searchParams.get("id");
@@ -37,11 +40,15 @@ export function useDashboardTopbarState() {
 
   const customizeTitle =
     organiserTemplate?.title || platformTemplate?.title || config.title || "";
+  const savedStatus = getSavedStatusLabel(organiserTemplate?.savedAt, now);
 
   const publishedTemplateId = publishedBadge?.templateId || organiserTemplateId;
   const publishedTitle =
     publishedBadge?.title || organiserTemplate?.title || config.title || "";
-  const publishedStatus = getPublishedStatusLabel(publishedBadge?.publishedAt);
+  const publishedStatus = getPublishedStatusLabel(
+    publishedBadge?.publishedAt,
+    now,
+  );
   const publishedEditHref = publishedTemplateId
     ? `/create-badges/customize?id=${encodeURIComponent(publishedTemplateId)}`
     : "/dashboard";
@@ -54,6 +61,16 @@ export function useDashboardTopbarState() {
       ]
     : config.actions ?? [];
 
+  useEffect(() => {
+    if (!isCustomizePage && !isPublishedPage) return;
+
+    const intervalId = window.setInterval(() => {
+      setNow(Date.now());
+    }, 30_000);
+
+    return () => window.clearInterval(intervalId);
+  }, [isCustomizePage, isPublishedPage]);
+
   return {
     pathname,
     config,
@@ -62,6 +79,7 @@ export function useDashboardTopbarState() {
     isPublishedPage,
     isFlowPage,
     customizeTitle,
+    savedStatus,
     flowTitle,
     publishedTitle,
     publishedStatus,
