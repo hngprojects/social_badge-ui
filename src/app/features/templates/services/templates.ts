@@ -172,6 +172,7 @@ export async function getOrganiserTemplate(
     is_published: summary.is_published,
     share_slug: summary.share_slug,
     published_at: summary.published_at,
+    updated_at: summary.updated_at,
   };
 }
 
