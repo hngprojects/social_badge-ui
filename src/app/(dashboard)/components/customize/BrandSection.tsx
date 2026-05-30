@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { toast } from "sonner";
 import {
 	SectionCard,
 	FieldLabel,
@@ -26,8 +25,9 @@ export function BrandSection({
 	const currentBlobUrl = useRef<string | null>(null);
 
 	useEffect(() => {
+		const blobUrl = currentBlobUrl.current;
 		return () => {
-			if (currentBlobUrl.current) URL.revokeObjectURL(currentBlobUrl.current);
+			if (blobUrl) URL.revokeObjectURL(blobUrl);
 		};
 	}, []);
 
@@ -48,6 +48,7 @@ export function BrandSection({
 			title="Brand"
 			subtitle="How your event shows up on the badge."
 		>
+			{/* Logo upload — temporarily hidden
 			<div>
 				<FieldLabel label="Logo" required />
 				<div className="flex items-center gap-3">
@@ -85,13 +86,14 @@ export function BrandSection({
 					</label>
 					<span className="text-sm text-gray-400 truncate max-w-[200px]">
 						{editor.pendingLogoFile?.name ??
-							(editor.logo ? "Logo uploaded" : "No file chosen")}
+							(editor.logo ? "No file chosen" : "No file chosen")}
 					</span>
 				</div>
 				<HelperText>
 					SVG recommended for crisp display. PNG works too (min 240 × 240px).
 				</HelperText>
 			</div>
+			*/}
 
 			<div>
 				<FieldLabel label="Template title" required />
