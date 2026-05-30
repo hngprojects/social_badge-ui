@@ -45,6 +45,7 @@ export interface PublishedTemplateData {
   is_published: boolean;
   published_at: string | null;
   share_slug: string | null;
+  created_at: string | null;
   updated_at: string | null;
 }
 
@@ -62,7 +63,8 @@ export interface OrganiserTemplateSummary {
 }
 
 export interface OrganiserTemplateListData {
-  templates: OrganiserTemplateSummary[];
+  badges?: OrganiserTemplateSummary[];
+  templates?: OrganiserTemplateSummary[];
   total: number;
   page: number;
   limit: number;

@@ -41,7 +41,7 @@ export function useLoadPlatformTemplate(platformTemplateId: string | null) {
         queryClient,
         platformTemplateId,
       );
-      if (cached) return cached;
+      if (cached?.canvasData) return cached;
 
       try {
         const response = await getPlatformTemplate(platformTemplateId);

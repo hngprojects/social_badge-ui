@@ -11,7 +11,7 @@ import {
   buildParticipantShareUrl,
   formatShareUrlForDisplay,
 } from "@/app/features/templates/lib/badge-share-url";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 export function TemplateInfoModal({
@@ -31,15 +31,22 @@ export function TemplateInfoModal({
   const displayUrl = fullUrl
     ? formatShareUrlForDisplay(fullUrl)
     : "Not yet published";
+  const statusDescription = fullUrl
+    ? "The badge is live and sharable. Participants can claim this badge and share it on social media."
+    : "This badge is not yet published. Publish it to create a shareable link for participants.";
 
   return (
     <Dialog open={true} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent
-        className="max-w-[939px] rounded-[16px] p-[24px] grid gap-[24px] md:grid-cols-[0.95fr_1.1fr]"
+        className="max-h-[calc(100vh-3rem)] max-w-[640px] overflow-y-auto rounded-[18px] p-5 sm:p-6 md:grid-cols-[160px_1fr] md:gap-6"
         showCloseButton
       >
-        <div className="overflow-hidden rounded-[12px] bg-[#F4F4F2]">
-          <div className="relative aspect-[4/5] w-full">
+        <DialogTitle className="sr-only">
+          {template.title} badge information
+        </DialogTitle>
+
+        <div className="flex items-center justify-center overflow-hidden rounded-[14px] bg-[#F4F4F2] p-4 md:self-stretch">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-[160px] md:max-w-none">
             <Image
               src={thumbnailUrl ?? "/assets/dashboard/badge-preview.png"}
               alt={template.title}
@@ -49,20 +56,19 @@ export function TemplateInfoModal({
           </div>
         </div>
 
-        <div>
-          <div className="flex items-center gap-3 pr-12">
-            <h2 className="text-[28px] font-bold leading-tight text-[#1A1A1A] lg:max-w-[70%]">
+        <div className="min-w-0">
+          <div className="flex items-start gap-3 pr-10">
+            <h2 className="min-w-0 flex-1 text-[24px] font-bold leading-[1.08] text-[#1A1A1A] sm:text-[26px]">
               {template.title}
             </h2>
 
             <StatusPill status={template.status} />
           </div>
-          <p className="mt-5 border-b border-[#E8E8E8] pb-5 text-[14px] leading-[1.7] text-[#757575]">
-            The badge is live and sharable. Participants can claim this badge
-            and share it on social media
+          <p className="mt-4 border-b border-[#E8E8E8] pb-4 text-[13px] leading-[1.6] text-[#757575]">
+            {statusDescription}
           </p>
 
-          <div className="space-y-4 border-b border-[#E8E8E8] py-5 text-[14px]">
+          <div className="space-y-3 border-b border-[#E8E8E8] py-4 text-[13px]">
             <InfoRow
               icon={
                 <Image
@@ -87,34 +93,10 @@ export function TemplateInfoModal({
               label="Last used"
               value={formatDate(template.updated_at)}
             />
-            <InfoRow
-              icon={
-                <Image
-                  src="/assets/dashboard/_ui-award-02.svg"
-                  height={20}
-                  width={20}
-                  alt="clock icon"
-                />
-              }
-              label="Created badges"
-              value="&mdash;"
-            />
-            <InfoRow
-              icon={
-                <Image
-                  src="/assets/dashboard/_ui-share-06.svg"
-                  height={20}
-                  width={20}
-                  alt="clock icon"
-                />
-              }
-              label="Total shares"
-              value="&mdash;"
-            />
           </div>
 
           <div className="pt-4">
-            <p className="mb-2 text-[13px] font-semibold text-[#6B6B6B]">
+            <p className="mb-2 text-[12px] font-semibold text-[#6B6B6B]">
               Shareable link
             </p>
 
@@ -126,7 +108,7 @@ export function TemplateInfoModal({
                 await navigator.clipboard.writeText(fullUrl);
                 toast.success("Link copied to clipboard");
               }}
-              className="flex gap-[8px] w-full items-center justify-start rounded-lg border border-[#E8E8E8] px-[16px] py-[8px] h-auto text-[13px] text-[#121217]"
+              className="flex h-auto w-full justify-start gap-2 rounded-lg border border-[#E8E8E8] px-3 py-2 text-left text-[12px] text-[#121217]"
             >
               <Image
                 src="/assets/dashboard/_ui-copy-02.svg"
@@ -134,7 +116,7 @@ export function TemplateInfoModal({
                 width={20}
                 alt="copy icon"
               />
-              <p>{displayUrl}</p>
+              <p className="min-w-0 truncate">{displayUrl}</p>
             </Button>
           </div>
 
@@ -142,12 +124,12 @@ export function TemplateInfoModal({
             <Button
               variant="outline"
               onClick={() => onRequestDelete(template)}
-              className="rounded-full border border-[#F6B6C8] px-5 py-3 h-auto text-[14px] font-semibold text-[#F43F72] hover:bg-[#EF4444] hover:text-white hover:border-[#EF4444]"
+              className="h-auto rounded-full border border-[#F6B6C8] px-5 py-2.5 text-[13px] font-semibold text-[#F43F72] hover:border-[#EF4444] hover:bg-[#EF4444] hover:text-white"
             >
               Delete badge
             </Button>
 
-            <Button asChild className="rounded-full bg-[#242424] px-5 py-3 h-auto text-[14px] font-semibold text-white hover:bg-[#242424]/90">
+            <Button asChild className="h-auto rounded-full bg-[#242424] px-5 py-2.5 text-[13px] font-semibold text-white hover:bg-[#242424]/90">
               <Link href={`/create-badges/customize?id=${encodeURIComponent(template.id)}`}>
                 Edit badge
               </Link>
@@ -173,12 +155,12 @@ function InfoRow({
       <div className="flex items-center gap-[10px] min-w-0">
         <span className="shrink-0 text-[#B0B0B0]">{icon}</span>
 
-        <p className="truncate text-[14px] text-[#8B8B8B] md:text-[16px]">
+        <p className="truncate text-[13px] text-[#8B8B8B]">
           {label}
         </p>
       </div>
 
-      <p className="text-right text-[16px] font-medium text-[#333] md:text-[18px]">
+      <p className="text-right text-[14px] font-medium text-[#333]">
         {value}
       </p>
     </div>
