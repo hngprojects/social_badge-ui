@@ -27,9 +27,9 @@ export function UserAvatar({ src }: UserAvatarProps) {
         </span>
       )}
 
-      <AvatarBadge className="grid size-8 place-items-center rounded-full border-[3px] border-white bg-black">
+      {/* <AvatarBadge className="grid size-8 place-items-center rounded-full border-[3px] border-white bg-black">
         <CameraIcon className="size-4 text-white" />
-      </AvatarBadge>
+      </AvatarBadge> */}
     </Avatar>
   );
 }
