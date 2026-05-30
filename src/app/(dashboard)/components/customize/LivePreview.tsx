@@ -15,9 +15,11 @@ interface LivePreviewProps {
   shareCaption?: string;
   participantPhotoUrl?: string | null;
   badgeRef?: React.RefObject<HTMLDivElement | null>;
+  hideExtras?: boolean;
+  badgeClassName?: string;
 }
 
-export function LivePreview({ editor, shareCaption, participantPhotoUrl, badgeRef }: LivePreviewProps) {
+export function LivePreview({ editor, shareCaption, participantPhotoUrl, badgeRef, hideExtras, badgeClassName }: LivePreviewProps) {
   const preview = PREVIEW_LAYOUTS[editor.layoutId];
 
   const backgroundStyle = useMemo(() => {
@@ -61,18 +63,20 @@ export function LivePreview({ editor, shareCaption, participantPhotoUrl, badgeRe
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-1.5 px-1">
-        <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
-        <span className="text-[11px] font-semibold tracking-widest text-gray-400 uppercase">
-          Live Preview
-        </span>
-      </div>
+      {!hideExtras && (
+        <div className="flex items-center gap-1.5 px-1">
+          <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
+          <span className="text-[11px] font-semibold tracking-widest text-gray-400 uppercase">
+            Live Preview
+          </span>
+        </div>
+      )}
 
-      <div className="rounded-2xl bg-orange-50 p-5">
+      <div className={hideExtras ? "" : "rounded-2xl bg-orange-50 p-5"}>
         <div
           ref={badgeRef}
           style={backgroundStyle}
-          className="w-full max-w-79.5 h-106 rounded-[18px] relative overflow-hidden mx-auto"
+          className={`rounded-[18px] relative overflow-hidden mx-auto ${badgeClassName ?? "w-full max-w-79.5 h-106"}`}
         >
           {editor.backgroundImageUrl && (
             <Image
@@ -160,36 +164,40 @@ export function LivePreview({ editor, shareCaption, participantPhotoUrl, badgeRe
         </div>
       </div>
 
-      <div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-4 space-y-2">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
-            <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-            </svg>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-gray-900 leading-tight">
-              Attendee preview · LinkedIn
+      {!hideExtras && (
+        <>
+          <div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-4 space-y-2">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
+                <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900 leading-tight">
+                  Attendee preview · LinkedIn
+                </p>
+                <p className="text-xs text-gray-400">How the post will look</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">
+              {shareCaption || editor.defaultCaption || (
+                <>
+                  I&apos;m at #{editor.hashtags[0] ?? "Summit26"} this weekend — who&apos;s joining?{" "}
+                  <span className="text-blue-600">{editor.destinationLink}</span>
+                </>
+              )}
             </p>
-            <p className="text-xs text-gray-400">How the post will look</p>
           </div>
-        </div>
-        <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">
-          {shareCaption || editor.defaultCaption || (
-            <>
-              I&apos;m at #{editor.hashtags[0] ?? "Summit26"} this weekend — who&apos;s joining?{" "}
-              <span className="text-blue-600">{editor.destinationLink}</span>
-            </>
-          )}
-        </p>
-      </div>
 
-      <div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-3.5 flex items-center gap-2">
-        <span className="text-sm text-gray-500">Clicks lead to</span>
-        <span className="text-sm font-medium text-gray-800 truncate">
-          {editor.destinationLink || "achieveher.com/register"}
-        </span>
-      </div>
+          <div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-3.5 flex items-center gap-2">
+            <span className="text-sm text-gray-500">Clicks lead to</span>
+            <span className="text-sm font-medium text-gray-800 truncate">
+              {editor.destinationLink || "achieveher.com/register"}
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 }
