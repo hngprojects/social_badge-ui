@@ -128,7 +128,7 @@ export function parseCanvasDataToEditorState(
 			| "hashtags"
 			| "access_type"
 		>
-	>,
+	> & { updated_at?: string | null },
 ): CustomizeEditorState {
 	const layoutId = canvas.layout_id;
 	const eventNameField = findStatic(
@@ -177,6 +177,7 @@ export function parseCanvasDataToEditorState(
 		destinationLink: (meta?.destination_link ?? "").replace(/^https?:\/\//, ""),
 		hashtags: meta?.hashtags ?? [],
 		accessType: meta?.access_type ?? 0,
+		savedAt: meta?.updated_at ?? null,
 	};
 }
 
