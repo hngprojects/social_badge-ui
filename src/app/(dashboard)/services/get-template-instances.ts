@@ -4,7 +4,7 @@ import {
 } from "../types/dashboard/organizer-template-instances";
 import { apiClient } from "@/lib/api/client";
 
-const ORGANIZER_TEMPLATE_INSTANCES_ENDPOINT = "/templates/organizer/instances";
+const ORGANIZER_TEMPLATE_INSTANCES_ENDPOINT = "/badges";
 
 export type OrganizerTemplateInstancesResult = Omit<
   OrganizerTemplatesResponse["data"],

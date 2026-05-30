@@ -34,7 +34,7 @@ export default function DashboardLayout({
             </div>
           </header>
 
-          <section className="pt-[76px] lg:pt-0 pb-8 px-[16px] md:pl-[24px] md:pr-[32px]">
+          <section className="pt-[64px] lg:pt-0 pb-8 px-[16px] md:pl-[24px] md:pr-[32px]">
             {children}
           </section>
         </main>

@@ -3,7 +3,7 @@ import { TopBarConfigItem } from "../../types/dashboard/topbar";
 export const topBarConfig: TopBarConfigItem[] = [
   {
     match: "/dashboard",
-    search: "Search for Events, Badges, Attendees...",
+    search: "search badge layouts...",
     action: {
       label: "Create new badge",
       isOrange: true,
@@ -44,7 +44,7 @@ export const topBarConfig: TopBarConfigItem[] = [
   },
   {
     match: "/settings",
-    search: "Search for Events, Badges, Attendees...",
+    search: "search badge layouts...",
     action: {
       label: "Create new badge",
       isOrange: true,

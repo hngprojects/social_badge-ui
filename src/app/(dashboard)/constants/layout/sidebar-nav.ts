@@ -1,9 +1,4 @@
-export type NavigationLink = {
-  label: string;
-  icon: string;
-  activeIcon: string;
-  href: string;
-};
+import { NavigationLink } from "../../types/dashboard/sidebar-nav";
 
 export const navigationLinks: NavigationLink[] = [
   {

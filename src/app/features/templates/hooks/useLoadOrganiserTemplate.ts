@@ -19,6 +19,7 @@ export function useLoadOrganiserTemplate(organiserTemplateId: string | null) {
           destination_link: response.destination_link,
           hashtags: response.hashtags,
           access_type: response.access_type,
+          updated_at: response.updated_at,
         },
       );
     },

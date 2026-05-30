@@ -1,6 +1,6 @@
 import { apiClient } from "@/lib/api/client";
 
-const ORGANIZER_TEMPLATE_ENDPOINT = "/templates/organizer";
+const ORGANIZER_TEMPLATE_ENDPOINT = "/badges";
 
 export async function deleteOrganizerTemplate(templateId: string) {
   const id = templateId.trim();

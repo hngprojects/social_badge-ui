@@ -3,13 +3,14 @@ import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-quer
 import AuthSessionProvider from './AuthSessionProvider';
 
 function makeQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60 * 1000,
-      },
-    },
-  });
+	return new QueryClient({
+		defaultOptions: {
+			queries: {
+				staleTime: 60 * 1000,
+				refetchOnWindowFocus: false,
+			},
+		},
+	});
 }
 
 let browserQueryClient: QueryClient | undefined = undefined;
