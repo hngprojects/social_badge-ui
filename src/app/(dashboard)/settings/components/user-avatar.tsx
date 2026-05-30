@@ -1,5 +1,4 @@
-import { CameraIcon } from "lucide-react";
-import { Avatar, AvatarBadge, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getUserDisplayName } from "@/lib/api/auth-session";
 import { useUserStore } from "@/stores/use-user-store";
 import { getInitials } from "@/lib/utils";
