@@ -222,7 +222,6 @@ export function createDefaultEditorState(
 			participantNamePlaceholder: "Your name",
 			roleTitleLabel: "Job Description",
 			roleTitlePlaceholder: "e.g. Product Designer",
-			allowParticipantPhoto: false,
 		},
 	};
 
