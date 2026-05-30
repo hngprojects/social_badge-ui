@@ -31,6 +31,9 @@ export function TemplateInfoModal({
   const displayUrl = fullUrl
     ? formatShareUrlForDisplay(fullUrl)
     : "Not yet published";
+  const statusDescription = fullUrl
+    ? "The badge is live and sharable. Participants can claim this badge and share it on social media."
+    : "This badge is not yet published. Publish it to create a shareable link for participants.";
 
   return (
     <Dialog open={true} onOpenChange={(open) => { if (!open) onClose(); }}>
@@ -62,8 +65,7 @@ export function TemplateInfoModal({
             <StatusPill status={template.status} />
           </div>
           <p className="mt-4 border-b border-[#E8E8E8] pb-4 text-[13px] leading-[1.6] text-[#757575]">
-            The badge is live and sharable. Participants can claim this badge
-            and share it on social media
+            {statusDescription}
           </p>
 
           <div className="space-y-3 border-b border-[#E8E8E8] py-4 text-[13px]">

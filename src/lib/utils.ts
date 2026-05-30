@@ -27,7 +27,8 @@ export const getEmailProviderUrl = (email?: string) => {
 
 export const initiateGoogleAuth = (): void => {
 	const BASE =
-		process.env.NEXT_PUBLIC_API_URL 
+		process.env.NEXT_PUBLIC_API_URL ??
+		"https://api.social-badge.hng14.com/api/v1";
 
 	globalThis.location.href = `${BASE}/auth/google`;
 };
