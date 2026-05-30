@@ -1,9 +1,16 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  organizerTemplateInstancesKey,
+  organizerTemplateInstancesRootKey,
+} from "@/app/(dashboard)/hooks/use-organizer-template-instances";
+import { badgeAnalyticsKey } from "@/app/(dashboard)/hooks/use-badge-analytics";
+import { RECENT_BADGES_LIMIT } from "@/app/(dashboard)/components/dashboard/recent-badges-types";
+import type { OrganizerTemplateInstancesResult } from "@/app/(dashboard)/services/get-template-instances";
 import type { OrganiserTemplatePayload } from "../types/canvas-data";
 import { storePublishedBadgeResult } from "../lib/published-badge-session";
 import {
@@ -29,6 +36,7 @@ interface SaveVariables {
  */
 export function useSaveOrganiserTemplate() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async ({ payload, organiserTemplateId, pendingLogoFile }: SaveVariables) => {
@@ -61,13 +69,73 @@ export function useSaveOrganiserTemplate() {
       await updateOrganiserTemplate(templateId, buildEditTemplateRequest(finalPayload));
 
       const published = await publishOrganiserTemplate(templateId);
-      return published.data;
+      return {
+        payload: finalPayload,
+        published: published.data,
+        templateId,
+      };
     },
-    onSuccess: (data) => {
+    onSuccess: ({ payload, published, templateId }) => {
       toast.success("Badge template published successfully.");
-      const slug = data.share_slug;
+      const publishedBadge = {
+        id: published.id || templateId,
+        title: published.title || payload.title || "Untitled badge",
+        platform_template_id: payload.platform_template_id,
+        is_published: true,
+        status: "live" as const,
+        share_slug: published.share_slug,
+        published_at: published.published_at,
+        created_at: published.updated_at ?? new Date().toISOString(),
+        updated_at: published.updated_at ?? new Date().toISOString(),
+      };
+
+      queryClient.setQueriesData<OrganizerTemplateInstancesResult>(
+        { queryKey: organizerTemplateInstancesRootKey },
+        (prev) => {
+          if (!prev) return prev;
+
+          const existingIndex = prev.templates.findIndex(
+            (template) => template.id === publishedBadge.id,
+          );
+          const templates =
+            existingIndex >= 0
+              ? prev.templates.map((template, index) =>
+                  index === existingIndex
+                    ? { ...template, ...publishedBadge }
+                    : template,
+                )
+              : [publishedBadge, ...prev.templates];
+
+          return {
+            ...prev,
+            total: existingIndex >= 0 ? prev.total : prev.total + 1,
+            templates: templates.slice(0, prev.limit),
+          };
+        },
+      );
+      queryClient.setQueryData<OrganizerTemplateInstancesResult>(
+        organizerTemplateInstancesKey(1, RECENT_BADGES_LIMIT),
+        (prev) => {
+          if (prev) return prev;
+
+          return {
+            templates: [publishedBadge],
+            total: 1,
+            page: 1,
+            limit: RECENT_BADGES_LIMIT,
+          };
+        },
+      );
+      queryClient.invalidateQueries({
+        queryKey: organizerTemplateInstancesRootKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: badgeAnalyticsKey,
+      });
+
+      const slug = published.share_slug;
       if (slug) {
-        storePublishedBadgeResult(data);
+        storePublishedBadgeResult(published);
         router.push(`/badges/published?slug=${encodeURIComponent(slug)}`);
       } else {
         router.push("/dashboard");

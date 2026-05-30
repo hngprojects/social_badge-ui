@@ -62,7 +62,8 @@ export interface OrganiserTemplateSummary {
 }
 
 export interface OrganiserTemplateListData {
-  templates: OrganiserTemplateSummary[];
+  badges?: OrganiserTemplateSummary[];
+  templates?: OrganiserTemplateSummary[];
   total: number;
   page: number;
   limit: number;
