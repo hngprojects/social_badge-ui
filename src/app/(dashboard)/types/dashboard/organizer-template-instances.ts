@@ -3,7 +3,7 @@ export type OrganizerTemplateInstanceRaw = {
   title: string;
   platform_template_id: string;
   is_published: boolean;
-  status: "draft" | "published";
+  status: "draft" | "published" | "live";
   share_slug: string | null;
   published_at: string | null;
   created_at: string;
@@ -21,7 +21,8 @@ export type OrganizerTemplatesResponse = {
   status: "success";
   message: string;
   data: {
-    templates: OrganizerTemplateInstanceRaw[];
+    badges?: OrganizerTemplateInstanceRaw[];
+    templates?: OrganizerTemplateInstanceRaw[];
     total: number;
     page: number;
     limit: number;

@@ -17,8 +17,6 @@ const TABLE_COLUMNS = [
 	{ label: "BADGE", className: "w-[36%]" },
 	{ label: "STATUS" },
 	{ label: "LAST EDITED" },
-	{ label: "LINK CLICKS" },
-	{ label: "SHARES" },
 	{ label: "", className: "w-[40px]" },
 ];
 
@@ -30,6 +28,8 @@ export function RecentBadgesTable({
 	onSelectTemplate,
 	onRequestDelete,
 }: RecentBadgesListProps) {
+	const hasTemplates = templates.length > 0;
+
 	return (
 		<div className="hidden md:block">
 			<Table className="border-collapse text-[13px]">
@@ -51,21 +51,20 @@ export function RecentBadgesTable({
 				</TableHeader>
 
 				<TableBody>
-					{loading ? (
+					{loading && !hasTemplates ? (
 						<RecentBadgesTableMessage>
 							Loading recent badges...
 						</RecentBadgesTableMessage>
-					) : isError ? (
+					) : isError && !hasTemplates ? (
 						<RecentBadgesTableMessage className="text-red-500">
 							Could not load recent badges.
 						</RecentBadgesTableMessage>
-					) : templates.length === 0 ? (
+					) : !hasTemplates ? (
 						<RecentBadgesTableMessage>
 							No badges match this filter.
 						</RecentBadgesTableMessage>
 					) : (
 						templates.map((template) => {
-							const isPublished = template.status === "live";
 							const thumbnailUrl = getTemplateThumbnail?.(template);
 
 							return (
@@ -114,14 +113,6 @@ export function RecentBadgesTable({
 										{formatDate(template.updated_at)}
 									</TableCell>
 
-									<TableCell className="px-[16px] py-[14px]">
-										<MetricPlaceholder isPublished={isPublished} />
-									</TableCell>
-
-									<TableCell className="px-[16px] py-[14px]">
-										<MetricPlaceholder isPublished={isPublished} />
-									</TableCell>
-
 									<TableCell
 										onClick={(event) => event.stopPropagation()}
 										className="py-[14px] pl-0 pr-[12px] text-right"
@@ -158,16 +149,5 @@ function RecentBadgesTableMessage({
 				{children}
 			</TableCell>
 		</TableRow>
-	);
-}
-
-export function MetricPlaceholder({ isPublished }: { isPublished: boolean }) {
-	return (
-		<>
-			<div className="text-[15px] leading-none text-gray-700">&mdash;</div>
-			<div className="mt-[3px] text-[11px] text-gray-300">
-				{isPublished ? "No data yet" : "Unpublished"}
-			</div>
-		</>
 	);
 }
