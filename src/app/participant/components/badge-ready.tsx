@@ -1,24 +1,36 @@
 "use client";
 
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import CaptionBox from "./caption-box";
-import { DEFAULT_CAPTION, SOCIAL_PLATFORMS } from "../constants";
+import { DEFAULT_CAPTION } from "../constants";
 import { useState } from "react";
 import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
-import { shareService } from "../services/share";
-import { SharePlatform } from "../types";
 
-export default function BadgeReady() {
+export default function BadgeReady({ onDownload }: { onDownload?: () => Promise<void> }) {
 	const [captionText, setCaptionText] = useState(DEFAULT_CAPTION);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [isDownloading, setIsDownloading] = useState(false);
 
-	const handleSocialShare = (platform: SharePlatform) => {
-		console.log(platform);
-		shareService.share(platform, captionText);
+	const handleDownload = async () => {
+		if (!onDownload) return;
+		setIsDownloading(true);
+		try {
+			await onDownload();
+			setIsPopupOpen(true);
+		} catch {
+			toast.error("Failed to download badge. Please try again.");
+		} finally {
+			setIsDownloading(false);
+		}
 	};
+
+	// const handleSocialShare = (platform: SharePlatform) => {
+	// 	shareService.share(platform, captionText);
+	// };
 
 	return (
 		<motion.div
@@ -58,12 +70,14 @@ export default function BadgeReady() {
 				</div>
 				<Button
 					type="button"
-					onClick={() => setIsPopupOpen(true)}
+					onClick={handleDownload}
+					disabled={isDownloading}
 					className="w-full h-10 bg-[#020202] font-sans text-[14px]"
 				>
-					Download badge
+					{isDownloading ? "Downloading…" : "Download badge"}
 				</Button>
 			</motion.div>
+			{/* Social media links — temporarily hidden
 			<motion.div
 				className="flex items-center gap-4 w-full my-5"
 				variants={itemVariants}
@@ -102,6 +116,7 @@ export default function BadgeReady() {
 					</motion.button>
 				))}
 			</motion.div>
+			*/}
 			<motion.div variants={itemVariants}>
 				<CaptionBox
 					value={captionText}

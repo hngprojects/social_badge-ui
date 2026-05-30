@@ -7,7 +7,7 @@ export const FONTS = [
 
 export const SIZES = ["SMALL", "MEDIUM", "LARGE"] as const;
 
-export const TABS = ["Badge", "Share post", "Click flow"] as const;
+export const TABS = ["Badge"] as const;
 
 export const MONTHS = [
   "January", "February", "March", "April", "May", "June",

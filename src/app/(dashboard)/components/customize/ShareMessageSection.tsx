@@ -68,11 +68,8 @@ export function ShareMessageSection({ editor, onChange }: ShareMessageSectionPro
       </div>
 
       <div>
-        <FieldLabel label="Destination link" required />
+        <FieldLabel label="Destination link" />
         <div className="flex items-center rounded-lg border border-gray-200 overflow-hidden focus-within:ring-2 focus-within:ring-orange-400 focus-within:border-transparent transition">
-          <span className="px-3 py-2.5 text-sm text-gray-400 bg-gray-50 border-r border-gray-200 select-none whitespace-nowrap">
-            https://
-          </span>
           <Input
             type="text"
             value={editor.destinationLink}
