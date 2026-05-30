@@ -17,33 +17,42 @@ const Layout = ({ children }: LayoutProps) => {
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
 
-  return (
-    <GuestGuard>
-      <div
-        className="w-full h-screen bg-cover bg-center bg-no-repeat"
-        style={{
-          background: "linear-gradient(180deg, #FF8A00 0%, #FF4D8D 100%)",
-        }}
-      >
-        <div className="mx-auto relative max-w-360 max-h-360 w-full h-full justify-center flex">
-          {/* left — BadgeUI handles its own internal animations */}
-          <BadgeUI />
+  const isResetPassword = pathname.includes("/reset-password");
 
-          {/* right — key re-triggers the slide-in on every route change */}
-          <motion.div
-            key={pathname}
-            className="w-full flex-1 h-full items-center flex p-6"
-            initial={shouldReduceMotion ? false : { opacity: 0, x: 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
+  const layoutContent = (
+    <div
+      className="w-full h-screen bg-cover bg-center bg-no-repeat"
+      style={{
+        background: "linear-gradient(180deg, #FF8A00 0%, #FF4D8D 100%)",
+      }}
+    >
+      <div className="mx-auto relative max-w-360 max-h-360 w-full h-full justify-center flex">
+        {/* left — BadgeUI handles its own internal animations */}
+        <BadgeUI />
+
+        {/* right — key re-triggers the slide-in on every route change */}
+        <motion.div
+          key={pathname}
+          className="w-full flex-1 h-full items-center flex p-6"
+          initial={shouldReduceMotion ? false : { opacity: 0, x: 80 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
+        >
+          <main
+            id="main-content"
+            className="login bg-white w-full rounded-lg overflow-y-auto scroll-smooth p-5 no-scrollbar flex flex-col gap-5 max-h-fit"
           >
-            <main id="main-content" className="login bg-white w-full rounded-lg overflow-y-auto scroll-smooth p-5 no-scrollbar flex flex-col gap-5 max-h-fit">
-              {children}
-            </main>
-          </motion.div>
-        </div>
+            {children}
+          </main>
+        </motion.div>
       </div>
-    </GuestGuard>
+    </div>
+  );
+
+  return isResetPassword ? (
+    layoutContent
+  ) : (
+    <GuestGuard>{layoutContent}</GuestGuard>
   );
 };
 
