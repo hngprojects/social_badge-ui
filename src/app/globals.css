@@ -319,6 +319,10 @@ html::-webkit-scrollbar-thumb {
     @apply border-border outline-ring/50;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   html {
     @apply font-sans;
   }
