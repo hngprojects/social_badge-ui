@@ -38,7 +38,7 @@ export function TemplateInfoModal({
   return (
     <Dialog open={true} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent
-        className="max-h-[calc(100vh-3rem)] max-w-[calc(100%-2rem)] overflow-y-auto rounded-[18px] p-5 sm:max-w-[760px] sm:p-6 md:grid-cols-[220px_1fr] md:gap-7"
+        className="max-h-[calc(100vh-3rem)] max-w-[calc(100%-2rem)] overflow-y-auto rounded-[18px] p-5 sm:max-w-[760px] sm:p-6 md:grid md:grid-cols-[220px_1fr] md:gap-7"
         showCloseButton
       >
         <DialogTitle className="sr-only">
