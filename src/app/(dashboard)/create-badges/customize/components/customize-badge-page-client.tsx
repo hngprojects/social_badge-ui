@@ -6,6 +6,20 @@ import { useLoadPlatformTemplate } from "@/app/features/templates/hooks/useLoadP
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { CustomizeBadgeForm } from "./customize-badge-form";
 
+function clearNewBadgeTextDefaults(
+  editor: ReturnType<typeof createDefaultEditorState>,
+) {
+  return {
+    ...editor,
+    title: "",
+    eventName: "",
+    participantNameLabel: "",
+    participantNamePlaceholder: "",
+    roleTitleLabel: "",
+    roleTitlePlaceholder: "",
+  };
+}
+
 export function CustomizeBadgePageClient() {
   const searchParams = useSearchParams();
   const platformTemplateId = searchParams.get("template");
@@ -42,7 +56,9 @@ export function CustomizeBadgePageClient() {
 
   const initialEditor =
     loadedState ??
-    createDefaultEditorState(platformId, platformTemplate?.canvasData);
+    clearNewBadgeTextDefaults(
+      createDefaultEditorState(platformId, platformTemplate?.canvasData),
+    );
   const editorKey = `${organiserTemplateId ?? platformId}-${loadedState ? "loaded" : "new"}`;
 
   return (
