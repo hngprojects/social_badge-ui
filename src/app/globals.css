@@ -319,6 +319,10 @@ html::-webkit-scrollbar-thumb {
     @apply border-border outline-ring/50;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   html {
     @apply font-sans;
   }
@@ -342,8 +346,4 @@ html::-webkit-scrollbar-thumb {
     -webkit-box-shadow: 0 0 0 1000px #fef0c7 inset !important;
     -webkit-text-fill-color: #0a0a0a !important;
   }
-}
-
-button {
-  cursor: pointer;
 }

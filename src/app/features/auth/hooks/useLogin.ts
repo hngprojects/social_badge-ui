@@ -21,7 +21,6 @@ export const useLogin = () => {
     onSuccess: async () => {
       const profile = await getCurrentUser();
       setUser(profile.data);
-      console.log("PROFILE USER", profile);
       toast.success("Login successful!");
       router.push("/dashboard");
     },
