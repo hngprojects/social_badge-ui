@@ -70,7 +70,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 	},
 	next_gen_mint_v1: {
 		staticFields: ["event_name", "event_date"],
-		participantFields: ["participant_name", "role_title"],
+		participantFields: ["participant_name", "role_title", "participant_photo"],
 		hasHeaderLogo: false,
 		defaultLogoPosition: "top-left",
 		defaultPaletteId: "bg_color_light_grey",

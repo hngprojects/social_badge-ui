@@ -132,7 +132,7 @@ export default function ParticipantPovClient() {
               <p className="text-sm text-gray-500">Failed to load badge. Please try again.</p>
             </div>
           ) : editorState ? (
-            <LivePreview editor={editorState} participantPhotoUrl={participantPhotoUrl} badgeRef={badgeRef} />
+            <LivePreview editor={editorState} participantPhotoUrl={participantPhotoUrl} badgeRef={badgeRef} hideExtras badgeClassName="w-full max-w-110 h-140" />
           ) : (
             <div
               aria-hidden="true"
