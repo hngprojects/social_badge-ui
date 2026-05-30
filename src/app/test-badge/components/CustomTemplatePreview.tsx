@@ -47,7 +47,7 @@ export function Layout1({ editor }: TemplateLayoutProps) {
 // Placeholder for Template 9 Layout
 export function Layout9({ editor }: TemplateLayoutProps) {
 	return (
-		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
 			<Template9 className="w-full h-full" />
 			<div className="absolute w-full h-full top-0 py-8">
 				<div className="flex border-white  justify-between items-start px-8">
@@ -65,7 +65,7 @@ export function Layout9({ editor }: TemplateLayoutProps) {
 						Product designer {/*User role will be placed here by users*/}
 					</p>
 				</div>
-				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto"></div>
+				<div className="bg-zinc-300 absolute bottom-8 w-35 h-35 right-10 rotate-10"></div>
 			</div>
 		</div>
 	);
