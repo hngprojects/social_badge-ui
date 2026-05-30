@@ -343,3 +343,7 @@ html::-webkit-scrollbar-thumb {
     -webkit-text-fill-color: #0a0a0a !important;
   }
 }
+
+button {
+  cursor: pointer;
+}
