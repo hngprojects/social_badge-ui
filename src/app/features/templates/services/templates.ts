@@ -147,7 +147,8 @@ export async function getOrganiserTemplate(
   templateId: string,
 ): Promise<OrganiserTemplateDetail> {
   const listResponse = await getOrganiserTemplateInstances({ page: 1, limit: 100 });
-  const summary = listResponse.data.templates.find((tpl) => tpl.id === templateId);
+  const templates = listResponse.data.badges ?? listResponse.data.templates ?? [];
+  const summary = templates.find((tpl) => tpl.id === templateId);
 
   if (!summary) {
     throw new Error("Organiser template not found.");

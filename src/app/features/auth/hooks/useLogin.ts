@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ApiError } from "@/app/features/auth/types";
 import { useUserStore } from "@/stores/use-user-store";
 import { resendVerifyEmail } from "../services/auth";
+import { getCurrentUser } from "../services/auth";
 export const useLogin = () => {
   const router = useRouter();
   const { setUser } = useUserStore();
@@ -17,8 +18,9 @@ export const useLogin = () => {
   } = useMutation({
     mutationFn: loginApi,
 
-    onSuccess: (data) => {
-      setUser(data.data.user);
+    onSuccess: async () => {
+      const profile = await getCurrentUser();
+      setUser(profile.data);
       toast.success("Login successful!");
       router.push("/dashboard");
     },

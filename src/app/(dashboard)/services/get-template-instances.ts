@@ -8,7 +8,7 @@ const ORGANIZER_TEMPLATE_INSTANCES_ENDPOINT = "/badges";
 
 export type OrganizerTemplateInstancesResult = Omit<
   OrganizerTemplatesResponse["data"],
-  "templates"
+  "badges" | "templates"
 > & {
   templates: OrganizerTemplateInstance[];
 };
@@ -25,10 +25,15 @@ export async function getOrganizerTemplateInstances(
     },
   );
 
-  const templates: OrganizerTemplateInstance[] = body.data.templates.map(
+  const badges = body.data.badges ?? body.data.templates ?? [];
+
+  const templates: OrganizerTemplateInstance[] = badges.map(
     (t) => ({
       ...t,
-      status: t.status === "published" ? "live" : "draft",
+      status:
+        t.is_published || t.status === "published" || t.status === "live"
+          ? "live"
+          : "draft",
     }),
   );
 
