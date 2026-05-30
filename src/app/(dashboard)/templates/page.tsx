@@ -1,42 +1,20 @@
 "use client";
-import { templates } from "../constants/templates";
-import { useState } from "react";
-import MockTemplates from "./components/mock-templates";
+import { useTemplateGallery } from "../create-badges/lib/use-template-gallery";
 import FilterTabs from "./components/filter-tabs";
-import TemplatePagination from "./components/pagination";
-
-const templateTypeByTab: Record<string, string> = {
-  festivals: "festival",
-  hackathons: "hackathon",
-  conferences: "conference",
-  meetups: "meetup",
-  speakers: "speaker",
-};
+import AllTemplates from "./components/all-templates";
 
 export default function Templates() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(8);
-  const [activeTab, setActiveTab] = useState("all");
+  const {
+    filteredTemplates,
+    activeFilter,
+    setActiveFilter,
+    isLoading,
+    filterTabs,
+  } = useTemplateGallery();
 
-  const activeTemplateType = templateTypeByTab[activeTab] ?? activeTab;
-  const filteredTemplates =
-    activeTab === "all"
-      ? templates
-      : activeTab === "trending"
-        ? templates.filter((t) => t.tag === "Trending")
-        : templates.filter(
-            (t) => t.type.toLowerCase() === activeTemplateType.toLowerCase(),
-          );
-
-  const lastPostIndex = currentPage * postsPerPage;
-  const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = filteredTemplates.slice(firstPostIndex, lastPostIndex);
-
-  // Reset to page 1 when tab changes
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    setCurrentPage(1);
-  };
+const handleFilterChange = (tab: string) => {
+  setActiveFilter(tab.trim());
+};
 
   return (
     <div className="flex min-w-0 flex-col space-y-8">
@@ -49,19 +27,16 @@ export default function Templates() {
         </p>
       </div>
 
-      <FilterTabs activeTab={activeTab} onTabChange={handleTabChange} />
-      <MockTemplates templates={currentPosts} activeTab={activeTab} />
-
-      {filteredTemplates.length > postsPerPage && (
-        <div className="flex justify-center mt-8">
-          <TemplatePagination
-            totalPosts={filteredTemplates.length}
-            postsPerPage={postsPerPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
-      )}
+      <FilterTabs
+        activeTab={activeFilter}
+        tabs={filterTabs}
+        onTabChange={handleFilterChange}
+      />
+      <AllTemplates
+        templates={filteredTemplates}
+        isLoading={isLoading}
+        activeTab={activeFilter}
+      />
     </div>
   );
 }

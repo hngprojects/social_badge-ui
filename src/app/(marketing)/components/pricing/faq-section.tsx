@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FAQ_DATA } from '../../constants/pricing';
+import { Plus } from 'lucide-react';
 
 // ── Shared easing ─────────────────────────────────────────────────────────────
 const EASE = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
@@ -31,7 +32,10 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="px-6 pb-20 max-w-[1090px] mx-auto text-center">
+    <section
+      id="pricing-faq"
+      className="scroll-mt-28 px-6 pb-20 max-w-[1090px] mx-auto text-center"
+    >
       {/* ── Header ── */}
       <motion.h2
         className="text-[clamp(22px,3vw,32px)] tracking-tight mb-9 font-fraunces"
@@ -40,7 +44,7 @@ export default function FAQSection() {
         whileInView="show"
         viewport={{ once: true, amount: 0.3 }}
       >
-        Frequently Asked Question
+        Frequently Asked Questions
       </motion.h2>
 
       <div className="text-left w-full max-w-220 mx-auto">
@@ -68,14 +72,13 @@ export default function FAQSection() {
                   {item.question}
                 </span>
 
-                <motion.span
-                  animate={{ rotate: isOpen ? 45 : 0 }}
-                  transition={{ duration: 0.2, ease: 'easeInOut' }}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xl font-light shrink-0"
-                  style={{ background: isOpen ? '#FF5236' : '#0A0A0A' }}
-                >
-                  +
-                </motion.span>
+                <div className="flex h-8 w-8 md:h-10 md:w-10 bg-black items-center text-white justify-center rounded-full border shrink-0 transition-all duration-300">
+                  <Plus
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      isOpen ? 'rotate-45' : 'rotate-0'
+                    }`}
+                  />
+                </div>
               </button>
 
               <AnimatePresence initial={false}>

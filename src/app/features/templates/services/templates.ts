@@ -1,4 +1,3 @@
-import axios from "axios";
 import { apiClient } from "@/lib/api/client";
 import type {
   LogoUploadResponse,
@@ -22,17 +21,21 @@ import type {
 } from "../types/organiser-template";
 import type { PublicParticipantPageResponse } from "../types/public-participant";
 
-export async function uploadLogo(file: File): Promise<LogoUploadResponse> {
-  const formData = new FormData();
-  formData.append("file", file);
+export async function uploadLogo(file: File, instanceId: string | null) : Promise<LogoUploadResponse> {
+  if (!instanceId) {
+    throw new Error("Missing organizer template istance id.")
+  }
 
-  const response = await axios.post<LogoUploadResponse>(
-    `${process.env.NEXT_PUBLIC_API_URL}/uploads/logo`,
-    formData,
-    { withCredentials: true },
+  return apiClient<LogoUploadResponse>(
+    `/badges/${instanceId}/logo`,
+    {
+      method: "PUT",
+      data: { file },
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
   );
-
-  return response.data;
 }
 
 /** Step 1 — create a draft instance from a platform template (organiser from JWT). */
@@ -40,7 +43,7 @@ export async function createOrganiserTemplateInstance(
   platformTemplateId: string,
 ): Promise<CreateTemplateInstanceApiResponse> {
   return apiClient<CreateTemplateInstanceApiResponse>(
-    "/templates/organizer/instances",
+    "/badges",
     {
       method: "POST",
       data: { platform_template_id: platformTemplateId },
@@ -54,7 +57,7 @@ export async function updateOrganiserTemplate(
   payload: EditTemplateRequest,
 ): Promise<EditTemplateApiResponse> {
   return apiClient<EditTemplateApiResponse>(
-    `/templates/organizer/${templateId}`,
+    `/badges/${templateId}`,
     {
       method: "PATCH",
       data: payload,
@@ -67,9 +70,42 @@ export async function publishOrganiserTemplate(
   templateId: string,
 ): Promise<PublishTemplateApiResponse> {
   return apiClient<PublishTemplateApiResponse>(
-    `/templates/organizer/${templateId}/publish`,
+    `/badges/${templateId}/publish`,
     {
       method: "POST",
+    },
+  );
+}
+
+export async function unpublishOrganiserTemplate(
+  templateId: string,
+): Promise<PublishTemplateApiResponse> {
+  return apiClient<PublishTemplateApiResponse>(
+    `/badges/${templateId}/unpublish`,
+    {
+      method: "POST",
+    },
+  );
+}
+
+export async function duplicateOrganiserTemplate(
+  templateId: string,
+): Promise<CreateTemplateInstanceApiResponse> {
+  return apiClient<CreateTemplateInstanceApiResponse>(
+    `/badges/${templateId}/duplicate`,
+    {
+      method: "POST",
+    },
+  );
+}
+
+export async function deleteOrganiserTemplate(
+  templateId: string,
+): Promise<ApiEnvelope<void>> {
+  return apiClient<ApiEnvelope<void>>(
+    `/badges/${templateId}`,
+    {
+      method: "DELETE",
     },
   );
 }
@@ -79,7 +115,7 @@ export async function getOrganiserTemplateInstances(query?: {
   limit?: number;
 }): Promise<OrganiserTemplateListApiResponse> {
   return apiClient<OrganiserTemplateListApiResponse>(
-    "/templates/organizer/instances",
+    "/badges",
     {
       method: "GET",
       params: {
@@ -102,15 +138,11 @@ export async function getPublicParticipantPage(
   shareSlug: string,
 ): Promise<PublicParticipantPageResponse> {
   return apiClient<PublicParticipantPageResponse>(
-    `/templates/organizer/public/${encodeURIComponent(shareSlug)}`,
+    `/badges/public/${encodeURIComponent(shareSlug)}`,
   );
 }
 
-/**
- * Load organiser instance metadata for the editor.
- * Note: list items omit canvas_data; we merge platform template canvas as the baseline
- * until a dedicated GET organiser detail endpoint exists.
- */
+
 export async function getOrganiserTemplate(
   templateId: string,
 ): Promise<OrganiserTemplateDetail> {
@@ -140,6 +172,7 @@ export async function getOrganiserTemplate(
     is_published: summary.is_published,
     share_slug: summary.share_slug,
     published_at: summary.published_at,
+    updated_at: summary.updated_at,
   };
 }
 

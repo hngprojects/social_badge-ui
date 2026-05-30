@@ -7,7 +7,7 @@ const Page = () => {
 				<h1 className="page-title font-semibold text-[40px] sm:text-[52px]">
 					Log in
 				</h1>
-				<p className="font-medium text-base sm:text-[18px] text-[#978B8A]">
+				<p className="font-medium text-base sm:text-[18px] text-[#595959]">
 					Welcome back to your account
 				</p>
 			</div>

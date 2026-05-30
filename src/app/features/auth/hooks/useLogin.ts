@@ -7,39 +7,50 @@ import { ApiError } from "@/app/features/auth/types";
 import { useUserStore } from "@/stores/use-user-store";
 import { resendVerifyEmail } from "../services/auth";
 export const useLogin = () => {
-	const router = useRouter();
-	const { setUser } = useUserStore();
+  const router = useRouter();
+  const { setUser } = useUserStore();
 
-	const {
-		mutate: login,
-		isPending: isLoading,
-		isError,
-	} = useMutation({
-		mutationFn: loginApi,
+  const {
+    mutate: login,
+    isPending: isLoading,
+    isError,
+  } = useMutation({
+    mutationFn: loginApi,
 
-		onSuccess: (data) => {
-			setUser(data.data.user);
-			toast.success("Login successful!");
-			router.push("/dashboard");
-		},
-		onError: (error, data) => {
-			const axiosError = error as AxiosError<ApiError>;
-			const status = axiosError.response?.status;
-			const message =
-				axiosError.response?.data?.message || "Login failed. Please try again.";
+    onSuccess: (data) => {
+      setUser(data.data.user);
+      toast.success("Login successful!");
+      router.push("/dashboard");
+    },
+    onError: async (error, data) => {
+      const axiosError = error as AxiosError<ApiError>;
+      const status = axiosError.response?.status;
+      const message =
+        axiosError.response?.data?.message || "Login failed. Please try again.";
 
-			if (status === 403 && message === "Please verify your email") {
-				const email = data.email;
-				resendVerifyEmail({ email });
-				toast.error(
-					"Your email is not verified. We've sent you a new verification link — please check your inbox.",
-				);
-				return;
-			}
+      if (status === 403 && message === "Please verify your email") {
+        const email = data.email;
+        try {
+          await resendVerifyEmail({ email });
+          toast.error(
+            "Your email is not verified. We've sent you a new verification link — please check your inbox.",
+          );
+        } catch {
+          toast.error(
+            "Your email is not verified. We couldn't resend the verification email right now. Please try again.",
+          );
+        }
+        return;
+      }
 
-			toast.error(message);
-		},
-	});
+      if (status === 401) {
+        toast.error("Invalid Email or Password. Please try again.");
+        return;
+      }
 
-	return { login, isLoading, isError };
+      toast.error(message);
+    },
+  });
+
+  return { login, isLoading, isError };
 };

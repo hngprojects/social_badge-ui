@@ -7,9 +7,11 @@ import {
   mapPlatformTemplatesToLayouts,
 } from "../lib/map-platform-template";
 import type { PlatformTemplatesQuery } from "../types/platform-template";
-import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard";
+import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard/dashboard";
 
-export function usePlatformTemplates(query: PlatformTemplatesQuery = { page: 1, limit: 10 }) {
+export function usePlatformTemplates(
+  query: PlatformTemplatesQuery = { page: 1, limit: 10 },
+) {
   return useQuery({
     queryKey: ["platform-templates", query.page ?? 1, query.limit ?? 10],
     queryFn: async (): Promise<LayoutTemplate[]> => {

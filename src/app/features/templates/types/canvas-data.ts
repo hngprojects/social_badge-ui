@@ -161,4 +161,5 @@ export interface CustomizeEditorState {
 	destinationLink: string;
 	hashtags: string[];
 	accessType: number;
+	savedAt?: string | null;
 }

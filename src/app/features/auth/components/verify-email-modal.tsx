@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, buttonVariants } from "./button";
+import { buttonVariants } from "@/components/ui/button";
 
 export const VerifyEmailModal = () => {
   return (
@@ -22,9 +22,9 @@ export const VerifyEmailModal = () => {
           <div className="text-base text-[#4D4645]  ">
             <p>Great! Your email address has been verified</p>
           </div>
-          <Button type="button" disabled>
+          {/* <Button type="button" disabled>
             Set up profile
-          </Button>
+          </Button> */}
           <Link
             href="/dashboard"
             className={cn(

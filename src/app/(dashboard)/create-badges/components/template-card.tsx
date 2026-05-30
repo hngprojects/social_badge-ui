@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { LayoutTemplate } from "../../types/dashboard";
+import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 
 interface TemplateCardProps {
   template: LayoutTemplate;
@@ -21,7 +21,9 @@ export function TemplateCard({
       type="button"
       onClick={() => onSelect(template)}
       className={`flex flex-col p-2.5 sm:p-4 rounded-[24px] transition-all duration-200 text-left group focus:outline-none focus:ring-0 border-2 w-full relative bg-white min-w-0 ${
-        isSelected ? "border-[#FF693E] shadow-sm" : "border-transparent hover:border-gray-200"
+        isSelected
+          ? "border-[#FF693E] shadow-sm"
+          : "border-transparent hover:border-gray-200"
       }`}
       aria-label={`Select layout structure for ${template.title}`}
     >
@@ -49,7 +51,7 @@ export function TemplateCard({
 
       <div className="w-full mt-2 sm:mt-3 flex flex-col gap-0.5 pl-0.5 min-w-0">
         <div className="flex flex-row items-center justify-between w-full gap-1">
-          <span className="text-[9px] sm:text-[12px] font-semibold text-[#AFAFAF] uppercase tracking-wider block truncate min-w-0">
+          <span className="text-[9px] sm:text-[12px] font-semibold text-[#595959] uppercase tracking-wider block truncate min-w-0">
             {template.category}
           </span>
           {template.isMostPicked && (
@@ -65,7 +67,7 @@ export function TemplateCard({
           </span>
         </div>
 
-        <div className="flex flex-row flex-wrap items-center justify-between gap-x-1.5 gap-y-1 text-[9px] sm:text-xs text-[#9CA3AF] font-[400] mt-1 select-none w-full min-w-0">
+        <div className="flex flex-row flex-wrap items-center justify-between gap-x-1.5 gap-y-1 text-[9px] sm:text-xs text-[#595959] font-[400] mt-1 select-none w-full min-w-0">
           <span className="flex items-center gap-1 min-w-0 shrink-0 truncate">
             <Image
               src="/assets/dashboard/icons/made.svg"

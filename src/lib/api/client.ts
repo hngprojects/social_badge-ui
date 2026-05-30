@@ -3,15 +3,43 @@ import axios, {
   type AxiosRequestConfig,
   type InternalAxiosRequestConfig,
 } from "axios";
-import { clearAuthSession } from "./auth-session";
+import { useUserStore } from "@/stores/use-user-store";
 
 const instance = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_API_URL,
-	withCredentials: true,
-	headers: {
-		"Content-Type": "application/json",
-	},
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
+
+instance.interceptors.request.use((config) => {
+  if (config.data instanceof FormData) {
+    delete config.headers["Content-Type"];
+  }
+
+  return config;
+});
+
+/**
+ * Clears only the local Zustand store.
+ */
+export function clearLocalAuthState(): void {
+  useUserStore.getState().clearUser();
+}
+
+/**
+ * Clears the user session both locally (Zustand) and on the backend (Cookies).
+ * This is called when a refresh token attempt fails or when an explicit logout is needed.
+ */
+export async function clearAuthSession(): Promise<void> {
+  clearLocalAuthState();
+  try {
+    await instance.post("/auth/logout");
+  } catch {
+    // Best-effort backend cleanup. Local auth state is already cleared.
+  }
+}
 
 let isRefreshing = false;
 let refreshQueue: Array<{
@@ -81,15 +109,15 @@ instance.interceptors.response.use(
 );
 
 export async function apiClient<T>(
-	endpoint: string,
-	options?: AxiosRequestConfig,
+  endpoint: string,
+  options?: AxiosRequestConfig,
 ): Promise<T> {
-	const response = await instance.request<T>({
-		url: endpoint,
-		...options,
-	});
+  const response = await instance.request<T>({
+    url: endpoint,
+    ...options,
+  });
 
-	return response.data;
+  return response.data;
 }
 
 export { instance as apiAxios };

@@ -1,5 +1,7 @@
 "use client";
 import { Icons } from "@/components/ui/icons";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import React from "react";
 
@@ -8,36 +10,33 @@ type InputProps = {
   icon?: React.ReactNode;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-export const AuthInput = (props: InputProps) => {
+export const AuthInput = ({ label, icon, type, className, id, ...props }: InputProps) => {
   const [isVisible, setIsVisible] = React.useState(false);
-  const inputType = isVisible ? "text" : "password";
+  const generatedId = React.useId();
+  const resolvedId = id ?? generatedId;
 
   const passwordIcon =
-    props.type === "password" ? (
+    type === "password" ? (
       <PasswordEyeIcon isVisible={isVisible} setIsVisible={setIsVisible} />
     ) : null;
 
   return (
     <div className="w-full relative">
-      <label
-        htmlFor={props.id}
-        className="block text-sm font-medium text-[#121217]"
-      >
-        {props.label} <span className="text-[#F53D6B]">*</span>
-      </label>
+      <Label htmlFor={resolvedId} className="block text-sm font-medium text-[#121217]">
+        {label} <span className="text-[#F53D6B]">*</span>
+      </Label>
 
-      <input
+      <Input
         {...props}
-        type={props.type === "password" ? inputType : props.type}
+        id={resolvedId}
+        type={type === "password" ? (isVisible ? "text" : "password") : type}
         className={cn(
-          " w-full h-12.5 p-4 mt-1 rounded-md text-black placeholder:text-[#6C6C89] outline-none border border-[#D1D1DB] bg-[#FFFFFF] shadow-[0px_1px_2px_0px_#1212170D] focus:border-[#7d7777]  text-sm",
-          props.className,
+          "h-12.5 p-4 mt-1 rounded-md text-black placeholder:text-[#6C6C89] border border-[#D1D1DB] bg-[#FFFFFF] shadow-[0px_1px_2px_0px_#1212170D] focus-visible:border-[#7d7777] focus-visible:ring-0 text-sm",
+          className,
         )}
-        placeholder={props.placeholder}
       />
-      {/* icons */}
       <span className="absolute right-3 top-[67%] translate-y-[-50%] text-[#6C6C89]">
-        {props.icon ? props.icon : passwordIcon}
+        {icon ? icon : passwordIcon}
       </span>
     </div>
   );
@@ -55,6 +54,8 @@ const PasswordEyeIcon = ({
       type="button"
       className="cursor-pointer"
       onClick={() => setIsVisible(!isVisible)}
+      aria-label={isVisible ? "Hide password" : "Show password"}
+      aria-pressed={isVisible}
     >
       {isVisible ? <Icons.EyeClosed /> : <Icons.EyeOpen />}
     </button>

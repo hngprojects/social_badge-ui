@@ -1,11 +1,14 @@
 "use client";
 
-import type { LayoutTemplate } from "../../types/dashboard";
+import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 import { TemplateGalleryGrid } from "./template-gallery-grid";
 import { TemplateGalleryHeader } from "./template-gallery-header";
-import { TemplateEmptyState, TemplateLoadingState } from "./template-gallery-states";
+import {
+  TemplateEmptyState,
+  TemplateLoadingState,
+} from "./template-gallery-states";
 import { TemplateLivePreview } from "./template-live-preview";
-import { UploadTemplateBox } from "./upload-template-box";
+//import { UploadTemplateBox } from "./upload-template-box";
 
 interface TemplatesDesktopLayoutProps {
   filterTabs: string[];
@@ -50,7 +53,7 @@ export function TemplatesDesktopLayout({
           />
         )}
 
-        <UploadTemplateBox />
+        {/* <UploadTemplateBox /> */}
       </section>
 
       <aside className="col-span-5 w-full sticky top-6 bg-white rounded-[32px] p-6 border border-[#E5E5E5] flex flex-col shadow-sm">

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-
+import { Button } from '@/components/ui/button';
 import { templates } from '../../constants/explore';
 
 const Templates = () => {
@@ -124,15 +124,6 @@ const Templates = () => {
                   </div>
 
                   {/* Link arrow */}
-                  <span className="flex items-center justify-center w-5 h-5 bg-primary rounded-full">
-                    <Image
-                      src="/assets/landing-page/icons/Vector.svg"
-                      alt="Arrow"
-                      width={8}
-                      height={8}
-                      className="w-2 h-2"
-                    />
-                  </span>
                 </div>
               </div>
             </div>
@@ -144,7 +135,7 @@ const Templates = () => {
           className="flex justify-center cursor-pointer opacity-[0.85] transition hover:opacity-[1]"
           href="/explore"
         >
-          <button className="flex items-center pt-3 justify-center gap-2 text-center transition underline font-medium cursor-pointer">
+          <Button variant="ghost" className="flex items-center pt-3 justify-center gap-2 text-center transition underline font-medium cursor-pointer">
             Explore More Templates
             <Image
               src="/assets/landing-page/icons/Arrow Right.svg"
@@ -153,7 +144,7 @@ const Templates = () => {
               height={20}
               className="w-5 h-5"
             />
-          </button>
+          </Button>
         </Link>
       </div>
     </section>

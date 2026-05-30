@@ -25,7 +25,7 @@ const PRODUCT_LINKS = [
 ] as const;
 
 const SUPPORT_LINKS = [
-	{ label: "FAQ", href: "#faq-section" },
+	{ label: "FAQ", href: "/pricing#pricing-faq" },
 	{ label: "Contact Us", href: "/contact" },
 ] as const;
 
@@ -64,7 +64,7 @@ export default function Footer() {
 							</h2>
 							<p className="text-white text-base max-w-sm">
 								Stay ahead with the latest updates, insights, and events from
-								Social Badge.
+								Flare Tag.
 							</p>
 						</div>
 
@@ -108,12 +108,6 @@ export default function Footer() {
 									{isLoading ? "Subscribing..." : "Subscribe"}
 								</Button>
 							</div>
-
-							{/* Desktop subtext below input */}
-							<p className="hidden lg:block text-white text-sm mt-3">
-								Stay ahead with the latest updates, insights, and events from
-								Social Badge.
-							</p>
 						</div>
 					</div>
 				</div>
@@ -126,14 +120,14 @@ export default function Footer() {
 							<span className="transition-transform duration-200 group-hover:scale-105">
 								<Image
 									src="/assets/logo.svg"
-									alt="Social Badge logo"
+									alt="Flare Tag logo"
 									width={28}
 									height={28}
 									className="w-6.75 h-6.75"
 								/>
 							</span>
 							<span className="text-base lg:text-lg font-semibold text-foreground">
-								Social Badge
+								Flare Tag
 							</span>
 						</Link>
 						<p className="text-muted-foreground text-xs lg:text-sm leading-relaxed">

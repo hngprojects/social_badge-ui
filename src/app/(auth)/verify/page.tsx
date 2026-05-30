@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/app/features/auth/components/button";
+import { Button } from "@/components/ui/button";
 import { VerifyEmailModal } from "@/app/features/auth/components/verify-email-modal";
 import { useVerifyEmail } from "@/app/features/auth/hooks/useVerifyEmail";
 import { useResendVerifyEmail } from "@/app/features/auth/hooks/useResendVerifyEmail";
@@ -53,6 +53,8 @@ const Page = () => {
 								expired.
 							</p>
 							<Button
+								variant="cta"
+								className="w-full py-4 text-base font-semibold"
 								onClick={() =>
 									user?.email && resendVerifyEmail({ email: user.email })
 								}

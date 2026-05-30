@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 function ReturnButton({
 	onClick,
@@ -12,12 +13,13 @@ function ReturnButton({
 	className?: string;
 }) {
 	return (
-		<button
+		<Button
 			onClick={onClick}
-			className={`w-full md:w-auto bg-[#FA5424] hover:bg-[#FA5424]/90 text-white rounded-full px-4 md:px-6 min-w-[120px] md:max-w-[163px] py-6 md:py-3 text-[16px] md:text-[16px] font-sans h-12 md:h-auto transition-all flex items-center justify-center gap-2 ${className}`}
+			variant="cta"
+			className={`w-full md:w-auto px-4 md:px-6 min-w-30 md:max-w-40.75 py-6 md:py-3 text-[16px] font-sans h-12 md:h-auto gap-2 ${className}`}
 		>
 			{text}
-		</button>
+		</Button>
 	);
 }
 
@@ -64,7 +66,7 @@ export default function WaitlistSuccessPage() {
 								You&apos;ve Joined the Waitlist!
 							</h1>
 							<p className="text-[#757575] text-[18px] font-semibold max-w-sm">
-								We&apos;ll notify you as soon as Social Badge Builder is ready.
+								We&apos;ll notify you as soon as Flare Tag Builder is ready.
 							</p>
 						</div>
 						<ReturnButton onClick={() => router.push("/")} />

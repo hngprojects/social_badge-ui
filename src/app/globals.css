@@ -6,13 +6,9 @@
 
 html {
   scroll-behavior: auto;
-  scrollbar-width: none;
-  scrollbar-color: transparent transparent;
-}
-
-html:hover {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+  scrollbar-gutter: stable;
 }
 
 html::-webkit-scrollbar {
@@ -24,16 +20,12 @@ html::-webkit-scrollbar-track {
 }
 
 html::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 999px;
-}
-
-html:hover::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
 }
 @font-face {
   font-family: "Fraunces";
-  src: url("/fonts/fraunces/Fraunces-Variable.ttf") format("truetype");
+  src: url("/fonts/fraunces/Fraunces-Variable.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -41,9 +33,18 @@ html:hover::-webkit-scrollbar-thumb {
 
 @font-face {
   font-family: "Fraunces";
-  src: url("/fonts/fraunces/Fraunces-Italic-Variable.ttf") format("truetype");
+  src: url("/fonts/fraunces/Fraunces-Italic-Variable.woff2") format("woff2");
   font-weight: 100 900;
   font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/fonts/plus-jakarta-sans/PlusJakartaSans-Variable.ttf")
+    format("truetype");
+  font-weight: 200 800;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -52,7 +53,9 @@ html:hover::-webkit-scrollbar-thumb {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-dm-sans);
   --font-heading: var(--font-dm-sans);
-  --font-fraunces: var(--font-fraunces);
+  --font-fraunces: var(--ff-fraunces);
+  --font-jakarta: var(--font-plus-jakarta);
+  --font-league-gothic: var(--font-league-gothic-font);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -161,7 +164,7 @@ html:hover::-webkit-scrollbar-thumb {
 }
 
 :root {
-  --font-fraunces: "Fraunces", serif;
+  --ff-fraunces: "Fraunces", serif;
   /* Backgrounds & Foregrounds */
   --background: #ffffff;
   --foreground: #4b4b4b; /* neutral-900 */

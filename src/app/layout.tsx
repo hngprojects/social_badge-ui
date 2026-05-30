@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { DM_Sans} from "next/font/google";
+import { DM_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, League_Gothic} from "next/font/google";
 import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 export const dmSans = DM_Sans({
@@ -8,17 +9,24 @@ export const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   weight: ["400", "500", "600"],
 });
-
-
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-plus-jakarta",
+});
+const leagueGothic = League_Gothic({
+  subsets: ["latin"],
+  variable: "--font-league-gothic-font",
+  weight: "400",
+});
 export const metadata: Metadata = {
   title: {
-    default: "Social Badge — Digital Badge Builder",
-    template: "%s | Social Badge",
+    default: "Flare Tag — Digital Badge Builder",
+    template: "%s | Flare Tag",
   },
   description:
     "Create customizable digital badge templates that participants can personalize and share on social media.",
   openGraph: {
-    title: "Social Badge",
+    title: "Flare Tag",
     description:
       "Turn participants into active promoters with shareable digital badges.",
     type: "website",
@@ -31,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} bg-page text-ink antialiased`}
+        className={`${dmSans.variable} ${plusJakartaSans.variable} ${leagueGothic.variable} bg-page text-ink antialiased`}
       >
         <Providers>{children}</Providers>
         <Toaster
