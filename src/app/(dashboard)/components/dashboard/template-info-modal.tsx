@@ -38,7 +38,7 @@ export function TemplateInfoModal({
   return (
     <Dialog open={true} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent
-        className="max-h-[calc(100vh-3rem)] max-w-[640px] overflow-y-auto rounded-[18px] p-5 sm:p-6 md:grid-cols-[160px_1fr] md:gap-6"
+        className="max-h-[calc(100vh-3rem)] max-w-[calc(100%-2rem)] overflow-y-auto rounded-[18px] p-5 sm:max-w-[760px] sm:p-6 md:grid md:grid-cols-[220px_1fr] md:gap-7"
         showCloseButton
       >
         <DialogTitle className="sr-only">
@@ -46,7 +46,7 @@ export function TemplateInfoModal({
         </DialogTitle>
 
         <div className="flex items-center justify-center overflow-hidden rounded-[14px] bg-[#F4F4F2] p-4 md:self-stretch">
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[160px] md:max-w-none">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-[180px] md:max-w-none">
             <Image
               src={thumbnailUrl ?? "/assets/dashboard/badge-preview.png"}
               alt={template.title}
