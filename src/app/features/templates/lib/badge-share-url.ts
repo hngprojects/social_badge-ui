@@ -5,16 +5,16 @@ export function getAppOrigin(): string {
   return raw.replace(/\/$/, "");
 }
 
-/** Participant claim page — matches GET /badges/{share_slug} in the product spec. */
+/** Participant claim page — the public link shared with attendees. */
 export function buildParticipantShareUrl(shareSlug: string): string {
-  return `${getAppOrigin()}/badges/${encodeURIComponent(shareSlug)}`;
+  return `${getAppOrigin()}/participant?slug=${encodeURIComponent(shareSlug)}`;
 }
 
-/** Host + path for the link card (e.g. `localhost:3000/badges/my-event`). */
+/** Host + path + query for the link card (e.g. `localhost:3000/participant?slug=my-event`). */
 export function formatShareUrlForDisplay(fullUrl: string): string {
   try {
-    const { host, pathname } = new URL(fullUrl);
-    return `${host}${pathname}`;
+    const { host, pathname, search } = new URL(fullUrl);
+    return `${host}${pathname}${search}`;
   } catch {
     return fullUrl.replace(/^https?:\/\//, "");
   }

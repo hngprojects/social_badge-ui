@@ -11,8 +11,10 @@ import { ProfileInput } from "./input-profile";
 import { ProfileAvatarUpload } from "./profile-avatar-upload";
 import { SettingsSubCard } from "./settings-subcard";
 import { useProfileForm } from "@/app/features/settings/hooks/useProfileForm";
+import { useUserStore } from "@/stores/use-user-store";
 
 export default function ProfileCard() {
+  const user = useUserStore((state) => state.user);
   const {
     formData,
     avatarPreview,
@@ -42,7 +44,7 @@ export default function ProfileCard() {
 
         <CardContent className="flex flex-col gap-6">
           <ProfileAvatarUpload
-            previewUrl={avatarPreview}
+            previewUrl={avatarPreview || user?.profile_photo_url || ""}
             inputRef={fileInputRef}
             onUploadClick={handleUploadClick}
             onAvatarChange={handleAvatarChange}

@@ -12,7 +12,7 @@ export function ProfileAvatarUpload({
 }: ProfileAvatarUploadProps) {
   return (
     <>
-      <div className="flex flex-col items-start md:flex-row md:items-center gap-6 border-b pb-4 md:pb-6.75">
+      <div className="flex flex-col items-start md:flex-row md:items-center gap-3 border-b pb-4 md:pb-6.75">
         {/* USER AVATAR */}
         <div className="h-24 w-24">
           <UserAvatar src={previewUrl} />

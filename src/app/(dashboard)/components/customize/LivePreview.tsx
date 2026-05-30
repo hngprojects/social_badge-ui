@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import Image from "next/image";
-import { TABS, FONTS } from "./constants";
+import { FONTS } from "./constants";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import {
   PREVIEW_LAYOUTS,
@@ -11,18 +11,13 @@ import {
 import { CANVAS_FIELD_KEYS } from "@/app/features/templates/constants/field-keys";
 
 interface LivePreviewProps {
-  activeTab: typeof TABS[number];
-  setActiveTab: (tab: typeof TABS[number]) => void;
   editor: CustomizeEditorState;
-  shareCaption: string;
+  shareCaption?: string;
+  participantPhotoUrl?: string | null;
+  badgeRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-export function LivePreview({
-  activeTab,
-  setActiveTab,
-  editor,
-  shareCaption,
-}: LivePreviewProps) {
+export function LivePreview({ editor, shareCaption, participantPhotoUrl, badgeRef }: LivePreviewProps) {
   const preview = PREVIEW_LAYOUTS[editor.layoutId];
 
   const backgroundStyle = useMemo(() => {
@@ -66,23 +61,6 @@ export function LivePreview({
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center bg-[#EEEEEE] rounded-xl p-1 shadow-sm border border-gray-100">
-        {TABS.map((tab) => (
-          <button
-            key={tab}
-            type="button"
-            onClick={() => setActiveTab(tab)}
-            className={`flex-1 text-sm font-medium py-2 rounded-lg transition-all ${
-              activeTab === tab
-                ? "bg-white shadow text-[#1A1A1A] font-semibold"
-                : "text-[#1A1A1A] hover:text-gray-600"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-
       <div className="flex items-center gap-1.5 px-1">
         <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
         <span className="text-[11px] font-semibold tracking-widest text-gray-400 uppercase">
@@ -92,6 +70,7 @@ export function LivePreview({
 
       <div className="rounded-2xl bg-orange-50 p-5">
         <div
+          ref={badgeRef}
           style={backgroundStyle}
           className="w-full max-w-79.5 h-106 rounded-[18px] relative overflow-hidden mx-auto"
         >
@@ -135,15 +114,24 @@ export function LivePreview({
                   : "rounded-2xl border-white/20"
               } ${preview.previewColor === "#F5F5F0" ? "border-gray-200" : ""}`}
             >
-              <div
-                className={`w-full h-full flex items-center justify-center ${
-                  preview.previewColor === "#F5F5F0" ? "bg-[#D4F5DC]" : "bg-[#E5E7EB]"
-                }`}
-              >
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center px-4 select-none">
-                  {preview.photoFrame.placeholder}
-                </span>
-              </div>
+              {participantPhotoUrl ? (
+                <Image
+                  src={participantPhotoUrl}
+                  alt="Participant photo"
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <div
+                  className={`w-full h-full flex items-center justify-center ${
+                    preview.previewColor === "#F5F5F0" ? "bg-[#D4F5DC]" : "bg-[#E5E7EB]"
+                  }`}
+                >
+                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center px-4 select-none">
+                    {preview.photoFrame.placeholder}
+                  </span>
+                </div>
+              )}
             </div>
           )}
 
