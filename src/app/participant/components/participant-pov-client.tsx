@@ -112,7 +112,11 @@ export default function ParticipantPovClient() {
       {/* Main section */}
       <div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10">
         {isBadgeReady ? (
-          <BadgeReady onDownload={handleDownload} />
+          <BadgeReady
+            onDownload={handleDownload}
+            defaultCaption={baseEditorState?.defaultCaption}
+            destinationLink={baseEditorState?.destinationLink}
+          />
         ) : (
           <ParticipantForm
             onSuccess={() => setIsBadgeReady(true)}
