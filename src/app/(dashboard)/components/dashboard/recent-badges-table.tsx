@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { MoreMenu } from "./more-menu";
 import { RecentBadgesListProps } from "./recent-badges-types";
-import { formatDate } from "./recent-badges-utils";
+import { formatRelativeDate } from "./recent-badges-utils";
 import { StatusPill } from "./status-pill";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ const TABLE_COLUMNS = [
 	{ label: "BADGE", className: "w-[36%]" },
 	{ label: "STATUS" },
 	{ label: "LAST EDITED" },
+	{ label: "SHARES" },
 	{ label: "", className: "w-[40px]" },
 ];
 
@@ -110,7 +111,11 @@ export function RecentBadgesTable({
 									</TableCell>
 
 									<TableCell className="whitespace-nowrap px-[16px] py-[14px] text-[13px] text-gray-500">
-										{formatDate(template.updated_at)}
+										{formatRelativeDate(template.updated_at)}
+									</TableCell>
+
+									<TableCell className="whitespace-nowrap px-[16px] py-[14px] text-[13px] text-gray-500">
+										{template.total_shares ?? 0}
 									</TableCell>
 
 									<TableCell

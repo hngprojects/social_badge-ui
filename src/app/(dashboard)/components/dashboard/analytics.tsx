@@ -7,6 +7,7 @@ export default function Analytics({
   totalBadges,
   activeBadges,
   totalShares,
+  totalDrafts,
 }: AnalyticsProps) {
   const analyticsStats = [
     {
@@ -21,6 +22,10 @@ export default function Analytics({
     //   ...stats[2],
     //   count: 0,
     // },
+    {
+      ...stats[4],
+      count: totalDrafts,
+    },
     {
       ...stats[3],
       count: totalShares,

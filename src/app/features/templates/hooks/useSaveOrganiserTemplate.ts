@@ -84,6 +84,7 @@ export function useSaveOrganiserTemplate() {
         is_published: true,
         status: "live" as const,
         share_slug: published.share_slug,
+        total_shares: published.total_shares ?? 0,
         published_at: published.published_at,
         created_at: published.created_at ?? new Date().toISOString(),
         updated_at: published.updated_at ?? new Date().toISOString(),
