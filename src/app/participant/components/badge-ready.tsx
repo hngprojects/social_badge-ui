@@ -4,14 +4,22 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import CaptionBox from "./caption-box";
-import { DEFAULT_CAPTION } from "../constants";
+import { DEFAULT_CAPTION, SOCIAL_PLATFORMS } from "../constants";
 import { useState } from "react";
 import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
+import { SharePlatform } from "../types";
+import { shareService } from "../services/share";
 
-export default function BadgeReady({ onDownload }: { onDownload?: () => Promise<void> }) {
-	const [captionText, setCaptionText] = useState(DEFAULT_CAPTION);
+interface BadgeReadyProps {
+	onDownload?: () => Promise<void>;
+	defaultCaption?: string;
+	destinationLink?: string;
+}
+
+export default function BadgeReady({ onDownload, defaultCaption, destinationLink }: BadgeReadyProps) {
+	const [captionText, setCaptionText] = useState(defaultCaption || DEFAULT_CAPTION);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isDownloading, setIsDownloading] = useState(false);
 
@@ -28,9 +36,9 @@ export default function BadgeReady({ onDownload }: { onDownload?: () => Promise<
 		}
 	};
 
-	// const handleSocialShare = (platform: SharePlatform) => {
-	// 	shareService.share(platform, captionText);
-	// };
+	const handleSocialShare = (platform: SharePlatform) => {
+		shareService.share(platform, captionText, destinationLink);
+	};
 
 	return (
 		<motion.div
@@ -77,16 +85,15 @@ export default function BadgeReady({ onDownload }: { onDownload?: () => Promise<
 					{isDownloading ? "Downloading…" : "Download badge"}
 				</Button>
 			</motion.div>
-			{/* Social media links — temporarily hidden
 			<motion.div
 				className="flex items-center gap-4 w-full my-5"
 				variants={itemVariants}
 			>
-				<hr className="flex-1 border-t border-[#e5e5e5]" />
-				<span className="text-[14px] text-[#9b9b9b] font-medium font-sans">
+				<hr className="flex-1 border-t border-[#D1D5DB]" />
+				<span className="text-[14px] text-black font-medium font-sans">
 					or share directly to
 				</span>
-				<hr className="flex-1 border-t border-[#e5e5e5]" />
+				<hr className="flex-1 border-t border-[#D1D5DB]" />
 			</motion.div>
 			<motion.div
 				className="grid grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-2 w-full place-items-center sm:gap-y-8 px-10"
@@ -96,7 +103,7 @@ export default function BadgeReady({ onDownload }: { onDownload?: () => Promise<
 					<motion.button
 						key={platform.id}
 						variants={itemVariants}
-						onClick={() => handleSocialShare(platform.name as SharePlatform)}
+						onClick={() => handleSocialShare(platform.id as SharePlatform)}
 						className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
@@ -116,7 +123,6 @@ export default function BadgeReady({ onDownload }: { onDownload?: () => Promise<
 					</motion.button>
 				))}
 			</motion.div>
-			*/}
 			<motion.div variants={itemVariants}>
 				<CaptionBox
 					value={captionText}
