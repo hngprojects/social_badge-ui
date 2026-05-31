@@ -2,7 +2,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileCard from "./tab-profile";
 import TabSecurity from "./tab-security";
-import TabNotifications from "./tab-notifications";
 import TabAccount from "./tab-account";
 
 export default function SettingTabs() {
