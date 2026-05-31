@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { ArrowOrange } from "../../badges/published/icons/arrow-up";
 import { NextAction } from "../../types/badge-published/badge";
 import { NEXT_ACTIONS } from "../../constants/badges-published/next-action";
@@ -35,7 +35,7 @@ export default function WhatsNext({ fullUrl, templateId }: WhatsNextProps) {
 				Keep momentum going while your badge does its work.
 			</p>
 
-			<div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
+			<div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
 				{actions.map((action) => (
 					<NextActionCard key={action.id} action={action} />
 				))}
@@ -71,4 +71,3 @@ function NextActionCard({ action }: { action: NextAction }) {
 		</div>
 	);
 }
-
