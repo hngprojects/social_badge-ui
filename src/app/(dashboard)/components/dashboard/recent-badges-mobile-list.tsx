@@ -1,6 +1,6 @@
 import { MoreMenu } from "./more-menu";
 import { RecentBadgesListProps } from "./recent-badges-types";
-import { formatRelativeDate } from "./recent-badges-utils";
+import { formatLastEditedDate } from "./recent-badges-utils";
 import { StatusPill } from "./status-pill";
 
 export function RecentBadgesMobileList({
@@ -54,7 +54,7 @@ export function RecentBadgesMobileList({
           </div>
 
           <p className="text-[13px] text-[#B0B0B0]">
-            {formatRelativeDate(template.updated_at)}
+            {formatLastEditedDate(template.updated_at, template.status)}
           </p>
 
           <p className="text-[13px] text-[#B0B0B0]">

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
 import { StatusPill } from "./status-pill";
-import { formatDate, formatRelativeDate } from "./recent-badges-utils";
+import { formatDate, formatLastEditedDate } from "./recent-badges-utils";
 import Link from "next/link";
 import { toast } from "sonner";
 import {
@@ -89,7 +89,7 @@ export function TemplateInfoModal({
                 />
               }
               label="Last used"
-              value={formatRelativeDate(template.updated_at)}
+              value={formatLastEditedDate(template.updated_at, template.status)}
             />
             <InfoRow
               icon={

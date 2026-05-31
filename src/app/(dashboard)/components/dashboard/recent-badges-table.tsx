@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { MoreMenu } from "./more-menu";
 import { RecentBadgesListProps } from "./recent-badges-types";
-import { formatRelativeDate } from "./recent-badges-utils";
+import { formatLastEditedDate } from "./recent-badges-utils";
 import { StatusPill } from "./status-pill";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -111,7 +111,7 @@ export function RecentBadgesTable({
 									</TableCell>
 
 									<TableCell className="whitespace-nowrap px-[16px] py-[14px] text-[13px] text-gray-500">
-										{formatRelativeDate(template.updated_at)}
+										{formatLastEditedDate(template.updated_at, template.status)}
 									</TableCell>
 
 									<TableCell className="whitespace-nowrap px-[16px] py-[14px] text-[13px] text-gray-500">

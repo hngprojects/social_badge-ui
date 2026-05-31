@@ -10,10 +10,14 @@ const relativeTimeFormatter = new Intl.RelativeTimeFormat("en", {
   numeric: "auto",
 });
 
-export function formatRelativeDate(date: string) {
+export function formatRelativeDate(date: string | null | undefined) {
+  if (!date) {
+    return "";
+  }
+
   const then = new Date(date).getTime();
 
-  if (Number.isNaN(then)) {
+  if (Number.isNaN(then) || then <= 0) {
     return "";
   }
 
@@ -53,4 +57,17 @@ export function formatRelativeDate(date: string) {
   }
 
   return relativeTimeFormatter.format(Math.round(diffInMonths / 12), "year");
+}
+
+export function formatLastEditedDate(
+  date: string | null | undefined,
+  status: "draft" | "live",
+) {
+  const relativeDate = formatRelativeDate(date);
+
+  if (relativeDate) {
+    return relativeDate;
+  }
+
+  return status === "draft" ? "Not edited yet" : "Not available";
 }
