@@ -15,23 +15,20 @@ export const signup = async (data: SignupPayload) => {
   return response;
 };
 export const login = async (data: LoginPayload) => {
-  const response = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw { response: { status: response.status, data: error } };
-  }
-
-  return response.json() as Promise<{
+  const body = await apiClient<{
     status: string;
     message: string;
-    data: { access_token: string; token_type?: string; user: User };
-  }>;
+    data: {
+      access_token: string;
+      token_type?: string;
+      user: User;
+    };
+  }>("/auth/login", {
+    method: "POST",
+    data,
+  });
+
+  return body;
 };
 export const forgotPassword = async ({ email }: { email: string }) => {
   return apiClient<{ status: string; message: string }>(
