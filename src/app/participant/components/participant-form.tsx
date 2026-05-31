@@ -31,6 +31,7 @@ export default function ParticipantForm({
 		formState: { errors, isSubmitting },
 	} = useForm<ParticipantValues>({
 		resolver: zodResolver(participantSchema),
+		mode: "onChange",
 		defaultValues: {
 			name: "",
 			caption: DEFAULT_CAPTION,
@@ -44,6 +45,11 @@ export default function ParticipantForm({
 
 	const onSubmit = async () => {
 		onSuccess?.();
+	};
+
+	const handleCaptionResize = (target: HTMLTextAreaElement) => {
+		target.style.height = "auto";
+		target.style.height = `${target.scrollHeight}px`;
 	};
 
 	return (
@@ -62,25 +68,25 @@ export default function ParticipantForm({
 				<Input
 					type="file"
 					className="
-					cursor-pointer
-					h-11.5
-					rounded-sm
-					text-sm
-					text-[#b5b7bc]
-					py-2
-					px-3
+                    cursor-pointer
+                    h-11.5
+                    rounded-sm
+                    text-sm
+                    text-[#b5b7bc]
+                    py-2
+                    px-3
 
-					file:mr-4
-					file:rounded-md
-					file:border
-					file:border-[#ff693E]
-					file:bg-white
-					file:px-4
-					file:text-sm
-					file:font-medium
-					file:text-[#ff693E]
-					file:cursor-pointer
-					"
+                    file:mr-4
+                    file:rounded-md
+                    file:border
+                    file:border-[#ff693E]
+                    file:bg-white
+                    file:px-4
+                    file:text-sm
+                    file:font-medium
+                    file:text-[#ff693E]
+                    file:cursor-pointer
+                    "
 					accept=".png,.jpg,.jpeg,.svg"
 					onChange={(e) => {
 						const file = e.target.files?.[0];
@@ -106,13 +112,16 @@ export default function ParticipantForm({
 
 			<motion.div className="space-y-4" variants={itemVariants}>
 				<label className="text-[13.5px] font-bold">
-					Enter Name <span className="text-[#ff693E]">*</span>
+					name <span className="text-[#ff693E]">*</span>
 				</label>
 
 				<Input
 					className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-					placeholder="Placeholder text..."
-					{...register("name", { onChange: (e) => onNameChange?.(e.target.value) })}
+					placeholder="Enter your name..."
+					maxLength={25}
+					{...register("name", {
+						onChange: (e) => onNameChange?.(e.target.value),
+					})}
 				/>
 				<p className="text-neutral-400 text-[12.5px] font-sans">
 					Appears as the main title on the badge.
@@ -124,7 +133,24 @@ export default function ParticipantForm({
 			</motion.div>
 
 			<motion.div variants={itemVariants}>
-				<CaptionBox {...register("caption")} error={errors.caption?.message} />
+				<CaptionBox
+					{...register("caption", {
+						onChange: (e) => {
+							const start = e.target.selectionStart;
+							const end = e.target.selectionEnd;
+
+							if (e.target.value.length > 200) {
+								e.target.value = e.target.value.slice(0, 200);
+								e.target.setSelectionRange(start, end);
+							}
+
+							if (e.target instanceof HTMLTextAreaElement) {
+								handleCaptionResize(e.target);
+							}
+						},
+					})}
+					error={errors.caption?.message}
+				/>
 			</motion.div>
 
 			<motion.div variants={itemVariants}>
