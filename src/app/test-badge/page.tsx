@@ -10,6 +10,7 @@ import { CustomTemplatePreview } from "./components/CustomTemplatePreview";
 
 const TEST_TEMPLATES = [
   { id: "tpl_1", label: "Template 1" },
+  { id: "tpl_3", label: "Template 3" },
   { id: "tpl_4", label: "Template 4" },
   { id: "tpl_5", label: "Template 5" },
   { id: "tpl_7", label: "Template 7" },

@@ -10,6 +10,7 @@ import {
 	Template5,
 	Template7,
 	Template9,
+	Template3
 } from "../../(dashboard)/create-badges/customize/components/customizable-svgs";
 import PlaceholderLogo from "./placeholder-logo";
 
@@ -52,7 +53,7 @@ export function Layout9({ editor }: TemplateLayoutProps) {
 			<div className="absolute w-full h-full top-0 py-8">
 				<div className="flex border-white  justify-between items-start px-8">
 					{" "}
-					<LogoPlaceholder isHidden={true} />
+					<LogoPlaceholder isHidden={false} />
 					<div>Event Name</div>
 				</div>
 
@@ -71,7 +72,6 @@ export function Layout9({ editor }: TemplateLayoutProps) {
 	);
 }
 
-// Add more Layout components here as needed...
 
 // Placeholder for Template 4 Layout
 export function Layout4({ editor }: TemplateLayoutProps) {
@@ -159,11 +159,38 @@ export function Layout7({ editor }: TemplateLayoutProps) {
 	);
 }
 
+export function Layout3({ editor }: TemplateLayoutProps) {
+	return (
+		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-black">
+			<Template3 className="w-full h-full" />
+			<div className="absolute w-full h-full top-0 py-8">
+				<div className="flex border-black  justify-between items-start px-8">
+					{" "}
+					<LogoPlaceholder isHidden={true} />
+					<div>Event Name</div>
+				</div>
+
+				<div className="px-8 my-6">
+					<h2 className="text-3xl">
+						<span>Sandra</span> Robinson{" "}
+						{/*User name will be placed here by users*/}
+					</h2>
+					<p className="text-base">
+						Product designer {/*User role will be placed here by users*/}
+					</p>
+				</div>
+				<div className="bg-black w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto"></div>
+			</div>
+		</div>
+	);
+}
+
 const LAYOUT_COMPONENTS: Record<
 	string,
 	React.ComponentType<TemplateLayoutProps>
 > = {
 	tpl_1: Layout1,
+	tpl_3: Layout3,
 	tpl_4: Layout4,
 	tpl_5: Layout5,
 	tpl_7: Layout7,

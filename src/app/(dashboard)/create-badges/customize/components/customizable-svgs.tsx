@@ -241,3 +241,15 @@ export function Template4Left({ className }: { className?: string }) {
 		</svg>
 	);
 }
+export function Template3({ className }: { className?: string }) {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="480"
+			height="640"
+			fill="none"
+			viewBox="0 0 480 640"
+		>
+			<rect width="480" height="640" fill="#fff" rx="32" />
+		</svg>
+	);}
