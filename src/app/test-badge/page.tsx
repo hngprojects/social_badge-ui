@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import { LivePreview } from "@/app/(dashboard)/components/customize/LivePreview";
 import { StyleSection } from "@/app/(dashboard)/components/customize/StyleSection";
-import { TABS } from "@/app/(dashboard)/components/customize/constants";
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
 import { CustomTemplatePreview } from "./components/CustomTemplatePreview";
@@ -23,11 +22,10 @@ const TEST_TEMPLATES = [
 
 export default function TestBadgePage({ className }: { className?: string }) {
   const [selectedTemplate, setSelectedTemplate] = useState(TEST_TEMPLATES[0].id);
-  const [activeTab, setActiveTab] = useState<typeof TABS[number]>("Badge");
   const [previewMode, setPreviewMode] = useState<"live" | "custom">("custom");
   
   const initialEditor = useMemo(() => createDefaultEditorState(selectedTemplate), [selectedTemplate]);
-  const { editor, patch, setPalette, setBgMode } = useCustomizeEditorState(initialEditor);
+  const { editor, patch, setPalette, setBgMode, layoutCaps } = useCustomizeEditorState(initialEditor);
 
   // Re-initialize editor when template changes
   const handleTemplateChange = (templateId: string) => {
@@ -102,6 +100,7 @@ export default function TestBadgePage({ className }: { className?: string }) {
               onChange={patch}
               onPaletteChange={setPalette}
               onBgModeChange={setBgMode}
+              layoutCaps={layoutCaps}
             />
           </div>
 
@@ -163,10 +162,7 @@ export default function TestBadgePage({ className }: { className?: string }) {
               </div>
             ) : (
               <LivePreview
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
                 editor={editor}
-                shareCaption={editor.defaultCaption}
               />
             )}
           </div>

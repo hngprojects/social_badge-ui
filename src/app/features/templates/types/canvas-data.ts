@@ -20,7 +20,7 @@ export type CanvasFieldType =
 
 export type LogoPosition = "top-center" | "top-left" | "top-right";
 
-export type BackgroundType = "gradient" | "solid" | "image";
+export type BackgroundType = "gradient" | "solid" | "image" | "split";
 
 export interface CanvasGradientBackground {
 	type: "gradient";
@@ -28,6 +28,13 @@ export interface CanvasGradientBackground {
 		colors: [string, string];
 		direction: string;
 	};
+}
+
+export interface CanvasSplitBackground {
+	type: "split";
+	top_color: string;
+	bottom_color: string;
+	split_ratio: number;
 }
 
 export interface CanvasSolidBackground {
@@ -159,12 +166,6 @@ export interface CustomizeEditorState {
 	fontId: string;
 	titleSize: "SMALL" | "MEDIUM" | "LARGE";
 	defaultCaption: string;
-	destinationLink: string;
-	hashtags: string[];
-	accessType: number;
-	savedAt?: string | null;
-}
-tion: string;
 	destinationLink: string;
 	hashtags: string[];
 	accessType: number;
