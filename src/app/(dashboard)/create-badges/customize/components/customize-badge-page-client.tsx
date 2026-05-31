@@ -12,7 +12,11 @@ export function CustomizeBadgePageClient() {
   const organiserTemplateId = searchParams.get("id");
 
   const platformId = platformTemplateId ?? "tpl_achieveher";
-  const { data: loadedState, isLoading: organiserLoading } =
+  const {
+    data: loadedState,
+    isLoading: organiserLoading,
+    isError: organiserError,
+  } =
     useLoadOrganiserTemplate(organiserTemplateId);
   const { data: platformTemplate, isLoading: platformLoading } = useLoadPlatformTemplate(
     organiserTemplateId ? null : platformTemplateId,
@@ -24,6 +28,14 @@ export function CustomizeBadgePageClient() {
     return (
       <main className="flex min-h-[50vh] items-center justify-center bg-[#F5F5F5]">
         <p className="text-sm text-gray-500">Loading template…</p>
+      </main>
+    );
+  }
+
+  if (organiserTemplateId && organiserError) {
+    return (
+      <main className="flex min-h-[50vh] items-center justify-center bg-[#F5F5F5]">
+        <p className="text-sm text-red-500">Could not load this badge.</p>
       </main>
     );
   }

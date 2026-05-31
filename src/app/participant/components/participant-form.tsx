@@ -16,8 +16,12 @@ import { containerVariants, itemVariants } from "../constants";
 
 export default function ParticipantForm({
 	onSuccess,
+	onNameChange,
+	onPhotoChange,
 }: {
 	onSuccess?: () => void;
+	onNameChange?: (name: string) => void;
+	onPhotoChange?: (url: string | null) => void;
 }) {
 	const {
 		register,
@@ -38,13 +42,7 @@ export default function ParticipantForm({
 		name: "avatar",
 	});
 
-	const onSubmit = async (values: ParticipantValues) => {
-		console.log(values);
-
-		// upload file
-		// generate badge
-
-		// TODO: replace with real success check once API is wired up
+	const onSubmit = async () => {
 		onSuccess?.();
 	};
 
@@ -86,11 +84,9 @@ export default function ParticipantForm({
 					accept=".png,.jpg,.jpeg,.svg"
 					onChange={(e) => {
 						const file = e.target.files?.[0];
-
 						if (file) {
-							setValue("avatar", file, {
-								shouldValidate: true,
-							});
+							setValue("avatar", file, { shouldValidate: true });
+							onPhotoChange?.(URL.createObjectURL(file));
 						}
 					}}
 				/>
@@ -116,7 +112,7 @@ export default function ParticipantForm({
 				<Input
 					className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
 					placeholder="Placeholder text..."
-					{...register("name")}
+					{...register("name", { onChange: (e) => onNameChange?.(e.target.value) })}
 				/>
 				<p className="text-neutral-400 text-[12.5px] font-sans">
 					Appears as the main title on the badge.

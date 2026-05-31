@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -10,7 +9,6 @@ import { StyleSection } from "../../../components/customize/StyleSection";
 import { BadgeContentSection } from "../../../components/customize/BadgeContentSection";
 import { ShareMessageSection } from "../../../components/customize/ShareMessageSection";
 import { LivePreview } from "../../../components/customize/LivePreview";
-import { TABS } from "../../../components/customize/constants";
 
 import { customizeBadgeSchema } from "@/schemas/template";
 
@@ -31,9 +29,7 @@ export function CustomizeBadgeForm({
   const { editor, patch, setPalette, setBgMode, layoutCaps } =
     useCustomizeEditorState(initialEditor);
   const { saveTemplateAsync, isSaving } = useSaveOrganiserTemplate();
-  const [activeTab, setActiveTab] = useState<typeof TABS[number]>("Badge");
-
-  const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
+const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -126,12 +122,7 @@ export function CustomizeBadgeForm({
       </section>
 
       <section className="order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:pt-6 lg:pb-6">
-        <LivePreview
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          editor={editor}
-          shareCaption={editor.defaultCaption}
-        />
+        <LivePreview editor={editor} />
       </section>
     </main>
   );

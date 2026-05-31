@@ -7,13 +7,21 @@ import { FirstBadgeCta } from "../components/dashboard/first-badge-cta";
 import RecentBadges from "../components/dashboard/recent-badges";
 import { RECENT_BADGES_LIMIT } from "../components/dashboard/recent-badges-types";
 import Steps from "../components/dashboard/steps";
+import { useBadgeAnalytics } from "../hooks/use-badge-analytics";
 import { useRecentOrganizerBadges } from "../hooks/use-organizer-template-instances";
 
 export default function Dashboard() {
   const { totalBadges, activeBadges } =
     useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
+  const { data: badgeAnalytics } = useBadgeAnalytics();
 
-  const hasBadges = totalBadges > 0;
+  const dashboardTotalBadges =
+    badgeAnalytics?.total_badges_created ?? totalBadges;
+  const dashboardActiveBadges =
+    badgeAnalytics?.total_active_badges ?? activeBadges;
+  const totalShares = badgeAnalytics?.total_shares ?? 0;
+
+  const hasPublishedBadges = dashboardActiveBadges > 0;
 
   return (
     <section className="flex flex-col gap-6 pt-[32px]">
@@ -22,9 +30,13 @@ export default function Dashboard() {
         <UserWelcome />
       </header>
 
-      <Analytics totalBadges={totalBadges} activeBadges={activeBadges} />
+      <Analytics
+        totalBadges={dashboardTotalBadges}
+        activeBadges={dashboardActiveBadges}
+        totalShares={totalShares}
+      />
 
-      {hasBadges ? <RecentBadges /> : <FirstBadgeCta />}
+      {hasPublishedBadges ? <RecentBadges /> : <FirstBadgeCta />}
 
       <Steps />
 

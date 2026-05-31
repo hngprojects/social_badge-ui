@@ -45,7 +45,7 @@ export default function ParticipantPopup({
                 className="flex-1 h-9 rounded-4xl bg-[#f3f4fe] text-[#131010] text-[14px]"
                 asChild
               >
-                <Link href="/signup">Explore Flaretag</Link>
+                <Link href="/signup">Explore Flare Tag</Link>
               </Button>
               <Button
                 className="flex-1 h-9 rounded-4xl bg-primary-500 font-medium text-[14px]"

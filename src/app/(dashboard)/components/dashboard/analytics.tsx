@@ -6,6 +6,7 @@ import { stats } from "../../constants/dashboard";
 export default function Analytics({
   totalBadges,
   activeBadges,
+  totalShares,
 }: AnalyticsProps) {
   const analyticsStats = [
     {
@@ -16,13 +17,13 @@ export default function Analytics({
       ...stats[1],
       count: activeBadges,
     },
-    {
-      ...stats[2],
-      count: 0,
-    },
+    // {
+    //   ...stats[2],
+    //   count: 0,
+    // },
     {
       ...stats[3],
-      count: 0,
+      count: totalShares,
     },
   ];
   return (

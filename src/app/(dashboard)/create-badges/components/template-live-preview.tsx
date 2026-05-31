@@ -73,7 +73,7 @@ export function TemplateLivePreview({ template }: TemplateLivePreviewProps) {
       <div className="w-full space-y-2.5 pt-1">
         <Link
           href={`/create-badges/customize?template=${template.id}`}
-          className="w-full h-11 bg-[#FF693E] hover:bg-[#FF693E]/90 cursor-pointer text-[#1a1a1a] font-semibold rounded-xl text-sm transition-colors shadow-sm flex items-center justify-center"
+          className="w-full h-11 bg-[#FF693E] hover:bg-[#FF693E]/90 cursor-pointer text-white font-semibold rounded-xl text-sm transition-colors shadow-sm flex items-center justify-center"
         >
           Continue to customize
         </Link>
