@@ -3,10 +3,15 @@ import { SharePlatform } from "../types";
 const encode = (text: string) => encodeURIComponent(text);
 
 export const shareService = {
-  async share(platform: SharePlatform, caption: string) {
+  async share(platform: SharePlatform, caption: string, destinationLink?: string) {
     const text = caption || "";
     const encodedText = encode(text);
-    const encodedUrl = encode(window.location.href);
+    const resolvedUrl = destinationLink
+      ? /^https?:\/\//i.test(destinationLink)
+        ? destinationLink
+        : `https://${destinationLink}`
+      : window.location.href;
+    const encodedUrl = encode(resolvedUrl);
 
     // best universal fallback (mobile)
     if (navigator.share) {
@@ -31,7 +36,7 @@ export const shareService = {
 
       case "telegram":
         window.open(
-          `https://t.me/share/url?text=${encodedText}`,
+          `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`,
           "_blank",
           "noopener,noreferrer",
         );
