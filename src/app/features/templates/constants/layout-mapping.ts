@@ -1,17 +1,13 @@
 import type { CanvasData, CanvasLayoutId } from "../types/canvas-data";
 
 const CANVAS_LAYOUT_IDS: CanvasLayoutId[] = [
-	"photo_gradient_v1",
-	"name_role_dark_v1",
-	"dev_summit_dark_v1",
-	"next_gen_mint_v1",
+	"circle_photo_dark_v1",
+	"dark_name_photo_v1",
+	"bold_name_pink_v1",
+	"split_purple_teal_v1",
 ];
 
 export const PLATFORM_TEMPLATE_LAYOUT_MAP: Record<string, CanvasLayoutId> = {
-	tpl_achieveher: "photo_gradient_v1",
-	tpl_dev_summit_26: "dev_summit_dark_v1",
-	tpl_web3_summit: "name_role_dark_v1",
-	tpl_next_gen: "next_gen_mint_v1",
 };
 
 function isCanvasLayoutId(value: string): value is CanvasLayoutId {
@@ -27,9 +23,8 @@ export function resolveLayoutId(
 	if (fromCanvas && isCanvasLayoutId(fromCanvas)) {
 		return fromCanvas;
 	}
-	return (
-		PLATFORM_TEMPLATE_LAYOUT_MAP[platformTemplateId] ?? "photo_gradient_v1"
-	);
+	// Fallback should probably be one of the new ones
+	return "bold_name_pink_v1";
 }
 
 export interface LayoutCapabilities {
@@ -44,36 +39,36 @@ export interface LayoutCapabilities {
 }
 
 export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
-	photo_gradient_v1: {
-		staticFields: ["event_name", "event_date"],
-		participantFields: ["participant_name", "participant_photo"],
-		hasHeaderLogo: true,
-		defaultLogoPosition: "top-center",
-		defaultPaletteId: "bg_mesh_01",
-		previewColor: "",
-	},
-	dev_summit_dark_v1: {
-		staticFields: ["event_name"],
-		participantFields: ["participant_name", "participant_photo"],
-		hasHeaderLogo: false,
-		defaultLogoPosition: "top-right",
-		defaultPaletteId: "bg_color_dark",
-		previewColor: "#0A0A0A",
-	},
-	name_role_dark_v1: {
-		staticFields: ["event_name"],
+	bold_name_pink_v1: {
+		staticFields: [],
 		participantFields: ["participant_name", "role_title", "participant_photo"],
 		hasHeaderLogo: false,
-		defaultLogoPosition: "top-right",
-		defaultPaletteId: "bg_mesh_02",
-		previewColor: "#1a1232",
+		defaultLogoPosition: "top-center",
+		defaultPaletteId: "bg_color_pink",
+		previewColor: "#f5c6d0",
 	},
-	next_gen_mint_v1: {
-		staticFields: ["event_name", "event_date"],
-		participantFields: ["participant_name", "role_title"],
-		hasHeaderLogo: false,
+	circle_photo_dark_v1: {
+		staticFields: [],
+		participantFields: ["participant_name", "role_title", "participant_photo"],
+		hasHeaderLogo: true,
+		defaultLogoPosition: "top-center",
+		defaultPaletteId: "bg_color_dark",
+		previewColor: "#1e1e1e",
+	},
+	dark_name_photo_v1: {
+		staticFields: ["event_name"],
+		participantFields: ["participant_name", "role_title", "participant_photo"],
+		hasHeaderLogo: true,
 		defaultLogoPosition: "top-left",
-		defaultPaletteId: "bg_color_light_grey",
-		previewColor: "#F5F5F0",
+		defaultPaletteId: "bg_color_dark",
+		previewColor: "#1a1a1a",
+	},
+	split_purple_teal_v1: {
+		staticFields: ["event_name"],
+		participantFields: ["participant_name", "role_title", "participant_photo"],
+		hasHeaderLogo: true,
+		defaultLogoPosition: "top-left",
+		defaultPaletteId: "bg_mesh_01",
+		previewColor: "#6b3fa0",
 	},
 };

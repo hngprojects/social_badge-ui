@@ -14,6 +14,7 @@ import { parseCanvasDataToEditorState } from "@/app/features/templates/lib/parse
 export default function ParticipantPovClient() {
   const [isBadgeReady, setIsBadgeReady] = useState(false);
   const [participantName, setParticipantName] = useState("");
+  const [participantRole, setParticipantRole] = useState("");
   const [participantPhotoUrl, setParticipantPhotoUrl] = useState<string | null>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -62,8 +63,9 @@ export default function ParticipantPovClient() {
     return {
       ...baseEditorState,
       participantNamePlaceholder: participantName || baseEditorState.participantNamePlaceholder,
+      roleTitlePlaceholder: participantRole || baseEditorState.roleTitlePlaceholder,
     };
-  }, [baseEditorState, participantName]);
+  }, [baseEditorState, participantName, participantRole]);
 
   return (
     <div className="relative min-h-screen bg-primary-50 flex flex-col items-center justify-center py-28 lg:py-0 overflow-hidden">
@@ -115,7 +117,9 @@ export default function ParticipantPovClient() {
           <ParticipantForm
             onSuccess={() => setIsBadgeReady(true)}
             onNameChange={setParticipantName}
+            onRoleChange={setParticipantRole}
             onPhotoChange={setParticipantPhotoUrl}
+            editorState={editorState}
           />
         )}
 
@@ -132,7 +136,13 @@ export default function ParticipantPovClient() {
               <p className="text-sm text-gray-500">Failed to load badge. Please try again.</p>
             </div>
           ) : editorState ? (
-            <LivePreview editor={editorState} participantPhotoUrl={participantPhotoUrl} badgeRef={badgeRef} />
+            <LivePreview 
+              editor={editorState} 
+              participantPhotoUrl={participantPhotoUrl} 
+              badgeRef={badgeRef} 
+              hideExtras 
+              badgeClassName="w-full max-w-110 h-140" 
+            />
           ) : (
             <div
               aria-hidden="true"

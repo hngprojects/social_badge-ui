@@ -27,13 +27,10 @@ export default function RecentBadges() {
   const [templateToDelete, setTemplateToDelete] =
     useState<OrganizerTemplateInstance | null>(null);
 
-  const publishedTemplates = templates.filter(
-    (template) => template.is_published || template.status === "live",
-  );
   const filtered =
     activeFilter === "All"
-      ? publishedTemplates
-      : publishedTemplates.filter(
+      ? templates
+      : templates.filter(
           (template) => template.status === activeFilter.toLowerCase(),
         );
 

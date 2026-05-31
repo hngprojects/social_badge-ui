@@ -16,9 +16,10 @@ export default function Dashboard() {
   const { data: badgeAnalytics } = useBadgeAnalytics();
 
   const dashboardTotalBadges =
-    badgeAnalytics?.total_badges_created ?? totalBadges;
+    badgeAnalytics?.total_organiser_badges ?? totalBadges;
   const dashboardActiveBadges =
     badgeAnalytics?.total_active_badges ?? activeBadges;
+  const totalDrafts = badgeAnalytics?.total_draft_badges ?? 0;
   const totalShares = badgeAnalytics?.total_shares ?? 0;
 
   const hasPublishedBadges = dashboardActiveBadges > 0;
@@ -34,6 +35,7 @@ export default function Dashboard() {
         totalBadges={dashboardTotalBadges}
         activeBadges={dashboardActiveBadges}
         totalShares={totalShares}
+        totalDrafts={totalDrafts}
       />
 
       {hasPublishedBadges ? <RecentBadges /> : <FirstBadgeCta />}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
 import { StatusPill } from "./status-pill";
-import { formatDate } from "./recent-badges-utils";
+import { formatDate, formatLastEditedDate } from "./recent-badges-utils";
 import Link from "next/link";
 import { toast } from "sonner";
 import {
@@ -38,27 +38,25 @@ export function TemplateInfoModal({
   return (
     <Dialog open={true} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent
-        className="max-h-[calc(100vh-3rem)] max-w-[640px] overflow-y-auto rounded-[18px] p-5 sm:p-6 md:grid-cols-[160px_1fr] md:gap-6"
+        className="max-h-[calc(100vh-4rem)] max-w-[calc(100%-3rem)] overflow-y-auto rounded-[18px] p-5 sm:max-w-[min(860px,calc(100%-4rem))] sm:p-6 md:grid md:grid-cols-[280px_1fr] md:gap-7"
         showCloseButton
       >
         <DialogTitle className="sr-only">
           {template.title} badge information
         </DialogTitle>
 
-        <div className="flex items-center justify-center overflow-hidden rounded-[14px] bg-[#F4F4F2] p-4 md:self-stretch">
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[160px] md:max-w-none">
-            <Image
-              src={thumbnailUrl ?? "/assets/dashboard/badge-preview.png"}
-              alt={template.title}
-              fill
-              className="object-cover"
-            />
-          </div>
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-[240px] overflow-hidden rounded-[14px] sm:max-w-[280px] md:mx-0 md:max-w-none">
+          <Image
+            src={thumbnailUrl ?? "/assets/dashboard/badge-preview.png"}
+            alt={template.title}
+            fill
+            className="object-cover"
+          />
         </div>
 
         <div className="min-w-0">
-          <div className="flex items-start gap-3 pr-10">
-            <h2 className="min-w-0 flex-1 text-[24px] font-bold leading-[1.08] text-[#1A1A1A] sm:text-[26px]">
+          <div className="flex items-center gap-5">
+            <h2 className="min-w-0 text-[24px] font-bold leading-[1.08] text-[#1A1A1A] sm:text-[26px]">
               {template.title}
             </h2>
 
@@ -91,7 +89,19 @@ export function TemplateInfoModal({
                 />
               }
               label="Last used"
-              value={formatDate(template.updated_at)}
+              value={formatLastEditedDate(template.updated_at, template.status)}
+            />
+            <InfoRow
+              icon={
+                <Image
+                  src="/assets/dashboard/icons/share.svg"
+                  height={20}
+                  width={20}
+                  alt="share icon"
+                />
+              }
+              label="Total shares"
+              value={(template.total_shares ?? 0).toLocaleString()}
             />
           </div>
 
@@ -148,7 +158,7 @@ function InfoRow({
 }: {
   icon: ReactNode;
   label: string;
-  value: string;
+  value: string | number;
 }) {
   return (
     <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">

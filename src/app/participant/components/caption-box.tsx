@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Pen } from "lucide-react";
@@ -9,7 +10,8 @@ export default function CaptionBox({
 	...props
 }: CaptionBoxProps) {
 	return (
-		<div className="space-y-2 rounded-2xl border bg-[#f6f5f5] p-3 h-40 md:h-33.5">
+		/* Removed fixed 'h-40 md:h-33.5' so the container can expand dynamically */
+		<div className="space-y-2 rounded-2xl border bg-[#f6f5f5] p-3 min-h-33.5 h-auto transition-all duration-150">
 			<div className="flex items-center justify-between">
 				<h3 className="font-medium font-sans">Caption</h3>
 
@@ -28,8 +30,8 @@ export default function CaptionBox({
 			</div>
 
 			<Textarea
-				className="border-0 bg-transparent text-[14px] font-medium focus-visible:ring-0"
-				rows={5}
+				className="border-0 bg-transparent text-[14px] font-medium focus-visible:ring-0 resize-none overflow-hidden min-h-[40px]"
+				rows={1} // Starts at 1 row and auto-expands cleanly via the form's onChange handle
 				{...props}
 			/>
 

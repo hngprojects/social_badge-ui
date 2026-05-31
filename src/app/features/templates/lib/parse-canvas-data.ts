@@ -86,6 +86,24 @@ function backgroundToEditorState(
 		};
 	}
 
+	if (bg.type === "split") {
+		const from = bg.top_color;
+		const to = bg.bottom_color;
+		const match = EDITOR_PALETTES.find(
+			(p) =>
+				p.from.toLowerCase() === from.toLowerCase() &&
+				p.to.toLowerCase() === to.toLowerCase(),
+		);
+		return {
+			bgMode: "gradient",
+			paletteId: match?.id ?? "bg_mesh_01",
+			gradientColors: [from, to],
+			gradientDirection: "180deg",
+			solidColor: from,
+			backgroundImageUrl: null,
+		};
+	}
+
 	const [from, to] = bg.gradient.colors;
 	const match = EDITOR_PALETTES.find(
 		(p) =>
@@ -158,13 +176,13 @@ export function parseCanvasDataToEditorState(
 		platformTemplateId,
 		layoutId,
 		title: meta?.title ?? eventNameField?.value ?? "",
-		eventName: eventNameField?.value ?? "",
+		eventName: eventNameField?.value ?? meta?.title ?? "",
 		eventDate: dateParts.eventDate,
 		eventTime: dateParts.eventTime,
-		participantNameLabel: participantName?.label ?? "NAME",
-		participantNamePlaceholder: participantName?.placeholder ?? "Your name",
-		roleTitleLabel: roleTitle?.label ?? "ROLE / TITLE",
-		roleTitlePlaceholder: roleTitle?.placeholder ?? "e.g. Attendee",
+		participantNameLabel: "NAME",
+		participantNamePlaceholder: participantName?.placeholder ?? "",
+		roleTitleLabel: "ROLE / TITLE",
+		roleTitlePlaceholder: roleTitle?.placeholder ?? "",
 		roleTitleRequired: roleTitle?.required ?? false,
 		allowParticipantPhoto: hasPhoto,
 		logo: canvas.logo,
@@ -196,37 +214,23 @@ export function createDefaultEditorState(
 		EDITOR_PALETTES.find((p) => p.id === palette) ?? EDITOR_PALETTES[0];
 
 	const defaults: Record<string, Partial<CustomizeEditorState>> = {
-		tpl_achieveher: {
-			eventName: "Achieveher",
-			eventDate: "JULY 21ST",
+		circle_photo_dark_v1: {
+			eventName: "",
 			participantNameLabel: "NAME",
-			participantNamePlaceholder: "Your Name",
+			participantNamePlaceholder: "",
+			roleTitleLabel: "ROLE / TITLE",
+			roleTitlePlaceholder: "",
 		},
-		tpl_dev_summit_26: {
-			eventName: "DEV / SUMMIT",
-			participantNameLabel: "YOUR NAME",
-			participantNamePlaceholder: "Your name",
-		},
-		tpl_web3_summit: {
-			eventName: "MENS SUMMIT 2026",
+		bold_name_pink_v1: {
+			eventName: "#DesignWeekLagos",
 			participantNameLabel: "NAME",
-			participantNamePlaceholder: "Full name",
-			roleTitleLabel: "ATTENDEE",
-			roleTitlePlaceholder: "e.g. Attendee",
-		},
-		tpl_next_gen: {
-			eventName: "Next Gen Meetup",
-			eventDate: "June 30th",
-			eventTime: "10am",
-			participantNameLabel: "Name",
-			participantNamePlaceholder: "Your name",
-			roleTitleLabel: "Job Description",
-			roleTitlePlaceholder: "e.g. Product Designer",
-			allowParticipantPhoto: false,
+			participantNamePlaceholder: "",
+			roleTitleLabel: "ROLE / TITLE",
+			roleTitlePlaceholder: "",
 		},
 	};
 
-	const preset = defaults[platformTemplateId] ?? {};
+	const preset = defaults[layoutId] ?? {};
 
 	return {
 		platformTemplateId,
@@ -236,9 +240,9 @@ export function createDefaultEditorState(
 		eventDate: "",
 		eventTime: "",
 		participantNameLabel: "NAME",
-		participantNamePlaceholder: "Your name",
+		participantNamePlaceholder: "",
 		roleTitleLabel: "ROLE / TITLE",
-		roleTitlePlaceholder: "e.g. Attendee",
+		roleTitlePlaceholder: "",
 		roleTitleRequired: false,
 		allowParticipantPhoto: caps.participantFields.includes("participant_photo"),
 		logo: null,
@@ -249,12 +253,11 @@ export function createDefaultEditorState(
 		gradientColors: [fromPalette.from, fromPalette.to],
 		gradientDirection: "135deg",
 		solidColor: fromPalette.from,
-		backgroundImageUrl:
-			layoutId === "photo_gradient_v1" ? "/assets/dashboard/bg-1.png" : null,
-		fontId: layoutId === "next_gen_mint_v1" ? "fraunces" : "inter",
+		backgroundImageUrl: null,
+		fontId: "inter",
 		titleSize: "MEDIUM",
 		defaultCaption: "",
-		destinationLink: "achieveher.com/register",
+		destinationLink: "socialbadge.com",
 		hashtags: [],
 		accessType: 0,
 		...preset,
