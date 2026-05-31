@@ -10,8 +10,6 @@ export default function TopBar() {
   const {
     config,
     customizeTitle,
-    isSaved,
-    savedStatus,
     publishedTitle,
     publishedStatus,
     publishedEditHref,
@@ -26,8 +24,6 @@ export default function TopBar() {
       {config.match === "/create-badges/customize" && (
         <CustomizeBar
           config={config}
-          isSaved={isSaved}
-          savedStatus={savedStatus}
           title={customizeTitle}
         />
       )}

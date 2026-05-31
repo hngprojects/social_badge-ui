@@ -1,7 +1,6 @@
 "use client";
 
 import { SectionCard, FieldLabel, TextArea, HelperText } from "./ui";
-import { Input } from "@/components/ui/input";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 interface ShareMessageSectionProps {
@@ -10,8 +9,6 @@ interface ShareMessageSectionProps {
 }
 
 export function ShareMessageSection({ editor, onChange }: ShareMessageSectionProps) {
-  const hashtagsInput = editor.hashtags.join(", ");
-
   return (
     <SectionCard
       icon={
@@ -41,43 +38,13 @@ export function ShareMessageSection({ editor, onChange }: ShareMessageSectionPro
       </div>
 
       <div>
-        <FieldLabel label="Default share caption" />
+        <FieldLabel label="Caption" />
         <TextArea
           placeholder="e.g. I'm at #Summit26 this weekend — who's joining?"
           value={editor.defaultCaption}
           onChange={(v) => onChange({ defaultCaption: v })}
         />
         <HelperText>Auto-shortened for X / Twitter. WhatsApp and LinkedIn use the full text.</HelperText>
-      </div>
-
-      <div>
-        <FieldLabel label="Hashtag (optional)" />
-        <TextArea
-          placeholder="e.g. AchieveHer2026, WomenInTech (comma-separated)"
-          value={hashtagsInput}
-          onChange={(v) =>
-            onChange({
-              hashtags: v
-                .split(",")
-                .map((tag) => tag.trim().replace(/^#/, ""))
-                .filter(Boolean),
-            })
-          }
-        />
-        <HelperText>Displayed on the badge and added to share captions automatically.</HelperText>
-      </div>
-
-      <div>
-        <FieldLabel label="Destination link" />
-        <div className="flex items-center rounded-lg border border-gray-200 overflow-hidden focus-within:ring-2 focus-within:ring-orange-400 focus-within:border-transparent transition">
-          <Input
-            type="text"
-            value={editor.destinationLink}
-            onChange={(e) => onChange({ destinationLink: e.target.value })}
-            className="flex-1 h-auto px-3 py-2.5 text-sm text-gray-800 bg-white border-0 rounded-none shadow-none focus-visible:ring-0 focus-visible:border-transparent"
-          />
-        </div>
-        <HelperText>Use a UTM-tagged URL if you want to track conversions in your analytics tool.</HelperText>
       </div>
     </SectionCard>
   );
