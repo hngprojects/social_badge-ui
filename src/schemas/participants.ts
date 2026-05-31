@@ -19,6 +19,8 @@ export const participantSchema = z.object({
 					: undefined,
 		}),
 
+	role: z.string().trim().optional(),
+
 	caption: z
 		.string()
 		.trim()

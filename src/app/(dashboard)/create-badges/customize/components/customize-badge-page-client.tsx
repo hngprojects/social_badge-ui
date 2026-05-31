@@ -11,7 +11,7 @@ export function CustomizeBadgePageClient() {
   const platformTemplateId = searchParams.get("template");
   const organiserTemplateId = searchParams.get("id");
 
-  const platformId = platformTemplateId ?? "tpl_achieveher";
+  const platformId = platformTemplateId ?? "bold_name_pink_v1";
   const {
     data: loadedState,
     isLoading: organiserLoading,
