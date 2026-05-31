@@ -13,7 +13,6 @@ interface BadgeContentSectionProps {
 
 export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeContentSectionProps) {
   const showRole = layoutCaps.participantFields.includes("role_title");
-  const showPhoto = layoutCaps.participantFields.includes("participant_photo");
 
   return (
     <SectionCard
@@ -81,20 +80,6 @@ export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeConte
         </>
       )}
 
-      {showPhoto && (
-        <div className="flex items-start justify-between gap-4 pt-1">
-          <div>
-            <p className="text-sm font-semibold text-gray-800">Allow attendee photo</p>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Let attendees add their photo to personalise the badge. Increases share rate by ~28%.
-            </p>
-          </div>
-          <Toggle
-            checked={editor.allowParticipantPhoto}
-            onChange={() => onChange({ allowParticipantPhoto: !editor.allowParticipantPhoto })}
-          />
-        </div>
-      )}
     </SectionCard>
   );
 }
