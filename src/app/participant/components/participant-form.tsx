@@ -117,14 +117,10 @@ export default function ParticipantForm({
 
 				<Input
 					className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-					placeholder="Placeholder text..."
+					placeholder="Enter your name..."
+					maxLength={25}
 					{...register("name", {
-						onChange: (e) => {
-							if (e.target.value.length > 25) {
-								e.target.value = e.target.value.slice(0, 25);
-							}
-							onNameChange?.(e.target.value);
-						},
+						onChange: (e) => onNameChange?.(e.target.value),
 					})}
 				/>
 				<p className="text-neutral-400 text-[12.5px] font-sans">
