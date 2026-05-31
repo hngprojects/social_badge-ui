@@ -28,11 +28,10 @@ export default function ParticipantForm({
 		handleSubmit,
 		setValue,
 		control,
-		trigger,
 		formState: { errors, isSubmitting },
 	} = useForm<ParticipantValues>({
 		resolver: zodResolver(participantSchema),
-		mode: "onChange", // Validates on every keystroke
+		mode: "onChange",
 		defaultValues: {
 			name: "",
 			caption: DEFAULT_CAPTION,
@@ -48,7 +47,6 @@ export default function ParticipantForm({
 		onSuccess?.();
 	};
 
-	// Helper to auto-grow the textarea dynamically
 	const handleCaptionResize = (target: HTMLTextAreaElement) => {
 		target.style.height = "auto";
 		target.style.height = `${target.scrollHeight}px`;
@@ -122,15 +120,10 @@ export default function ParticipantForm({
 					placeholder="Placeholder text..."
 					{...register("name", {
 						onChange: (e) => {
-							let value = e.target.value;
-							// Strictly intercept and hard-truncate text over 25 characters
-							if (value.length > 25) {
-								value = value.slice(0, 25);
-								e.target.value = value;
-								setValue("name", value);
+							if (e.target.value.length > 25) {
+								e.target.value = e.target.value.slice(0, 25);
 							}
-							onNameChange?.(value);
-							trigger("name");
+							onNameChange?.(e.target.value);
 						},
 					})}
 				/>
@@ -147,18 +140,17 @@ export default function ParticipantForm({
 				<CaptionBox
 					{...register("caption", {
 						onChange: (e) => {
-							let value = e.target.value;
-							// Strictly intercept and hard-truncate text over 200 characters
-							if (value.length > 200) {
-								value = value.slice(0, 200);
-								e.target.value = value;
-								setValue("caption", value);
+							const start = e.target.selectionStart;
+							const end = e.target.selectionEnd;
+
+							if (e.target.value.length > 200) {
+								e.target.value = e.target.value.slice(0, 200);
+								e.target.setSelectionRange(start, end);
 							}
-							// Trigger the auto-grow feature
+
 							if (e.target instanceof HTMLTextAreaElement) {
 								handleCaptionResize(e.target);
 							}
-							trigger("caption");
 						},
 					})}
 					error={errors.caption?.message}
