@@ -62,7 +62,7 @@ export const stats: StatCard[] = [
   },
   {
     image: "/assets/dashboard/icons/active-badges.svg",
-    title: "active badges",
+    title: "live badges",
     count: "0",
     bg: "#DCFCE7",
   },
@@ -77,6 +77,12 @@ export const stats: StatCard[] = [
     title: "total shares",
     count: "0",
     bg: "#FEF3C7",
+  },
+  {
+    image: "/assets/dashboard/icons/folder-open.svg",
+    title: "total drafts",
+    count: "0",
+    bg: "#DCEFFC",
   },
 ];
 

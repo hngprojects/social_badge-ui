@@ -43,6 +43,7 @@ export interface PublishedTemplateData {
   id: string;
   title: string;
   is_published: boolean;
+  total_shares?: number;
   published_at: string | null;
   share_slug: string | null;
   created_at: string | null;
