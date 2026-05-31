@@ -1,0 +1,48 @@
+import { useMutation } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
+import { toast } from "sonner";
+import { changePassword as changePasswordApi } from "../services/auth";
+import { getAxiosApiErrorMessage } from "@/lib/api/error-messages";
+import { useLogout } from "../../auth/hooks/useLogout";
+
+export const useChangePassword = () => {
+  const { logout } = useLogout();
+  const {
+    mutate: changePassword,
+    isPending: isLoading,
+    isError,
+  } = useMutation({
+    mutationFn: changePasswordApi,
+
+    onSuccess: (data: { message?: string }) => {
+      toast.success(
+        data?.message || "Password updated successfully. Please log in again.",
+      );
+
+      setTimeout(() => {
+        logout();
+      }, 1200);
+    },
+
+    onError: (error) => {
+      const status = isAxiosError(error) ? error.response?.status : undefined;
+
+      const fallback =
+        status === 401
+          ? "Your current password is incorrect."
+          : status === 422
+            ? "Please check your password requirements."
+            : status === 429
+              ? "Too many attempts. Please try again later."
+              : "Failed to update password. Please try again.";
+
+      toast.error(getAxiosApiErrorMessage(error, fallback));
+    },
+  });
+
+  return {
+    changePassword,
+    isLoading,
+    isError,
+  };
+};
