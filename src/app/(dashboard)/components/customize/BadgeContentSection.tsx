@@ -26,22 +26,11 @@ export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeConte
       subtitle="What attendees fill in when they claim a badge."
     >
       <div>
-        <FieldLabel label="Name field label" required />
-        <TextInput
-          placeholder="e.g. Your Name"
-          value={editor.participantNameLabel}
-          onChange={(v) => onChange({ participantNameLabel: v })}
-          maxLength={20}
-        />
-        <HelperText>What attendees see in the badge&apos;s name field.</HelperText>
-      </div>
-
-      <div>
         <FieldLabel label="Name placeholder" />
         <TextInput
-          placeholder="e.g. Your name"
+          placeholder="Your full name"
           value={editor.participantNamePlaceholder}
-          onChange={(v) => onChange({ participantNamePlaceholder: v })}
+          onChange={(v) => onChange({ participantNamePlaceholder: v, participantNameLabel: "NAME" })}
           maxLength={25}
         />
         <HelperText>Hint text shown before attendees type their name.</HelperText>
@@ -50,20 +39,11 @@ export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeConte
       {showRole && (
         <>
           <div>
-            <FieldLabel label="Role / title label" />
-            <TextInput
-              placeholder="e.g. ROLE / TITLE"
-              value={editor.roleTitleLabel}
-              onChange={(v) => onChange({ roleTitleLabel: v })}
-              maxLength={20}
-            />
-          </div>
-          <div>
             <FieldLabel label="Role / title placeholder" />
             <TextInput
-              placeholder="e.g. Attendee"
+              placeholder="e.g. Product Designer"
               value={editor.roleTitlePlaceholder}
-              onChange={(v) => onChange({ roleTitlePlaceholder: v })}
+              onChange={(v) => onChange({ roleTitlePlaceholder: v, roleTitleLabel: "ROLE / TITLE" })}
               maxLength={25}
             />
           </div>

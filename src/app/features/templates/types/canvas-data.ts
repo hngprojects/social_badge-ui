@@ -8,10 +8,10 @@ export type CanvasFieldKey =
 export type PreviewFieldKey = CanvasFieldKey | "brand_initials";
 
 export type CanvasLayoutId =
-	| "photo_gradient_v1"
-	| "name_role_dark_v1"
-	| "dev_summit_dark_v1"
-	| "next_gen_mint_v1";
+	| "circle_photo_dark_v1"
+	| "dark_name_photo_v1"
+	| "bold_name_pink_v1"
+	| "split_purple_teal_v1";
 
 export type CanvasFieldType =
 	| "static"
@@ -44,7 +44,8 @@ export interface CanvasImageBackground {
 export type CanvasBackground =
 	| CanvasGradientBackground
 	| CanvasSolidBackground
-	| CanvasImageBackground;
+	| CanvasImageBackground
+	| CanvasSplitBackground;
 
 export interface CanvasTypography {
 	font_family: string;
@@ -158,6 +159,12 @@ export interface CustomizeEditorState {
 	fontId: string;
 	titleSize: "SMALL" | "MEDIUM" | "LARGE";
 	defaultCaption: string;
+	destinationLink: string;
+	hashtags: string[];
+	accessType: number;
+	savedAt?: string | null;
+}
+tion: string;
 	destinationLink: string;
 	hashtags: string[];
 	accessType: number;

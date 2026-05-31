@@ -13,15 +13,20 @@ import CaptionBox from "./caption-box";
 import { DEFAULT_CAPTION } from "../constants";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
+import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 export default function ParticipantForm({
 	onSuccess,
 	onNameChange,
+	onRoleChange,
 	onPhotoChange,
+	editorState,
 }: {
 	onSuccess?: () => void;
 	onNameChange?: (name: string) => void;
+	onRoleChange?: (role: string) => void;
 	onPhotoChange?: (url: string | null) => void;
+	editorState: CustomizeEditorState | null;
 }) {
 	const {
 		register,
@@ -34,9 +39,12 @@ export default function ParticipantForm({
 		mode: "onChange",
 		defaultValues: {
 			name: "",
+			role: "",
 			caption: DEFAULT_CAPTION,
 		},
 	});
+
+	const showRole = Boolean(editorState?.roleTitleLabel || editorState?.roleTitlePlaceholder);
 
 	const selectedFile = useWatch({
 		control,
@@ -117,20 +125,34 @@ export default function ParticipantForm({
 
 				<Input
 					className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-					placeholder="Enter your name..."
-					maxLength={25}
-					{...register("name", {
-						onChange: (e) => onNameChange?.(e.target.value),
-					})}
+					placeholder={editorState?.participantNamePlaceholder || "Your full name"}
+					{...register("name", { onChange: (e) => onNameChange?.(e.target.value) })}
 				/>
-				<p className="text-neutral-400 text-[12.5px] font-sans">
-					Appears as the main title on the badge.
-				</p>
 
 				{errors.name && (
 					<p className="text-sm text-red-500">{errors.name.message}</p>
 				)}
 			</motion.div>
+
+			{showRole && (
+				<motion.div className="space-y-4" variants={itemVariants}>
+					<label className="text-[13.5px] font-bold">
+						{editorState?.roleTitleLabel || "Role / Title"} {editorState?.roleTitleRequired && <span className="text-[#ff693E]">*</span>}
+					</label>
+
+					<Input
+						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
+						placeholder={editorState?.roleTitlePlaceholder || "e.g. Product Designer"}
+						{...register("role", { 
+							onChange: (e) => onRoleChange?.(e.target.value),
+						})}
+					/>
+
+					{errors.role && (
+						<p className="text-sm text-red-500">{errors.role.message}</p>
+					)}
+				</motion.div>
+			)}
 
 			<motion.div variants={itemVariants}>
 				<CaptionBox

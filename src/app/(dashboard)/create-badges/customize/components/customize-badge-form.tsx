@@ -91,6 +91,7 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
             onChange={handleChange}
             onPaletteChange={(id) => setPalette(id)}
             onBgModeChange={setBgMode}
+            layoutCaps={layoutCaps}
           />
 
           <BadgeContentSection editor={editor} onChange={handleChange} layoutCaps={layoutCaps} />
