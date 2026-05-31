@@ -99,14 +99,19 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
         </form>
 
         <div className="flex flex-col sm:flex-row gap-3 pb-8 w-full">
-          <Button
-            type="button"
-            disabled={isPublishing}
-            variant="outline"
-            className="flex-1 rounded-xl font-semibold text-sm py-3"
-          >
-            Save as Draft
-          </Button>
+          <div className="flex-1 flex flex-col gap-1">
+            <Button
+              type="button"
+              disabled
+              variant="outline"
+              title="Coming soon"
+              aria-label="Save as Draft — coming soon"
+              className="w-full rounded-xl font-semibold text-sm py-3 cursor-not-allowed opacity-50"
+            >
+              Save as Draft
+            </Button>
+            <p className="text-center text-xs text-gray-400">Coming soon</p>
+          </div>
           <Button
             form="badge-form"
             type="submit"
