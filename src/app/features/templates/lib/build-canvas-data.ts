@@ -49,10 +49,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 	const fields: CanvasField[] = [];
 
 	if (caps.staticFields.includes("event_date")) {
-		const value =
-			state.layoutId === "next_gen_mint_v1"
-				? formatEventDateValue(state.eventDate, state.eventTime)
-				: state.eventDate.trim().toUpperCase() || "JULY 21ST";
+		const value = state.eventDate.trim().toUpperCase() || "JULY 21ST";
 
 		fields.push({
 			key: CANVAS_FIELD_KEYS.EVENT_DATE,

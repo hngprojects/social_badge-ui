@@ -1,16 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { SectionCard, HelperText } from "./ui";
 import { FONTS, SIZES } from "./constants";
 import { EDITOR_PALETTES } from "@/app/features/templates/lib/palette-mapping";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
+import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
 interface StyleSectionProps {
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	onPaletteChange: (paletteId: string) => void;
 	onBgModeChange: (mode: "gradient" | "solid") => void;
+	layoutCaps: LayoutCapabilities;
 }
 
 export function StyleSection({
@@ -18,7 +20,14 @@ export function StyleSection({
 	onChange,
 	onPaletteChange,
 	onBgModeChange,
+	layoutCaps,
 }: StyleSectionProps) {
+	const sortedPalettes = useMemo(() => {
+		const defaultPalette = EDITOR_PALETTES.find((p) => p.id === layoutCaps.defaultPaletteId) ?? EDITOR_PALETTES[0];
+		const others = EDITOR_PALETTES.filter((p) => p.id !== defaultPalette.id);
+		return [defaultPalette, ...others];
+	}, [layoutCaps.defaultPaletteId]);
+
 	return (
 		<SectionCard
 			icon={
@@ -68,7 +77,7 @@ export function StyleSection({
 
 			<div>
 				<div className="flex items-center gap-2 flex-wrap">
-					{EDITOR_PALETTES.map((p) => (
+					{sortedPalettes.map((p) => (
 						<button
 							key={p.id}
 							type="button"

@@ -2,31 +2,31 @@ import { SearchItem } from "../../types/dashboard/search";
 
 export const SEARCH_ITEMS: SearchItem[] = [
   {
-    title: "Dev Summit '26",
-    description: "conference badge layout",
-    href: "/create-badges/customize?template=tpl_dev_summit_26",
-    group: "Badge layouts",
-    searchText: "dev summit 26 conference",
-  },
-  {
-    title: "Achiever",
+    title: "Design Week Lagos",
     description: "summit badge layout",
-    href: "/create-badges/customize?template=tpl_achieveher",
+    href: "/create-badges/customize?template=bold_name_pink_v1",
     group: "Badge layouts",
-    searchText: "achiever achieveher summit",
+    searchText: "design week lagos summit pink",
   },
   {
-    title: "Men's Summit",
+    title: "Dark Circle",
     description: "conference badge layout",
-    href: "/create-badges/customize?template=tpl_mens_summit_26",
+    href: "/create-badges/customize?template=circle_photo_dark_v1",
     group: "Badge layouts",
-    searchText: "mens men's men summit 26 conference",
+    searchText: "dark circle conference",
   },
   {
-    title: "Next Gen Meetup",
+    title: "Dark Name Card",
     description: "conference badge layout",
-    href: "/create-badges/customize?template=tpl_next_gen",
+    href: "/create-badges/customize?template=dark_name_photo_v1",
     group: "Badge layouts",
-    searchText: "next gen meetup conference",
+    searchText: "dark name card conference",
+  },
+  {
+    title: "Split Purple Teal",
+    description: "conference badge layout",
+    href: "/create-badges/customize?template=split_purple_teal_v1",
+    group: "Badge layouts",
+    searchText: "split purple teal conference",
   },
 ];

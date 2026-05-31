@@ -27,8 +27,6 @@ export type TopBarConfigItem = {
 
 export type CustomizeBarProps = {
   config: TopBarConfigItem;
-  isSaved: boolean;
-  savedStatus: string;
   title: string;
 };
 
