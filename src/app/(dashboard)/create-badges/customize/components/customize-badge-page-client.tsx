@@ -6,26 +6,12 @@ import { useLoadPlatformTemplate } from "@/app/features/templates/hooks/useLoadP
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { CustomizeBadgeForm } from "./customize-badge-form";
 
-function clearNewBadgeTextDefaults(
-  editor: ReturnType<typeof createDefaultEditorState>,
-) {
-  return {
-    ...editor,
-    title: "",
-    eventName: "",
-    participantNameLabel: "",
-    participantNamePlaceholder: "",
-    roleTitleLabel: "",
-    roleTitlePlaceholder: "",
-  };
-}
-
 export function CustomizeBadgePageClient() {
   const searchParams = useSearchParams();
   const platformTemplateId = searchParams.get("template");
   const organiserTemplateId = searchParams.get("id");
 
-  const platformId = platformTemplateId ?? "tpl_achieveher";
+  const platformId = platformTemplateId ?? "bold_name_pink_v1";
   const {
     data: loadedState,
     isLoading: organiserLoading,
@@ -56,9 +42,7 @@ export function CustomizeBadgePageClient() {
 
   const initialEditor =
     loadedState ??
-    clearNewBadgeTextDefaults(
-      createDefaultEditorState(platformId, platformTemplate?.canvasData),
-    );
+    createDefaultEditorState(platformId, platformTemplate?.canvasData);
   const editorKey = `${organiserTemplateId ?? platformId}-${loadedState ? "loaded" : "new"}`;
 
   return (

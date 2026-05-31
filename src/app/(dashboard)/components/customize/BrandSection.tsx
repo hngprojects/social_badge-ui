@@ -48,72 +48,57 @@ export function BrandSection({
 			title="Brand"
 			subtitle="How your event shows up on the badge."
 		>
-			{/* Logo upload — temporarily hidden
-			<div>
-				<FieldLabel label="Logo" required />
-				<div className="flex items-center gap-3">
-					<label className="cursor-pointer">
-						<span className="inline-flex items-center rounded-md border border-orange-400 px-3 py-1.5 text-xs font-semibold text-orange-500 hover:bg-orange-50 transition">
-							Choose File
+			{layoutCaps.hasHeaderLogo && (
+				<div>
+					<FieldLabel label="Logo" required />
+					<div className="flex items-center gap-3">
+						<label className="cursor-pointer">
+							<span className="inline-flex items-center rounded-md border border-orange-400 px-3 py-1.5 text-xs font-semibold text-orange-500 hover:bg-orange-50 transition">
+								Choose File
+							</span>
+							<input
+								type="file"
+								accept="image/*,.svg"
+								className="sr-only"
+								onChange={(e) => {
+									const file = e.target.files?.[0];
+									if (!file) return;
+									const validType =
+										file.type.startsWith("image/") ||
+										file.type === "image/svg+xml";
+									const validSize = file.size <= 2 * 1024 * 1024;
+									if (!validType || !validSize) {
+										return;
+									}
+									if (currentBlobUrl.current)
+										URL.revokeObjectURL(currentBlobUrl.current);
+									const blobUrl = URL.createObjectURL(file);
+									currentBlobUrl.current = blobUrl;
+									onChange({
+										pendingLogoFile: file,
+										logoPreviewUrl: blobUrl,
+										logo: null,
+									});
+								}}
+							/>
+						</label>
+						<span className="text-sm text-gray-400 truncate max-w-[200px]">
+							{editor.pendingLogoFile?.name ??
+								(editor.logo ? "Logo uploaded" : "No file chosen")}
 						</span>
-						<input
-							type="file"
-							accept="image/*,.svg"
-							className="sr-only"
-							onChange={(e) => {
-								const file = e.target.files?.[0];
-								if (!file) return;
-								const validType =
-									file.type.startsWith("image/") ||
-									file.type === "image/svg+xml";
-								const validSize = file.size <= 2 * 1024 * 1024;
-								if (!validType || !validSize) {
-									if (!validType) toast.error("Only images and SVGs are allowed.");
-									if (!validSize) toast.error("Logo must be 2MB or less.");
-									return;
-								}
-								if (currentBlobUrl.current)
-									URL.revokeObjectURL(currentBlobUrl.current);
-								const blobUrl = URL.createObjectURL(file);
-								currentBlobUrl.current = blobUrl;
-								onChange({
-									pendingLogoFile: file,
-									logoPreviewUrl: blobUrl,
-									logo: null,
-								});
-							}}
-						/>
-					</label>
-					<span className="text-sm text-gray-400 truncate max-w-[200px]">
-						{editor.pendingLogoFile?.name ??
-							(editor.logo ? "No file chosen" : "No file chosen")}
-					</span>
+					</div>
+					<HelperText>
+						SVG recommended for crisp display. PNG works too (min 240 × 240px).
+					</HelperText>
 				</div>
-				<HelperText>
-					SVG recommended for crisp display. PNG works too (min 240 × 240px).
-				</HelperText>
-			</div>
-			*/}
-
-			<div>
-				<FieldLabel label="Template title" required />
-				<TextInput
-					placeholder="e.g. AchieveHer Summit Badge"
-					value={editor.title}
-					onChange={(v) => onChange({ title: v })}
-					maxLength={50}
-				/>
-				<HelperText>
-					A name for this badge template in your dashboard.
-				</HelperText>
-			</div>
+			)}
 
 			<div>
 				<FieldLabel label="Event Name" required />
 				<TextInput
-					placeholder="e.g. AchieveHer Summit"
+					placeholder="e.g. DESIGNWEEKLAGOS"
 					value={editor.eventName}
-					onChange={(v) => onChange({ eventName: v })}
+					onChange={(v) => onChange({ eventName: v, title: v })}
 					maxLength={25}
 				/>
 				<HelperText>Appears as the main title on the badge.</HelperText>
@@ -128,18 +113,16 @@ export function BrandSection({
 							Updates the date shown on the live badge preview.
 						</HelperText>
 					</div>
-					{editor.layoutId === "next_gen_mint_v1" && (
-						<div>
-							<FieldLabel label="Time" />
-							<TextInput
-								placeholder="e.g. 10am"
-								value={editor.eventTime}
-								onChange={(v) => onChange({ eventTime: v })}
-								maxLength={15}
-							/>
-							<HelperText>Shown alongside the date on the badge.</HelperText>
-						</div>
-					)}
+					<div>
+						<FieldLabel label="Time" />
+						<TextInput
+							placeholder="e.g. 10am"
+							value={editor.eventTime}
+							onChange={(v) => onChange({ eventTime: v })}
+							maxLength={15}
+						/>
+						<HelperText>Shown alongside the date on the badge.</HelperText>
+					</div>
 				</>
 			)}
 		</SectionCard>

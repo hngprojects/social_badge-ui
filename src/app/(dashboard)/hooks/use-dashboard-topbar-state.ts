@@ -26,7 +26,7 @@ export function useDashboardTopbarState() {
   const platformTemplateId = searchParams.get("template");
   const organiserTemplateId = searchParams.get("id");
   const shareSlug = searchParams.get("slug");
-  const platformId = platformTemplateId ?? "tpl_achieveher";
+  const platformId = platformTemplateId ?? "bold_name_pink_v1";
 
   const { data: organiserTemplate } = useLoadOrganiserTemplate(
     isCustomizePage ? organiserTemplateId : isPublishedPage ? organiserTemplateId : null,

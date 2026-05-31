@@ -8,10 +8,10 @@ export type CanvasFieldKey =
 export type PreviewFieldKey = CanvasFieldKey | "brand_initials";
 
 export type CanvasLayoutId =
-	| "photo_gradient_v1"
-	| "name_role_dark_v1"
-	| "dev_summit_dark_v1"
-	| "next_gen_mint_v1";
+	| "circle_photo_dark_v1"
+	| "dark_name_photo_v1"
+	| "bold_name_pink_v1"
+	| "split_purple_teal_v1";
 
 export type CanvasFieldType =
 	| "static"
@@ -20,7 +20,7 @@ export type CanvasFieldType =
 
 export type LogoPosition = "top-center" | "top-left" | "top-right";
 
-export type BackgroundType = "gradient" | "solid" | "image";
+export type BackgroundType = "gradient" | "solid" | "image" | "split";
 
 export interface CanvasGradientBackground {
 	type: "gradient";
@@ -28,6 +28,13 @@ export interface CanvasGradientBackground {
 		colors: [string, string];
 		direction: string;
 	};
+}
+
+export interface CanvasSplitBackground {
+	type: "split";
+	top_color: string;
+	bottom_color: string;
+	split_ratio: number;
 }
 
 export interface CanvasSolidBackground {
@@ -44,7 +51,8 @@ export interface CanvasImageBackground {
 export type CanvasBackground =
 	| CanvasGradientBackground
 	| CanvasSolidBackground
-	| CanvasImageBackground;
+	| CanvasImageBackground
+	| CanvasSplitBackground;
 
 export interface CanvasTypography {
 	font_family: string;

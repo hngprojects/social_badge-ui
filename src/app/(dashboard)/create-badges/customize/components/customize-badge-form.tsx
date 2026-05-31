@@ -67,8 +67,8 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
   const isPublishing = isSaving;
 
   return (
-    <main className="grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-8 max-w-360 mx-auto w-full items-start">
-      <section className="order-2 lg:order-1 lg:col-span-7 p-6 space-y-6">
+    <main className="grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-8 w-full items-start">
+      <section className="order-2 lg:order-1 lg:col-span-7 w-full min-w-0 overflow-hidden p-6 space-y-6">
         <div className="pb-2 border-b border-gray-100">
           <p className="text-xs text-gray-400">
             <Link href="/dashboard" className="hover:text-gray-600 transition-colors">Dashboard</Link>
@@ -83,7 +83,7 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 mt-9">
+        <form id="badge-form" onSubmit={handleSubmit} className="w-full space-y-6 mt-9">
           <BrandSection editor={editor} onChange={handleChange} layoutCaps={layoutCaps} />
 
           <StyleSection
@@ -91,34 +91,38 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
             onChange={handleChange}
             onPaletteChange={(id) => setPalette(id)}
             onBgModeChange={setBgMode}
+            layoutCaps={layoutCaps}
           />
 
           <BadgeContentSection editor={editor} onChange={handleChange} layoutCaps={layoutCaps} />
 
           <ShareMessageSection editor={editor} onChange={handleChange} />
-
-          <div className="hidden lg:block pb-4">
-            <Button
-              type="submit"
-              disabled={isPublishing}
-              variant="cta"
-              className="w-full rounded-xl font-semibold text-sm py-3"
-            >
-              {isPublishing ? "Publishing…" : "Publish Badge"}
-            </Button>
-          </div>
-
-          <div className="pb-8 lg:hidden">
-            <Button
-              type="submit"
-              disabled={isPublishing}
-              variant="cta"
-              className="w-full rounded-xl font-semibold text-sm py-3"
-            >
-              {isPublishing ? "Publishing…" : "Publish Badge"}
-            </Button>
-          </div>
         </form>
+
+        <div className="flex flex-col sm:flex-row gap-3 pb-8 w-full">
+          <div className="flex-1 flex flex-col gap-1">
+            <Button
+              type="button"
+              disabled
+              variant="outline"
+              title="Coming soon"
+              aria-label="Save as Draft — coming soon"
+              className="w-full rounded-xl font-semibold text-sm py-3 cursor-not-allowed opacity-50"
+            >
+              Save as Draft
+            </Button>
+            <p className="text-center text-xs text-gray-400">Coming soon</p>
+          </div>
+          <Button
+            form="badge-form"
+            type="submit"
+            disabled={isPublishing}
+            variant="cta"
+            className="flex-1 rounded-xl font-semibold text-sm py-3"
+          >
+            {isPublishing ? "Publishing…" : "Publish"}
+          </Button>
+        </div>
       </section>
 
       <section className="order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:pt-6 lg:pb-6">
