@@ -23,12 +23,12 @@ export default function SettingTabs() {
           >
             Security
           </TabsTrigger>
-          <TabsTrigger
+          {/* <TabsTrigger
             value="notifications"
             className="py-2 px-3.5 leading-[19.5px] rounded-[12px]"
           >
             Notifications
-          </TabsTrigger>
+          </TabsTrigger> */}
           <TabsTrigger
             value="account"
             className="py-2 px-3.5 leading-[19.5px] rounded-[12px]"
@@ -53,13 +53,13 @@ export default function SettingTabs() {
       >
         <TabSecurity />
       </TabsContent>
-      <TabsContent
+      {/* <TabsContent
         forceMount
         className="data-[state=inactive]:hidden"
         value="notifications"
       >
         <TabNotifications />
-      </TabsContent>
+      </TabsContent> */}
       <TabsContent
         forceMount
         className="data-[state=inactive]:hidden"
