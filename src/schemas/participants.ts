@@ -11,7 +11,8 @@ export const participantSchema = z.object({
 				issue.code === "too_small"
 					? "Name must be at least 2 characters"
 					: undefined,
-		}),
+		})
+		.max(25, "Name cannot exceed 25 characters"),
 
 	caption: z
 		.string()
