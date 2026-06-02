@@ -5,6 +5,7 @@ import { SettingsSubCard } from "./settings-subcard";
 import { Button } from "@/components/ui/button";
 import { RowSeparator } from "./row-seperator";
 import { useDeleteProfile } from "@/app/features/settings/hooks/useDeleteProfile";
+import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +22,7 @@ import { Trash2Icon } from "lucide-react";
 
 export default function TabAccount() {
   const { deleteProfile, isDeleting } = useDeleteProfile();
+  const { logout, isLoggingOut } = useLogout();
   return (
     <Card className="text-[14px] text-[#9CA3AF] font-normal py-0 gap-0">
       <CardHeader className="border-b pt-1">
@@ -46,9 +48,12 @@ export default function TabAccount() {
           />{" "}
           <Button
             variant="cta"
+            type="button"
+            onClick={() => logout()}
+            disabled={isLoggingOut}
             className="text-[14px] text-[#3A3A3A] py-2 px-4 bg-white shadow-none border-[#EEEEEE] hover:bg-[#f2f2f2]"
           >
-            Log out
+            {isLoggingOut ? "Loggng out..." : "Log out"}
           </Button>
         </div>
       </CardContent>
