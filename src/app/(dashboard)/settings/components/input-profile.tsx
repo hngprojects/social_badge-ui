@@ -64,7 +64,7 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
             <Asterisk className="w-2 h-auto text-error-500" />
           </FieldLabel>
           <Input
-            className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] bg-[#E7E8E94D]/30"
+            className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#B5B7BC] bg-[#E7E8E94D]/30"
             id="email"
             type="email"
             readOnly
@@ -84,7 +84,8 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
             Role / Title
           </FieldLabel>
           <Input
-            className="w-full rounded-[8px] py-2 px-4 font-medium text-[14px] text-[#121217] bg-[#E7E8E94D]/30"
+            className="w-full rounded-[8px] py-2 px-4 font-medium text-[14px] text-[#121217] placeholder:text-[#B5B7BC] bg-[#E7E8E94D]/30"
+            placeholder="e.g. Community Manager"
             id="role"
             type="text"
             value={values.role}

@@ -23,14 +23,14 @@ export function ProfileAvatarUpload({
             <h2 className="text-[#3A3A3A] text-[16px] font-bold">
               Profile Photo
             </h2>
-            <p>Jpg or Png. Square ratio recommended. Max 2MB.</p>
+            <p>JPG, PNG, or GIF. Square ratio recommended. Max 2MB.</p>
           </div>
 
           <div className="flex items-center gap-4">
             <input
               ref={inputRef}
               type="file"
-              accept="image/png,image/jpeg"
+              accept="image/png,image/jpeg,image/gif"
               className="hidden"
               onChange={onAvatarChange}
             />
