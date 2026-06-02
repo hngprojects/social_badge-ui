@@ -1,10 +1,9 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query"
-import { useQueryClient } from "@tanstack/react-query";;
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { clearAuthSession } from "@/lib/api/auth-session";
+import { clearLocalAuthState } from "@/lib/api/auth-session";
 import { logout } from "../services/auth";
 
 export function useLogout() {
@@ -13,9 +12,9 @@ export function useLogout() {
 
   const mutation = useMutation({
     mutationFn: logout,
-    onSettled: async () => {
+    onSettled: () => {
       queryClient.removeQueries({ queryKey: ["auth", "me"] });
-      await clearAuthSession();
+      clearLocalAuthState();
       router.replace("/login");
     },
     onSuccess: () => {

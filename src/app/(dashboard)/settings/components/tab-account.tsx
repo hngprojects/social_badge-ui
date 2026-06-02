@@ -53,7 +53,7 @@ export default function TabAccount() {
             disabled={isLoggingOut}
             className="text-[14px] text-[#3A3A3A] py-2 px-4 bg-white shadow-none border-[#EEEEEE] hover:bg-[#f2f2f2]"
           >
-            {isLoggingOut ? "Loggng out..." : "Log out"}
+            {isLoggingOut ? "Logging out..." : "Log out"}
           </Button>
         </div>
       </CardContent>
