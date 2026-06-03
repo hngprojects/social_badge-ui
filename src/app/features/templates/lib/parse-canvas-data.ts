@@ -142,11 +142,10 @@ export function parseCanvasDataToEditorState(
 			OrganiserTemplateResponse,
 			| "title"
 			| "default_caption"
-			| "destination_link"
 			| "hashtags"
 			| "access_type"
 		>
-	> & { updated_at?: string | null },
+	> & { logo_url?: string | null; updated_at?: string | null },
 ): CustomizeEditorState {
 	const layoutId = canvas.layout_id;
 	const eventNameField = findStatic(
@@ -180,19 +179,21 @@ export function parseCanvasDataToEditorState(
 		eventDate: dateParts.eventDate,
 		eventTime: dateParts.eventTime,
 		participantNameLabel: "NAME",
-		participantNamePlaceholder: participantName?.placeholder ?? "",
+		participantNamePlaceholder: participantName?.placeholder ?? "Your full name",
+		participantNameVisible: participantName?.visible ?? true,
 		roleTitleLabel: "ROLE / TITLE",
-		roleTitlePlaceholder: roleTitle?.placeholder ?? "",
+		roleTitlePlaceholder: roleTitle?.placeholder ?? "e.g. Product Designer",
+		roleTitleVisible: roleTitle?.visible ?? true,
 		roleTitleRequired: roleTitle?.required ?? false,
 		allowParticipantPhoto: hasPhoto,
 		logo: canvas.logo,
-		logoPreviewUrl: canvas.logo?.url ?? null,
+		logoPreviewUrl: meta?.logo_url ?? canvas.logo?.url ?? null,
 		pendingLogoFile: null,
 		...bgState,
 		fontId: FONT_FAMILY_TO_ID[canvas.typography.font_family] ?? "inter",
 		titleSize: sizePxToEnum(canvas.typography.size_px),
 		defaultCaption: meta?.default_caption ?? "",
-		destinationLink: (meta?.destination_link ?? "").replace(/^https?:\/\//, ""),
+		destinationLink: "", // Removed
 		hashtags: meta?.hashtags ?? [],
 		accessType: meta?.access_type ?? 0,
 		savedAt: meta?.updated_at ?? null,

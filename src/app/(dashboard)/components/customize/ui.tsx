@@ -54,83 +54,113 @@ export function FieldLabel({ label, required }: { label: string; required?: bool
 
 /* ── TextInput ──────────────────────────────────────────────────────────── */
 
-export function TextInput({
-  placeholder,
-  value,
-  onChange,
-  maxLength,
-}: {
-  placeholder?: string;
-  value?: string;
-  onChange?: (v: string) => void;
-  maxLength?: number;
-}) {
-  return (
-    <div className="relative">
-      <Input
-        type="text"
-        placeholder={placeholder}
-        value={value ?? ""}
-        maxLength={maxLength}
-        onChange={(e) => onChange?.(e.target.value)}
-        className="h-12 px-4 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
-      />
-      {maxLength && (
-        <span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
-          {(value ?? "").length}/{maxLength}
-        </span>
-      )}
-    </div>
-  );
-}
+export const TextInput = React.forwardRef<
+	HTMLInputElement,
+	{
+		placeholder?: string;
+		value?: string;
+		onChange?: any; // Flexible for RHF event or manual string
+		maxLength?: number;
+		name?: string;
+		onBlur?: React.FocusEventHandler<HTMLInputElement>;
+	}
+>(({ placeholder, value, onChange, maxLength, name, onBlur }, ref) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (!onChange) return;
+		// If it's a react-hook-form handler, it expects the whole event
+		// If it's a legacy handler from our old code, it might expect just the value
+		if (onChange.length === 1 && name) {
+			// This is a heuristic for RHF which expects the event
+			onChange(e);
+		} else {
+			onChange(e.target.value);
+		}
+	};
+
+	return (
+		<div className="relative">
+			<Input
+				ref={ref}
+				name={name}
+				onBlur={onBlur}
+				type="text"
+				placeholder={placeholder}
+				value={value}
+				maxLength={maxLength}
+				onChange={handleChange}
+				className="h-12 px-4 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
+			/>
+			{maxLength && (
+				<span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
+					{(value ?? "").length}/{maxLength}
+				</span>
+			)}
+		</div>
+	);
+});
+TextInput.displayName = "TextInput";
 
 /* ── HelperText ─────────────────────────────────────────────────────────── */
 
 export function HelperText({ children }: { children: React.ReactNode }) {
-  return <p className="text-xs text-gray-400 mt-1.5">{children}</p>;
+	return <p className="text-xs text-gray-400 mt-1.5">{children}</p>;
 }
 
 /* ── TextArea ───────────────────────────────────────────────────────────── */
 
-export function TextArea({
-  placeholder,
-  value,
-  onChange,
-  maxLength,
-}: {
-  placeholder?: string;
-  value?: string;
-  onChange?: (v: string) => void;
-  maxLength?: number;
-}) {
-  return (
-    <div className="relative">
-      <Textarea
-        rows={3}
-        placeholder={placeholder}
-        value={value ?? ""}
-        maxLength={maxLength}
-        onChange={(e) => onChange?.(e.target.value)}
-        className="px-4 py-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
-      />
-      {maxLength && (
-        <span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
-          {(value ?? "").length}/{maxLength}
-        </span>
-      )}
-    </div>
-  );
-}
+export const TextArea = React.forwardRef<
+	HTMLTextAreaElement,
+	{
+		placeholder?: string;
+		value?: string;
+		onChange?: any;
+		maxLength?: number;
+		name?: string;
+		onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
+	}
+>(({ placeholder, value, onChange, maxLength, name, onBlur }, ref) => {
+	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		if (!onChange) return;
+		if (onChange.length === 1 && name) {
+			onChange(e);
+		} else {
+			onChange(e.target.value);
+		}
+	};
+
+	return (
+		<div className="relative">
+			<Textarea
+				ref={ref}
+				name={name}
+				onBlur={onBlur}
+				rows={3}
+				placeholder={placeholder}
+				value={value}
+				maxLength={maxLength}
+				onChange={handleChange}
+				className="px-4 py-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
+			/>
+			{maxLength && (
+				<span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
+					{(value ?? "").length}/{maxLength}
+				</span>
+			)}
+		</div>
+	);
+});
+TextArea.displayName = "TextArea";
 
 /* ── Toggle ─────────────────────────────────────────────────────────────── */
 
-export function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void }) {
-  return (
-    <Switch
-      checked={checked}
-      onCheckedChange={() => onChange()}
-    />
-  );
+export function Toggle({
+	checked,
+	onChange,
+}: {
+	checked: boolean;
+	onChange: (v: boolean) => void;
+}) {
+	return <Switch checked={checked} onCheckedChange={onChange} />;
 }
 
 /* ── BadgeDatePicker ────────────────────────────────────────────────────── */

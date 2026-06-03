@@ -5,13 +5,16 @@ import { SectionCard, FieldLabel, TextInput, HelperText, Toggle } from "./ui";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
+import { Control, Controller } from "react-hook-form";
+import type { CustomizeBadgeSchema } from "@/schemas/template";
+
 interface BadgeContentSectionProps {
+  control: Control<CustomizeBadgeSchema>;
   editor: CustomizeEditorState;
-  onChange: (partial: Partial<CustomizeEditorState>) => void;
   layoutCaps: LayoutCapabilities;
 }
 
-export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeContentSectionProps) {
+export function BadgeContentSection({ control, editor, layoutCaps }: BadgeContentSectionProps) {
   const showRole = layoutCaps.participantFields.includes("role_title");
 
   return (
@@ -25,40 +28,85 @@ export function BadgeContentSection({ editor, onChange, layoutCaps }: BadgeConte
       title="Badge content"
       subtitle="What attendees fill in when they claim a badge."
     >
-      <div>
-        <FieldLabel label="Name placeholder" />
-        <TextInput
-          placeholder="Your full name"
-          value={editor.participantNamePlaceholder}
-          onChange={(v) => onChange({ participantNamePlaceholder: v, participantNameLabel: "NAME" })}
-          maxLength={25}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold text-gray-800">Show Name field</p>
+          <p className="text-xs text-gray-400 mt-0.5">Allow attendees to provide their name on the badge.</p>
+        </div>
+        <Controller
+          name="participantNameVisible"
+          control={control}
+          render={({ field }) => (
+            <Toggle
+              checked={field.value}
+              onChange={field.onChange}
+            />
+          )}
         />
-        <HelperText>Hint text shown before attendees type their name.</HelperText>
       </div>
 
       {showRole && (
         <>
-          <div>
-            <FieldLabel label="Role / title placeholder" />
-            <TextInput
-              placeholder="e.g. Product Designer"
-              value={editor.roleTitlePlaceholder}
-              onChange={(v) => onChange({ roleTitlePlaceholder: v, roleTitleLabel: "ROLE / TITLE" })}
-              maxLength={25}
-            />
-          </div>
-          <div className="flex items-start justify-between gap-4 pt-1">
+          <div className="flex items-start justify-between gap-4 pt-4 border-t border-gray-100">
             <div>
-              <p className="text-sm font-semibold text-gray-800">Require role / title</p>
-              <p className="text-xs text-gray-400 mt-0.5">Attendees must fill in their role or title to claim.</p>
+              <p className="text-sm font-semibold text-gray-800">Show Role / title field</p>
+              <p className="text-xs text-gray-400 mt-0.5">Allow attendees to provide their role or title.</p>
             </div>
-            <Toggle
-              checked={editor.roleTitleRequired}
-              onChange={() => onChange({ roleTitleRequired: !editor.roleTitleRequired })}
+            <Controller
+              name="roleTitleVisible"
+              control={control}
+              render={({ field }) => (
+                <Toggle
+                  checked={field.value}
+                  onChange={field.onChange}
+                />
+              )}
             />
           </div>
+
+          <Controller
+            name="roleTitleVisible"
+            control={control}
+            render={({ field: visibleField }) => (
+              visibleField.value ? (
+                <div className="flex items-start justify-between gap-4 pt-4 ml-4">
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800">Require role / title</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Attendees must fill in their role or title to claim.</p>
+                  </div>
+                  <Controller
+                    name="roleTitleRequired"
+                    control={control}
+                    render={({ field }) => (
+                      <Toggle
+                        checked={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
+                  />
+                </div>
+              ) : <></>
+            )}
+          />
         </>
       )}
+
+      <div className="flex items-start justify-between gap-4 pt-4 border-t border-gray-100">
+        <div>
+          <p className="text-sm font-semibold text-gray-800">Allow participant photo</p>
+          <p className="text-xs text-gray-400 mt-0.5">Attendees can upload their own photo.</p>
+        </div>
+        <Controller
+          name="allowParticipantPhoto"
+          control={control}
+          render={({ field }) => (
+            <Toggle
+              checked={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
+      </div>
 
     </SectionCard>
   );

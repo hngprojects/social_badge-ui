@@ -74,10 +74,10 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 		fields.push({
 			key: CANVAS_FIELD_KEYS.PARTICIPANT_NAME,
 			type: "participant_input",
-			label: state.participantNameLabel.trim() || "NAME",
-			placeholder: state.participantNamePlaceholder.trim() || "Your name",
+			label: "NAME",
+			placeholder: "Your full name",
 			required: true,
-			visible: true,
+			visible: state.participantNameVisible,
 		});
 	}
 
@@ -85,10 +85,10 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 		fields.push({
 			key: CANVAS_FIELD_KEYS.ROLE_TITLE,
 			type: "participant_input",
-			label: state.roleTitleLabel.trim() || "ROLE / TITLE",
-			placeholder: state.roleTitlePlaceholder.trim() || "e.g. Attendee",
+			label: "ROLE / TITLE",
+			placeholder: "e.g. Product Designer",
 			required: state.roleTitleRequired,
-			visible: true,
+			visible: state.roleTitleVisible,
 		});
 	}
 
@@ -137,17 +137,11 @@ export function buildCanvasData(state: CustomizeEditorState): CanvasData {
 export function buildOrganiserTemplatePayload(
 	state: CustomizeEditorState,
 ): OrganiserTemplatePayload {
-	const destination = state.destinationLink.trim();
-	const normalizedDestination = destination.startsWith("http")
-		? destination
-		: `https://${destination.replace(/^\/+/, "")}`;
-
 	return {
 		platform_template_id: state.platformTemplateId,
 		title: state.title.trim() || state.eventName.trim() || "Untitled Badge",
 		canvas_data: buildCanvasData(state),
 		default_caption: state.defaultCaption.trim(),
-		destination_link: normalizedDestination,
 		hashtags: state.hashtags.filter(Boolean),
 		access_type: state.accessType,
 	};

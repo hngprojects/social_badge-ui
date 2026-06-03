@@ -44,13 +44,13 @@ export function LivePreview({ editor, shareCaption, participantPhotoUrl, badgeRe
             Caption preview
           </p>
           <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">
-            {shareCaption || editor.defaultCaption || (
-              <>
-                I&apos;m at #{editor.hashtags[0] ?? "Summit26"} this weekend — who&apos;s joining?{" "}
-                <span className="text-blue-600">{editor.destinationLink}</span>
-              </>
-            )}
+           {shareCaption || editor.defaultCaption || (
+             <>
+               I&apos;m at #{editor.hashtags[0] ?? "Summit26"} this weekend — who&apos;s joining?
+             </>
+           )}
           </p>
+
         </div>
       )}
     </div>

@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 
 import { BrandSection } from "../../../components/customize/BrandSection";
@@ -10,7 +12,7 @@ import { BadgeContentSection } from "../../../components/customize/BadgeContentS
 import { ShareMessageSection } from "../../../components/customize/ShareMessageSection";
 import { LivePreview } from "../../../components/customize/LivePreview";
 
-import { customizeBadgeSchema } from "@/schemas/template";
+import { customizeBadgeSchema, type CustomizeBadgeSchema } from "@/schemas/template";
 
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
 import { useSaveOrganiserTemplate } from "@/app/features/templates/hooks/useSaveOrganiserTemplate";
@@ -29,28 +31,49 @@ export function CustomizeBadgeForm({
   const { editor, patch, setPalette, setBgMode, layoutCaps } =
     useCustomizeEditorState(initialEditor);
   const { saveTemplateAsync, isSaving } = useSaveOrganiserTemplate();
-const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const validation = customizeBadgeSchema.safeParse({
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<CustomizeBadgeSchema>({
+    resolver: zodResolver(customizeBadgeSchema),
+    defaultValues: {
       eventName: editor.eventName,
-      destinationLink: editor.destinationLink,
       title: editor.title,
+      eventDate: editor.eventDate,
+      eventTime: editor.eventTime,
+      participantNameVisible: editor.participantNameVisible,
+      roleTitleVisible: editor.roleTitleVisible,
+      roleTitleRequired: editor.roleTitleRequired,
+      allowParticipantPhoto: editor.allowParticipantPhoto,
       defaultCaption: editor.defaultCaption,
       hashtags: editor.hashtags,
       accessType: editor.accessType,
-    });
+      fontId: editor.fontId,
+      paletteId: editor.paletteId,
+      bgMode: editor.bgMode,
+    },
+  });
 
-    if (!validation.success) {
-      toast.error(validation.error.issues[0].message);
-      return;
-    }
+  const formValues = watch();
 
+  // Unified editor state for LivePreview derived from form + extra editor state
+  const previewEditor: CustomizeEditorState = {
+    ...editor,
+    ...formValues,
+    title: formValues.eventName || editor.title,
+    eventName: formValues.eventName || editor.eventName,
+  };
+
+  const onFormSubmit = async (data: CustomizeBadgeSchema) => {
     const payload = buildOrganiserTemplatePayload({
       ...editor,
-      destinationLink: validation.data.destinationLink,
+      ...data,
+      title: data.eventName, // Use eventName as title
     });
 
     try {
@@ -64,7 +87,22 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
     }
   };
 
-  const isPublishing = isSaving;
+  const handleError = () => {
+    const firstError = Object.values(errors)[0];
+    if (firstError?.message) {
+      toast.error(firstError.message as string);
+    }
+  };
+
+  const handlePaletteChange = (id: string) => {
+    setPalette(id, formValues.bgMode);
+    setValue("paletteId", id);
+  };
+
+  const handleBgModeChange = (mode: "gradient" | "solid") => {
+    setBgMode(mode);
+    setValue("bgMode", mode);
+  };
 
   return (
     <main className="grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-8 w-full items-start">
@@ -83,20 +121,41 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
           </p>
         </div>
 
-        <form id="badge-form" onSubmit={handleSubmit} className="w-full space-y-6 mt-9">
-          <BrandSection editor={editor} onChange={handleChange} layoutCaps={layoutCaps} />
-
-          <StyleSection
-            editor={editor}
-            onChange={handleChange}
-            onPaletteChange={(id) => setPalette(id)}
-            onBgModeChange={setBgMode}
+        <form id="badge-form" onSubmit={handleSubmit(onFormSubmit, handleError)} className="w-full space-y-6 mt-9">
+          <BrandSection
+            register={register}
+            editor={previewEditor}
+            onChange={(p) => {
+              patch(p);
+              // Only setValue for things that aren't automatically handled by register()
+              if (p.eventDate !== undefined) setValue("eventDate", p.eventDate);
+            }}
             layoutCaps={layoutCaps}
           />
 
-          <BadgeContentSection editor={editor} onChange={handleChange} layoutCaps={layoutCaps} />
+          <StyleSection
+            register={register}
+            editor={previewEditor}
+            onChange={(p) => {
+              patch(p);
+              if (p.fontId !== undefined) setValue("fontId", p.fontId);
+            }}
+            onPaletteChange={handlePaletteChange}
+            onBgModeChange={handleBgModeChange}
+            layoutCaps={layoutCaps}
+          />
 
-          <ShareMessageSection editor={editor} onChange={handleChange} />
+          <BadgeContentSection
+            control={control}
+            editor={previewEditor}
+            layoutCaps={layoutCaps}
+          />
+
+          <ShareMessageSection
+            register={register}
+            editor={previewEditor}
+            onChange={patch}
+          />
         </form>
 
         <div className="flex flex-col sm:flex-row gap-3 pb-8 w-full">
@@ -116,17 +175,17 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
           <Button
             form="badge-form"
             type="submit"
-            disabled={isPublishing}
+            disabled={isSaving}
             variant="cta"
             className="flex-1 rounded-xl font-semibold text-sm py-3"
           >
-            {isPublishing ? "Publishing…" : "Publish"}
+            {isSaving ? "Publishing…" : "Publish"}
           </Button>
         </div>
       </section>
 
       <section className="order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:pt-6 lg:pb-6">
-        <LivePreview editor={editor} />
+        <LivePreview editor={previewEditor} />
       </section>
     </main>
   );

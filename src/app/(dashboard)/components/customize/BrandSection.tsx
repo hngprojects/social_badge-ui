@@ -11,13 +11,18 @@ import {
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
+import type { UseFormRegister } from "react-hook-form";
+import type { CustomizeBadgeSchema } from "@/schemas/template";
+
 interface BrandSectionProps {
+	register: UseFormRegister<CustomizeBadgeSchema>;
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	layoutCaps: LayoutCapabilities;
 }
 
 export function BrandSection({
+	register,
 	editor,
 	onChange,
 	layoutCaps,
@@ -97,8 +102,7 @@ export function BrandSection({
 				<FieldLabel label="Event Name" required />
 				<TextInput
 					placeholder="e.g. DESIGNWEEKLAGOS"
-					value={editor.eventName}
-					onChange={(v) => onChange({ eventName: v, title: v })}
+					{...register("eventName")}
 					maxLength={25}
 				/>
 				<HelperText>Appears as the main title on the badge.</HelperText>
@@ -117,8 +121,7 @@ export function BrandSection({
 						<FieldLabel label="Time" />
 						<TextInput
 							placeholder="e.g. 10am"
-							value={editor.eventTime}
-							onChange={(v) => onChange({ eventTime: v })}
+							{...register("eventTime")}
 							maxLength={15}
 						/>
 						<HelperText>Shown alongside the date on the badge.</HelperText>

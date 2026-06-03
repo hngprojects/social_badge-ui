@@ -38,10 +38,10 @@ export function Layout1({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 			</div>
 			<div className="absolute top-45 px-8 w-full">
 				<h2 style={fontStyle} className="text-6xl font-normal uppercase text-black  tracking-tight font-league-gothic leading-[0.85]">
-					{editor.participantNamePlaceholder || "Sandra Robinson"}
+					{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Your full name") : ""}
 				</h2>
 				<p className="text-md text-black/80 mt-2">
-					{editor.roleTitlePlaceholder || "Product Designer"}
+					{editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Product Designer") : ""}
 				</p>
 			</div>
 			<div className="absolute bottom-5 w-full text-right px-6">
@@ -67,10 +67,10 @@ export function Layout9({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 
 				<div className="px-8 my-6">
 					<h2 className="text-3xl font-bold uppercase">
-						{editor.participantNamePlaceholder || "Sandra Robinson"}
+						{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Your full name") : ""}
 					</h2>
 					<p className="text-base opacity-90">
-						{editor.roleTitlePlaceholder || "Product designer"}
+						{editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Product designer") : ""}
 					</p>
 				</div>
 				<div className="bg-zinc-300 absolute bottom-8 w-35 h-35 right-10 rotate-10 flex items-center justify-center text-black text-[10px] overflow-hidden relative">
@@ -111,10 +111,10 @@ export function Layout4({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 
 			<div className="absolute bottom-0 h-[23%] w-full pl-12 text-black">
 				<h2 style={fontStyle} className="text-xl mt-4 font-bold uppercase">
-					{editor.participantNamePlaceholder || "Sandra Robinson"}
+					{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Your full name") : ""}
 				</h2>
 				<p className="text-sm opacity-80">
-					{editor.roleTitlePlaceholder || "Product designer"}
+					{editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Product designer") : ""}
 				</p>
 			</div>
 		</div>
@@ -151,7 +151,7 @@ export function Layout5({ editor, participantPhotoUrl }: TemplateLayoutProps) {
 				</h2>
 				<div className="w-20 h-1 bg-white mb-6" />
 				<p className="text-xl font-bold text-white/90">
-					{editor.participantNamePlaceholder || "Attendee"}
+					{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Attendee") : ""}
 				</p>
 			</div>
 		</div>
@@ -172,10 +172,10 @@ export function Layout7({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 			
 				<div className="px-8 my-6">
 					<h2 className="text-3xl font-bold uppercase">
-						{editor.participantNamePlaceholder || "Sandra Robinson"}
+						{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Your full name") : ""}
 					</h2>
 					<p className="text-base opacity-90">
-						{editor.roleTitlePlaceholder || "Product designer"}
+						{editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Product designer") : ""}
 					</p>
 				</div>
 				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden relative">
@@ -203,11 +203,10 @@ export function Layout3({ editor, participantPhotoUrl }: TemplateLayoutProps) {
 
 				<div className="px-8 my-6">
 					<h2 className="text-3xl">
-						<span>Sandra</span> Robinson{" "}
-						{/*User name will be placed here by users*/}
+						{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Sandra Robinson") : ""}
 					</h2>
 					<p className="text-base">
-						Product designer {/*User role will be placed here by users*/}
+						{editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Product designer") : ""}
 					</p>
 				</div>
 				<div className="bg-black w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto"></div>

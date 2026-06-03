@@ -7,7 +7,11 @@ import { EDITOR_PALETTES } from "@/app/features/templates/lib/palette-mapping";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
+import type { UseFormRegister } from "react-hook-form";
+import type { CustomizeBadgeSchema } from "@/schemas/template";
+
 interface StyleSectionProps {
+	register: UseFormRegister<CustomizeBadgeSchema>;
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	onPaletteChange: (paletteId: string) => void;
@@ -16,6 +20,7 @@ interface StyleSectionProps {
 }
 
 export function StyleSection({
+	register,
 	editor,
 	onChange,
 	onPaletteChange,
@@ -139,33 +144,6 @@ export function StyleSection({
 							</span>
 							<span className="block text-[10px] font-semibold tracking-widest text-gray-400 mt-1">
 								{f.label}
-							</span>
-						</button>
-					))}
-				</div>
-			</div>
-
-			<div>
-				<p className="text-sm font-medium text-gray-800 mb-2">Title size</p>
-				<div className="grid grid-cols-3 gap-2">
-					{SIZES.map((s) => (
-						<button
-							key={s}
-							type="button"
-							onClick={() => onChange({ titleSize: s })}
-							className={`rounded-xl border py-3 flex flex-col items-center gap-1 transition ${
-								editor.titleSize === s
-									? "border-gray-900 bg-white shadow-sm"
-									: "border-gray-200 bg-gray-50 hover:border-gray-300"
-							}`}
-						>
-							<span
-								className={`font-bold text-gray-800 ${s === "SMALL" ? "text-base" : s === "MEDIUM" ? "text-xl" : "text-2xl"}`}
-							>
-								Aa
-							</span>
-							<span className="text-[10px] font-semibold tracking-widest text-gray-400">
-								{s}
 							</span>
 						</button>
 					))}
