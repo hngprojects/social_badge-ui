@@ -10,7 +10,7 @@ import { getUserDisplayName } from "@/lib/api/auth-session";
 import { useUserStore } from "@/stores/use-user-store";
 import { navigationLinks } from "../../../app/(dashboard)/constants/layout/sidebar-nav";
 import type { NavigationLink } from "../../../app/(dashboard)/types/dashboard/sidebar-nav";
-import { getInitials } from "@/lib/utils";
+import { DashboardUserAvatar } from "./dashboard-user-avatar";
 
 const mainLinks = navigationLinks.filter((nav) =>
   ["Dashboard", "Badges"].includes(nav.label),
@@ -162,19 +162,11 @@ export default function SideNav() {
               expanded ? "w-full gap-4" : "justify-center"
             }`}
           >
-            <div className="flex h-13 w-13 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#0000000D] bg-primary/10 text-base font-semibold text-primary">
-              {user?.profile_photo_url ? (
-                <Image
-                  src={user.profile_photo_url}
-                  width={52}
-                  height={52}
-                  alt={displayName || "Profile picture"}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span>{getInitials(user?.first_name, user?.last_name)}</span>
-              )}
-            </div>
+            <DashboardUserAvatar
+              user={user}
+              displayName={displayName}
+              className="h-13 w-13 text-base"
+            />
 
             {expanded && (
               <div className="flex min-w-0 flex-col gap-1">

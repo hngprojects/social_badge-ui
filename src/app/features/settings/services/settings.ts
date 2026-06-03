@@ -2,7 +2,7 @@ import { apiClient } from "@/lib/api/client";
 import { UpdateProfileResponse, DeleteProfileResponse } from "../types";
 
 export const deleteProfile = async () => {
-  return apiClient<DeleteProfileResponse>("/profile/", {
+  return apiClient<DeleteProfileResponse>("/profile", {
     method: "DELETE",
   });
 };
@@ -14,7 +14,7 @@ type UpdateProfilePayload = {
 };
 
 export async function updateProfile(payload: UpdateProfilePayload) {
-  return apiClient<UpdateProfileResponse>("/profile/", {
+  return apiClient<UpdateProfileResponse>("/profile", {
     method: "PUT",
     data: payload,
   });
