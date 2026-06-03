@@ -2,13 +2,14 @@
 
 import { SectionCard, FieldLabel, TextArea, HelperText } from "./ui";
 import type { UseFormRegister } from "react-hook-form";
-import type { CustomizeBadgeSchema } from "@/schemas/template";
+import type { CustomizeBadgeFormValues } from "@/schemas/template";
 
 interface ShareMessageSectionProps {
-  register: UseFormRegister<CustomizeBadgeSchema>;
+  register: UseFormRegister<CustomizeBadgeFormValues>;
 }
 
 export function ShareMessageSection({ register }: ShareMessageSectionProps) {
+
   return (
     <SectionCard
       icon={

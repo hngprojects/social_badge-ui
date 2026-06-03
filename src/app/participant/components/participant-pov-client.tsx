@@ -61,13 +61,15 @@ export default function ParticipantPovClient() {
 
   const editorState = useMemo(() => {
     if (!baseEditorState) return null;
-    return {
+    const state = {
       ...baseEditorState,
       // Pass the actual values being typed to the editor state properties
       // used by CustomTemplatePreview
       participantNamePlaceholder: participantName || baseEditorState.participantNamePlaceholder,
       roleTitlePlaceholder: participantRole || baseEditorState.roleTitlePlaceholder,
     };
+    console.log("DEBUG: Editor State in POV:", state);
+    return state;
   }, [baseEditorState, participantName, participantRole]);
 
   return (

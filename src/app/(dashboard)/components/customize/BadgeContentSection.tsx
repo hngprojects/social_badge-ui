@@ -2,15 +2,13 @@
 
 import React from "react";
 import { SectionCard, Toggle } from "./ui";
-import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
 import { Control, Controller } from "react-hook-form";
-import type { CustomizeBadgeSchema } from "@/schemas/template";
+import type { CustomizeBadgeFormValues } from "@/schemas/template";
 
 interface BadgeContentSectionProps {
-  control: Control<CustomizeBadgeSchema>;
-  editor: CustomizeEditorState;
+  control: Control<CustomizeBadgeFormValues>;
   layoutCaps: LayoutCapabilities;
 }
 
@@ -38,7 +36,7 @@ export function BadgeContentSection({ control, layoutCaps }: BadgeContentSection
           control={control}
           render={({ field }) => (
             <Toggle
-              checked={field.value}
+              checked={!!field.value}
               onChange={field.onChange}
             />
           )}
@@ -56,7 +54,7 @@ export function BadgeContentSection({ control, layoutCaps }: BadgeContentSection
             control={control}
             render={({ field }) => (
               <Toggle
-                checked={field.value}
+                checked={!!field.value}
                 onChange={field.onChange}
               />
             )}

@@ -12,10 +12,10 @@ import type { CustomizeEditorState } from "@/app/features/templates/types/canvas
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
 import type { UseFormRegister } from "react-hook-form";
-import type { CustomizeBadgeSchema } from "@/schemas/template";
+import type { CustomizeBadgeFormValues } from "@/schemas/template";
 
 interface BrandSectionProps {
-	register: UseFormRegister<CustomizeBadgeSchema>;
+	register: UseFormRegister<CustomizeBadgeFormValues>;
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	layoutCaps: LayoutCapabilities;

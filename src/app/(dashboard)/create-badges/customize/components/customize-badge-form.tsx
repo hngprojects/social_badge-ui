@@ -12,7 +12,7 @@ import { BadgeContentSection } from "../../../components/customize/BadgeContentS
 import { ShareMessageSection } from "../../../components/customize/ShareMessageSection";
 import { LivePreview } from "../../../components/customize/LivePreview";
 
-import { customizeBadgeSchema, type CustomizeBadgeSchema, type CustomizeBadgeFormValues } from "@/schemas/template";
+import { customizeBadgeSchema, type CustomizeBadgeFormValues } from "@/schemas/template";
 
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
 import { useSaveOrganiserTemplate } from "@/app/features/templates/hooks/useSaveOrganiserTemplate";
@@ -137,14 +137,12 @@ export function CustomizeBadgeForm({
             editor={previewEditor}
             onChange={(p) => {
               patch(p);
-              // Only setValue for things that aren't automatically handled by register()
               if (p.eventDate !== undefined) setValue("eventDate", p.eventDate);
             }}
             layoutCaps={layoutCaps}
           />
 
           <StyleSection
-            register={register}
             editor={previewEditor}
             onChange={(p) => {
               patch(p);
@@ -157,7 +155,6 @@ export function CustomizeBadgeForm({
 
           <BadgeContentSection
             control={control}
-            editor={previewEditor}
             layoutCaps={layoutCaps}
           />
 

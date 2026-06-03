@@ -159,7 +159,7 @@ export function LogoPlaceholder({isHidden, className, logoPreviewUrl}: {isHidden
 	);
 }
 // Placeholder for Template 5 Layout
-export function Layout5({ editor, participantPhotoUrl }: TemplateLayoutProps) {
+export function Layout5({ editor }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			<Template5 className="w-full h-full" editor={editor} />
@@ -208,7 +208,7 @@ export function Layout7({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 	);
 }
 
-export function Layout3({ editor, participantPhotoUrl }: TemplateLayoutProps) {
+export function Layout3({ editor }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-black">
 			<Template3 className="w-full h-full" editor={editor} />

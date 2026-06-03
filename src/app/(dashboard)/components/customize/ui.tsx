@@ -59,21 +59,12 @@ export const TextInput = React.forwardRef<
 	{
 		placeholder?: string;
 		value?: string;
-		onChange?: React.ChangeEventHandler<HTMLInputElement> | ((v: string) => void);
+		onChange?: React.ChangeEventHandler<HTMLInputElement>;
 		maxLength?: number;
 		name?: string;
 		onBlur?: React.FocusEventHandler<HTMLInputElement>;
 	}
 >(({ placeholder, value, onChange, maxLength, name, onBlur }, ref) => {
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (!onChange) return;
-		if (typeof onChange === 'function' && onChange.length === 1 && name) {
-			(onChange as React.ChangeEventHandler<HTMLInputElement>)(e);
-		} else if (typeof onChange === 'function') {
-			(onChange as (v: string) => void)(e.target.value);
-		}
-	};
-
 	return (
 		<div className="relative">
 			<Input
@@ -84,7 +75,7 @@ export const TextInput = React.forwardRef<
 				placeholder={placeholder}
 				value={value}
 				maxLength={maxLength}
-				onChange={handleChange}
+				onChange={onChange}
 				className="h-12 px-4 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
 			/>
 			{maxLength && (
@@ -110,21 +101,12 @@ export const TextArea = React.forwardRef<
 	{
 		placeholder?: string;
 		value?: string;
-		onChange?: React.ChangeEventHandler<HTMLTextAreaElement> | ((v: string) => void);
+		onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 		maxLength?: number;
 		name?: string;
 		onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
 	}
 >(({ placeholder, value, onChange, maxLength, name, onBlur }, ref) => {
-	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		if (!onChange) return;
-		if (typeof onChange === 'function' && onChange.length === 1 && name) {
-			(onChange as React.ChangeEventHandler<HTMLTextAreaElement>)(e);
-		} else if (typeof onChange === 'function') {
-			(onChange as (v: string) => void)(e.target.value);
-		}
-	};
-
 	return (
 		<div className="relative">
 			<Textarea
@@ -135,7 +117,7 @@ export const TextArea = React.forwardRef<
 				placeholder={placeholder}
 				value={value}
 				maxLength={maxLength}
-				onChange={handleChange}
+				onChange={onChange}
 				className="px-4 py-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
 			/>
 			{maxLength && (
