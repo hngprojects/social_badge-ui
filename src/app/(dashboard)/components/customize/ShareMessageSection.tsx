@@ -1,18 +1,14 @@
 "use client";
 
 import { SectionCard, FieldLabel, TextArea, HelperText } from "./ui";
-import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
-
 import type { UseFormRegister } from "react-hook-form";
 import type { CustomizeBadgeSchema } from "@/schemas/template";
 
 interface ShareMessageSectionProps {
   register: UseFormRegister<CustomizeBadgeSchema>;
-  editor: CustomizeEditorState;
-  onChange: (partial: Partial<CustomizeEditorState>) => void;
 }
 
-export function ShareMessageSection({ register, editor, onChange }: ShareMessageSectionProps) {
+export function ShareMessageSection({ register }: ShareMessageSectionProps) {
   return (
     <SectionCard
       icon={

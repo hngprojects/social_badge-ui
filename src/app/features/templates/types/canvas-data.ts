@@ -168,5 +168,6 @@ export interface CustomizeEditorState {
 	defaultCaption: string;
 	hashtags: string[];
 	accessType: number;
+	status?: "draft" | "live";
 	savedAt?: string | null;
 }

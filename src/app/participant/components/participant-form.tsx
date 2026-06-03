@@ -59,6 +59,7 @@ export default function ParticipantForm({
 	const showName = editorState?.participantNameVisible ?? true;
 	const showRole = editorState?.roleTitleVisible ?? true;
 
+	// eslint-disable-next-line react-hooks/incompatible-library
 	const formValues = watch();
 
 	const selectedFile = useWatch({

@@ -59,7 +59,7 @@ export const TextInput = React.forwardRef<
 	{
 		placeholder?: string;
 		value?: string;
-		onChange?: any; // Flexible for RHF event or manual string
+		onChange?: React.ChangeEventHandler<HTMLInputElement> | ((v: string) => void);
 		maxLength?: number;
 		name?: string;
 		onBlur?: React.FocusEventHandler<HTMLInputElement>;
@@ -67,13 +67,10 @@ export const TextInput = React.forwardRef<
 >(({ placeholder, value, onChange, maxLength, name, onBlur }, ref) => {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (!onChange) return;
-		// If it's a react-hook-form handler, it expects the whole event
-		// If it's a legacy handler from our old code, it might expect just the value
-		if (onChange.length === 1 && name) {
-			// This is a heuristic for RHF which expects the event
-			onChange(e);
-		} else {
-			onChange(e.target.value);
+		if (typeof onChange === 'function' && onChange.length === 1 && name) {
+			(onChange as React.ChangeEventHandler<HTMLInputElement>)(e);
+		} else if (typeof onChange === 'function') {
+			(onChange as (v: string) => void)(e.target.value);
 		}
 	};
 
@@ -113,7 +110,7 @@ export const TextArea = React.forwardRef<
 	{
 		placeholder?: string;
 		value?: string;
-		onChange?: any;
+		onChange?: React.ChangeEventHandler<HTMLTextAreaElement> | ((v: string) => void);
 		maxLength?: number;
 		name?: string;
 		onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
@@ -121,10 +118,10 @@ export const TextArea = React.forwardRef<
 >(({ placeholder, value, onChange, maxLength, name, onBlur }, ref) => {
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		if (!onChange) return;
-		if (onChange.length === 1 && name) {
-			onChange(e);
-		} else {
-			onChange(e.target.value);
+		if (typeof onChange === 'function' && onChange.length === 1 && name) {
+			(onChange as React.ChangeEventHandler<HTMLTextAreaElement>)(e);
+		} else if (typeof onChange === 'function') {
+			(onChange as (v: string) => void)(e.target.value);
 		}
 	};
 

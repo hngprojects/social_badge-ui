@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SectionCard, FieldLabel, TextInput, HelperText, Toggle } from "./ui";
+import { SectionCard, Toggle } from "./ui";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
@@ -14,7 +14,7 @@ interface BadgeContentSectionProps {
   layoutCaps: LayoutCapabilities;
 }
 
-export function BadgeContentSection({ control, editor, layoutCaps }: BadgeContentSectionProps) {
+export function BadgeContentSection({ control, layoutCaps }: BadgeContentSectionProps) {
   const showRole = layoutCaps.participantFields.includes("role_title");
 
   return (

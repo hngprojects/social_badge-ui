@@ -20,7 +20,7 @@ const TEST_TEMPLATES = [
   { id: "photo_gradient_v1", label: "Live: Photo Gradient" },
 ];
 
-export default function TestBadgePage({ className }: { className?: string }) {
+export default function TestBadgePage({ }: { className?: string }) {
   const [selectedTemplate, setSelectedTemplate] = useState(TEST_TEMPLATES[0].id);
   const [previewMode, setPreviewMode] = useState<"live" | "custom">("custom");
   
@@ -125,15 +125,7 @@ export default function TestBadgePage({ className }: { className?: string }) {
                   className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
                 />
               </div>
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Destination Link</label>
-                <input
-                  type="text"
-                  value={editor.destinationLink}
-                  onChange={(e) => patch({ destinationLink: e.target.value })}
-                  className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
-                />
-              </div>
+              
             </div>
           </div>
         </div>

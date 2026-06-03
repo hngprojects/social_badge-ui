@@ -2,16 +2,13 @@
 
 import React, { useMemo } from "react";
 import { SectionCard, HelperText } from "./ui";
-import { FONTS, SIZES } from "./constants";
+import { FONTS } from "./constants";
 import { EDITOR_PALETTES } from "@/app/features/templates/lib/palette-mapping";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
-import type { UseFormRegister } from "react-hook-form";
-import type { CustomizeBadgeSchema } from "@/schemas/template";
 
 interface StyleSectionProps {
-	register: UseFormRegister<CustomizeBadgeSchema>;
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	onPaletteChange: (paletteId: string) => void;
@@ -20,7 +17,6 @@ interface StyleSectionProps {
 }
 
 export function StyleSection({
-	register,
 	editor,
 	onChange,
 	onPaletteChange,

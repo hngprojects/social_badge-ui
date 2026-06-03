@@ -147,7 +147,7 @@ export function parseCanvasDataToEditorState(
 			| "hashtags"
 			| "access_type"
 		>
-	> & { logo_url?: string | null; updated_at?: string | null },
+	> & { logo_url?: string | null; updated_at?: string | null; is_published?: boolean },
 ): CustomizeEditorState {
 	const layoutId = canvas.layout_id;
 	const eventNameField = findStatic(
@@ -182,11 +182,11 @@ export function parseCanvasDataToEditorState(
 		eventTime: dateParts.eventTime,
 		participantNameLabel: "NAME",
 		participantNamePlaceholder: participantName?.placeholder ?? "Your name",
-		participantNameVisible: participantName?.visible ?? true,
+		participantNameVisible: Boolean(participantName?.visible ?? true),
 		roleTitleLabel: "ROLE / TITLE",
 		roleTitlePlaceholder: roleTitle?.placeholder ?? "e.g. Product Designer",
-		roleTitleVisible: roleTitle?.visible ?? true,
-		roleTitleRequired: roleTitle?.required ?? false,
+		roleTitleVisible: Boolean(roleTitle?.visible ?? true),
+		roleTitleRequired: Boolean(roleTitle?.required ?? false),
 		allowParticipantPhoto: hasPhoto,
 		logo: canvas.logo,
 		logoPreviewUrl: meta?.logo_url ?? canvas.logo?.url ?? null,
@@ -197,6 +197,7 @@ export function parseCanvasDataToEditorState(
 		defaultCaption: meta?.default_caption ?? "",
 		hashtags: meta?.hashtags ?? [],
 		accessType: meta?.access_type ?? 0,
+		status: meta?.is_published ? "live" : "draft",
 		savedAt: meta?.updated_at ?? null,
 	};
 }
@@ -261,6 +262,9 @@ export function createDefaultEditorState(
 		defaultCaption: "",
 		hashtags: [],
 		accessType: 0,
+		participantNameVisible: true,
+		roleTitleVisible: true,
+		status: "draft",
 		...preset,
 	};
 }

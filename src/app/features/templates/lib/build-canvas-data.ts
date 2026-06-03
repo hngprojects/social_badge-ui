@@ -37,11 +37,14 @@ function buildBackground(state: CustomizeEditorState): CanvasBackground {
 	};
 }
 
-function formatEventDateValue(eventDate: string, eventTime: string): string {
+
+{
+	/*function formatEventDateValue(eventDate: string, eventTime: string): string {
 	const date = eventDate.trim();
 	const time = eventTime.trim();
 	if (date && time) return `${date} · ${time}`;
 	return date || time;
+} */
 }
 
 function buildFields(state: CustomizeEditorState): CanvasField[] {
@@ -123,10 +126,11 @@ export function buildCanvasData(state: CustomizeEditorState): CanvasData {
 			italic: state.fontId === "fraunces",
 			underline: false,
 		},
-		logo: state.logo
+		logo: (state.logo || state.logoPreviewUrl)
 			? {
-					...state.logo,
-					position: state.logo.position ?? caps.defaultLogoPosition,
+					url: state.logo?.url || state.logoPreviewUrl || "",
+					public_id: state.logo?.public_id || "",
+					position: state.logo?.position ?? caps.defaultLogoPosition,
 				}
 			: null,
 		fields: buildFields(state),

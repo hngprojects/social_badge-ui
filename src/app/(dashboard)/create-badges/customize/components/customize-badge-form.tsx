@@ -12,7 +12,7 @@ import { BadgeContentSection } from "../../../components/customize/BadgeContentS
 import { ShareMessageSection } from "../../../components/customize/ShareMessageSection";
 import { LivePreview } from "../../../components/customize/LivePreview";
 
-import { customizeBadgeSchema, type CustomizeBadgeSchema } from "@/schemas/template";
+import { customizeBadgeSchema, type CustomizeBadgeSchema, type CustomizeBadgeFormValues } from "@/schemas/template";
 
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
 import { useSaveOrganiserTemplate } from "@/app/features/templates/hooks/useSaveOrganiserTemplate";
@@ -39,7 +39,7 @@ export function CustomizeBadgeForm({
     watch,
     setValue,
     formState: { errors },
-  } = useForm<CustomizeBadgeSchema>({
+  } = useForm<CustomizeBadgeFormValues>({
     resolver: zodResolver(customizeBadgeSchema),
     defaultValues: {
       eventName: editor.eventName,
@@ -59,6 +59,7 @@ export function CustomizeBadgeForm({
     },
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const formValues = watch();
 
   // Unified editor state for LivePreview derived from form + extra editor state
@@ -69,7 +70,7 @@ export function CustomizeBadgeForm({
     eventName: formValues.eventName || editor.eventName,
   };
 
-  const onFormSubmit = async (data: CustomizeBadgeSchema) => {
+  const onFormSubmit = async (data: CustomizeBadgeFormValues, shouldPublish = true) => {
     // Make logo compulsory if required by layout
     if (layoutCaps.hasHeaderLogo && !editor.logoPreviewUrl && !editor.pendingLogoFile) {
       toast.error("Please upload a logo for this badge layout.");
@@ -80,13 +81,14 @@ export function CustomizeBadgeForm({
       ...editor,
       ...data,
       title: data.eventName, // Use eventName as title
-    });
+    } as CustomizeEditorState); // Temporary fix to satisfy payload builder type
 
     try {
       await saveTemplateAsync({
         payload,
         organiserTemplateId,
         pendingLogoFile: editor.pendingLogoFile,
+        shouldPublish,
       });
     } catch {
       /* toast handled in hook */
@@ -110,6 +112,8 @@ export function CustomizeBadgeForm({
     setValue("bgMode", mode);
   };
 
+  const isPublished = editor.status === "live";
+
   return (
     <main className="grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-8 w-full items-start">
       <section className="order-2 lg:order-1 lg:col-span-7 w-full min-w-0 overflow-hidden p-6 space-y-6">
@@ -127,7 +131,7 @@ export function CustomizeBadgeForm({
           </p>
         </div>
 
-        <form id="badge-form" onSubmit={handleSubmit(onFormSubmit, handleError)} className="w-full space-y-6 mt-9">
+        <form id="badge-form" onSubmit={(e) => e.preventDefault()} className="w-full space-y-6 mt-9">
           <BrandSection
             register={register}
             editor={previewEditor}
@@ -159,33 +163,35 @@ export function CustomizeBadgeForm({
 
           <ShareMessageSection
             register={register}
-            editor={previewEditor}
-            onChange={patch}
           />
         </form>
 
         <div className="flex flex-col sm:flex-row gap-3 pb-8 w-full">
-          <div className="flex-1 flex flex-col gap-1">
-            <Button
-              type="button"
-              disabled
-              variant="outline"
-              title="Coming soon"
-              aria-label="Save as Draft — coming soon"
-              className="w-full rounded-xl font-semibold text-sm py-3 cursor-not-allowed opacity-50"
-            >
-              Save as Draft
-            </Button>
-            <p className="text-center text-xs text-gray-400">Coming soon</p>
-          </div>
+          {!isPublished && (
+            <div className="flex-1 flex flex-col gap-1">
+              <Button
+                type="button"
+                onClick={handleSubmit((data) => onFormSubmit(data, false), handleError)}
+                disabled={isSaving}
+                variant="outline"
+                className="w-full rounded-xl font-semibold text-sm py-3"
+              >
+                {isSaving ? "Saving…" : "Save as Draft"}
+              </Button>
+            </div>
+          )}
+          
           <Button
             form="badge-form"
-            type="submit"
+            type="button"
+            onClick={handleSubmit((data) => onFormSubmit(data, !isPublished), handleError)}
             disabled={isSaving}
             variant="cta"
             className="flex-1 rounded-xl font-semibold text-sm py-3"
           >
-            {isSaving ? "Publishing…" : "Publish"}
+            {isSaving 
+              ? (isPublished ? "Saving Changes…" : "Publishing…") 
+              : (isPublished ? "Save Changes" : "Publish")}
           </Button>
         </div>
       </section>

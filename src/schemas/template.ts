@@ -18,3 +18,4 @@ export const customizeBadgeSchema = z.object({
 });
 
 export type CustomizeBadgeSchema = z.infer<typeof customizeBadgeSchema>;
+export type CustomizeBadgeFormValues = z.input<typeof customizeBadgeSchema>;
