@@ -57,14 +57,16 @@ function backgroundToEditorState(
 	| "backgroundImageUrl"
 > {
 	const bg = canvas.background;
+	const caps = LAYOUT_CAPABILITIES[canvas.layout_id];
+	const fallbackPaletteId = caps?.defaultPaletteId ?? "bg_color_dark";
 
 	if (bg.type === "image") {
 		const match = EDITOR_PALETTES.find(
 			(p) => BACKGROUND_IMAGE_BY_PALETTE[p.id] === bg.image_url,
 		);
 		return {
-			bgMode: "gradient",
-			paletteId: match?.id ?? "bg_mesh_01",
+			bgMode: "solid",
+			paletteId: match?.id ?? fallbackPaletteId,
 			gradientColors: ["#ff007a", "#ffa800"],
 			gradientDirection: "135deg",
 			solidColor: "#ff007a",
@@ -78,7 +80,7 @@ function backgroundToEditorState(
 		);
 		return {
 			bgMode: "solid",
-			paletteId: match?.id ?? "bg_color_dark",
+			paletteId: match?.id ?? fallbackPaletteId,
 			gradientColors: [bg.color, bg.color],
 			gradientDirection: "135deg",
 			solidColor: bg.color,
@@ -95,8 +97,8 @@ function backgroundToEditorState(
 				p.to.toLowerCase() === to.toLowerCase(),
 		);
 		return {
-			bgMode: "gradient",
-			paletteId: match?.id ?? "bg_mesh_01",
+			bgMode: "solid",
+			paletteId: match?.id ?? fallbackPaletteId,
 			gradientColors: [from, to],
 			gradientDirection: "180deg",
 			solidColor: from,
@@ -113,7 +115,7 @@ function backgroundToEditorState(
 
 	return {
 		bgMode: "gradient",
-		paletteId: match?.id ?? "bg_mesh_01",
+		paletteId: match?.id ?? fallbackPaletteId,
 		gradientColors: bg.gradient.colors,
 		gradientDirection: bg.gradient.direction,
 		solidColor: from,
@@ -179,7 +181,7 @@ export function parseCanvasDataToEditorState(
 		eventDate: dateParts.eventDate,
 		eventTime: dateParts.eventTime,
 		participantNameLabel: "NAME",
-		participantNamePlaceholder: participantName?.placeholder ?? "Your full name",
+		participantNamePlaceholder: participantName?.placeholder ?? "Your name",
 		participantNameVisible: participantName?.visible ?? true,
 		roleTitleLabel: "ROLE / TITLE",
 		roleTitlePlaceholder: roleTitle?.placeholder ?? "e.g. Product Designer",
@@ -193,7 +195,6 @@ export function parseCanvasDataToEditorState(
 		fontId: FONT_FAMILY_TO_ID[canvas.typography.font_family] ?? "inter",
 		titleSize: sizePxToEnum(canvas.typography.size_px),
 		defaultCaption: meta?.default_caption ?? "",
-		destinationLink: "", // Removed
 		hashtags: meta?.hashtags ?? [],
 		accessType: meta?.access_type ?? 0,
 		savedAt: meta?.updated_at ?? null,
@@ -258,7 +259,6 @@ export function createDefaultEditorState(
 		fontId: "inter",
 		titleSize: "MEDIUM",
 		defaultCaption: "",
-		destinationLink: "socialbadge.com",
 		hashtags: [],
 		accessType: 0,
 		...preset,

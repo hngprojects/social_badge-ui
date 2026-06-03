@@ -46,68 +46,23 @@ export function BadgeContentSection({ control, editor, layoutCaps }: BadgeConten
       </div>
 
       {showRole && (
-        <>
-          <div className="flex items-start justify-between gap-4 pt-4 border-t border-gray-100">
-            <div>
-              <p className="text-sm font-semibold text-gray-800">Show Role / title field</p>
-              <p className="text-xs text-gray-400 mt-0.5">Allow attendees to provide their role or title.</p>
-            </div>
-            <Controller
-              name="roleTitleVisible"
-              control={control}
-              render={({ field }) => (
-                <Toggle
-                  checked={field.value}
-                  onChange={field.onChange}
-                />
-              )}
-            />
+        <div className="flex items-start justify-between gap-4 pt-4 border-t border-gray-100">
+          <div>
+            <p className="text-sm font-semibold text-gray-800">Show Role / title field</p>
+            <p className="text-xs text-gray-400 mt-0.5">Allow attendees to provide their role or title.</p>
           </div>
-
           <Controller
             name="roleTitleVisible"
             control={control}
-            render={({ field: visibleField }) => (
-              visibleField.value ? (
-                <div className="flex items-start justify-between gap-4 pt-4 ml-4">
-                  <div>
-                    <p className="text-sm font-semibold text-gray-800">Require role / title</p>
-                    <p className="text-xs text-gray-400 mt-0.5">Attendees must fill in their role or title to claim.</p>
-                  </div>
-                  <Controller
-                    name="roleTitleRequired"
-                    control={control}
-                    render={({ field }) => (
-                      <Toggle
-                        checked={field.value}
-                        onChange={field.onChange}
-                      />
-                    )}
-                  />
-                </div>
-              ) : <></>
+            render={({ field }) => (
+              <Toggle
+                checked={field.value}
+                onChange={field.onChange}
+              />
             )}
           />
-        </>
-      )}
-
-      <div className="flex items-start justify-between gap-4 pt-4 border-t border-gray-100">
-        <div>
-          <p className="text-sm font-semibold text-gray-800">Allow participant photo</p>
-          <p className="text-xs text-gray-400 mt-0.5">Attendees can upload their own photo.</p>
         </div>
-        <Controller
-          name="allowParticipantPhoto"
-          control={control}
-          render={({ field }) => (
-            <Toggle
-              checked={field.value}
-              onChange={field.onChange}
-            />
-          )}
-        />
-      </div>
-
+      )}
     </SectionCard>
   );
 }

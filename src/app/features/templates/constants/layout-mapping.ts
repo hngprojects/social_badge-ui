@@ -76,7 +76,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 		participantFields: ["participant_name", "role_title", "participant_photo"],
 		hasHeaderLogo: true,
 		defaultLogoPosition: "top-left",
-		defaultPaletteId: "bg_mesh_01",
+		defaultPaletteId: "bg_mesh_purple_teal",
 		previewColor: "#6b3fa0",
 	},
 };

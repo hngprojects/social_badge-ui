@@ -53,7 +53,7 @@ export function StyleSection({
 			<div>
 				<p className="text-sm font-medium text-gray-800 mb-2">Background</p>
 				<div className="flex rounded-lg border border-gray-200 overflow-hidden items-center px-1.5 gap-2 h-11.5">
-					{(["gradient", "solid"] as const).map((mode) => (
+					{(["solid", "gradient"] as const).map((mode) => (
 						<button
 							key={mode}
 							type="button"

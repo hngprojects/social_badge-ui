@@ -1,4 +1,19 @@
-export function Template9({ className, baseColor }: { className?: string; baseColor?: string }) {
+import { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
+
+function GradientDefs({ id, editor }: { id: string; editor?: CustomizeEditorState }) {
+	if (!editor || editor.bgMode !== "gradient") return null;
+	return (
+		<defs>
+			<linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stopColor={editor.gradientColors[0]} />
+				<stop offset="100%" stopColor={editor.gradientColors[1]} />
+			</linearGradient>
+		</defs>
+	);
+}
+
+export function Template9({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+	const fill = editor?.bgMode === "gradient" ? "url(#grad9)" : (editor?.solidColor || baseColor || "#6543A1");
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -8,8 +23,9 @@ export function Template9({ className, baseColor }: { className?: string; baseCo
 			viewBox="0 0 480 640"
 			className={className}
 		>
+			<GradientDefs id="grad9" editor={editor} />
 			<g clipPath="url(#a)">
-				<rect width="480" height="640" fill={baseColor || "#6543A1"} rx="32" />
+				<rect width="480" height="640" fill={fill} rx="32" />
 				<path
 					fill="#68C4B9"
 					d="M-34 356c76.785 30.411 128.146 28.639 231.25 0L176 438c99.575-74.292 98.5-82 254-103l78 103v159c-118.468-22.568-197.188-5.004-350 57H-34V356Z"
@@ -32,7 +48,8 @@ export function Template9({ className, baseColor }: { className?: string; baseCo
 	);
 }
 
-export function Template7({ className, baseColor }: { className?: string; baseColor?: string }) {
+export function Template7({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+	const fill = editor?.bgMode === "gradient" ? "url(#grad7)" : (editor?.solidColor || baseColor || "#1E1E1E");
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -42,12 +59,14 @@ export function Template7({ className, baseColor }: { className?: string; baseCo
 			viewBox="0 0 480 640"
 			className={className}
 		>
-			<rect width="480" height="640" fill={baseColor || "#1E1E1E"} rx="32" />
+			<GradientDefs id="grad7" editor={editor} />
+			<rect width="480" height="640" fill={fill} rx="32" />
 		</svg>
 	);
 }
 
-export function Template1({ className, baseColor }: { className?: string; baseColor?: string }) {
+export function Template1({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+	const fill = editor?.bgMode === "gradient" ? "url(#grad1)" : (editor?.solidColor || baseColor || "#E8CAD4");
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -57,8 +76,9 @@ export function Template1({ className, baseColor }: { className?: string; baseCo
 			viewBox="0 0 480 640"
 			className={className}
 		>
+			<GradientDefs id="grad1" editor={editor} />
 			<g clipPath="url(#a)">
-				<rect width="480" height="640" fill={baseColor || "#E8CAD4"} rx="32" />
+				<rect width="480" height="640" fill={fill} rx="32" />
 				<path
 					stroke="#E61B62"
 					strokeLinecap="round"
@@ -98,7 +118,8 @@ export function Template1({ className, baseColor }: { className?: string; baseCo
 	);
 }
 
-export function Template5({ className, baseColor }: { className?: string; baseColor?: string }) {
+export function Template5({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+	const fill = editor?.bgMode === "gradient" ? "url(#grad5)" : (editor?.solidColor || baseColor || "#8454E8");
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -108,12 +129,14 @@ export function Template5({ className, baseColor }: { className?: string; baseCo
 			viewBox="0 0 480 640"
 			className={className}
 		>
-			<rect width="480" height="640" fill={baseColor || "#8454E8"} rx="32" />
+			<GradientDefs id="grad5" editor={editor} />
+			<rect width="480" height="640" fill={fill} rx="32" />
 		</svg>
 	);
 }
 
-export function Template4({ className, baseColor }: { className?: string; baseColor?: string }) {
+export function Template4({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+	const fill = editor?.bgMode === "gradient" ? "url(#grad4)" : (editor?.solidColor || baseColor || "#222");
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -123,13 +146,15 @@ export function Template4({ className, baseColor }: { className?: string; baseCo
 			viewBox="0 0 480 640"
 			className={className}
 		>
-			<rect width="480" height="640" fill={baseColor || "#222"} rx="32" />
+			<GradientDefs id="grad4" editor={editor} />
+			<rect width="480" height="640" fill={fill} rx="32" />
 			<path fill="#CAC9C7" d="M0 492h480v148H0z" />
 		</svg>
 	);
 }
 
-export function Template3({ className, baseColor }: { className?: string; baseColor?: string }) {
+export function Template3({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+	const fill = editor?.bgMode === "gradient" ? "url(#grad3)" : (editor?.solidColor || baseColor || "#fff");
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +164,8 @@ export function Template3({ className, baseColor }: { className?: string; baseCo
 			viewBox="0 0 480 640"
 			className={className}
 		>
-			<rect width="480" height="640" fill={baseColor || "#fff"} rx="32" />
+			<GradientDefs id="grad3" editor={editor} />
+			<rect width="480" height="640" fill={fill} rx="32" />
 		</svg>
 	);
 }

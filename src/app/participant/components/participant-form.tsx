@@ -144,7 +144,7 @@ export default function ParticipantForm({
 
 					<Input
 						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-						placeholder={editorState?.participantNamePlaceholder || "Your full name"}
+						placeholder={editorState?.participantNamePlaceholder || "Your name"}
 						maxLength={25}
 						{...register("name", { onChange: (e) => onNameChange?.(e.target.value) })}
 					/>

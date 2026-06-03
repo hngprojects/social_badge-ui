@@ -75,7 +75,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			key: CANVAS_FIELD_KEYS.PARTICIPANT_NAME,
 			type: "participant_input",
 			label: "NAME",
-			placeholder: "Your full name",
+			placeholder: "Your name",
 			required: true,
 			visible: state.participantNameVisible,
 		});

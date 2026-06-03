@@ -28,24 +28,42 @@ interface TemplateLayoutProps {
 export function Layout1({ editor, participantPhotoUrl, baseColor, fontStyle }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
-			<Template1 className="w-full h-full" baseColor={baseColor} />
+			<Template1
+				className="w-full h-full"
+				editor={editor}
+				baseColor={baseColor}
+			/>
 			<div className="w-30 h-26.5 left-[32.5px] bg-rose-600 absolute top-17 rounded-full flex justify-center items-center text-white text-[10px] text-center overflow-hidden">
 				{participantPhotoUrl ? (
-					<Image src={participantPhotoUrl} alt="Participant" fill className="object-cover" />
+					<Image
+						src={participantPhotoUrl}
+						alt="Participant"
+						fill
+						className="object-cover"
+					/>
 				) : (
-					<span className="px-2">{editor.allowParticipantPhoto ? "Profile Photo" : ""}</span>
+					<span className="px-2">
+						{editor.allowParticipantPhoto ? "Profile Photo" : ""}
+					</span>
 				)}
 			</div>
 			<div className="absolute top-45 px-8 w-full">
-				<h2 style={fontStyle} className="text-6xl font-normal uppercase text-black  tracking-tight font-league-gothic leading-[0.85]">
-					{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Your full name") : ""}
+				<h2 className="text-6xl font-normal uppercase text-black  tracking-tight font-league-gothic leading-[0.85]">
+					{editor.participantNameVisible
+						? editor.participantNamePlaceholder || "Your full name"
+						: ""}
 				</h2>
 				<p className="text-md text-black/80 mt-2">
-					{editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Product Designer") : ""}
+					{editor.roleTitleVisible
+						? editor.roleTitlePlaceholder || "Product Designer"
+						: ""}
 				</p>
 			</div>
 			<div className="absolute bottom-5 w-full text-right px-6">
-				<p className="text-2xl font-normal text-stone-300 font-league-gothic">
+				<p
+					style={fontStyle}
+					className="text-xl font-normal text-stone-300 font-league-gothic"
+				>
 					{editor.eventName || "#DesignWeekLagos"}
 				</p>
 			</div>
@@ -57,7 +75,7 @@ export function Layout1({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 export function Layout9({ editor, participantPhotoUrl, baseColor, fontStyle }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
-			<Template9 className="w-full h-full" baseColor={baseColor} />
+			<Template9 className="w-full h-full" editor={editor} baseColor={baseColor} />
 			<div className="absolute w-full h-full top-0 py-8">
 				<div className="flex border-white  justify-between items-start px-8">
 					{" "}
@@ -73,7 +91,7 @@ export function Layout9({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 						{editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Product designer") : ""}
 					</p>
 				</div>
-				<div className="bg-zinc-300 absolute bottom-8 w-35 h-35 right-10 rotate-10 flex items-center justify-center text-black text-[10px] overflow-hidden relative">
+				<div className="bg-zinc-300 absolute bottom-8 w-35 h-35 right-10 rotate-10 flex items-center justify-center text-black text-[10px] overflow-hidden">
 					{participantPhotoUrl ? (
 						<Image src={participantPhotoUrl} alt="Participant" fill className="object-cover" />
 					) : (
@@ -90,7 +108,7 @@ export function Layout9({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 export function Layout4({ editor, participantPhotoUrl, baseColor, fontStyle }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
-			<Template4 className="w-full h-full" baseColor={baseColor} />
+			<Template4 className="w-full h-full" editor={editor} baseColor={baseColor} />
 			<div className="absolute top-[22%] left-0 w-full h-[60%] flex">
 				{" "}
 				<Template4Left />
@@ -144,7 +162,7 @@ export function LogoPlaceholder({isHidden, className, logoPreviewUrl}: {isHidden
 export function Layout5({ editor, participantPhotoUrl }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
-			<Template5 className="w-full h-full" />
+			<Template5 className="w-full h-full" editor={editor} />
 			<div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
 				<h2 className="text-3xl font-black text-white uppercase italic mb-4">
 					{editor.eventName || "SUMMIT"}
@@ -162,7 +180,7 @@ export function Layout5({ editor, participantPhotoUrl }: TemplateLayoutProps) {
 export function Layout7({ editor, participantPhotoUrl, baseColor, fontStyle }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
-			<Template7 className="w-full h-full" baseColor={baseColor} />
+			<Template7 className="w-full h-full" editor={editor} baseColor={baseColor} />
 			<div className="absolute w-full h-full top-0 py-8">
 				<div className="flex border-white  justify-between items-start px-8">
 					{" "}
@@ -193,7 +211,7 @@ export function Layout7({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 export function Layout3({ editor, participantPhotoUrl }: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-black">
-			<Template3 className="w-full h-full" />
+			<Template3 className="w-full h-full" editor={editor} />
 			<div className="absolute w-full h-full top-0 py-8">
 				<div className="flex border-black  justify-between items-start px-8">
 					{" "}
