@@ -70,6 +70,12 @@ export function CustomizeBadgeForm({
   };
 
   const onFormSubmit = async (data: CustomizeBadgeSchema) => {
+    // Make logo compulsory if required by layout
+    if (layoutCaps.hasHeaderLogo && !editor.logoPreviewUrl && !editor.pendingLogoFile) {
+      toast.error("Please upload a logo for this badge layout.");
+      return;
+    }
+
     const payload = buildOrganiserTemplatePayload({
       ...editor,
       ...data,

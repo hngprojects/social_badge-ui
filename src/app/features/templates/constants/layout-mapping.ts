@@ -23,6 +23,14 @@ export function resolveLayoutId(
 	if (fromCanvas && isCanvasLayoutId(fromCanvas)) {
 		return fromCanvas;
 	}
+
+	if (isCanvasLayoutId(platformTemplateId)) {
+		return platformTemplateId;
+	}
+
+	const mapped = PLATFORM_TEMPLATE_LAYOUT_MAP[platformTemplateId];
+	if (mapped) return mapped;
+
 	// Fallback should probably be one of the new ones
 	return "bold_name_pink_v1";
 }
