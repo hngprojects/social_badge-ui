@@ -128,6 +128,9 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 		setIsDownloading(true);
 		try {
 			const response = await fetch(qrUrl);
+			if (!response.ok) {
+				throw new Error(`QR fetch failed with status ${response.status}`);
+			}
 			const blob = await response.blob();
 			const blobUrl = URL.createObjectURL(blob);
 
@@ -173,7 +176,10 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 
 					<div>
 						<div className="flex gap-1.5 mb-1.5">
-							{QR_FORMATS.map((fmt, i) => (
+							<span className="text-[0.7rem] font-semibold text-gray-400 tracking-wide">
+								Download QR code as PNG
+							</span>
+							{/* {QR_FORMATS.map((fmt, i) => (
 								<span
 									key={fmt}
 									className="text-[0.7rem] font-semibold text-gray-400 tracking-wide"
@@ -183,7 +189,7 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 										<span className="ml-1.5">·</span>
 									)}
 								</span>
-							))}
+							))} */}
 						</div>
 						<p className="text-[0.78rem] text-gray-400 leading-snug">
 							High-res, print-ready. Includes a version with the {badgeName}{" "}

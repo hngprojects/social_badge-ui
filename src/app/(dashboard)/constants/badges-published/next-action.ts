@@ -15,17 +15,6 @@ export const NEXT_ACTIONS: NextAction[] = [
 		cta: "Open link",
 		href: "#preview",
 	},
-	// {
-	//     id: "analytics",
-	//     Icon: ChartIcon,
-	//     iconBg: "bg-orange-50",
-	//     iconColor: "text-[#e8511a]",
-	//     title: "Track engagement",
-	//     description:
-	//         "Claims, shares per platform, click-through to your destination — in real time.",
-	//     cta: "Open link",
-	//     href: "#analytics",
-	// },
 	{
 		id: "edit",
 		Icon: EditIcon,
