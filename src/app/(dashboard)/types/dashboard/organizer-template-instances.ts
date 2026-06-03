@@ -5,6 +5,7 @@ export type OrganizerTemplateInstanceRaw = {
   is_published: boolean;
   status: "draft" | "published" | "live";
   share_slug: string | null;
+  total_shares: number;
   published_at: string | null;
   created_at: string;
   updated_at: string;

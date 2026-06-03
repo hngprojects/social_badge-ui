@@ -24,6 +24,14 @@ export function useProfileForm() {
   const [savedFormData, setSavedFormData] = useState(formData);
 
   useEffect(() => {
+    return () => {
+      if (avatarPreview) {
+        URL.revokeObjectURL(avatarPreview);
+      }
+    };
+  }, [avatarPreview]);
+
+  useEffect(() => {
     const nextFormData = {
       firstName: user?.first_name ?? "",
       lastName: user?.last_name ?? "",

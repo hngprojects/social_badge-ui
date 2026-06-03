@@ -10,7 +10,7 @@ export function StatusPill({
 
   return (
     <span
-      className="inline-flex items-center gap-[6px] rounded-[20px] px-[10px] py-[4px] text-[12px] font-medium whitespace-nowrap"
+      className="inline-flex items-center gap-[6px] capitalize rounded-[20px] px-[10px] py-[4px] text-[12px] font-medium whitespace-nowrap"
       style={{
         background: s.bg,
         color: s.text,

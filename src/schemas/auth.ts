@@ -70,8 +70,36 @@ export const resetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
+export const changePasswordSchema = z
+  .object({
+    oldPassword: z.string().min(1, "Old password is required"),
+    newPassword: z
+      .string()
+      .min(1, "New password is required")
+      .min(8, "Password should be at least eight characters")
+      .max(128, "Password is too long")
+      .regex(/[A-Z]/, "Password should have at least a CAPITAL letter")
+      .regex(/[a-z]/, "Password should have at least a small letter")
+      .regex(/\d/, "Password should have at least a number")
+      .regex(
+        /[^\p{L}\p{N}\s_]/u,
+        "Password should have at least a special character",
+      )
+      .regex(/^\S+$/, "Password cannot contain spaces"),
+    confirmNewPassword: z.string().min(1, "Please confirm your new password"),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords do not match!",
+    path: ["confirmNewPassword"],
+  })
+  .refine((data) => data.oldPassword !== data.newPassword, {
+    message: "New password must be different from your current password",
+    path: ["newPassword"],
+  });
+
 export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export type SignupFormValues = z.infer<typeof signupSchema>;
+export type ChangePasswordFormValues = z.infer<typeof changePasswordSchema>;

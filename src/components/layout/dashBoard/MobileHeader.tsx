@@ -18,10 +18,10 @@ import { useState, useEffect } from "react";
 import { useUserStore } from "@/stores/use-user-store";
 import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
-import { getInitials } from "@/lib/utils";
 import { useDashboardTopbarState } from "@/app/(dashboard)/hooks/use-dashboard-topbar-state";
 import type { TopBarAction } from "@/app/(dashboard)/types/dashboard/topbar";
 import { TopBarSearch } from "@/app/(dashboard)/components/topbar/DashboardBar";
+import { DashboardUserAvatar } from "./dashboard-user-avatar";
 
 function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
   const [open, setOpen] = useState(false);
@@ -293,21 +293,11 @@ export default function MobileHeader() {
 
                 <div className="mt-auto border-t border-border px-3 py-4">
                   <div className="flex items-center gap-3 mb-3 px-1">
-                    <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
-                      {user?.profile_photo_url ? (
-                        <Image
-                          src={user.profile_photo_url}
-                          width={40}
-                          height={40}
-                          alt={displayName || "Profile picture"}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <span>
-                          {getInitials(user?.first_name, user?.last_name)}
-                        </span>
-                      )}
-                    </div>
+                    <DashboardUserAvatar
+                      user={user}
+                      displayName={displayName}
+                      className="h-10 w-10 text-sm"
+                    />
                     <p className="truncate text-sm font-medium text-foreground">
                       {displayName}
                     </p>

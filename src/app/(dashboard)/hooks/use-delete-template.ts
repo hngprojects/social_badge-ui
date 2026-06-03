@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteOrganizerTemplate } from "../services/delete-template";
 import { OrganizerTemplateInstancesResult } from "../services/get-template-instances";
-import { organizerTemplateInstancesKey } from "./use-organizer-template-instances";
+import {
+  organizerTemplateInstancesKey,
+  organizerTemplateInstancesRootKey,
+} from "./use-organizer-template-instances";
+import { badgeAnalyticsKey } from "./use-badge-analytics";
 import { RECENT_BADGES_LIMIT } from "../components/dashboard/recent-badges-types";
 import { toast } from "sonner";
 
@@ -26,6 +30,12 @@ export function useDeleteOrganizerTemplate() {
               }
             : prev,
       );
+      queryClient.invalidateQueries({
+        queryKey: organizerTemplateInstancesRootKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: badgeAnalyticsKey,
+      });
       toast.success("Badge deleted successfully");
     },
 

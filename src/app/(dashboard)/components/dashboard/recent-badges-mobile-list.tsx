@@ -1,6 +1,6 @@
 import { MoreMenu } from "./more-menu";
 import { RecentBadgesListProps } from "./recent-badges-types";
-import { formatDate } from "./recent-badges-utils";
+import { formatLastEditedDate } from "./recent-badges-utils";
 import { StatusPill } from "./status-pill";
 
 export function RecentBadgesMobileList({
@@ -10,7 +10,7 @@ export function RecentBadgesMobileList({
 }: RecentBadgesListProps) {
   return (
     <div className="md:hidden">
-      <div className="grid grid-cols-[1.3fr_1fr_1fr_32px] border-b border-t border-[#F0F0EE] bg-[#ECE9E4] px-3 py-3">
+      <div className="grid grid-cols-[1.3fr_0.9fr_1fr_0.7fr_32px] border-b border-t border-[#F0F0EE] bg-[#ECE9E4] px-3 py-3">
         <p className="text-[11px] font-semibold tracking-[0.12em] text-[#757575]">
           BADGE
         </p>
@@ -19,6 +19,9 @@ export function RecentBadgesMobileList({
         </p>
         <p className="text-[11px] font-semibold tracking-[0.12em] text-[#757575]">
           LAST EDITED
+        </p>
+        <p className="text-[11px] font-semibold tracking-[0.12em] text-[#757575]">
+          SHARES
         </p>
         <span />
       </div>
@@ -35,7 +38,7 @@ export function RecentBadgesMobileList({
               onSelectTemplate(template);
             }
           }}
-          className="grid grid-cols-[1.3fr_1fr_1fr_32px] items-center border-b border-[#F0F0EE] px-3 py-5"
+          className="grid grid-cols-[1.3fr_0.9fr_1fr_0.7fr_32px] items-center border-b border-[#F0F0EE] px-3 py-5"
         >
           <div className="min-w-0">
             <h3 className="text-[14px] font-semibold leading-[1.25] text-[#3A3A3A]">
@@ -51,7 +54,11 @@ export function RecentBadgesMobileList({
           </div>
 
           <p className="text-[13px] text-[#B0B0B0]">
-            {formatDate(template.updated_at)}
+            {formatLastEditedDate(template.updated_at, template.status)}
+          </p>
+
+          <p className="text-[13px] text-[#B0B0B0]">
+            {template.total_shares ?? 0}
           </p>
 
           <div onClick={(event) => event.stopPropagation()}>

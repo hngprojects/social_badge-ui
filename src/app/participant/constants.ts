@@ -7,32 +7,27 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
 	{
 		id: "whatsapp",
 		name: "WhatsApp",
-		icon: "/assets/participant/whatsapp.png",
+		icon: "/assets/participant/whatsapp.svg",
 	},
 	{
 		id: "facebook",
 		name: "Facebook",
-		icon: "/assets/participant/facebook.png",
+		icon: "/assets/participant/facebook.svg",
 	},
 	{
 		id: "x",
 		name: "X",
-		icon: "/assets/participant/x.png",
-	},
-	{
-		id: "instagram",
-		name: "Instagram",
-		icon: "/assets/participant/instagram.png",
+		icon: "/assets/participant/twitter.svg",
 	},
 	{
 		id: "linkedin",
 		name: "LinkedIn",
-		icon: "/assets/participant/linkedin.png",
+		icon: "/assets/participant/linkedin.svg",
 	},
 	{
 		id: "telegram",
 		name: "Telegram",
-		icon: "/assets/participant/telegram.png",
+		icon: "/assets/participant/telegram.svg",
 	},
 ];
 

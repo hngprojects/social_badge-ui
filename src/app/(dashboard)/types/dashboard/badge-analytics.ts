@@ -1,6 +1,7 @@
 export type BadgeAnalyticsData = {
   total_organiser_badges: number;
   total_active_badges: number;
+  total_draft_badges: number;
   total_shares: number;
   total_badges_created: number;
   platform_template_usage: Array<{
