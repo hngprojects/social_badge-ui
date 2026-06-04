@@ -165,6 +165,7 @@ export function CustomizeBadgeForm({
 
           <ShareMessageSection
             register={register}
+            editor={previewEditor}
           />
         </form>
 

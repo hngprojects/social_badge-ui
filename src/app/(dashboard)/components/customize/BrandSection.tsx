@@ -104,6 +104,7 @@ export function BrandSection({
 				<TextInput
 					placeholder="e.g. DESIGNWEEKLAGOS"
 					{...register("eventName")}
+					value={editor.eventName}
 					maxLength={25}
 				/>
 				<HelperText>Appears as the main title on the badge.</HelperText>
@@ -123,6 +124,7 @@ export function BrandSection({
 						<TextInput
 							placeholder="e.g. 10am"
 							{...register("eventTime")}
+							value={editor.eventTime}
 							maxLength={15}
 						/>
 						<HelperText>Shown alongside the date on the badge.</HelperText>
