@@ -252,13 +252,13 @@ export function Layout7({
 					/>
 					<div
 						style={fontStyle}
-						className="text-xs font-bold uppercase tracking-widest"
+						className="text-xs font-bold uppercase tracking-widest text-right"
 					>
 						{editor.eventName || "Event Name"}
 					</div>
 				</div>
 
-				<div className="px-8 my-6">
+				<div className="px-8 my-6 min-h-20">
 					<h2 className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Your full name") : ""}
 					</h2>
