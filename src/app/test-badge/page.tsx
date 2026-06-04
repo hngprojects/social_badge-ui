@@ -20,12 +20,9 @@ const TEST_TEMPLATES = [
 	{ id: "photo_gradient_v1", label: "Live: Photo Gradient" },
 ];
 
-export default function TestBadgePage({ }: { className?: string }) {
-  const [selectedTemplate, setSelectedTemplate] = useState(TEST_TEMPLATES[0].id);
-  const [previewMode, setPreviewMode] = useState<"live" | "custom">("custom");
-  
-  const initialEditor = useMemo(() => createDefaultEditorState(selectedTemplate), [selectedTemplate]);
-  const { editor, patch, setPalette, setBgMode, layoutCaps } = useCustomizeEditorState(initialEditor);
+export default function TestBadgePage() {
+	const [selectedTemplate, setSelectedTemplate] = useState(TEST_TEMPLATES[0].id);
+	const [previewMode, setPreviewMode] = useState<"live" | "custom">("custom");
 
 	const initialEditor = useMemo(
 		() => createDefaultEditorState(selectedTemplate),
@@ -34,7 +31,6 @@ export default function TestBadgePage({ }: { className?: string }) {
 	const { editor, patch, setPalette, setBgMode, layoutCaps } =
 		useCustomizeEditorState(initialEditor);
 
-	// Re-initialize editor when template changes
 	const handleTemplateChange = (templateId: string) => {
 		setSelectedTemplate(templateId);
 	};
@@ -50,6 +46,27 @@ export default function TestBadgePage({ }: { className?: string }) {
 						</p>
 
 						<div className="mt-6 space-y-6">
+							<div>
+								<label className="block text-sm font-semibold text-gray-700 mb-2">
+									Select Template
+								</label>
+								<div className="flex flex-wrap gap-2">
+									{TEST_TEMPLATES.map((tpl) => (
+										<button
+											key={tpl.id}
+											onClick={() => handleTemplateChange(tpl.id)}
+											className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+												selectedTemplate === tpl.id
+													? "bg-orange-500 text-white shadow-md"
+													: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+											}`}
+										>
+											{tpl.label}
+										</button>
+									))}
+								</div>
+							</div>
+
 							<div>
 								<label className="block text-sm font-semibold text-gray-700 mb-2">
 									Preview Mode
@@ -77,32 +94,8 @@ export default function TestBadgePage({ }: { className?: string }) {
 									</button>
 								</div>
 							</div>
-
-          <div className="bg-white p-6 rounded-2xl shadow-sm">
-            <h3 className="text-sm font-semibold text-gray-700 mb-4">Content Overrides</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Event Name</label>
-                <input
-                  type="text"
-                  value={editor.eventName}
-                  onChange={(e) => patch({ eventName: e.target.value })}
-                  className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Participant Name</label>
-                <input
-                  type="text"
-                  value={editor.participantNamePlaceholder}
-                  onChange={(e) => patch({ participantNamePlaceholder: e.target.value })}
-                  className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
-                />
-              </div>
-              
-            </div>
-          </div>
-        </div>
+						</div>
+					</div>
 
 					<div className="bg-white p-6 rounded-2xl shadow-sm">
 						<StyleSection
@@ -140,17 +133,6 @@ export default function TestBadgePage({ }: { className?: string }) {
 									onChange={(e) =>
 										patch({ participantNamePlaceholder: e.target.value })
 									}
-									className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
-								/>
-							</div>
-							<div className="space-y-1.5">
-								<label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-									Destination Link
-								</label>
-								<input
-									type="text"
-									value={editor.destinationLink}
-									onChange={(e) => patch({ destinationLink: e.target.value })}
 									className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
 								/>
 							</div>
