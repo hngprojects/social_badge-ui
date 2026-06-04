@@ -68,7 +68,6 @@ export default function ParticipantPovClient() {
       participantNamePlaceholder: participantName || baseEditorState.participantNamePlaceholder,
       roleTitlePlaceholder: participantRole || baseEditorState.roleTitlePlaceholder,
     };
-    console.log("DEBUG: Editor State in POV:", state);
     return state;
   }, [baseEditorState, participantName, participantRole]);
 

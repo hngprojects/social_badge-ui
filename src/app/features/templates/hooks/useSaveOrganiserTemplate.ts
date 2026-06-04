@@ -8,6 +8,7 @@ import {
   organizerTemplateInstancesRootKey,
 } from "@/app/(dashboard)/hooks/use-organizer-template-instances";
 import { badgeAnalyticsKey } from "@/app/(dashboard)/hooks/use-badge-analytics";
+import type { OrganizerTemplateInstance } from "@/app/(dashboard)/types/dashboard/organizer-template-instances";
 import type { OrganizerTemplateInstancesResult } from "@/app/(dashboard)/services/get-template-instances";
 import type { OrganiserTemplatePayload } from "../types/canvas-data";
 import { storePublishedBadgeResult } from "../lib/published-badge-session";
@@ -18,6 +19,7 @@ import {
   updateOrganiserTemplate,
   uploadLogo,
 } from "../services/templates";
+import type { OrganiserTemplateDetail, PublishedTemplateData } from "../types/organiser-template";
 
 interface SaveVariables {
   payload: OrganiserTemplatePayload;
@@ -68,7 +70,10 @@ export function useSaveOrganiserTemplate() {
       }
 
       // Step 3: Patch metadata
-      await updateOrganiserTemplate(templateId, buildEditTemplateRequest(finalPayload));
+      const updated = await updateOrganiserTemplate(
+        templateId,
+        buildEditTemplateRequest(finalPayload),
+      );
 
       // Step 4: Publish only if requested
       let publishedData = null;
@@ -79,13 +84,14 @@ export function useSaveOrganiserTemplate() {
 
       return {
         payload: finalPayload,
+        updated: updated.data,
         published: publishedData,
         templateId,
         isNew: !organiserTemplateId,
         wasPublished: shouldPublish,
       };
     },
-    onSuccess: ({ payload, published, templateId, wasPublished, isNew }) => {
+    onSuccess: ({ payload, updated, published, templateId, wasPublished, isNew }) => {
       const message = wasPublished
         ? "Badge template published successfully."
         : isNew
@@ -93,17 +99,19 @@ export function useSaveOrganiserTemplate() {
           : "Changes saved successfully.";
       toast.success(message);
 
-      const updatedBadge = {
-        id: published?.id || templateId,
-        title: published?.title || payload.title || "Untitled badge",
+      const source = (published ?? updated) as Partial<PublishedTemplateData & OrganiserTemplateDetail>;
+
+      const updatedBadge: OrganizerTemplateInstance = {
+        id: source.id ?? templateId,
+        title: source.title ?? payload.title ?? "Untitled badge",
         platform_template_id: payload.platform_template_id,
-        is_published: !!wasPublished,
-        status: wasPublished ? ("live" as const) : ("draft" as const),
-        share_slug: published?.share_slug || null,
-        total_shares: published?.total_shares ?? 0,
-        published_at: published?.published_at || null,
-        created_at: published?.created_at || new Date().toISOString(),
-        updated_at: published?.updated_at || new Date().toISOString(),
+        is_published: source.is_published ?? false,
+        status: wasPublished ? "live" : "draft",
+        share_slug: source.share_slug ?? null,
+        total_shares: source.total_shares ?? 0,
+        published_at: source.published_at ?? null,
+        created_at: source.created_at ?? new Date().toISOString(),
+        updated_at: source.updated_at ?? new Date().toISOString(),
       };
 
       queryClient.setQueriesData<OrganizerTemplateInstancesResult>(

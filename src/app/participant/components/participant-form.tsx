@@ -206,10 +206,10 @@ export default function ParticipantForm({
 			</motion.div>
 
 			<motion.div variants={itemVariants}>
-				<Button 
-					type="submit" 
-					className="w-full h-11" 
-					disabled={isSubmitting || !isValid || (showName && formValues.name.length > 25) || (showRole && (formValues.role?.length ?? 0) > 25)}
+				<Button
+					type="submit"
+					className="w-full h-11"
+					disabled={isSubmitting || !isValid}
 				>
 					Generate badge
 				</Button>
