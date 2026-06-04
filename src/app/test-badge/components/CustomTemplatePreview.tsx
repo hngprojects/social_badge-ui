@@ -358,6 +358,6 @@ export function CustomTemplatePreview({
 				baseColor={baseColor}
 				fontStyle={font.style}
 			/>
-		</div>
+			</div>
 	);
 }
