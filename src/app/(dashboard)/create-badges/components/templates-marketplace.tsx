@@ -1,6 +1,6 @@
 "use client";
 
-import { useTemplateGallery } from "../lib/use-template-gallery";
+import { useLiveTemplateGallery } from "../lib/use-live-template-gallery";
 import { TemplatesDesktopLayout } from "./templates-desktop-layout";
 import { TemplatesMobileLayout } from "./templates-mobile-layout";
 
@@ -13,7 +13,7 @@ export function TemplatesMarketplace() {
     selectTemplate,
     isLoading,
     filterTabs,
-  } = useTemplateGallery();
+  } = useLiveTemplateGallery();
 
   const layoutProps = {
     filterTabs,
