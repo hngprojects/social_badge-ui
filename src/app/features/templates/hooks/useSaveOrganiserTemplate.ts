@@ -85,8 +85,12 @@ export function useSaveOrganiserTemplate() {
         wasPublished: shouldPublish,
       };
     },
-    onSuccess: ({ payload, published, templateId, wasPublished }) => {
-      const message = wasPublished ? "Badge template published successfully." : "Draft saved successfully.";
+    onSuccess: ({ payload, published, templateId, wasPublished, isNew }) => {
+      const message = wasPublished
+        ? "Badge template published successfully."
+        : isNew
+          ? "Draft saved successfully."
+          : "Changes saved successfully.";
       toast.success(message);
 
       const updatedBadge = {
