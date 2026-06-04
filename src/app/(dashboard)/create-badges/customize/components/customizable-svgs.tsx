@@ -20,13 +20,11 @@ function GradientDefs({ id, editor }: { id: string; editor?: CustomizeEditorStat
 }
 
 const getFill = (editor?: CustomizeEditorState, baseColor?: string, defaultColor?: string) => {
-    console.log("DEBUG: getFill:", editor?.bgMode, "solid:", editor?.solidColor, "main:", editor?.splitMainColor);
     return editor?.solidColor || baseColor || defaultColor || "#6543A1";
 };
 
 export function Template9({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
-    const main = editor?.bgMode === "split" ? editor.splitMainColor : getFill(editor, baseColor, "#6543A1");
-    const secondary = editor?.bgMode === "split" ? editor.splitSecondaryColor : "#68C4B9"; 
+    const main = getFill(editor, baseColor, "#6543A1");
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +49,7 @@ export function Template9({ className, editor, baseColor }: { className?: string
 					rx="32"
 				/>
 				<path
-					fill={editor?.bgMode === "split" ? secondary : "#68C4B9"}
+					fill="#68C4B9"
 					d="M-34 356c76.785 30.411 128.146 28.639 231.25 0L176 438c99.575-74.292 98.5-82 254-103l78 103v159c-118.468-22.568-197.188-5.004-350 57H-34V356Z"
 				/>
 				<path
@@ -74,7 +72,6 @@ export function Template9({ className, editor, baseColor }: { className?: string
 
 export function Template7({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
 	const fill = getFill(editor, baseColor, "#1E1E1E");
-    console.log("DEBUG: Template7 fill:", fill, "bgMode:", editor?.bgMode);
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
