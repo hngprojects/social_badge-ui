@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 
 import { BrandSection } from "../../../components/customize/BrandSection";
@@ -10,7 +12,7 @@ import { BadgeContentSection } from "../../../components/customize/BadgeContentS
 import { ShareMessageSection } from "../../../components/customize/ShareMessageSection";
 import { LivePreview } from "../../../components/customize/LivePreview";
 
-import { customizeBadgeSchema } from "@/schemas/template";
+import { customizeBadgeSchema, type CustomizeBadgeFormValues } from "@/schemas/template";
 
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
 import { useSaveOrganiserTemplate } from "@/app/features/templates/hooks/useSaveOrganiserTemplate";
@@ -29,42 +31,88 @@ export function CustomizeBadgeForm({
   const { editor, patch, setPalette, setBgMode, layoutCaps } =
     useCustomizeEditorState(initialEditor);
   const { saveTemplateAsync, isSaving } = useSaveOrganiserTemplate();
-const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const validation = customizeBadgeSchema.safeParse({
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<CustomizeBadgeFormValues>({
+    resolver: zodResolver(customizeBadgeSchema),
+    defaultValues: {
       eventName: editor.eventName,
-      destinationLink: editor.destinationLink,
       title: editor.title,
+      eventDate: editor.eventDate,
+      eventTime: editor.eventTime,
+      participantNameVisible: editor.participantNameVisible,
+      roleTitleVisible: editor.roleTitleVisible,
+      roleTitleRequired: editor.roleTitleRequired,
+      allowParticipantPhoto: editor.allowParticipantPhoto,
       defaultCaption: editor.defaultCaption,
       hashtags: editor.hashtags,
       accessType: editor.accessType,
-    });
+      fontId: editor.fontId,
+      paletteId: editor.paletteId,
+      bgMode: editor.bgMode,
+    },
+  });
 
-    if (!validation.success) {
-      toast.error(validation.error.issues[0].message);
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const formValues = watch();
+
+  // Unified editor state for LivePreview derived from form + extra editor state
+  const previewEditor: CustomizeEditorState = {
+    ...editor,
+    ...formValues,
+    title: formValues.eventName || editor.title,
+    eventName: formValues.eventName || editor.eventName,
+  };
+
+  const onFormSubmit = async (data: CustomizeBadgeFormValues, shouldPublish = true) => {
+    // Make logo compulsory if required by layout
+    if (layoutCaps.hasHeaderLogo && !editor.logoPreviewUrl && !editor.pendingLogoFile) {
+      toast.error("Please upload a logo for this badge layout.");
       return;
     }
 
     const payload = buildOrganiserTemplatePayload({
       ...editor,
-      destinationLink: validation.data.destinationLink,
-    });
+      ...data,
+      title: data.eventName, // Use eventName as title
+    } as CustomizeEditorState); // Temporary fix to satisfy payload builder type
 
     try {
       await saveTemplateAsync({
         payload,
         organiserTemplateId,
         pendingLogoFile: editor.pendingLogoFile,
+        shouldPublish,
       });
     } catch {
       /* toast handled in hook */
     }
   };
 
-  const isPublishing = isSaving;
+  const handleError = () => {
+    const firstError = Object.values(errors)[0];
+    if (firstError?.message) {
+      toast.error(firstError.message as string);
+    }
+  };
+
+  const handlePaletteChange = (id: string) => {
+    setPalette(id, formValues.bgMode);
+    setValue("paletteId", id);
+  };
+
+  const handleBgModeChange = (mode: "gradient" | "solid") => {
+    setBgMode(mode);
+    setValue("bgMode", mode);
+  };
+
+  const isPublished = editor.status === "live";
 
   return (
     <main className="grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-8 w-full items-start">
@@ -83,50 +131,70 @@ const handleChange = (partial: Partial<CustomizeEditorState>) => patch(partial);
           </p>
         </div>
 
-        <form id="badge-form" onSubmit={handleSubmit} className="w-full space-y-6 mt-9">
-          <BrandSection editor={editor} onChange={handleChange} layoutCaps={layoutCaps} />
-
-          <StyleSection
-            editor={editor}
-            onChange={handleChange}
-            onPaletteChange={(id) => setPalette(id)}
-            onBgModeChange={setBgMode}
+        <form id="badge-form" onSubmit={(e) => e.preventDefault()} className="w-full space-y-6 mt-9">
+          <BrandSection
+            register={register}
+            editor={previewEditor}
+            onChange={(p) => {
+              patch(p);
+              if (p.eventDate !== undefined) setValue("eventDate", p.eventDate);
+            }}
             layoutCaps={layoutCaps}
           />
 
-          <BadgeContentSection editor={editor} onChange={handleChange} layoutCaps={layoutCaps} />
+          <StyleSection
+            editor={previewEditor}
+            onChange={(p) => {
+              patch(p);
+              if (p.fontId !== undefined) setValue("fontId", p.fontId);
+            }}
+            onPaletteChange={handlePaletteChange}
+            onBgModeChange={handleBgModeChange}
+            layoutCaps={layoutCaps}
+          />
 
-          <ShareMessageSection editor={editor} onChange={handleChange} />
+          <BadgeContentSection
+            control={control}
+            layoutCaps={layoutCaps}
+          />
+
+          <ShareMessageSection
+            register={register}
+          />
         </form>
 
         <div className="flex flex-col sm:flex-row gap-3 pb-8 w-full">
-          <div className="flex-1 flex flex-col gap-1">
-            <Button
-              type="button"
-              disabled
-              variant="outline"
-              title="Coming soon"
-              aria-label="Save as Draft — coming soon"
-              className="w-full rounded-xl font-semibold text-sm py-3 cursor-not-allowed opacity-50"
-            >
-              Save as Draft
-            </Button>
-            <p className="text-center text-xs text-gray-400">Coming soon</p>
-          </div>
+          {!isPublished && (
+            <div className="flex-1 flex flex-col gap-1">
+              <Button
+                type="button"
+                onClick={handleSubmit((data) => onFormSubmit(data, false), handleError)}
+                disabled={isSaving}
+                variant="outline"
+                className="w-full rounded-xl font-semibold text-sm py-3"
+              >
+                {isSaving ? "Saving…" : "Save as Draft"}
+              </Button>
+            </div>
+          )}
+          
           <Button
             form="badge-form"
-            type="submit"
-            disabled={isPublishing}
+            type="button"
+            onClick={handleSubmit((data) => onFormSubmit(data, !isPublished), handleError)}
+            disabled={isSaving}
             variant="cta"
             className="flex-1 rounded-xl font-semibold text-sm py-3"
           >
-            {isPublishing ? "Publishing…" : "Publish"}
+            {isSaving 
+              ? (isPublished ? "Saving Changes…" : "Publishing…") 
+              : (isPublished ? "Save Changes" : "Publish")}
           </Button>
         </div>
       </section>
 
       <section className="order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:pt-6 lg:pb-6">
-        <LivePreview editor={editor} />
+        <LivePreview editor={previewEditor} />
       </section>
     </main>
   );

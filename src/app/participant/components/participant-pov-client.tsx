@@ -16,6 +16,7 @@ export default function ParticipantPovClient() {
   const [participantName, setParticipantName] = useState("");
   const [participantRole, setParticipantRole] = useState("");
   const [participantPhotoUrl, setParticipantPhotoUrl] = useState<string | null>(null);
+  const [participantCaption, setParticipantCaption] = useState("");
   const badgeRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
   const slug = searchParams.get("slug");
@@ -53,18 +54,21 @@ export default function ParticipantPovClient() {
     return parseCanvasDataToEditorState("", d.canvas_data, {
       title: d.title,
       default_caption: d.default_caption ?? "",
-      destination_link: d.destination_link ?? "",
       hashtags: d.hashtags ?? [],
+      logo_url: d.logo_url,
     });
   }, [badgeResponse]);
 
   const editorState = useMemo(() => {
     if (!baseEditorState) return null;
-    return {
+    const state = {
       ...baseEditorState,
+      // Pass the actual values being typed to the editor state properties
+      // used by CustomTemplatePreview
       participantNamePlaceholder: participantName || baseEditorState.participantNamePlaceholder,
       roleTitlePlaceholder: participantRole || baseEditorState.roleTitlePlaceholder,
     };
+    return state;
   }, [baseEditorState, participantName, participantRole]);
 
   return (
@@ -114,8 +118,7 @@ export default function ParticipantPovClient() {
         {isBadgeReady ? (
           <BadgeReady
             onDownload={handleDownload}
-            defaultCaption={baseEditorState?.defaultCaption}
-            destinationLink={baseEditorState?.destinationLink}
+            defaultCaption={participantCaption || baseEditorState?.defaultCaption}
           />
         ) : (
           <ParticipantForm
@@ -123,6 +126,7 @@ export default function ParticipantPovClient() {
             onNameChange={setParticipantName}
             onRoleChange={setParticipantRole}
             onPhotoChange={setParticipantPhotoUrl}
+            onCaptionChange={setParticipantCaption}
             editorState={editorState}
           />
         )}

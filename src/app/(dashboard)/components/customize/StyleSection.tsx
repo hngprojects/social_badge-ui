@@ -2,10 +2,11 @@
 
 import React, { useMemo } from "react";
 import { SectionCard, HelperText } from "./ui";
-import { FONTS, SIZES } from "./constants";
+import { FONTS } from "./constants";
 import { EDITOR_PALETTES } from "@/app/features/templates/lib/palette-mapping";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
+
 
 interface StyleSectionProps {
 	editor: CustomizeEditorState;
@@ -48,7 +49,7 @@ export function StyleSection({
 			<div>
 				<p className="text-sm font-medium text-gray-800 mb-2">Background</p>
 				<div className="flex rounded-lg border border-gray-200 overflow-hidden items-center px-1.5 gap-2 h-11.5">
-					{(["gradient", "solid"] as const).map((mode) => (
+					{(["solid", "gradient"] as const).map((mode) => (
 						<button
 							key={mode}
 							type="button"
@@ -139,33 +140,6 @@ export function StyleSection({
 							</span>
 							<span className="block text-[10px] font-semibold tracking-widest text-gray-400 mt-1">
 								{f.label}
-							</span>
-						</button>
-					))}
-				</div>
-			</div>
-
-			<div>
-				<p className="text-sm font-medium text-gray-800 mb-2">Title size</p>
-				<div className="grid grid-cols-3 gap-2">
-					{SIZES.map((s) => (
-						<button
-							key={s}
-							type="button"
-							onClick={() => onChange({ titleSize: s })}
-							className={`rounded-xl border py-3 flex flex-col items-center gap-1 transition ${
-								editor.titleSize === s
-									? "border-gray-900 bg-white shadow-sm"
-									: "border-gray-200 bg-gray-50 hover:border-gray-300"
-							}`}
-						>
-							<span
-								className={`font-bold text-gray-800 ${s === "SMALL" ? "text-base" : s === "MEDIUM" ? "text-xl" : "text-2xl"}`}
-							>
-								Aa
-							</span>
-							<span className="text-[10px] font-semibold tracking-widest text-gray-400">
-								{s}
 							</span>
 						</button>
 					))}
