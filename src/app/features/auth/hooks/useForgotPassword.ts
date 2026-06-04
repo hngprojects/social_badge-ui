@@ -13,7 +13,6 @@ export const useForgotPassword = () => {
     mutationFn: forgotPasswordApi,
 
     onSuccess: (data: { message?: string }) => {
-      console.log(data);
       toast.success(
         data?.message || "Password reset email sent! Please check your email.",
       );

@@ -1,14 +1,15 @@
 "use client";
 
 import { SectionCard, FieldLabel, TextArea, HelperText } from "./ui";
-import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
+import type { UseFormRegister } from "react-hook-form";
+import type { CustomizeBadgeFormValues } from "@/schemas/template";
 
 interface ShareMessageSectionProps {
-  editor: CustomizeEditorState;
-  onChange: (partial: Partial<CustomizeEditorState>) => void;
+  register: UseFormRegister<CustomizeBadgeFormValues>;
 }
 
-export function ShareMessageSection({ editor, onChange }: ShareMessageSectionProps) {
+export function ShareMessageSection({ register }: ShareMessageSectionProps) {
+
   return (
     <SectionCard
       icon={
@@ -41,8 +42,7 @@ export function ShareMessageSection({ editor, onChange }: ShareMessageSectionPro
         <FieldLabel label="Caption" />
         <TextArea
           placeholder="e.g. I'm at #Summit26 this weekend — who's joining?"
-          value={editor.defaultCaption}
-          onChange={(v) => onChange({ defaultCaption: v })}
+          {...register("defaultCaption")}
         />
         <HelperText>Auto-shortened for X / Twitter. WhatsApp and LinkedIn use the full text.</HelperText>
       </div>

@@ -26,9 +26,10 @@ export const PREVIEW_LAYOUTS: Record<string, CustomizeEditorState> = {
 		fontId: "inter",
 		titleSize: "MEDIUM",
 		defaultCaption: "",
-		destinationLink: "",
 		hashtags: [],
 		accessType: 0,
+		participantNameVisible: true,
+		roleTitleVisible: true,
 	},
 	bold_name_pink_v1: {
 		platformTemplateId: "bold_name_pink_v1",
@@ -55,8 +56,9 @@ export const PREVIEW_LAYOUTS: Record<string, CustomizeEditorState> = {
 		fontId: "inter",
 		titleSize: "MEDIUM",
 		defaultCaption: "",
-		destinationLink: "",
 		hashtags: [],
 		accessType: 0,
+		participantNameVisible: true,
+		roleTitleVisible: true,
 	},
 };
