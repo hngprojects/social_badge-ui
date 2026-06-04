@@ -15,8 +15,7 @@ export function useLiveTemplateGallery() {
     page: 1,
     limit: 50,
   });
-  const { data: badgeAnalytics, isLoading: areBadgeCountsLoading } =
-    useBadgeAnalytics();
+  const { data: badgeAnalytics } = useBadgeAnalytics();
 
   const templates = useMemo((): LayoutTemplate[] => {
     if (apiTemplates && apiTemplates.length > 0) {
@@ -70,7 +69,7 @@ export function useLiveTemplateGallery() {
     activeFilter,
     setActiveFilter,
     selectTemplate,
-    isLoading: areTemplatesLoading || areBadgeCountsLoading,
+    isLoading: areTemplatesLoading,
     filterTabs: FILTER_TABS,
   };
 }
