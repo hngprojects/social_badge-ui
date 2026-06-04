@@ -11,7 +11,7 @@ import {
 	Template5,
 	Template7,
 	Template9,
-	Template3
+	Template3,
 } from "../../(dashboard)/create-badges/customize/components/customizable-svgs";
 import PlaceholderLogo from "./placeholder-logo";
 import { getPalette } from "@/app/features/templates/lib/palette-mapping";
@@ -25,7 +25,12 @@ interface TemplateLayoutProps {
 }
 
 // Placeholder for Template 1 Layout
-export function Layout1({ editor, participantPhotoUrl, baseColor, fontStyle }: TemplateLayoutProps) {
+export function Layout1({
+	editor,
+	participantPhotoUrl,
+	baseColor,
+	fontStyle,
+}: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			<Template1
@@ -72,15 +77,28 @@ export function Layout1({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 }
 
 // Placeholder for Template 9 Layout
-export function Layout9({ editor, participantPhotoUrl, baseColor, fontStyle }: TemplateLayoutProps) {
+export function Layout9({
+	editor,
+	participantPhotoUrl,
+	baseColor,
+	fontStyle,
+}: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
 			<Template9 className="w-full h-full" editor={editor} baseColor={baseColor} />
 			<div className="absolute w-full h-full top-0 py-8">
 				<div className="flex border-white  justify-between items-start px-8">
 					{" "}
-					<LogoPlaceholder isHidden={!editor.logo} logoPreviewUrl={editor.logoPreviewUrl} />
-					<div style={fontStyle} className="text-xs font-bold uppercase tracking-widest">{editor.eventName || "Event Name"}</div>
+					<LogoPlaceholder
+						isHidden={!editor.logo}
+						logoPreviewUrl={editor.logoPreviewUrl}
+					/>
+					<div
+						style={fontStyle}
+						className="text-xs font-bold uppercase tracking-widest"
+					>
+						{editor.eventName || "Event Name"}
+					</div>
 				</div>
 
 				<div className="px-8 my-6">
@@ -93,9 +111,16 @@ export function Layout9({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 				</div>
 				<div className="bg-zinc-300 absolute bottom-8 w-35 h-35 right-10 rotate-10 flex items-center justify-center text-black text-[10px] overflow-hidden">
 					{participantPhotoUrl ? (
-						<Image src={participantPhotoUrl} alt="Participant" fill className="object-cover" />
+						<Image
+							src={participantPhotoUrl}
+							alt="Participant"
+							fill
+							className="object-cover"
+						/>
+					) : editor.allowParticipantPhoto ? (
+						"PHOTO"
 					) : (
-						editor.allowParticipantPhoto ? "PHOTO" : ""
+						""
 					)}
 				</div>
 			</div>
@@ -103,9 +128,13 @@ export function Layout9({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 	);
 }
 
-
 // Placeholder for Template 4 Layout
-export function Layout4({ editor, participantPhotoUrl, baseColor, fontStyle }: TemplateLayoutProps) {
+export function Layout4({
+	editor,
+	participantPhotoUrl,
+	baseColor,
+	fontStyle,
+}: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			<Template4 className="w-full h-full" editor={editor} baseColor={baseColor} />
@@ -117,12 +146,23 @@ export function Layout4({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 
 			{/*This div below will be rendered as a placeholder if the chosen badge as a space for organizer logo */}
 			<div className="h-[77%] w-full absolute top-0">
-				<LogoPlaceholder isHidden={!editor.logo} className="mt-12 mb-6  w-full" logoPreviewUrl={editor.logoPreviewUrl} />
+				<LogoPlaceholder
+					isHidden={!editor.logo}
+					className="mt-12 mb-6  w-full"
+					logoPreviewUrl={editor.logoPreviewUrl}
+				/>
 				<div className="w-35 h-35 rounded-full bg-white mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden relative">
 					{participantPhotoUrl ? (
-						<Image src={participantPhotoUrl} alt="Participant" fill className="object-cover" />
+						<Image
+							src={participantPhotoUrl}
+							alt="Participant"
+							fill
+							className="object-cover"
+						/>
+					) : editor.allowParticipantPhoto ? (
+						"PHOTO"
 					) : (
-						editor.allowParticipantPhoto ? "PHOTO" : ""
+						""
 					)}
 				</div>
 			</div>
@@ -139,18 +179,35 @@ export function Layout4({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 	);
 }
 
-export function LogoPlaceholder({isHidden, className, logoPreviewUrl}: {isHidden: boolean, className?:string, logoPreviewUrl?: string | null}) {
+export function LogoPlaceholder({
+	isHidden,
+	className,
+	logoPreviewUrl,
+}: {
+	isHidden: boolean;
+	className?: string;
+	logoPreviewUrl?: string | null;
+}) {
 	return (
-		<div className={`flex gap-2 items-center justify-center text-white  ${className}`}>
+		<div
+			className={`flex gap-2 items-center justify-center text-white  ${className}`}
+		>
 			<div className="w-10 h-10 flex items-center justify-center overflow-hidden relative">
 				{logoPreviewUrl ? (
-					<Image src={logoPreviewUrl} alt="Logo" fill className="object-contain" />
+					<Image
+						src={logoPreviewUrl}
+						alt="Logo"
+						fill
+						className="object-contain"
+					/>
 				) : (
 					<PlaceholderLogo />
 				)}
 			</div>
 			{!logoPreviewUrl && (
-				<span className={`text-sm flex flex-col gap-0 ${isHidden ? "hidden" : "block"}`}>
+				<span
+					className={`text-sm flex flex-col gap-0 ${isHidden ? "hidden" : "block"}`}
+				>
 					<span className="leading-none">YOUR</span>{" "}
 					<span className="leading-none">LOGO</span>
 				</span>
@@ -177,17 +234,30 @@ export function Layout5({ editor }: TemplateLayoutProps) {
 }
 
 // Placeholder for Template 7 Layout
-export function Layout7({ editor, participantPhotoUrl, baseColor, fontStyle }: TemplateLayoutProps) {
+export function Layout7({
+	editor,
+	participantPhotoUrl,
+	baseColor,
+	fontStyle,
+}: TemplateLayoutProps) {
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
 			<Template7 className="w-full h-full" editor={editor} baseColor={baseColor} />
 			<div className="absolute w-full h-full top-0 py-8">
 				<div className="flex border-white  justify-between items-start px-8">
 					{" "}
-					<LogoPlaceholder isHidden={!editor.logo} logoPreviewUrl={editor.logoPreviewUrl} />
-					<div style={fontStyle} className="text-xs font-bold uppercase tracking-widest">{editor.eventName || "Event Name"}</div>
+					<LogoPlaceholder
+						isHidden={!editor.logo}
+						logoPreviewUrl={editor.logoPreviewUrl}
+					/>
+					<div
+						style={fontStyle}
+						className="text-xs font-bold uppercase tracking-widest"
+					>
+						{editor.eventName || "Event Name"}
+					</div>
 				</div>
-			
+
 				<div className="px-8 my-6">
 					<h2 className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible ? (editor.participantNamePlaceholder || "Your full name") : ""}
@@ -198,9 +268,16 @@ export function Layout7({ editor, participantPhotoUrl, baseColor, fontStyle }: T
 				</div>
 				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden relative">
 					{participantPhotoUrl ? (
-						<Image src={participantPhotoUrl} alt="Participant" fill className="object-cover" />
+						<Image
+							src={participantPhotoUrl}
+							alt="Participant"
+							fill
+							className="object-cover"
+						/>
+					) : editor.allowParticipantPhoto ? (
+						"PHOTO"
 					) : (
-						editor.allowParticipantPhoto ? "PHOTO" : ""
+						""
 					)}
 				</div>
 			</div>
@@ -258,7 +335,7 @@ export function CustomTemplatePreview({
 
 	const palette = getPalette(editor.paletteId);
 	const baseColor = palette.from;
-	const font = FONTS.find(f => f.id === editor.fontId) ?? FONTS[0];
+	const font = FONTS.find((f) => f.id === editor.fontId) ?? FONTS[0];
 
 	if (!LayoutComponent) {
 		return (
@@ -273,9 +350,9 @@ export function CustomTemplatePreview({
 
 	return (
 		<div className="w-full max-w-79.5 h-106 shadow-2xl mx-auto">
-			<LayoutComponent 
-				editor={editor} 
-				participantPhotoUrl={participantPhotoUrl} 
+			<LayoutComponent
+				editor={editor}
+				participantPhotoUrl={participantPhotoUrl}
 				baseColor={baseColor}
 				fontStyle={font.style}
 			/>

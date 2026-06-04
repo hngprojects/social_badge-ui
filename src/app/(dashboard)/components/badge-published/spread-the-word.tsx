@@ -1,10 +1,10 @@
-'use client'
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import Qr from "../../badges/published/icons/qr";
 import { Share } from "../../badges/published/icons/share-icon";
 import { SocialPlatform } from "../../types/badge-published/badge";
 import { Button } from "@/components/ui/button";
-
 
 const SOCIAL_PLATFORMS: SocialPlatform[] = [
 	{
@@ -45,7 +45,6 @@ const SOCIAL_PLATFORMS: SocialPlatform[] = [
 
 const QR_FORMATS = ["PNG", "SVG", "PDF"] as const;
 
-
 interface SpreadTheWordProps {
 	url: string;
 	badgeName: string;
@@ -69,7 +68,6 @@ export default function SpreadTheWord({ url, badgeName }: SpreadTheWordProps) {
 	);
 }
 
-
 interface OneTapShareProps {
 	url: string;
 	badgeName: string;
@@ -86,16 +84,19 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 	};
 
 	return (
-		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6">
-			<div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-3.5">
-				<Share />
+		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6 flex flex-col justify-between">
+			<div>
+				<div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-3.5">
+					<Share />
+				</div>
+				<h3 className="text-[0.9375rem] font-bold text-gray-900 mb-1.5">
+					One-tap share
+				</h3>
+				<p className="text-[0.8375rem] text-gray-500 leading-relaxed mb-4">
+					Open a pre-filled post on the platform you choose. Edit before
+					posting.
+				</p>
 			</div>
-			<h3 className="text-[0.9375rem] font-bold text-gray-900 mb-1.5">
-				One-tap share
-			</h3>
-			<p className="text-[0.8375rem] text-gray-500 leading-relaxed mb-4">
-				Open a pre-filled post on the platform you choose. Edit before posting.
-			</p>
 			<div className="flex gap-1.5 flex-wrap">
 				{SOCIAL_PLATFORMS.map((platform) => (
 					<Button
@@ -114,68 +115,110 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 	);
 }
 
-
 interface QRCodeCardProps {
 	url: string;
 	badgeName: string;
 }
 
 function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
-	const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(url)}`;
+	const [isDownloading, setIsDownloading] = useState(false);
+	const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(url)}`;
+
+	const handleDownload = async () => {
+		setIsDownloading(true);
+		try {
+			const response = await fetch(qrUrl);
+			if (!response.ok) {
+				throw new Error(`QR fetch failed with status ${response.status}`);
+			}
+			const blob = await response.blob();
+			const blobUrl = URL.createObjectURL(blob);
+
+			const link = document.createElement("a");
+			link.href = blobUrl;
+			link.download = `${badgeName.toLowerCase().replace(/\s+/g, "-")}-qr-code.png`;
+
+			document.body.appendChild(link);
+			link.click();
+
+			// Clean up
+			document.body.removeChild(link);
+			URL.revokeObjectURL(blobUrl);
+		} catch (error) {
+			console.error("Failed to download QR code:", error);
+		} finally {
+			setIsDownloading(false);
+		}
+	};
 
 	return (
-		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6">
-			<div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center text-[#e8511a] mb-3.5">
-				<Qr />
-			</div>
-			<h3 className="text-[0.9375rem] font-bold text-gray-900 mb-1.5">
-				QR code
-			</h3>
-			<p className="text-[0.8375rem] text-gray-500 leading-relaxed mb-4">
-				Perfect for venue signage, slides, lanyards, name tags.
-			</p>
+		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6 flex flex-col justify-between">
+			<div>
+				<div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center text-[#e8511a] mb-3.5">
+					<Qr />
+				</div>
+				<h3 className="text-[0.9375rem] font-bold text-gray-900 mb-1.5">
+					QR code
+				</h3>
+				<p className="text-[0.8375rem] text-gray-500 leading-relaxed mb-4">
+					Perfect for venue signage, slides, lanyards, name tags.
+				</p>
 
-			<div className="flex gap-3.75 items-center mb-4.5">
-				<Image
-					src={qrUrl}
-					alt={`QR code for ${badgeName}`}
-					width={80}
-					height={80}
-					className="rounded-md border border-gray-200 flex-shrink-0"
-				/>
+				<div className="flex gap-3.75 items-center mb-6">
+					<Image
+						src={qrUrl}
+						alt={`QR code for ${badgeName}`}
+						width={80}
+						height={80}
+						unoptimized
+						className="rounded-md border border-gray-200 flex-shrink-0"
+					/>
 
-				<div>
-					<div className="flex gap-1.5 mb-1.5">
-						{QR_FORMATS.map((fmt, i) => (
-							<span
-								key={fmt}
-								className="text-[0.7rem] font-semibold text-gray-400 tracking-wide"
-							>
-								{fmt}
-								{i < QR_FORMATS.length - 1 && <span className="ml-1.5">·</span>}
+					<div>
+						<div className="flex gap-1.5 mb-1.5">
+							<span className="text-[0.7rem] font-semibold text-gray-400 tracking-wide">
+								Download QR code as PNG
 							</span>
-						))}
+							{/* {QR_FORMATS.map((fmt, i) => (
+								<span
+									key={fmt}
+									className="text-[0.7rem] font-semibold text-gray-400 tracking-wide"
+								>
+									{fmt}
+									{i < QR_FORMATS.length - 1 && (
+										<span className="ml-1.5">·</span>
+									)}
+								</span>
+							))} */}
+						</div>
+						<p className="text-[0.78rem] text-gray-400 leading-snug">
+							High-res, print-ready. Includes a version with the {badgeName}{" "}
+							logo in the centre.
+						</p>
 					</div>
-					<p className="text-[0.78rem] text-gray-400 leading-snug">
-						High-res, print-ready. Includes a version with the {badgeName} logo
-						in the centre.
-					</p>
 				</div>
 			</div>
 
-			<div className="flex gap-2 justify-between">
-				<Button variant="outline" className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold">
-					Preview
-				</Button>
-				<Button variant="dark" className="w-37.5 md:w-49 h-10 rounded-full text-[0.8125rem] font-semibold">
-					Download
+			{/* Centralized Action Buttons Layout */}
+			<div className="flex gap-3 justify-center items-center w-full mt-auto">
+				{/* Un-comment Preview if needed; the distribution is setup perfectly for both scenarios */}
+				{/* <Button variant="outline" className="flex-1 max-w-[180px] h-10 rounded-full text-[0.8125rem] font-semibold">
+                    Preview
+                </Button> */}
+				<Button
+					variant="dark"
+					onClick={handleDownload}
+					disabled={isDownloading}
+					className="flex-1 max-w-50 h-10 rounded-full text-[0.8125rem] font-semibold shadow-sm"
+				>
+					{isDownloading ? "Downloading..." : "Download"}
 				</Button>
 			</div>
 		</div>
 	);
 }
 
-
+// Icon components stay the same ...
 function LinkedInIcon() {
 	return (
 		<svg
@@ -190,7 +233,6 @@ function LinkedInIcon() {
 		</svg>
 	);
 }
-
 function XIcon() {
 	return (
 		<svg
@@ -204,7 +246,6 @@ function XIcon() {
 		</svg>
 	);
 }
-
 function WhatsAppIcon() {
 	return (
 		<svg
@@ -218,7 +259,6 @@ function WhatsAppIcon() {
 		</svg>
 	);
 }
-
 function EmailIcon() {
 	return (
 		<svg
@@ -242,7 +282,6 @@ function EmailIcon() {
 		</svg>
 	);
 }
-
 function SlackIcon() {
 	return (
 		<svg
