@@ -65,7 +65,7 @@ function backgroundToEditorState(
 			(p) => BACKGROUND_IMAGE_BY_PALETTE[p.id] === bg.image_url,
 		);
 		return {
-			bgMode: "solid",
+			bgMode: "gradient",
 			paletteId: match?.id ?? fallbackPaletteId,
 			gradientColors: ["#ff007a", "#ffa800"],
 			gradientDirection: "135deg",

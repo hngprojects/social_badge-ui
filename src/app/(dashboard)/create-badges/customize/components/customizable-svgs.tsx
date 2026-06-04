@@ -1,13 +1,20 @@
 import { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 function GradientDefs({ id, editor }: { id: string; editor?: CustomizeEditorState }) {
-	if (!editor || editor.bgMode !== "gradient") return null;
+	if (!editor) return null;
 	return (
 		<defs>
-			<linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
-				<stop offset="0%" stopColor={editor.gradientColors[0]} />
-				<stop offset="100%" stopColor={editor.gradientColors[1]} />
-			</linearGradient>
+			{editor.bgMode === "gradient" && (
+				<linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
+					<stop offset="0%" stopColor={editor.gradientColors[0]} />
+					<stop offset="100%" stopColor={editor.gradientColors[1]} />
+				</linearGradient>
+			)}
+			{editor.backgroundImageUrl && (
+				<pattern id={`img-${id}`} patternUnits="userSpaceOnUse" width="480" height="640">
+					<image href={editor.backgroundImageUrl} width="480" height="640" preserveAspectRatio="xMidYMid slice" />
+				</pattern>
+			)}
 		</defs>
 	);
 }
@@ -31,7 +38,18 @@ export function Template9({ className, editor, baseColor }: { className?: string
 		>
 			<GradientDefs id="grad9" editor={editor} />
 			<g clipPath="url(#a)">
-				<rect width="480" height="640" fill={editor?.bgMode === "gradient" ? "url(#grad9)" : main} rx="32" />
+				<rect
+					width="480"
+					height="640"
+					fill={
+						editor?.backgroundImageUrl
+							? "url(#img-grad9)"
+							: editor?.bgMode === "gradient"
+							? "url(#grad9)"
+							: main
+					}
+					rx="32"
+				/>
 				<path
 					fill={editor?.bgMode === "split" ? secondary : "#68C4B9"}
 					d="M-34 356c76.785 30.411 128.146 28.639 231.25 0L176 438c99.575-74.292 98.5-82 254-103l78 103v159c-118.468-22.568-197.188-5.004-350 57H-34V356Z"
@@ -67,7 +85,18 @@ export function Template7({ className, editor, baseColor }: { className?: string
 			className={className}
 		>
 			<GradientDefs id="grad7" editor={editor} />
-			<rect width="480" height="640" fill={editor?.bgMode === "gradient" ? "url(#grad7)" : fill} rx="32" />
+			<rect
+				width="480"
+				height="640"
+				fill={
+					editor?.backgroundImageUrl
+						? "url(#img-grad7)"
+						: editor?.bgMode === "gradient"
+						? "url(#grad7)"
+						: fill
+				}
+				rx="32"
+			/>
 		</svg>
 	);
 }
@@ -85,7 +114,18 @@ export function Template1({ className, editor, baseColor }: { className?: string
 		>
 			<GradientDefs id="grad1" editor={editor} />
 			<g clipPath="url(#a)">
-				<rect width="480" height="640" fill={editor?.bgMode === "gradient" ? "url(#grad1)" : fill} rx="32" />
+				<rect
+					width="480"
+					height="640"
+					fill={
+						editor?.backgroundImageUrl
+							? "url(#img-grad1)"
+							: editor?.bgMode === "gradient"
+							? "url(#grad1)"
+							: fill
+					}
+					rx="32"
+				/>
 				<path
 					stroke="#E61B62"
 					strokeLinecap="round"
@@ -137,7 +177,18 @@ export function Template5({ className, editor, baseColor }: { className?: string
 			className={className}
 		>
 			<GradientDefs id="grad5" editor={editor} />
-			<rect width="480" height="640" fill={editor?.bgMode === "gradient" ? "url(#grad5)" : fill} rx="32" />
+			<rect
+				width="480"
+				height="640"
+				fill={
+					editor?.backgroundImageUrl
+						? "url(#img-grad5)"
+						: editor?.bgMode === "gradient"
+						? "url(#grad5)"
+						: fill
+				}
+				rx="32"
+			/>
 		</svg>
 	);
 }
@@ -154,7 +205,18 @@ export function Template4({ className, editor, baseColor }: { className?: string
 			className={className}
 		>
 			<GradientDefs id="grad4" editor={editor} />
-			<rect width="480" height="640" fill={editor?.bgMode === "gradient" ? "url(#grad4)" : fill} rx="32" />
+			<rect
+				width="480"
+				height="640"
+				fill={
+					editor?.backgroundImageUrl
+						? "url(#img-grad4)"
+						: editor?.bgMode === "gradient"
+						? "url(#grad4)"
+						: fill
+				}
+				rx="32"
+			/>
 			<path fill="#CAC9C7" d="M0 492h480v148H0z" />
 		</svg>
 	);
@@ -172,7 +234,18 @@ export function Template3({ className, editor, baseColor }: { className?: string
 			className={className}
 		>
 			<GradientDefs id="grad3" editor={editor} />
-			<rect width="480" height="640" fill={editor?.bgMode === "gradient" ? "url(#grad3)" : fill} rx="32" />
+			<rect
+				width="480"
+				height="640"
+				fill={
+					editor?.backgroundImageUrl
+						? "url(#img-grad3)"
+						: editor?.bgMode === "gradient"
+						? "url(#grad3)"
+						: fill
+				}
+				rx="32"
+			/>
 		</svg>
 	);
 }
