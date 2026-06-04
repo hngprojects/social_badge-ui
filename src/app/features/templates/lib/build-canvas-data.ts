@@ -37,12 +37,15 @@ function buildBackground(state: CustomizeEditorState): CanvasBackground {
 	};
 }
 
-// function formatEventDateValue(eventDate: string, eventTime: string): string {
-// 	const date = eventDate.trim();
-// 	const time = eventTime.trim();
-// 	if (date && time) return `${date} · ${time}`;
-// 	return date || time;
-// }
+
+{
+	/*function formatEventDateValue(eventDate: string, eventTime: string): string {
+	const date = eventDate.trim();
+	const time = eventTime.trim();
+	if (date && time) return `${date} · ${time}`;
+	return date || time;
+} */
+}
 
 function buildFields(state: CustomizeEditorState): CanvasField[] {
 	const caps = LAYOUT_CAPABILITIES[state.layoutId];
@@ -74,10 +77,10 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 		fields.push({
 			key: CANVAS_FIELD_KEYS.PARTICIPANT_NAME,
 			type: "participant_input",
-			label: state.participantNameLabel.trim() || "NAME",
-			placeholder: state.participantNamePlaceholder.trim() || "Your name",
+			label: "NAME",
+			placeholder: "Your name",
 			required: true,
-			visible: true,
+			visible: state.participantNameVisible,
 		});
 	}
 
@@ -85,10 +88,10 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 		fields.push({
 			key: CANVAS_FIELD_KEYS.ROLE_TITLE,
 			type: "participant_input",
-			label: state.roleTitleLabel.trim() || "ROLE / TITLE",
-			placeholder: state.roleTitlePlaceholder.trim() || "e.g. Attendee",
+			label: "ROLE / TITLE",
+			placeholder: "e.g. Product Designer",
 			required: state.roleTitleRequired,
-			visible: true,
+			visible: state.roleTitleVisible,
 		});
 	}
 
@@ -123,10 +126,11 @@ export function buildCanvasData(state: CustomizeEditorState): CanvasData {
 			italic: state.fontId === "fraunces",
 			underline: false,
 		},
-		logo: state.logo
+		logo: (state.logo || state.logoPreviewUrl)
 			? {
-					...state.logo,
-					position: state.logo.position ?? caps.defaultLogoPosition,
+					url: state.logo?.url || state.logoPreviewUrl || "",
+					public_id: state.logo?.public_id || "",
+					position: state.logo?.position ?? caps.defaultLogoPosition,
 				}
 			: null,
 		fields: buildFields(state),
@@ -137,17 +141,11 @@ export function buildCanvasData(state: CustomizeEditorState): CanvasData {
 export function buildOrganiserTemplatePayload(
 	state: CustomizeEditorState,
 ): OrganiserTemplatePayload {
-	const destination = state.destinationLink.trim();
-	const normalizedDestination = destination.startsWith("http")
-		? destination
-		: `https://${destination.replace(/^\/+/, "")}`;
-
 	return {
 		platform_template_id: state.platformTemplateId,
 		title: state.title.trim() || state.eventName.trim() || "Untitled Badge",
 		canvas_data: buildCanvasData(state),
 		default_caption: state.defaultCaption.trim(),
-		destination_link: normalizedDestination,
 		hashtags: state.hashtags.filter(Boolean),
 		access_type: state.accessType,
 	};

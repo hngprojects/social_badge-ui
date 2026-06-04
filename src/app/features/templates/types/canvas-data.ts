@@ -120,7 +120,6 @@ export interface OrganiserTemplatePayload {
 	title: string;
 	canvas_data: CanvasData;
 	default_caption: string;
-	destination_link: string;
 	hashtags: string[];
 	access_type: number;
 }
@@ -130,7 +129,6 @@ export interface OrganiserTemplateResponse {
 	platform_template_id: string;
 	title: string;
 default_caption?: string | null | undefined;
-destination_link?: string | null | undefined;
 	hashtags: string[];
 	access_type: number;
 }
@@ -165,9 +163,11 @@ export interface CustomizeEditorState {
 	backgroundImageUrl: string | null;
 	fontId: string;
 	titleSize: "SMALL" | "MEDIUM" | "LARGE";
+	participantNameVisible: boolean;
+	roleTitleVisible: boolean;
 	defaultCaption: string;
-	destinationLink: string;
 	hashtags: string[];
 	accessType: number;
+	status?: "draft" | "live";
 	savedAt?: string | null;
 }

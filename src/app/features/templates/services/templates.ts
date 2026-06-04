@@ -146,35 +146,8 @@ export async function getPublicParticipantPage(
 export async function getOrganiserTemplate(
   templateId: string,
 ): Promise<OrganiserTemplateDetail> {
-  const listResponse = await getOrganiserTemplateInstances({ page: 1, limit: 100 });
-  const templates = listResponse.data.badges ?? listResponse.data.templates ?? [];
-  const summary = templates.find((tpl) => tpl.id === templateId);
-
-  if (!summary) {
-    throw new Error("Organiser template not found.");
-  }
-
-  const platformResponse = await getPlatformTemplate(summary.platform_template_id);
-  const platform = platformResponse.data;
-
-  if (!platform.canvas_data) {
-    throw new Error("Platform template canvas data is missing.");
-  }
-
-  return {
-    id: summary.id,
-    platform_template_id: summary.platform_template_id,
-    title: summary.title,
-    canvas_data: platform.canvas_data,
-    default_caption: null,
-    destination_link: null,
-    access_type: 0,
-    hashtags: [],
-    is_published: summary.is_published,
-    share_slug: summary.share_slug,
-    published_at: summary.published_at,
-    updated_at: summary.updated_at,
-  };
+  const response = await apiClient<EditTemplateApiResponse>(`/badges/${templateId}`);
+  return response.data;
 }
 
 export async function getPlatformTemplates(
@@ -196,7 +169,6 @@ export function buildEditTemplateRequest(
     title: payload.title,
     canvas_data: payload.canvas_data,
     default_caption: payload.default_caption,
-    destination_link: payload.destination_link,
     hashtags: payload.hashtags,
     access_type: payload.access_type,
   };

@@ -11,13 +11,18 @@ import {
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
+import type { UseFormRegister } from "react-hook-form";
+import type { CustomizeBadgeFormValues } from "@/schemas/template";
+
 interface BrandSectionProps {
+	register: UseFormRegister<CustomizeBadgeFormValues>;
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	layoutCaps: LayoutCapabilities;
 }
 
 export function BrandSection({
+	register,
 	editor,
 	onChange,
 	layoutCaps,
@@ -52,6 +57,7 @@ export function BrandSection({
 				<div>
 					<FieldLabel label="Logo" required />
 					<div className="flex items-center gap-3">
+
 						<label className="cursor-pointer">
 							<span className="inline-flex items-center rounded-md border border-orange-400 px-3 py-1.5 text-xs font-semibold text-orange-500 hover:bg-orange-50 transition">
 								Choose File
@@ -97,8 +103,7 @@ export function BrandSection({
 				<FieldLabel label="Event Name" required />
 				<TextInput
 					placeholder="e.g. DESIGNWEEKLAGOS"
-					value={editor.eventName}
-					onChange={(v) => onChange({ eventName: v, title: v })}
+					{...register("eventName")}
 					maxLength={25}
 				/>
 				<HelperText>Appears as the main title on the badge.</HelperText>
@@ -117,8 +122,7 @@ export function BrandSection({
 						<FieldLabel label="Time" />
 						<TextInput
 							placeholder="e.g. 10am"
-							value={editor.eventTime}
-							onChange={(v) => onChange({ eventTime: v })}
+							{...register("eventTime")}
 							maxLength={15}
 						/>
 						<HelperText>Shown alongside the date on the badge.</HelperText>

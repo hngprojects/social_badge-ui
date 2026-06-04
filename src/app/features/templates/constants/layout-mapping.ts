@@ -23,6 +23,14 @@ export function resolveLayoutId(
 	if (fromCanvas && isCanvasLayoutId(fromCanvas)) {
 		return fromCanvas;
 	}
+
+	if (isCanvasLayoutId(platformTemplateId)) {
+		return platformTemplateId;
+	}
+
+	const mapped = PLATFORM_TEMPLATE_LAYOUT_MAP[platformTemplateId];
+	if (mapped) return mapped;
+
 	// Fallback should probably be one of the new ones
 	return "bold_name_pink_v1";
 }
@@ -68,7 +76,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 		participantFields: ["participant_name", "role_title", "participant_photo"],
 		hasHeaderLogo: true,
 		defaultLogoPosition: "top-left",
-		defaultPaletteId: "bg_mesh_01",
+		defaultPaletteId: "bg_mesh_purple_teal",
 		previewColor: "#6b3fa0",
 	},
 };

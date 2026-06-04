@@ -21,9 +21,7 @@ const TEST_TEMPLATES = [
 ];
 
 export default function TestBadgePage() {
-	const [selectedTemplate, setSelectedTemplate] = useState(
-		TEST_TEMPLATES[0].id,
-	);
+	const [selectedTemplate, setSelectedTemplate] = useState(TEST_TEMPLATES[0].id);
 	const [previewMode, setPreviewMode] = useState<"live" | "custom">("custom");
 
 	const initialEditor = useMemo(
@@ -33,7 +31,6 @@ export default function TestBadgePage() {
 	const { editor, patch, setPalette, setBgMode, layoutCaps } =
 		useCustomizeEditorState(initialEditor);
 
-	// Re-initialize editor when template changes
 	const handleTemplateChange = (templateId: string) => {
 		setSelectedTemplate(templateId);
 	};
@@ -49,6 +46,27 @@ export default function TestBadgePage() {
 						</p>
 
 						<div className="mt-6 space-y-6">
+							<div>
+								<label className="block text-sm font-semibold text-gray-700 mb-2">
+									Select Template
+								</label>
+								<div className="flex flex-wrap gap-2">
+									{TEST_TEMPLATES.map((tpl) => (
+										<button
+											key={tpl.id}
+											onClick={() => handleTemplateChange(tpl.id)}
+											className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+												selectedTemplate === tpl.id
+													? "bg-orange-500 text-white shadow-md"
+													: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+											}`}
+										>
+											{tpl.label}
+										</button>
+									))}
+								</div>
+							</div>
+
 							<div>
 								<label className="block text-sm font-semibold text-gray-700 mb-2">
 									Preview Mode
@@ -74,27 +92,6 @@ export default function TestBadgePage() {
 									>
 										Production LivePreview
 									</button>
-								</div>
-							</div>
-
-							<div>
-								<label className="block text-sm font-semibold text-gray-700 mb-2">
-									Select Template Base
-								</label>
-								<div className="flex flex-wrap gap-2">
-									{TEST_TEMPLATES.map((t) => (
-										<button
-											key={t.id}
-											onClick={() => handleTemplateChange(t.id)}
-											className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-												selectedTemplate === t.id
-													? "bg-orange-500 text-white shadow-md"
-													: "bg-gray-100 text-gray-600 hover:bg-gray-200"
-											}`}
-										>
-											{t.label}
-										</button>
-									))}
 								</div>
 							</div>
 						</div>
@@ -136,17 +133,6 @@ export default function TestBadgePage() {
 									onChange={(e) =>
 										patch({ participantNamePlaceholder: e.target.value })
 									}
-									className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
-								/>
-							</div>
-							<div className="space-y-1.5">
-								<label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-									Destination Link
-								</label>
-								<input
-									type="text"
-									value={editor.destinationLink}
-									onChange={(e) => patch({ destinationLink: e.target.value })}
 									className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
 								/>
 							</div>

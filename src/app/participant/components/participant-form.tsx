@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -20,12 +21,14 @@ export default function ParticipantForm({
 	onNameChange,
 	onRoleChange,
 	onPhotoChange,
+	onCaptionChange,
 	editorState,
 }: {
 	onSuccess?: () => void;
 	onNameChange?: (name: string) => void;
 	onRoleChange?: (role: string) => void;
 	onPhotoChange?: (url: string | null) => void;
+	onCaptionChange?: (caption: string) => void;
 	editorState: CustomizeEditorState | null;
 }) {
 	const {
@@ -33,18 +36,31 @@ export default function ParticipantForm({
 		handleSubmit,
 		setValue,
 		control,
-		formState: { errors, isSubmitting },
+		watch,
+		formState: { errors, isSubmitting, isValid },
 	} = useForm<ParticipantValues>({
 		resolver: zodResolver(participantSchema),
 		mode: "onChange",
 		defaultValues: {
 			name: "",
 			role: "",
-			caption: DEFAULT_CAPTION,
+			caption: editorState?.defaultCaption || DEFAULT_CAPTION,
 		},
 	});
 
-	const showRole = Boolean(editorState?.roleTitleLabel || editorState?.roleTitlePlaceholder);
+	// Sync initial caption when editorState loads
+	useEffect(() => {
+		if (editorState?.defaultCaption) {
+			setValue("caption", editorState.defaultCaption, { shouldValidate: true });
+			onCaptionChange?.(editorState.defaultCaption);
+		}
+	}, [editorState?.defaultCaption, setValue, onCaptionChange]);
+
+	const showName = editorState?.participantNameVisible ?? true;
+	const showRole = editorState?.roleTitleVisible ?? true;
+
+	// eslint-disable-next-line react-hooks/incompatible-library
+	const formValues = watch();
 
 	const selectedFile = useWatch({
 		control,
@@ -118,31 +134,41 @@ export default function ParticipantForm({
 				)}
 			</motion.div>
 
-			<motion.div className="space-y-4" variants={itemVariants}>
-				<label className="text-[13.5px] font-bold">
-					name <span className="text-[#ff693E]">*</span>
-				</label>
+			{showName && (
+				<motion.div className="space-y-4" variants={itemVariants}>
+					<label className="text-[13.5px] font-bold flex justify-between items-center">
+						<span>NAME <span className="text-[#ff693E]">*</span></span>
+						<span className="text-[10px] text-gray-400 font-medium">
+							{formValues.name.length}/25
+						</span>
+					</label>
 
-				<Input
-					className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-					placeholder={editorState?.participantNamePlaceholder || "Your full name"}
-					{...register("name", { onChange: (e) => onNameChange?.(e.target.value) })}
-				/>
+					<Input
+						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
+						placeholder={editorState?.participantNamePlaceholder || "Your name"}
+						maxLength={25}
+						{...register("name", { onChange: (e) => onNameChange?.(e.target.value) })}
+					/>
 
-				{errors.name && (
-					<p className="text-sm text-red-500">{errors.name.message}</p>
-				)}
-			</motion.div>
+					{errors.name && (
+						<p className="text-sm text-red-500">{errors.name.message}</p>
+					)}
+				</motion.div>
+			)}
 
 			{showRole && (
 				<motion.div className="space-y-4" variants={itemVariants}>
-					<label className="text-[13.5px] font-bold">
-						{editorState?.roleTitleLabel || "Role / Title"} {editorState?.roleTitleRequired && <span className="text-[#ff693E]">*</span>}
+					<label className="text-[13.5px] font-bold flex justify-between items-center">
+						<span>{editorState?.roleTitleLabel || "ROLE / TITLE"} {editorState?.roleTitleRequired && <span className="text-[#ff693E]">*</span>}</span>
+						<span className="text-[10px] text-gray-400 font-medium">
+							{formValues.role?.length ?? 0}/25
+						</span>
 					</label>
 
 					<Input
 						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
 						placeholder={editorState?.roleTitlePlaceholder || "e.g. Product Designer"}
+						maxLength={25}
 						{...register("role", { 
 							onChange: (e) => onRoleChange?.(e.target.value),
 						})}
@@ -160,23 +186,31 @@ export default function ParticipantForm({
 						onChange: (e) => {
 							const start = e.target.selectionStart;
 							const end = e.target.selectionEnd;
+							const val = e.target.value;
 
-							if (e.target.value.length > 200) {
-								e.target.value = e.target.value.slice(0, 200);
+							if (val.length > 200) {
+								e.target.value = val.slice(0, 200);
 								e.target.setSelectionRange(start, end);
 							}
+							
+							onCaptionChange?.(e.target.value);
 
 							if (e.target instanceof HTMLTextAreaElement) {
 								handleCaptionResize(e.target);
 							}
 						},
 					})}
+					value={formValues.caption}
 					error={errors.caption?.message}
 				/>
 			</motion.div>
 
 			<motion.div variants={itemVariants}>
-				<Button type="submit" className="w-full h-11" disabled={isSubmitting}>
+				<Button
+					type="submit"
+					className="w-full h-11"
+					disabled={isSubmitting || !isValid}
+				>
 					Generate badge
 				</Button>
 			</motion.div>
