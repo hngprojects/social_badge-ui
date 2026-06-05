@@ -8,10 +8,17 @@ import { useSearchParams } from "next/navigation";
 
 export default function SettingTabs() {
   const searchParams = useSearchParams();
-  const tab = searchParams.get("tab") ?? "profile";
+  const rawTab = searchParams.get("tab");
+  const allowedTabs = new Set([
+    "profile",
+    "security",
+    "notifications",
+    "account",
+  ]);
+  const tab = rawTab && allowedTabs.has(rawTab) ? rawTab : "profile";
 
   return (
-    <Tabs defaultValue={tab} className="w-full flex flex-col gap-4.5">
+    <Tabs key={tab} defaultValue={tab} className="w-full flex flex-col gap-4.5">
       <div className="w-full border rounded-[12px] bg-white">
         <TabsList className="flex gap-1.5 bg-transparent  p-1.5">
           <TabsTrigger
