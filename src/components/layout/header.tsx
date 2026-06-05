@@ -23,7 +23,7 @@ const NAV_LINKS = [
 	{ label: "Home", href: "/" },
 	{ label: "Explore", href: "/explore" },
 	{ label: "Features", href: "/#feature-section" },
-	{ label: "Pricing", href: "/pricing" },
+	// TODO: restore when pricing page is launched
 	{ label: "Contact us", href: "/contact" },
 ] as const;
 
@@ -274,7 +274,7 @@ export default function Header() {
 												"w-full h-11 rounded-full text-[15px] font-semibold",
 												"bg-primary text-primary-foreground",
 												"hover:opacity-90 active:opacity-80",
-												"shadow-sm transition-all duration-150",
+												"transition-all duration-150",
 											)}
 										>
 											<Link
@@ -304,7 +304,7 @@ export default function Header() {
 													"w-full h-11 rounded-full text-[15px] font-semibold",
 													"bg-primary text-primary-foreground",
 													"hover:opacity-90 active:opacity-80",
-													"shadow-sm transition-all duration-150",
+													"transition-all duration-150",
 												)}
 											>
 												<Link

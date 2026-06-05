@@ -53,7 +53,7 @@ export default function Footer() {
 		/* Outer wrapper — white bg so footer card floats */
 		<div className="bg-background px-4 sm:px-6 lg:px-8 pb-6 pt-2">
 			{/* Footer card */}
-			<footer className="mx-auto max-w-360 rounded-[40px] bg-[#F8F5F5] px-6 sm:px-10 lg:px-16 py-15">
+			<footer className="mx-auto max-w-360 rounded-[48px] bg-[#F8F5F5] px-6 sm:px-10 lg:px-16 py-15">
 				{/* Newsletter CTA Banner */}
 				<div className="rounded-[48px] bg-[#C7421D] px-8 py-10 mb-12">
 					<div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
