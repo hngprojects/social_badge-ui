@@ -10,94 +10,161 @@ import { RecentBadgesTable } from "./recent-badges-table";
 import { RECENT_BADGES_LIMIT, TemplateFilter } from "./recent-badges-types";
 import { TemplateInfoModal } from "./template-info-modal";
 import { DeleteBadgeModal } from "./delete-badge-modal";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function RecentBadges() {
-  // GET RECENT ORGANIZERS BADGES WITH HOOK
-  const deleteMutation = useDeleteOrganizerTemplate();
-  const {
-    templates,
-    isLoading: loading,
-    isError,
-  } = useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
+	// GET RECENT ORGANIZERS BADGES WITH HOOK
+	const deleteMutation = useDeleteOrganizerTemplate();
+	const [page, setPage] = useState(1);
 
-  const { templates: platformTemplates } = usePlatformTemplates();
-  const [activeFilter, setActiveFilter] = useState<TemplateFilter>("All");
-  const [selectedTemplate, setSelectedTemplate] =
-    useState<OrganizerTemplateInstance | null>(null);
-  const [templateToDelete, setTemplateToDelete] =
-    useState<OrganizerTemplateInstance | null>(null);
+	const {
+		templates,
+		total,
+		isLoading: loading,
+		isError,
+	} = useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
+	const totalPages = Math.ceil(total / RECENT_BADGES_LIMIT);
 
-  const filtered =
-    activeFilter === "All"
-      ? templates
-      : templates.filter(
-          (template) => template.status === activeFilter.toLowerCase(),
-        );
+	const { templates: platformTemplates } = usePlatformTemplates();
+	const [activeFilter, setActiveFilter] = useState<TemplateFilter>("All");
+	const [selectedTemplate, setSelectedTemplate] =
+		useState<OrganizerTemplateInstance | null>(null);
+	const [templateToDelete, setTemplateToDelete] =
+		useState<OrganizerTemplateInstance | null>(null);
 
-  const platformTemplatesById = useMemo(
-    () => new Map(platformTemplates.map((template) => [template.id, template])),
-    [platformTemplates],
-  );
+	const filtered =
+		activeFilter === "All"
+			? templates
+			: templates.filter(
+					(template) => template.status === activeFilter.toLowerCase(),
+				);
 
-  const getTemplateThumbnail = useCallback(
-    (template: OrganizerTemplateInstance) => {
-      return (
-        platformTemplatesById.get(template.platform_template_id)
-          ?.thumbnail_url ?? undefined
-      );
-    },
-    [platformTemplatesById],
-  );
+	const platformTemplatesById = useMemo(
+		() => new Map(platformTemplates.map((template) => [template.id, template])),
+		[platformTemplates],
+	);
 
-  function handleDeleteTemplate() {
-    if (!templateToDelete) return;
-    deleteMutation.mutate(templateToDelete.id, {
-      onSuccess: () => setTemplateToDelete(null),
-    });
-  }
+	const getTemplateThumbnail = useCallback(
+		(template: OrganizerTemplateInstance) => {
+			return (
+				platformTemplatesById.get(template.platform_template_id)
+					?.thumbnail_url ?? undefined
+			);
+		},
+		[platformTemplatesById],
+	);
 
-  return (
-    <div className="w-full overflow-hidden overflow-y-visible rounded-2xl border border-[#F0F0EE]">
-      <RecentBadgesHeader
-        activeFilter={activeFilter}
-        onFilterChange={setActiveFilter}
-      />
+	const [direction, setDirection] = useState(1);
 
-      <RecentBadgesMobileList
-        templates={filtered}
-        onSelectTemplate={setSelectedTemplate}
-        onRequestDelete={setTemplateToDelete}
-      />
+	const variants = {
+		enter: (direction: number) => ({
+			x: direction > 0 ? 30 : -30,
+			opacity: 0,
+		}),
+		center: {
+			x: 0,
+			opacity: 1,
+		},
+		exit: (direction: number) => ({
+			x: direction > 0 ? -30 : 30,
+			opacity: 0,
+		}),
+	};
 
-      <RecentBadgesTable
-        templates={filtered}
-        getTemplateThumbnail={getTemplateThumbnail}
-        loading={loading}
-        isError={isError}
-        onSelectTemplate={setSelectedTemplate}
-        onRequestDelete={setTemplateToDelete}
-      />
+	function handleNextPage() {
+		setDirection(1);
+		setPage((p) => Math.min(p + 1, totalPages));
+	}
 
-      {selectedTemplate && (
-        <TemplateInfoModal
-          template={selectedTemplate}
-          thumbnailUrl={getTemplateThumbnail(selectedTemplate)}
-          onClose={() => setSelectedTemplate(null)}
-          onRequestDelete={(template) => {
-            setSelectedTemplate(null);
-            setTemplateToDelete(template);
-          }}
-        />
-      )}
+	function handlePreviousPage() {
+		setDirection(-1);
+		setPage((p) => Math.max(p - 1, 1));
+	}
 
-      {templateToDelete && (
-        <DeleteBadgeModal
-          title={templateToDelete.title}
-          onClose={() => setTemplateToDelete(null)}
-          onDelete={handleDeleteTemplate}
-          isDeleting={deleteMutation.isPending}
-        />
-      )}
-    </div>
-  );
+	function handleDeleteTemplate() {
+		if (!templateToDelete) return;
+		deleteMutation.mutate(templateToDelete.id, {
+			onSuccess: () => setTemplateToDelete(null),
+		});
+	}
+
+	return (
+		<div className="w-full overflow-hidden overflow-y-visible rounded-2xl border border-[#F0F0EE]">
+			<RecentBadgesHeader
+				activeFilter={activeFilter}
+				onFilterChange={setActiveFilter}
+			/>
+
+			<RecentBadgesMobileList
+				templates={filtered}
+				onSelectTemplate={setSelectedTemplate}
+				onRequestDelete={setTemplateToDelete}
+			/>
+
+			<AnimatePresence mode="wait" custom={direction}>
+				<motion.div
+					key={page}
+					custom={direction}
+					variants={variants}
+					initial="enter"
+					animate="center"
+					exit="exit"
+					transition={{ duration: 0.35 }}
+				>
+					<RecentBadgesTable
+						templates={filtered}
+						getTemplateThumbnail={getTemplateThumbnail}
+						loading={loading}
+						isError={isError}
+						onSelectTemplate={setSelectedTemplate}
+						onRequestDelete={setTemplateToDelete}
+					/>
+				</motion.div>
+			</AnimatePresence>
+
+			{/* Previous and next buttons with page indicator */}
+			<div className="flex justify-end gap-2 border-t border-[#F0F0EE] p-4">
+				<button
+					onClick={handlePreviousPage}
+					disabled={page === 1}
+					className="rounded-md border px-4 py-2 disabled:opacity-50"
+				>
+					Previous
+				</button>
+
+				<span className="flex items-center text-sm">
+					Page {page} of {totalPages}
+				</span>
+
+				<button
+					onClick={handleNextPage}
+					disabled={page === totalPages}
+					className="rounded-md border px-4 py-2 disabled:opacity-50"
+				>
+					Next
+				</button>
+			</div>
+
+			{selectedTemplate && (
+				<TemplateInfoModal
+					template={selectedTemplate}
+					thumbnailUrl={getTemplateThumbnail(selectedTemplate)}
+					onClose={() => setSelectedTemplate(null)}
+					onRequestDelete={(template) => {
+						setSelectedTemplate(null);
+						setTemplateToDelete(template);
+					}}
+				/>
+			)}
+
+			{templateToDelete && (
+				<DeleteBadgeModal
+					title={templateToDelete.title}
+					onClose={() => setTemplateToDelete(null)}
+					onDelete={handleDeleteTemplate}
+					isDeleting={deleteMutation.isPending}
+				/>
+			)}
+		</div>
+	);
 }
