@@ -240,7 +240,7 @@ export default function MobileHeader() {
                   </SheetDescription>
                 </VisuallyHidden>
 
-                <div className="flex item flex-col h-full">
+                <div className="flex flex-col h-full">
                   {/* Mobile sheet header */}
                   <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
                     <Image
@@ -256,65 +256,62 @@ export default function MobileHeader() {
                   </div>
 
                   {/* Mobile nav links */}
-                  <nav className="flex flex-col gap-1  flex-1">
-                    {/* Mobile nav links */}
 
-                    <nav className="flex flex-col gap-1 px-3 py-4 pt-0 flex-1">
-                      <TopBarSearch
-                        placeholder="search badge layouts..."
-                        className="min-w-0 py-2"
-                      />
-                      {navigation.map(({ label, href }) => {
-                        const isActive = pathname === href;
+                  <nav className="flex flex-col gap-1 px-3 py-4 pt-0 flex-1">
+                    <TopBarSearch
+                      placeholder="search badge layouts..."
+                      className="min-w-0 py-2"
+                    />
+                    {navigation.map(({ label, href }) => {
+                      const isActive = pathname === href;
 
-                        const handleClick = () => {
-                          setMobileOpen(false);
-                        };
+                      const handleClick = () => {
+                        setMobileOpen(false);
+                      };
 
-                        return (
-                          <Link
-                            key={label}
-                            href={href}
-                            onClick={handleClick}
-                            className={cn(
-                              "px-4 py-3 text-[15px] font-medium rounded-xl",
-                              "transition-colors duration-150",
-                              isActive
-                                ? "text-primary bg-secondary"
-                                : "text-foreground hover:bg-muted",
-                            )}
-                          >
-                            {label}
-                          </Link>
-                        );
-                      })}
-                    </nav>
-
-                    <div className="mt-auto border-t border-border px-3 py-4">
-                      <div className="flex items-center gap-3 mb-3 px-1">
-                        <DashboardUserAvatar
-                          user={user}
-                          displayName={displayName}
-                          className="h-10 w-10 text-sm"
-                        />
-                        <p className="truncate text-sm font-medium text-foreground">
-                          {displayName}
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          logout();
-                          setMobileOpen(false);
-                        }}
-                        disabled={isLoggingOut}
-                        className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-60"
-                      >
-                        <LogOut className="h-5 w-5" strokeWidth={1.75} />
-                        {isLoggingOut ? "Logging out…" : "Log out"}
-                      </button>
-                    </div>
+                      return (
+                        <Link
+                          key={label}
+                          href={href}
+                          onClick={handleClick}
+                          className={cn(
+                            "px-4 py-3 text-[15px] font-medium rounded-xl",
+                            "transition-colors duration-150",
+                            isActive
+                              ? "text-primary bg-secondary"
+                              : "text-foreground hover:bg-muted",
+                          )}
+                        >
+                          {label}
+                        </Link>
+                      );
+                    })}
                   </nav>
+
+                  <div className="mt-auto border-t border-border px-3 py-4">
+                    <div className="flex items-center gap-3 mb-3 px-1">
+                      <DashboardUserAvatar
+                        user={user}
+                        displayName={displayName}
+                        className="h-10 w-10 text-sm"
+                      />
+                      <p className="truncate text-sm font-medium text-foreground">
+                        {displayName}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        logout();
+                        setMobileOpen(false);
+                      }}
+                      disabled={isLoggingOut}
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-60"
+                    >
+                      <LogOut className="h-5 w-5" strokeWidth={1.75} />
+                      {isLoggingOut ? "Logging out…" : "Log out"}
+                    </button>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
