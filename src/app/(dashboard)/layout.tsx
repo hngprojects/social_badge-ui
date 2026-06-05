@@ -18,12 +18,12 @@ export default function DashboardLayout({
         >
           Skip to main content
         </a>
-        <section className="flex min-h-screen">
+        <section className="flex min-h-screen w-full min-w-0 overflow-x-hidden">
         <div className="sticky top-0 z-30 hidden self-start lg:block">
           <SideNav />
         </div>
 
-        <main id="main-content" className="flex flex-1 flex-col">
+        <main id="main-content" className="flex min-w-0 flex-1 flex-col overflow-x-hidden">
           <header className="lg:sticky lg:top-0 lg:z-20 lg:flex lg:items-center lg:py-[18px] lg:pl-[30px] lg:pr-[32px] lg:border-b lg:border-black/8 lg:bg-background">
             <div className="lg:hidden">
               <MobileHeader />
@@ -34,7 +34,7 @@ export default function DashboardLayout({
             </div>
           </header>
 
-          <section className="pt-[64px] lg:pt-0 pb-8 px-[16px] md:pl-[24px] md:pr-[32px]">
+          <section className="min-w-0 overflow-x-hidden px-[16px] pt-[64px] pb-8 md:pl-[24px] md:pr-[32px] lg:pt-0">
             {children}
           </section>
         </main>

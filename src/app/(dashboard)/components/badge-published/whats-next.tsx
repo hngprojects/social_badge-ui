@@ -35,7 +35,7 @@ export default function WhatsNext({ fullUrl, templateId }: WhatsNextProps) {
 				Keep momentum going while your badge does its work.
 			</p>
 
-			<div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 				{actions.map((action) => (
 					<NextActionCard key={action.id} action={action} />
 				))}
@@ -46,7 +46,7 @@ export default function WhatsNext({ fullUrl, templateId }: WhatsNextProps) {
 
 function NextActionCard({ action }: { action: NextAction }) {
 	return (
-		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-5 flex flex-col">
+		<div className="flex min-w-0 flex-col rounded-[16px] border border-[#ECE9E4] bg-white p-4 sm:p-5">
 			<div
 				className={`w-9 h-9 rounded-lg ${action.iconBg} ${action.iconColor} flex items-center justify-center mb-3.5`}
 			>

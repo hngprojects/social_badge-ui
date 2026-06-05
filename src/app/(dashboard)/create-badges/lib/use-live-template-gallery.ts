@@ -5,6 +5,7 @@ import { usePlatformTemplates } from "@/app/features/templates/hooks/usePlatform
 import { EXTENDED_MOCK_DB, FILTER_TABS } from "../../constants/dashboard";
 import { useBadgeAnalytics } from "../../hooks/use-badge-analytics";
 import type { LayoutTemplate } from "../../types/dashboard/dashboard";
+import { normalizeTemplateCategory } from "./template-category";
 
 export function useLiveTemplateGallery() {
   const {
@@ -45,9 +46,11 @@ export function useLiveTemplateGallery() {
 
   const filteredTemplates = useMemo(() => {
     if (activeFilter === "All layouts") return templates;
+    const activeCategory = normalizeTemplateCategory(activeFilter);
+
     return templates.filter(
       (template) =>
-        template.category.toLowerCase() === activeFilter.toLowerCase(),
+        normalizeTemplateCategory(template.category) === activeCategory,
     );
   }, [activeFilter, templates]);
 

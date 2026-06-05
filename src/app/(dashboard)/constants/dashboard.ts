@@ -215,8 +215,6 @@ export const FILTER_TABS = [
   "All layouts",
   "Summit",
   "Conference",
-  "Hackathon",
-  "VIP / Invite",
 ];
 
 export const BADGES: Badge[] = [

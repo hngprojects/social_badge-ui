@@ -18,4 +18,5 @@ export type AllTemplatesProps = {
   isLoading?: boolean;
   activeTab?: string;
   limit?: number;
+  gridClassName?: string;
 };

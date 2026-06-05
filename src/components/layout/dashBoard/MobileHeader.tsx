@@ -121,7 +121,7 @@ export default function MobileHeader() {
       )}
     >
       {isFlowPage ? (
-        <div className="flex min-h-[64px] items-center justify-between gap-3 bg-white px-4 py-3">
+        <div className="flex min-h-[64px] min-w-0 items-center justify-between gap-3 overflow-x-hidden bg-white px-4 py-3">
           <div className="flex min-w-0 flex-1 items-center gap-3">
             {isPublishedPage ? (
               <Link
