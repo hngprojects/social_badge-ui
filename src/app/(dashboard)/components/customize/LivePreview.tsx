@@ -34,7 +34,7 @@ export function LivePreview({
 
 			<div className={hideExtras ? "" : " rounded-2xl bg-orange-50 p-5"}>
 				<div
-					className={`mx-auto ${badgeClassName && "[&>div]:!max-w-none [&>div]:!w-full [&>div]:!h-full [&>div]:relative  ring w-full max-w-full h-152 flex flex-col intems-center justify-center"}`}
+					className={`mx-auto ${badgeClassName && "w-full max-w-full h-152 flex flex-col items-center justify-center"}`}
 					ref={badgeRef}
 				>
 					<CustomTemplatePreview
