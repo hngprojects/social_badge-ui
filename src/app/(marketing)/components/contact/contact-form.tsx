@@ -247,7 +247,7 @@ export default function ContactForm() {
                 <SelectTrigger
                   id="subject"
                   aria-invalid={!!errors.subject}
-                  className="h-12 w-full rounded-[12px] border-[#EAEAE6] bg-[#F4F4F2] text-base aria-invalid:border-red-400"
+                  className="h-12 p-6 w-full rounded-[12px] border-[#EAEAE6] bg-[#F4F4F2] text-base aria-invalid:border-red-400"
                 >
                   <SelectValue placeholder="Select a topic..." />
                 </SelectTrigger>
@@ -279,7 +279,7 @@ export default function ContactForm() {
             rows={6}
             placeholder="Tell us what's on your mind. The more detail the better — we'll actually read it."
             aria-invalid={!!errors.message}
-            className="min-h-[144px] rounded-[12px] border-[#EAEAE6] bg-[#F4F4F2] text-base placeholder:text-[#757575] aria-invalid:border-red-400"
+            className="min-h-[144px] rounded-[12px] border-[#EAEAE6] bg-[#F4F4F2] text-lg md:text-lg placeholder:text-[#757575] aria-invalid:border-red-400"
             {...register("message")}
           />
           {errors.message && (
