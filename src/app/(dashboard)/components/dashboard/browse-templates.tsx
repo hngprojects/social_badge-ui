@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useTemplateGallery } from "../../create-badges/lib/use-template-gallery";
+import { useLiveTemplateGallery } from "../../create-badges/lib/use-live-template-gallery";
 import MockTemplates from "../../templates/components/all-templates";
 
 export default function BrowseTemplate() {
-  const { filteredTemplates, isLoading } = useTemplateGallery();
+  const { filteredTemplates, isLoading } = useLiveTemplateGallery();
 
   return (
     <section className="rounded-[12px] border border-[#E8E8E8] w-full ">
