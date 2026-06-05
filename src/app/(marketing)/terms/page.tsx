@@ -252,7 +252,7 @@ export default function TermsOfServicePage() {
 					<p>
 						For legal queries:{" "}
 						<a
-							href="mailto:legal@badge.build"
+							href="mailto:flaretagme@gmail.com"
 							className="text-primary hover:text-primary-600 transition-colors"
 						>
 							flaretagme@gmail.com

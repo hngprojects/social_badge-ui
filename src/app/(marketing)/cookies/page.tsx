@@ -257,7 +257,7 @@ export default function CookiePolicyPage() {
 				<p>
 					To exercise any of these rights, contact us at{" "}
 					<a
-						href="mailto:privatesocialbadge@gmail.com"
+						href="mailto:flaretagme@gmail.com"
 						className="text-primary hover:text-primary-600 transition-colors"
 					>
 						flaretagme@gmail.com
@@ -315,7 +315,7 @@ export default function CookiePolicyPage() {
 				<p>
 					Questions about this policy? Reach us at{" "}
 					<a
-						href="mailto:privatesocialbadge@gmail.com"
+						href="mailto:flaretagme@gmail.com"
 						className="text-primary hover:text-primary-600 transition-colors"
 					>
 						flaretagme@gmail.com
