@@ -22,7 +22,7 @@ export default function RecentBadges() {
 		total,
 		isLoading: loading,
 		isError,
-	} = useRecentOrganizerBadges(RECENT_BADGES_LIMIT);
+	} = useRecentOrganizerBadges(page, RECENT_BADGES_LIMIT);
 	const totalPages = Math.ceil(total / RECENT_BADGES_LIMIT);
 
 	const { templates: platformTemplates } = usePlatformTemplates();

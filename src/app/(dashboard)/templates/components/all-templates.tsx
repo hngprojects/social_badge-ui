@@ -33,6 +33,7 @@ const AllTemplates = ({
   isLoading = false,
   activeTab,
   limit,
+  gridClassName = "grid grid-cols-1 min-[350px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5",
 }: AllTemplatesProps) => {
   const templates = useMemo(
     () => layoutTemplates.map(layoutTemplateToTemplate),
@@ -51,7 +52,7 @@ const AllTemplates = ({
     const placeholderCount = limit ?? 4;
 
     return (
-      <div className="grid grid-cols-1 min-[350px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className={gridClassName}>
         {Array.from({ length: placeholderCount }).map((_, index) => (
           <div
             key={index}
@@ -79,7 +80,7 @@ const AllTemplates = ({
   }
 
   return (
-    <div className="grid grid-cols-1 min-[350px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+    <div className={gridClassName}>
       {visibleTemplates.map((template, index) => (
         <Link
           key={template.id}
