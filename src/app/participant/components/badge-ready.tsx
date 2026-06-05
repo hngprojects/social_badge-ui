@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import CaptionBox from "./caption-box";
 import { DEFAULT_CAPTION, SOCIAL_PLATFORMS } from "../constants";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import { SharePlatform } from "../types";
 import { useSearchParams } from "next/navigation";
 import { useIncrementBadgeShare } from "../hooks/useIncrementBadgeShare";
+import { useIncrementBadgeCreation } from "../hooks/useIncrementBadgeCreation";
 
 interface BadgeReadyProps {
 	onDownload?: () => Promise<void>;
@@ -27,12 +28,21 @@ export default function BadgeReady({
 	const searchParams = useSearchParams();
 	const slug = searchParams.get("slug");
 	const { incrementShare } = useIncrementBadgeShare();
+	const { incrementCreation } = useIncrementBadgeCreation();
 
 	const [captionText, setCaptionText] = useState(
 		defaultCaption || DEFAULT_CAPTION,
 	);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isDownloading, setIsDownloading] = useState(false);
+	const hasIncremented = useRef(false);
+
+	useEffect(() => {
+		if (slug && !hasIncremented.current) {
+			incrementCreation(slug);
+			hasIncremented.current = true;
+		}
+	}, [slug, incrementCreation]);
 
 	const handleDownload = async () => {
 		if (!onDownload) return;
@@ -40,8 +50,8 @@ export default function BadgeReady({
 		try {
 			await onDownload();
 			if (slug) {
-				incrementShare(slug);
-			}
+			incrementShare(slug);
+		}
 			setIsPopupOpen(true);
 		} catch {
 			toast.error("Failed to download badge. Please try again.");
