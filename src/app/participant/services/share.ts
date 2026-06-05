@@ -3,14 +3,10 @@ import { SharePlatform } from "../types";
 const encode = (text: string) => encodeURIComponent(text);
 
 export const shareService = {
-  async share(platform: SharePlatform, caption: string, destinationLink?: string) {
+  async share(platform: SharePlatform, caption: string) {
     const text = caption || "";
     const encodedText = encode(text);
-    const resolvedUrl = destinationLink
-      ? /^https?:\/\//i.test(destinationLink)
-        ? destinationLink
-        : `https://${destinationLink}`
-      : window.location.href;
+    const resolvedUrl = window.location.href;
     const encodedUrl = encode(resolvedUrl);
 
     // best universal fallback (mobile)

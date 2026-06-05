@@ -1,5 +1,5 @@
 "use client";
-import { useTemplateGallery } from "../create-badges/lib/use-template-gallery";
+import { useLiveTemplateGallery } from "../create-badges/lib/use-live-template-gallery";
 import FilterTabs from "./components/filter-tabs";
 import AllTemplates from "./components/all-templates";
 
@@ -10,7 +10,7 @@ export default function Templates() {
     setActiveFilter,
     isLoading,
     filterTabs,
-  } = useTemplateGallery();
+  } = useLiveTemplateGallery();
 
 const handleFilterChange = (tab: string) => {
   setActiveFilter(tab.trim());

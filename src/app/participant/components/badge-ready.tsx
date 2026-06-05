@@ -15,10 +15,9 @@ import { shareService } from "../services/share";
 interface BadgeReadyProps {
 	onDownload?: () => Promise<void>;
 	defaultCaption?: string;
-	destinationLink?: string;
 }
 
-export default function BadgeReady({ onDownload, defaultCaption, destinationLink }: BadgeReadyProps) {
+export default function BadgeReady({ onDownload, defaultCaption }: BadgeReadyProps) {
 	const [captionText, setCaptionText] = useState(defaultCaption || DEFAULT_CAPTION);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isDownloading, setIsDownloading] = useState(false);
@@ -37,7 +36,7 @@ export default function BadgeReady({ onDownload, defaultCaption, destinationLink
 	};
 
 	const handleSocialShare = (platform: SharePlatform) => {
-		shareService.share(platform, captionText, destinationLink);
+		shareService.share(platform, captionText);
 	};
 
 	return (

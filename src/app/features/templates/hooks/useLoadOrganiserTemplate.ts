@@ -16,10 +16,11 @@ export function useLoadOrganiserTemplate(organiserTemplateId: string | null) {
         {
           title: response.title,
           default_caption: response.default_caption,
-          destination_link: response.destination_link,
           hashtags: response.hashtags,
           access_type: response.access_type,
           updated_at: response.updated_at,
+          is_published: response.is_published,
+          logo_url: response.logo_url,
         },
       );
     },

@@ -64,7 +64,7 @@ export default function SideNav() {
             >
               <Image
                 alt="sidebar toggle"
-                src="/assets/dashboard/icons/chevron-left.svg"
+                src="/assets/dashboard/icons/sidebar-collapse.svg"
                 width={16}
                 height={16}
                 className="z-99"

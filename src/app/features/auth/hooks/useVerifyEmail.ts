@@ -13,7 +13,6 @@ export const useVerifyEmail = () => {
     mutationFn: verifyEmailApi,
 
     onSuccess: (data: { message?: string }) => {
-      console.log(data);
       toast.success(data?.message || "Email verified successfully!");
     },
     onError: (error) => {

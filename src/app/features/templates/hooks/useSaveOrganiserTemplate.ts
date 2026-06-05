@@ -5,11 +5,10 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
-  organizerTemplateInstancesKey,
   organizerTemplateInstancesRootKey,
 } from "@/app/(dashboard)/hooks/use-organizer-template-instances";
 import { badgeAnalyticsKey } from "@/app/(dashboard)/hooks/use-badge-analytics";
-import { RECENT_BADGES_LIMIT } from "@/app/(dashboard)/components/dashboard/recent-badges-types";
+import type { OrganizerTemplateInstance } from "@/app/(dashboard)/types/dashboard/organizer-template-instances";
 import type { OrganizerTemplateInstancesResult } from "@/app/(dashboard)/services/get-template-instances";
 import type { OrganiserTemplatePayload } from "../types/canvas-data";
 import { storePublishedBadgeResult } from "../lib/published-badge-session";
@@ -20,28 +19,31 @@ import {
   updateOrganiserTemplate,
   uploadLogo,
 } from "../services/templates";
+import type { OrganiserTemplateDetail, PublishedTemplateData } from "../types/organiser-template";
 
 interface SaveVariables {
   payload: OrganiserTemplatePayload;
   organiserTemplateId?: string | null;
   pendingLogoFile?: File | null;
+  shouldPublish?: boolean;
 }
 
 /**
- * Publish flow (per API):
+ * Save flow:
  * 1. POST /badges — create instance from platform template (new only)
  * 2. PUT /badges/{id}/logo — upload logo if pendingLogoFile is provided
  * 3. PATCH /badges/{id} — persist canvas_data and metadata
- * 4. POST /badges/{id}/publish — go live and receive share_slug
+ * 4. POST /badges/{id}/publish — go live (only if shouldPublish is true)
  */
 export function useSaveOrganiserTemplate() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ payload, organiserTemplateId, pendingLogoFile }: SaveVariables) => {
+    mutationFn: async ({ payload, organiserTemplateId, pendingLogoFile, shouldPublish }: SaveVariables) => {
       let templateId = organiserTemplateId ?? null;
 
+      // Step 1: Create only if new
       if (!templateId) {
         const created = await createOrganiserTemplateInstance(
           payload.platform_template_id,
@@ -51,6 +53,7 @@ export function useSaveOrganiserTemplate() {
 
       let finalPayload = payload;
 
+      // Step 2: Upload logo if provided
       if (pendingLogoFile) {
         const uploaded = await uploadLogo(pendingLogoFile, templateId);
         finalPayload = {
@@ -66,28 +69,49 @@ export function useSaveOrganiserTemplate() {
         };
       }
 
-      await updateOrganiserTemplate(templateId, buildEditTemplateRequest(finalPayload));
+      // Step 3: Patch metadata
+      const updated = await updateOrganiserTemplate(
+        templateId,
+        buildEditTemplateRequest(finalPayload),
+      );
 
-      const published = await publishOrganiserTemplate(templateId);
+      // Step 4: Publish only if requested
+      let publishedData = null;
+      if (shouldPublish) {
+        const published = await publishOrganiserTemplate(templateId);
+        publishedData = published.data;
+      }
+
       return {
         payload: finalPayload,
-        published: published.data,
+        updated: updated.data,
+        published: publishedData,
         templateId,
+        isNew: !organiserTemplateId,
+        wasPublished: shouldPublish,
       };
     },
-    onSuccess: ({ payload, published, templateId }) => {
-      toast.success("Badge template published successfully.");
-      const publishedBadge = {
-        id: published.id || templateId,
-        title: published.title || payload.title || "Untitled badge",
+    onSuccess: ({ payload, updated, published, templateId, wasPublished, isNew }) => {
+      const message = wasPublished
+        ? "Badge template published successfully."
+        : isNew
+          ? "Draft saved successfully."
+          : "Changes saved successfully.";
+      toast.success(message);
+
+      const source = (published ?? updated) as Partial<PublishedTemplateData & OrganiserTemplateDetail>;
+
+      const updatedBadge: OrganizerTemplateInstance = {
+        id: source.id ?? templateId,
+        title: source.title ?? payload.title ?? "Untitled badge",
         platform_template_id: payload.platform_template_id,
-        is_published: true,
-        status: "live" as const,
-        share_slug: published.share_slug,
-        total_shares: published.total_shares ?? 0,
-        published_at: published.published_at,
-        created_at: published.created_at ?? new Date().toISOString(),
-        updated_at: published.updated_at ?? new Date().toISOString(),
+        is_published: source.is_published ?? false,
+        status: wasPublished ? "live" : "draft",
+        share_slug: source.share_slug ?? null,
+        total_shares: source.total_shares ?? 0,
+        published_at: source.published_at ?? null,
+        created_at: source.created_at ?? new Date().toISOString(),
+        updated_at: source.updated_at ?? new Date().toISOString(),
       };
 
       queryClient.setQueriesData<OrganizerTemplateInstancesResult>(
@@ -96,16 +120,16 @@ export function useSaveOrganiserTemplate() {
           if (!prev) return prev;
 
           const existingIndex = prev.templates.findIndex(
-            (template) => template.id === publishedBadge.id,
+            (template) => template.id === updatedBadge.id,
           );
           const templates =
             existingIndex >= 0
               ? prev.templates.map((template, index) =>
                   index === existingIndex
-                    ? { ...template, ...publishedBadge }
+                    ? { ...template, ...updatedBadge }
                     : template,
                 )
-              : [publishedBadge, ...prev.templates];
+              : [updatedBadge, ...prev.templates];
 
           return {
             ...prev,
@@ -114,19 +138,7 @@ export function useSaveOrganiserTemplate() {
           };
         },
       );
-      queryClient.setQueryData<OrganizerTemplateInstancesResult>(
-        organizerTemplateInstancesKey(1, RECENT_BADGES_LIMIT),
-        (prev) => {
-          if (prev) return prev;
 
-          return {
-            templates: [publishedBadge],
-            total: 1,
-            page: 1,
-            limit: RECENT_BADGES_LIMIT,
-          };
-        },
-      );
       queryClient.invalidateQueries({
         queryKey: organizerTemplateInstancesRootKey,
       });
@@ -134,11 +146,11 @@ export function useSaveOrganiserTemplate() {
         queryKey: badgeAnalyticsKey,
       });
 
-      const slug = published.share_slug;
-      if (slug) {
+      if (wasPublished && published?.share_slug) {
         storePublishedBadgeResult(published);
-        router.push(`/badges/published?slug=${encodeURIComponent(slug)}`);
+        router.push(`/badges/published?slug=${encodeURIComponent(published.share_slug)}`);
       } else {
+        // Redirect to dashboard on draft save or published update
         router.push("/dashboard");
       }
     },
