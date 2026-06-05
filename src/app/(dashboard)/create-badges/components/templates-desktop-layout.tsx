@@ -30,8 +30,11 @@ export function TemplatesDesktopLayout({
   onSelectTemplate,
 }: TemplatesDesktopLayoutProps) {
   return (
-    <main className="hidden lg:grid grid-cols-12 gap-8 max-w-7xl mx-auto w-full items-start px-6 lg:px-8">
-      <section className="col-span-7 flex flex-col gap-6 w-full">
+    <main className="hidden lg:grid lg:h-[calc(100dvh-10rem)] grid-cols-12 gap-8 max-w-7xl mx-auto w-full items-start px-6 lg:px-8">
+      <section
+        data-lenis-prevent-wheel
+        className="col-span-7 flex h-full min-h-0 flex-col gap-6 w-full overflow-y-auto pr-2 overscroll-contain"
+      >
         <TemplateGalleryHeader
           filterTabs={filterTabs}
           activeFilter={activeFilter}
@@ -56,7 +59,7 @@ export function TemplatesDesktopLayout({
         {/* <UploadTemplateBox /> */}
       </section>
 
-      <aside className="col-span-5 w-full sticky top-6 bg-white rounded-[32px] p-6 border border-[#E5E5E5] flex flex-col shadow-sm">
+      <aside className="col-span-5 w-full bg-white rounded-[32px] p-6 border border-[#E5E5E5] flex flex-col shadow-sm">
         <TemplateLivePreview template={activeTemplate} />
       </aside>
     </main>
