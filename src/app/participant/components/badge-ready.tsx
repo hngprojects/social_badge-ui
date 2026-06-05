@@ -36,11 +36,12 @@ export default function BadgeReady({
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isDownloading, setIsDownloading] = useState(false);
 	const hasIncremented = useRef(false);
+	const incrementedSlugs = useRef(new Set<string>());
 
 	useEffect(() => {
-		if (slug && !hasIncremented.current) {
+		if (slug && !incrementedSlugs.current.has(slug)) {
 			incrementCreation(slug);
-			hasIncremented.current = true;
+			incrementedSlugs.current.add(slug);
 		}
 	}, [slug, incrementCreation]);
 
@@ -50,8 +51,8 @@ export default function BadgeReady({
 		try {
 			await onDownload();
 			if (slug) {
-			incrementShare(slug);
-		}
+				incrementShare(slug);
+			}
 			setIsPopupOpen(true);
 		} catch {
 			toast.error("Failed to download badge. Please try again.");
