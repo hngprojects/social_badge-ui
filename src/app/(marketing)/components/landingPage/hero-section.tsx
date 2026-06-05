@@ -37,13 +37,26 @@ const itemVariants = {
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    if (!mediaQuery.matches || isPaused) return;
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroImages.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused]);
+
+  const prev = () => setCurrentIndex((i) => (i - 1 + heroImages.length) % heroImages.length);
+  const next = () => setCurrentIndex((i) => (i + 1) % heroImages.length);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") prev();
+    else if (e.key === "ArrowRight") next();
+    else if (e.key === " " || e.key === "Enter") setIsPaused((p) => !p);
+  };
 
   return (
     <section className="bg-[#F9F9F9]">
@@ -164,7 +177,18 @@ export default function Hero() {
               className="-ml-1 md:hidden"
               alt="badge preview"
             />{" "}
-            <div className="relative hidden md:block w-full" style={{ aspectRatio: "6/5" }}>
+            <div
+              className="relative hidden md:block w-full aspect-6/5"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              onKeyDown={handleKeyDown}
+              tabIndex={0}
+              role="region"
+              aria-label="Badge preview carousel"
+            >
+              <span aria-live="polite" aria-atomic="true" className="sr-only">
+                Image {currentIndex + 1} of {heroImages.length}
+              </span>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}

@@ -10,7 +10,6 @@ import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import { SharePlatform } from "../types";
-import { shareService } from "../services/share";
 
 interface BadgeReadyProps {
     onDownload?: () => Promise<void>;
@@ -36,24 +35,34 @@ export default function BadgeReady({ onDownload, defaultCaption, shareUrl }: Bad
         }
     };
 
-    const handleSocialShare = (platformId: SharePlatform) => {
-    const url = shareUrl || window.location.href;
-    const encodedCaption = encodeURIComponent(captionText);
-    const encodedUrl = encodeURIComponent(url);
+    const handleSocialShare = async (platformId: SharePlatform) => {
+        const url = shareUrl || window.location.href;
 
-    const shareUrls: Record<string, string> = {
-      whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
-      x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
+        if (navigator.share) {
+            try {
+                await navigator.share({ text: captionText, url });
+                return;
+            } catch {
+                // user cancelled or API unavailable — fall through to platform URLs
+            }
+        }
+
+        const encodedCaption = encodeURIComponent(captionText);
+        const encodedUrl = encodeURIComponent(url);
+
+        const shareUrls: Record<string, string> = {
+            whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
+            facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
+            x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
+            linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+            telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
+        };
+
+        const target = shareUrls[platformId];
+        if (target) {
+            window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
+        }
     };
-
-    const target = shareUrls[platformId];
-    if (target) {
-      window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
-    }
-  };
 
     return (
         <motion.div

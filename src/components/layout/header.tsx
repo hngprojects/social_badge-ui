@@ -23,7 +23,7 @@ const NAV_LINKS = [
 	{ label: "Home", href: "/" },
 	{ label: "Explore", href: "/explore" },
 	{ label: "Features", href: "/#feature-section" },
-	// { label: "Pricing", href: "/pricing" },
+	// TODO: restore when pricing page is launched
 	{ label: "Contact us", href: "/contact" },
 ] as const;
 

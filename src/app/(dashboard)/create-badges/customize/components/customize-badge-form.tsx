@@ -72,8 +72,8 @@ export function CustomizeBadgeForm({
     eventName: formValues.eventName || editor.eventName,
   };
 
-  const onFormSubmit = async (data: CustomizeBadgeFormValues, shouldPublish = true, action: "draft" | "publish" = "publish") => {
-    setSavingAction(action);
+  const onFormSubmit = async (data: CustomizeBadgeFormValues, shouldPublish = true) => {
+    setSavingAction(shouldPublish ? "publish" : "draft");
     // Make logo compulsory if required by layout
     if (layoutCaps.hasHeaderLogo && !editor.logoPreviewUrl && !editor.pendingLogoFile) {
       toast.error("Please upload a logo for this badge layout.");
@@ -174,8 +174,8 @@ export function CustomizeBadgeForm({
               type="button"
               variant="outline"
               size="default"
-              onClick={handleSubmit((data) => onFormSubmit(data, false, "draft"), handleError)}
-              disabled={savingAction === "draft"}
+              onClick={handleSubmit((data) => onFormSubmit(data, false), handleError)}
+              disabled={savingAction !== null}
               className="rounded-full border-[#EEEEEE] text-[#3A3A3A]"
             >
               {savingAction === "draft" ? "Saving…" : "Save as draft"}
@@ -186,8 +186,8 @@ export function CustomizeBadgeForm({
             type="button"
             variant="cta"
             size="default"
-            onClick={handleSubmit((data) => onFormSubmit(data, !isPublished, "publish"), handleError)}
-            disabled={savingAction === "publish"}
+            onClick={handleSubmit((data) => onFormSubmit(data, !isPublished), handleError)}
+            disabled={savingAction !== null}
             className="shadow-none border-0"
           >
             {savingAction === "publish"
