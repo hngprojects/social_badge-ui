@@ -11,22 +11,34 @@ import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import { SharePlatform } from "../types";
 import { shareService } from "../services/share";
+import { useIncrementBadgeShare } from "../hooks/useIncrementBadgeShare";
+import { useSearchParams } from "next/navigation";
 
 interface BadgeReadyProps {
 	onDownload?: () => Promise<void>;
 	defaultCaption?: string;
 }
 
-export default function BadgeReady({ onDownload, defaultCaption }: BadgeReadyProps) {
-	const [captionText, setCaptionText] = useState(defaultCaption || DEFAULT_CAPTION);
+export default function BadgeReady({
+	onDownload,
+	defaultCaption,
+}: BadgeReadyProps) {
+	const [captionText, setCaptionText] = useState(
+		defaultCaption || DEFAULT_CAPTION,
+	);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isDownloading, setIsDownloading] = useState(false);
+	const { incrementShare } = useIncrementBadgeShare();
+	const slug = useSearchParams().get("slug");
 
 	const handleDownload = async () => {
 		if (!onDownload) return;
 		setIsDownloading(true);
 		try {
 			await onDownload();
+			if (slug) {
+				incrementShare(slug);
+			}
 			setIsPopupOpen(true);
 		} catch {
 			toast.error("Failed to download badge. Please try again.");
