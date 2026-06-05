@@ -10,6 +10,8 @@ import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import { SharePlatform } from "../types";
+import { useSearchParams } from "next/navigation";
+import { useIncrementBadgeShare } from "../hooks/useIncrementBadgeShare";
 
 interface BadgeReadyProps {
 	onDownload?: () => Promise<void>;
@@ -22,6 +24,10 @@ export default function BadgeReady({
 	defaultCaption,
 	shareUrl,
 }: BadgeReadyProps) {
+	const searchParams = useSearchParams();
+	const slug = searchParams.get("slug");
+	const { incrementShare } = useIncrementBadgeShare();
+
 	const [captionText, setCaptionText] = useState(
 		defaultCaption || DEFAULT_CAPTION,
 	);
@@ -33,6 +39,9 @@ export default function BadgeReady({
 		setIsDownloading(true);
 		try {
 			await onDownload();
+			if (slug) {
+				incrementShare(slug);
+			}
 			setIsPopupOpen(true);
 		} catch {
 			toast.error("Failed to download badge. Please try again.");
