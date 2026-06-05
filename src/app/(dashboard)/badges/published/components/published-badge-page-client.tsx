@@ -16,15 +16,15 @@ export function PublishedBadgePageClient() {
 
   if (isLoading) {
     return (
-      <main className="mx-auto mt-16 flex min-h-[40vh] w-[90%] max-w-227 items-center justify-center">
+      <div className="mx-auto mt-8 flex min-h-[40vh] w-full max-w-227 items-center justify-center sm:mt-16 sm:w-[90%]">
         <p className="text-sm text-gray-500">Loading your published badge…</p>
-      </main>
+      </div>
     );
   }
 
   if (isError || !data) {
     return (
-      <main className="mx-auto mt-16 w-[90%] max-w-227 space-y-4 text-center">
+      <div className="mx-auto mt-8 w-full max-w-227 space-y-4 text-center sm:mt-16 sm:w-[90%]">
         <h1 className="text-xl font-semibold text-gray-900">Badge link unavailable</h1>
         <p className="text-sm text-gray-500">
           We couldn&apos;t load this published badge. Open it from your dashboard or publish
@@ -36,14 +36,14 @@ export function PublishedBadgePageClient() {
         >
           Back to dashboard
         </Link>
-      </main>
+      </div>
     );
   }
 
   const embedImageUrl = data.logoUrl ?? data.fullUrl;
 
   return (
-    <div className="mx-auto mt-16 w-[90%] max-w-227">
+    <div className="mx-auto mt-8 w-full max-w-227 min-w-0 overflow-x-hidden sm:mt-16 sm:w-[90%]">
       <LiveHeroBanner badgeName={data.title} publishedAt={data.publishedAt} />
       <ShareableLinkCard url={data.displayUrl} fullUrl={data.fullUrl} />
       <SpreadTheWord url={data.fullUrl} badgeName={data.title} />
