@@ -38,6 +38,15 @@ const itemVariants = {
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1140px)");
+    setIsDesktop(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1140px)");
@@ -167,16 +176,18 @@ export default function Hero() {
             delay: 0.5,
           }}
           className="grid flex-1 place-items-center"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onKeyDown={handleKeyDown}
-          tabIndex={0}
-          role="region"
-          aria-label="Badge preview carousel"
+          onMouseEnter={isDesktop ? () => setIsPaused(true) : undefined}
+          onMouseLeave={isDesktop ? () => setIsPaused(false) : undefined}
+          onKeyDown={isDesktop ? handleKeyDown : undefined}
+          tabIndex={isDesktop ? 0 : undefined}
+          role={isDesktop ? "region" : undefined}
+          aria-label={isDesktop ? "Badge preview carousel" : undefined}
         >
-          <span aria-live="polite" aria-atomic="true" className="sr-only">
-            Image {currentIndex + 1} of {heroImages.length}
-          </span>
+          {isDesktop && (
+            <span aria-live="polite" aria-atomic="true" className="sr-only">
+              Image {currentIndex + 1} of {heroImages.length}
+            </span>
+          )}
 
           {/* Mobile only */}
           <div className="w-80 pb-9 sm:w-92.5 h-auto -my-5.5 min-[1140px]:hidden">
