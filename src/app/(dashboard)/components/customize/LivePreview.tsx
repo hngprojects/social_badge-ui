@@ -44,7 +44,6 @@ export function LivePreview({
 					/>
 				</div>
 			</div>
-
 			{!hideExtras && (
 				<div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-4 space-y-2">
 					<p className="text-sm font-semibold text-gray-900 leading-tight">

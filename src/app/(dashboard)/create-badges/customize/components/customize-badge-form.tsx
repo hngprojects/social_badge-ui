@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { toast } from "sonner";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -30,7 +31,8 @@ export function CustomizeBadgeForm({
 }: CustomizeBadgeFormProps) {
   const { editor, patch, setPalette, setBgMode, layoutCaps } =
     useCustomizeEditorState(initialEditor);
-  const { saveTemplateAsync, isSaving } = useSaveOrganiserTemplate();
+  const { saveTemplateAsync } = useSaveOrganiserTemplate();
+  const [savingAction, setSavingAction] = useState<"draft" | "publish" | null>(null);
 
   const {
     register,
@@ -71,6 +73,7 @@ export function CustomizeBadgeForm({
   };
 
   const onFormSubmit = async (data: CustomizeBadgeFormValues, shouldPublish = true) => {
+    setSavingAction(shouldPublish ? "publish" : "draft");
     // Make logo compulsory if required by layout
     if (layoutCaps.hasHeaderLogo && !editor.logoPreviewUrl && !editor.pendingLogoFile) {
       toast.error("Please upload a logo for this badge layout.");
@@ -92,6 +95,8 @@ export function CustomizeBadgeForm({
       });
     } catch {
       /* toast handled in hook */
+    } finally {
+      setSavingAction(null);
     }
   };
 
@@ -163,32 +168,36 @@ export function CustomizeBadgeForm({
           />
         </form>
 
-        <div className="flex flex-col sm:flex-row gap-3 pb-8 w-full">
+        <div className="flex flex-row gap-3 pb-8 w-full justify-end">
           {!isPublished && (
-            <div className="flex-1 flex flex-col gap-1">
-              <Button
-                type="button"
-                onClick={handleSubmit((data) => onFormSubmit(data, false), handleError)}
-                disabled={isSaving}
-                variant="outline"
-                className="w-full rounded-xl font-semibold text-sm py-3"
-              >
-                {isSaving ? "Saving…" : "Save as Draft"}
-              </Button>
-            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="default"
+              onClick={handleSubmit((data) => onFormSubmit(data, false), handleError)}
+              disabled={savingAction !== null}
+              className="rounded-full border-[#EEEEEE] text-[#3A3A3A]"
+            >
+              {savingAction === "draft" ? "Saving…" : "Save as draft"}
+            </Button>
           )}
-          
+
           <Button
-            form="badge-form"
             type="button"
-            onClick={handleSubmit((data) => onFormSubmit(data, !isPublished), handleError)}
-            disabled={isSaving}
             variant="cta"
-            className="flex-1 rounded-xl font-semibold text-sm py-3"
+            size="default"
+            onClick={handleSubmit((data) => onFormSubmit(data, !isPublished), handleError)}
+            disabled={savingAction !== null}
+            className="shadow-none border-0"
           >
-            {isSaving 
-              ? (isPublished ? "Saving Changes…" : "Publishing…") 
-              : (isPublished ? "Save Changes" : "Publish")}
+            {savingAction === "publish"
+              ? (isPublished ? "Saving Changes…" : "Publishing…")
+              : (isPublished ? "Save Changes" : "Publish badge")}
+            {savingAction !== "publish" && (
+              <svg className="size-3" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.875 0C1.52982 0 1.25 0.279822 1.25 0.625C1.25 0.970178 1.52982 1.25 1.875 1.25H4.11612L0.183058 5.18306C-0.0610194 5.42714 -0.0610194 5.82287 0.183058 6.06694C0.427136 6.31102 0.822864 6.31102 1.06694 6.06694L5 2.13388V4.375C5 4.72018 5.27982 5 5.625 5C5.97018 5 6.25 4.72018 6.25 4.375V0.625C6.25 0.279822 5.97018 0 5.625 0H1.875Z" fill="white"/>
+              </svg>
+            )}
           </Button>
         </div>
       </section>

@@ -10,35 +10,29 @@ import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import { SharePlatform } from "../types";
-import { shareService } from "../services/share";
-import { useIncrementBadgeShare } from "../hooks/useIncrementBadgeShare";
-import { useSearchParams } from "next/navigation";
 
 interface BadgeReadyProps {
 	onDownload?: () => Promise<void>;
 	defaultCaption?: string;
+	shareUrl?: string;
 }
 
 export default function BadgeReady({
 	onDownload,
 	defaultCaption,
+	shareUrl,
 }: BadgeReadyProps) {
 	const [captionText, setCaptionText] = useState(
 		defaultCaption || DEFAULT_CAPTION,
 	);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isDownloading, setIsDownloading] = useState(false);
-	const { incrementShare } = useIncrementBadgeShare();
-	const slug = useSearchParams().get("slug");
 
 	const handleDownload = async () => {
 		if (!onDownload) return;
 		setIsDownloading(true);
 		try {
 			await onDownload();
-			if (slug) {
-				incrementShare(slug);
-			}
 			setIsPopupOpen(true);
 		} catch {
 			toast.error("Failed to download badge. Please try again.");
@@ -47,8 +41,33 @@ export default function BadgeReady({
 		}
 	};
 
-	const handleSocialShare = (platform: SharePlatform) => {
-		shareService.share(platform, captionText);
+	const handleSocialShare = async (platformId: SharePlatform) => {
+		const url = shareUrl || window.location.href;
+
+		if (navigator.share) {
+			try {
+				await navigator.share({ text: captionText, url });
+				return;
+			} catch {
+				// user cancelled or API unavailable — fall through to platform URLs
+			}
+		}
+
+		const encodedCaption = encodeURIComponent(captionText);
+		const encodedUrl = encodeURIComponent(url);
+
+		const shareUrls: Record<string, string> = {
+			whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
+			facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
+			x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
+			linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+			telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
+		};
+
+		const target = shareUrls[platformId];
+		if (target) {
+			window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
+		}
 	};
 
 	return (

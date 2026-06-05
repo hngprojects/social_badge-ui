@@ -114,7 +114,7 @@ export default function FAQ() {
                 </div>
               </AccordionTrigger>
 
-              <AccordionContent className="bg-transparent font-sans text-sm md:text-[16px] leading-relaxed text-[#3A3A3A] max-w-3xl h-auto overflow-visible data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+              <AccordionContent className="font-sans text-sm md:text-[16px] leading-relaxed text-[#3A3A3A] max-w-3xl h-auto overflow-visible data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>
