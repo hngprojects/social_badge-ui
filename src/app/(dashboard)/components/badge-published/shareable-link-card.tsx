@@ -32,18 +32,17 @@ export default function ShareableLinkCard({
 	};
 
 	return (
-		<div className="bg-[#1a1a1a] relative overflow-hidden rounded-2xl p-6 md:pt-[38px] md:pb-7 md:px-8 mb-9 md:h-[163px] flex justify-between flex-col md:flex-row">
-
+		<div className="bg-[#1a1a1a] relative overflow-hidden rounded-2xl p-4 sm:p-6 md:pt-[38px] md:pb-7 md:px-8 mb-9 md:h-[163px] flex justify-between flex-col md:flex-row max-w-full min-w-0">
 			<div className="absolute inset-0 pointer-events-none">
-								<div className="absolute top-0 right-0 hidden md:block">
+				<div className="absolute top-0 right-0 hidden md:block">
 					<GradientBgLg />
 				</div>
 				<div className="absolute top-0 right-0 md:hidden">
 					<GradientBgSm />
 				</div>
+			</div>
 
-
-			</div>			<div>
+			<div className="relative min-w-0">
 				<div className="inline-flex h-5 items-center gap-1.5 bg-[#2a2a2a] border border-[#333] rounded-full px-2.5 py-2 mb-3">
 					<span className="relative w-[5px] h-[5px] flex-shrink-0" aria-hidden="true">
 						<span className="absolute inset-0 rounded-full bg-[#4ADE80] opacity-40 scale-[2.2]" />
@@ -55,7 +54,7 @@ export default function ShareableLinkCard({
 				</div>
 
 				{/* URL */}
-				<p className="font-mono text-2xl font-semibold mb-1.5 tracking-tight">
+				<p className="font-mono text-lg sm:text-2xl font-semibold mb-1.5 tracking-tight break-all max-w-full">
 					<span className="text-white/70">{url.substring(0, url.lastIndexOf('/') + 1)}</span>
 					<span className="text-white">{url.substring(url.lastIndexOf('/') + 1)}</span>
 				</p>
@@ -68,7 +67,7 @@ export default function ShareableLinkCard({
 			</div>
 
 			{/* Actions */}
-			<div className="flex flex-col gap-2.5 md:w-[130px] md:items-center md:justify-center">
+			<div className="relative flex flex-col gap-2.5 md:w-[130px] md:shrink-0 md:items-center md:justify-center">
 				<button
 					onClick={handleCopy}
 					className="w-full flex justify-center md:inline-flex items-center gap-2 h-10 bg-[#e8511a] hover:bg-[#d44816] text-white rounded-full text-sm font-semibold transition-colors cursor-pointer"
@@ -93,4 +92,3 @@ export default function ShareableLinkCard({
 		</div>
 	);
 }
-

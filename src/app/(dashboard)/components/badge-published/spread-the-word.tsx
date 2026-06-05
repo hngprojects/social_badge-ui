@@ -57,7 +57,7 @@ export default function SpreadTheWord({ url, badgeName }: SpreadTheWordProps) {
 				The quickest ways to get your link in front of attendees.
 			</p>
 
-			<div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 				<OneTapShare url={url} badgeName={badgeName} />
 				<QRCodeCard url={url} badgeName={badgeName} />
 			</div>
@@ -81,7 +81,7 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 	};
 
 	return (
-		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6 flex flex-col justify-between">
+		<div className="flex min-w-0 flex-col justify-between rounded-[16px] border border-[#ECE9E4] bg-white p-4 sm:p-6">
 			<div>
 				<div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-3.5">
 					<Share />
@@ -100,7 +100,7 @@ function OneTapShare({ url, badgeName }: OneTapShareProps) {
 						key={platform.id}
 						variant="social"
 						onClick={() => handleShare(platform)}
-						className="w-14 h-14 md:w-18.5 md:h-18.5 rounded-lg"
+						className="h-14 w-14 rounded-lg min-[430px]:h-16 min-[430px]:w-16 md:h-18.5 md:w-18.5"
 						aria-label={`Share on ${platform.label}`}
 						title={platform.label}
 					>
@@ -149,7 +149,7 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 	};
 
 	return (
-		<div className="bg-white border border-[#ECE9E4] rounded-[16px] p-6 flex flex-col justify-between">
+		<div className="flex min-w-0 flex-col justify-between rounded-[16px] border border-[#ECE9E4] bg-white p-4 sm:p-6">
 			<div>
 				<div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center text-[#e8511a] mb-3.5">
 					<Qr />
@@ -161,7 +161,7 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 					Perfect for venue signage, slides, lanyards, name tags.
 				</p>
 
-				<div className="flex gap-3.75 items-center mb-6">
+				<div className="mb-6 flex flex-col gap-3.75 min-[430px]:flex-row min-[430px]:items-center">
 					<Image
 						src={qrUrl}
 						alt={`QR code for ${badgeName}`}
@@ -171,7 +171,7 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 						className="rounded-md border border-gray-200 flex-shrink-0"
 					/>
 
-					<div>
+					<div className="min-w-0">
 						<div className="flex gap-1.5 mb-1.5">
 							<span className="text-[0.7rem] font-semibold text-gray-400 tracking-wide">
 								Download QR code as PNG

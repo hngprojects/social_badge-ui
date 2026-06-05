@@ -5,11 +5,14 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import CaptionBox from "./caption-box";
 import { DEFAULT_CAPTION, SOCIAL_PLATFORMS } from "../constants";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import { SharePlatform } from "../types";
+import { useSearchParams } from "next/navigation";
+import { useIncrementBadgeShare } from "../hooks/useIncrementBadgeShare";
+import { useIncrementBadgeCreation } from "../hooks/useIncrementBadgeCreation";
 
 interface BadgeReadyProps {
 	onDownload?: () => Promise<void>;
@@ -22,17 +25,34 @@ export default function BadgeReady({
 	defaultCaption,
 	shareUrl,
 }: BadgeReadyProps) {
+	const searchParams = useSearchParams();
+	const slug = searchParams.get("slug");
+	const { incrementShare } = useIncrementBadgeShare();
+	const { incrementCreation } = useIncrementBadgeCreation();
+
 	const [captionText, setCaptionText] = useState(
 		defaultCaption || DEFAULT_CAPTION,
 	);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isDownloading, setIsDownloading] = useState(false);
+	const hasIncremented = useRef(false);
+	const incrementedSlugs = useRef(new Set<string>());
+
+	useEffect(() => {
+		if (slug && !incrementedSlugs.current.has(slug)) {
+			incrementCreation(slug);
+			incrementedSlugs.current.add(slug);
+		}
+	}, [slug, incrementCreation]);
 
 	const handleDownload = async () => {
 		if (!onDownload) return;
 		setIsDownloading(true);
 		try {
 			await onDownload();
+			if (slug) {
+				incrementShare(slug);
+			}
 			setIsPopupOpen(true);
 		} catch {
 			toast.error("Failed to download badge. Please try again.");
@@ -60,8 +80,7 @@ export default function BadgeReady({
 			whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
 			facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
 			x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
-			linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-			telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
+telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
 		};
 
 		const target = shareUrls[platformId];

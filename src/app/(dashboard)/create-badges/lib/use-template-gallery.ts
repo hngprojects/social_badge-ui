@@ -5,6 +5,19 @@ import { usePlatformTemplates } from "@/app/features/templates/hooks/usePlatform
 import { EXTENDED_MOCK_DB, FILTER_TABS } from "../../constants/dashboard";
 import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 
+function normalizeTemplateCategory(category: string) {
+  const normalized = category.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+
+  if (normalized === "conferences") return "conference";
+  if (normalized === "summits") return "summit";
+  if (normalized === "hackathons") return "hackathon";
+  if (normalized === "vip invite" || normalized === "vip invites") {
+    return "vip";
+  }
+
+  return normalized;
+}
+
 export function useTemplateGallery() {
   const {
     data: apiTemplates,
@@ -26,8 +39,10 @@ export function useTemplateGallery() {
 
   const filteredTemplates = useMemo(() => {
     if (activeFilter === "All layouts") return templates;
+    const activeCategory = normalizeTemplateCategory(activeFilter);
+
     return templates.filter(
-      (tpl) => tpl.category.toLowerCase() === activeFilter.toLowerCase(),
+      (tpl) => normalizeTemplateCategory(tpl.category) === activeCategory,
     );
   }, [activeFilter, templates]);
 

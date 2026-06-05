@@ -39,7 +39,7 @@ const Templates = () => {
                   alt={template.title}
                   fill
                   sizes="80vw"
-                  className={`object-contain ${template.hasShadow ? 'p-0 pt-2' : 'p-4'}`}
+                  className={`object-contain ${template.hasShadow ? 'py-4' : 'p-4'}`}
                 />
               </div>
 
@@ -94,7 +94,7 @@ const Templates = () => {
                   alt={template.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className={`object-contain ${template.hasShadow ? 'p-0 pt-2' : 'p-4'}`}
+                  className={`object-contain ${template.hasShadow ? 'py-4' : 'p-4'}`}
                 />
               </div>
 
