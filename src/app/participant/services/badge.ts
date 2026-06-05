@@ -1,12 +1,18 @@
 import { apiClient } from "@/lib/api/client";
 
-export const incrementBadgeShare = async (slug: string) => {
+const incrementBadge = async (slug: string, type: "share" | "creation") => {
 	const safeSlug = encodeURIComponent(slug.trim());
 	if (!safeSlug) throw new Error("Missing badge slug");
 	return apiClient<{ status: string; message: string; data: null }>(
-		`/badges/public/${safeSlug}/increment-share`,
-		{
-			method: "POST",
-		},
+		`/badges/public/${safeSlug}/increment-${type}`,
+		{ method: "POST" },
 	);
+};
+
+export const incrementBadgeShare = async (slug: string) => {
+	return incrementBadge(slug, "share");
+};
+
+export const incrementBadgeCreation = async (slug: string) => {
+	return incrementBadge(slug, "creation");
 };
