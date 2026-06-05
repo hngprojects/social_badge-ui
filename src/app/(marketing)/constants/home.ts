@@ -74,38 +74,39 @@ export const FEATURES = [
 export const faqData = [
   {
     id: 'item-1',
-    question: 'Do participants need to sign up?',
+    question: 'How long does it take to set up a badge?',
     answer:
-      'No. Only the event organizers are required to sign up. Participants can click the badge link, add their name and photo, and get their badge without signing up at all',
+      'For a new template built from a starter, most organisers are live in under 10 minutes. Starting from scratch, give yourself 20–30 minutes if you\'re particular about typography and layout. Participants generate their personalised badge in well under a minute.',
   },
   {
     id: 'item-2',
-    question: 'Is it free?',
+    question: 'Can I gate access by email?',
     answer:
-      'Yes, Flare Tag is completely free to use. Organisers can create and publish badge templates, and participants can generate and share their badges all at no cost.',
+      'Yes. On Pro and Team plans, you can restrict badge generation to a specific list of verified email addresses — so only your actual attendees or cohort members can access the link. Free plan links are open by default.',
   },
   {
     id: 'item-3',
-    question: 'Can I customize the badge?',
+    question: 'What about content moderation?',
     answer:
-      'Yes. Organisers can upload their logo, set their event name, choose a colour style, and write the caption that participants share.',
+      'Participant names and photos are submitted directly through your badge link. FlareTag does not host or expose participant content publicly. Badges are generated on-demand and downloaded directly — they are never stored in a public gallery. If you have specific moderation concerns for a large event, the Team plan includes controls worth discussing with us directly.',
   },
   {
     id: 'item-4',
-    question: 'Where can people share it?',
+    question: 'Can I use my own fonts and colours?',
     answer:
-      'Anywhere. Badges can be shared directly to LinkedIn, Instagram, and Twitter/X, or downloaded and posted wherever you like (WhatsApp, email, Telegram).',
+      'Yes. Pro and Team plans give you full colour customisation and the ability to upload brand assets including logos. Font options come from a curated set of professional typefaces — custom font upload is on the roadmap.',
   },
   {
     id: 'item-5',
     question: 'Will it embed on my event page?',
-    answer: 'Yes. Our embed code integrates seamlessly with any event page or website platform.',
+    answer:
+      'Direct embed is on the roadmap. For now, your badge link works as a standalone page — most organisers drop it in their confirmation email, event WhatsApp group, or registration follow-up. That\'s where participation rates are highest anyway.',
   },
   {
     id: 'item-6',
-    question: 'Do I need design skills?',
+    question: 'What happens if I downgrade?',
     answer:
-      'Absolutely not. Flare Tag is created with non-designers in mind and built around pre-designed templates. Pick one, fill in your details and it is ready to share!',
+      'Your published templates remain accessible. If your active campaigns exceed the limit of your new plan, you\'ll be asked to archive down to the allowed number before your next billing cycle. No content is deleted automatically — you always choose what stays.',
   },
 ];
 

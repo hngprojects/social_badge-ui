@@ -28,12 +28,12 @@ export function LivePreview({ editor, shareCaption, participantPhotoUrl, badgeRe
       <div className={hideExtras ? "" : "rounded-2xl bg-orange-50 p-5"}>
         <div
           className={`mx-auto ${badgeClassName ?? "w-full max-w-79.5 h-106"}`}
-          ref={badgeRef}
         >
-          <CustomTemplatePreview 
-            templateId={editor.layoutId} 
-            editor={editor} 
+          <CustomTemplatePreview
+            templateId={editor.layoutId}
+            editor={editor}
             participantPhotoUrl={participantPhotoUrl}
+            badgeRef={badgeRef}
           />
         </div>
       </div>
