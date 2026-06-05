@@ -4,10 +4,14 @@ import ProfileCard from "./tab-profile";
 import TabSecurity from "./tab-security";
 import TabAccount from "./tab-account";
 import TabNotifications from "./tab-notifications";
+import { useSearchParams } from "next/navigation";
 
 export default function SettingTabs() {
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab") ?? "profile";
+
   return (
-    <Tabs defaultValue="profile" className="w-full flex flex-col gap-4.5">
+    <Tabs defaultValue={tab} className="w-full flex flex-col gap-4.5">
       <div className="w-full border rounded-[12px] bg-white">
         <TabsList className="flex gap-1.5 bg-transparent  p-1.5">
           <TabsTrigger

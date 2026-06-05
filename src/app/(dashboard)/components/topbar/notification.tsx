@@ -6,10 +6,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export function NotificationDropDown() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <DropdownMenu modal={false}>
+    <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <button
           type="button"
@@ -68,7 +71,11 @@ export function NotificationDropDown() {
 
         <DropdownMenuSeparator />
 
-        <Link href="/settings" className="py-[22px] grid place-content-center">
+        <Link
+          href="/settings?tab=notifications"
+          onClick={() => setOpen(false)}
+          className="py-[22px] grid place-content-center"
+        >
           <p className="text-primary text-[12px] sm:text-[14px] leading-[12px] sm:leading-[14px] font-medium">
             Notification Settings
           </p>
