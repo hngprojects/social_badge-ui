@@ -30,11 +30,18 @@ export function NotificationDropDown() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-[360px]">
-        <div className="flex justify-between align-center py-[18px] px-[16px]">
+        <div className="flex justify-between items-center py-[18px] px-[16px]">
           <p className="font-semibold text-[16px] text-[#3A3A3A]">
             Notifications
           </p>
-          <button className="text-[#BDBDBD] text-[14px]">
+          <button
+            type="button"
+            onClick={() => {
+              // TODO: Implement mark all as read logic
+              console.log("Mark all as read clicked");
+            }}
+            className="text-[#BDBDBD] text-[14px]"
+          >
             Mark all as read
           </button>
         </div>
