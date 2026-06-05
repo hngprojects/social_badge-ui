@@ -27,7 +27,8 @@ export default function Dashboard() {
 	const totalDrafts = badgeAnalytics?.total_draft_badges ?? 0;
 	const totalShares = badgeAnalytics?.total_shares ?? 0;
 
-	const hasPublishedBadges = dashboardActiveBadges > 0;
+	const hasPublishedBadges =
+		dashboardActiveBadges > 0 || dashboardTotalBadges > 0;
 
 	return (
 		<section className="flex flex-col gap-6 pt-[32px]">
