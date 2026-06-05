@@ -24,7 +24,7 @@ export function CreateBadgeBar({ config }: { config: TopBarConfigItem }) {
           />
           <span>Back</span>
         </button>
-        <div className="text-sm leading-5.25">
+        <div className="text-sm leading-[21px]">
           <span className="font-semibold text-[#3A3A3A]">{config.title}</span> ·{" "}
           <span className="text-[#AFAFAF]">
             Step {config.step} of {config.stepCount}
