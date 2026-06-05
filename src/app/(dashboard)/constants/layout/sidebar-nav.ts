@@ -20,7 +20,7 @@ export const navigationLinks: NavigationLink[] = [
     href: "/settings",
   },
   {
-    label: "Help",
+    label: "Support",
     icon: "/assets/dashboard/icons/support.svg",
     activeIcon: "/assets/dashboard/icons/support.svg",
     href: "/support",
