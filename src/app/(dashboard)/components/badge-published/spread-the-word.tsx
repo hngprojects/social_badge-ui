@@ -43,7 +43,7 @@ const SOCIAL_PLATFORMS: SocialPlatform[] = [
 	},
 ];
 
-const QR_FORMATS = ["PNG", "SVG", "PDF"] as const;
+//const QR_FORMATS = ["PNG", "SVG", "PDF"] as const;
 
 interface SpreadTheWordProps {
 	url: string;
