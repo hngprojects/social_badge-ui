@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { TopBarConfigItem } from "../../types/dashboard/topbar";
-import { TopBarSearch } from "./DashboardBar";
+import { TopBarSearch } from "./topbar-search";
 
 export function CreateBadgeBar({ config }: { config: TopBarConfigItem }) {
   const router = useRouter();
@@ -25,8 +25,7 @@ export function CreateBadgeBar({ config }: { config: TopBarConfigItem }) {
           <span>Back</span>
         </button>
         <div className="text-sm leading-[21px]">
-          <span className="font-semibold text-[#3A3A3A]">{config.title}</span>{" "}
-          ·{" "}
+          <span className="font-semibold text-[#3A3A3A]">{config.title}</span> ·{" "}
           <span className="text-[#AFAFAF]">
             Step {config.step} of {config.stepCount}
           </span>
