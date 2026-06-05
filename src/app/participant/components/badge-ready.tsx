@@ -26,7 +26,6 @@ export default function BadgeReady({
 }: BadgeReadyProps) {
 	const searchParams = useSearchParams();
 	const slug = searchParams.get("slug");
-	console.log(slug);
 	const { incrementShare } = useIncrementBadgeShare();
 
 	const [captionText, setCaptionText] = useState(
