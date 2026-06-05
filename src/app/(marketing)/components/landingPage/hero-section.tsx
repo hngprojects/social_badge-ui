@@ -7,9 +7,9 @@ import Link from "next/link";
 import Image from "next/image";
 
 const heroImages = [
-  "/assets/landing-page/heroGroup1.png",
-  "/assets/landing-page/heroGroup2.svg",
-  "/assets/landing-page/heroGroup3.png",
+  "/assets/landing-page/new/heroimg1.svg",
+  "/assets/landing-page/new/heroimg2.svg",
+  "/assets/landing-page/new/heroimg3.svg",
 ];
 
 // Text column children slide in from the right one after another
@@ -38,9 +38,18 @@ const itemVariants = {
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const mq = window.matchMedia("(min-width: 1140px)");
+    setIsDesktop(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1140px)");
     if (!mediaQuery.matches || isPaused) return;
 
     const interval = setInterval(() => {
@@ -59,8 +68,8 @@ export default function Hero() {
   };
 
   return (
-    <section className="bg-[#F9F9F9]">
-      <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:flex md:gap-8 lg:gap-12">
+    <section className="bg-[#F9F9F9] overflow-hidden">
+      <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative min-[1140px]:flex min-[1140px]:gap-8 lg:gap-12">
         {/* BG FLOAT LOGO */}
         <Image
           src="/assets/landing-page/logo-float-low-bg.svg"
@@ -85,7 +94,7 @@ export default function Hero() {
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="flex flex-1 flex-col items-center py-7.5 md:py-16 lg:py-35 lg:max-w-150 md:items-start"
+          className="flex flex-1 flex-col items-center py-7.5 md:py-16 lg:py-35 lg:max-w-150 min-[1140px]:items-start"
         >
           {/* Eyebrow badge */}
           <motion.div
@@ -101,7 +110,7 @@ export default function Hero() {
           {/* Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-[clamp(2rem,5vw,4.6875rem)] font-semibold text-center md:text-left leading-tight md:leading-[1.15] lg:leading-[1.1] text-pretty tracking-[-0.02em] lg:mt-3"
+            className="text-[clamp(2rem,5vw,4.6875rem)] font-semibold text-center min-[1140px]:text-left leading-tight min-[1140px]:leading-[1.15] lg:leading-[1.1] text-pretty tracking-[-0.02em] lg:mt-3"
           >
             Turn attendees into your{" "}
             <span className="whitespace-nowrap">
@@ -115,21 +124,21 @@ export default function Hero() {
           {/* Sub-copy */}
           <motion.div
             variants={itemVariants}
-            className="text-muted-foreground text-[15px] text-center mt-4 mb-8 md:text-left"
+            className="text-muted-foreground text-[15px] text-center mt-4 mb-8 min-[1140px]:text-left"
           >
             <p>
-              Give every participant a badge with their name on it. Watch your participants 
+              Give every participant a badge with their name on it. Watch your participants
             </p>
-            <p>share it everywhere. Watch your programme grow itself. No chasing required. </p>
+            <p>share it everywhere. Watch your programme grow itself. No chasing required. </p>
           </motion.div>
 
           {/* CTA buttons */}
           <motion.div
             variants={itemVariants}
-            className="w-full flex-col flex items-center md:flex-row gap-3.5"
+            className="w-full flex-col flex items-center min-[1140px]:flex-row gap-3.5"
           >
             <Button
-              className="w-3xs font-light py-4! md:w-fit lg:py-6!"
+              className="w-3xs font-light py-4! min-[1140px]:w-fit lg:py-6!"
               asChild
             >
               <Link href="/signup">
@@ -157,7 +166,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* LANDING IMAGE — slides in from the left */}
+        {/* Right column — mobile image + desktop spacer for flex height */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
@@ -167,49 +176,105 @@ export default function Hero() {
             delay: 0.5,
           }}
           className="grid flex-1 place-items-center"
+          onMouseEnter={isDesktop ? () => setIsPaused(true) : undefined}
+          onMouseLeave={isDesktop ? () => setIsPaused(false) : undefined}
+          onKeyDown={isDesktop ? handleKeyDown : undefined}
+          tabIndex={isDesktop ? 0 : undefined}
+          role={isDesktop ? "region" : undefined}
+          aria-label={isDesktop ? "Badge preview carousel" : undefined}
         >
-          <div className="w-80 pb-9 md:py-0 sm:w-92.5 h-auto -my-5.5 md:my:0 lg:w-full lg:flex-1">
+          {isDesktop && (
+            <span aria-live="polite" aria-atomic="true" className="sr-only">
+              Image {currentIndex + 1} of {heroImages.length}
+            </span>
+          )}
+
+          {/* Mobile only */}
+          <div className="w-80 pb-9 sm:w-92.5 h-auto -my-5.5 min-[1140px]:hidden">
             <Image
               src="/assets/landing-page/heroSingle.png"
               width={320}
               height={400}
               loading="eager"
-              className="-ml-1 md:hidden"
+              className="-ml-1"
               alt="badge preview"
-            />{" "}
-            <div
-              className="relative hidden md:block w-full aspect-6/5"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-              onKeyDown={handleKeyDown}
-              tabIndex={0}
-              role="region"
-              aria-label="Badge preview carousel"
-            >
-              <span aria-live="polite" aria-atomic="true" className="sr-only">
-                Image {currentIndex + 1} of {heroImages.length}
-              </span>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8, ease: "easeInOut" }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={heroImages[currentIndex]}
-                    fill
-                    loading="eager"
-                    className="object-contain"
-                    alt="badge preview"
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </div>
+            />
           </div>
         </motion.div>
+
+        {/* Desktop cycling images — each absolutely positioned */}
+        <AnimatePresence mode="wait">
+          {currentIndex === 0 && (
+            <motion.div
+              key="img1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute hidden min-[1140px]:block"
+              style={{ top: 70, left: '48.75%', width: '32.6%' }}
+            >
+              <Image
+                src="/assets/landing-page/new/heroimg1.svg"
+                width={469.5}
+                height={580}
+                loading="eager"
+                alt="badge preview"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </motion.div>
+          )}
+          {currentIndex === 1 && (
+            <motion.div
+              key="img2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute hidden min-[1140px]:block"
+              style={{ top: 208, left: '55%', width: '23.82%' }}
+            >
+              <Image
+                src="/assets/landing-page/new/heroimg2.svg"
+                width={343}
+                height={388}
+                loading="eager"
+                alt="badge preview"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </motion.div>
+          )}
+          {currentIndex === 2 && (
+            <motion.div
+              key="img3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute hidden min-[1140px]:block"
+              style={{ top: 174, left: '50.83%', width: '36.94%' }}
+            >
+              <Image
+                src="/assets/landing-page/new/heroimg3.svg"
+                width={532}
+                height={433}
+                loading="eager"
+                alt="badge preview"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Steps — always visible, absolutely positioned */}
+        <Image
+          src="/assets/landing-page/new/steps.svg"
+          width={280}
+          height={282.5}
+          alt="How it works"
+          className="absolute hidden min-[1140px]:block z-10"
+          style={{ top: 161, left: '76.875%', width: '19.44%', height: 'auto' }}
+        />
       </div>
     </section>
   );

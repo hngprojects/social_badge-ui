@@ -20,11 +20,6 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
 		icon: "/assets/participant/twitter.svg",
 	},
 	{
-		id: "linkedin",
-		name: "LinkedIn",
-		icon: "/assets/participant/linkedin.svg",
-	},
-	{
 		id: "telegram",
 		name: "Telegram",
 		icon: "/assets/participant/telegram.svg",

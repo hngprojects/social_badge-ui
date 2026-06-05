@@ -80,8 +80,7 @@ export default function BadgeReady({
 			whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
 			facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
 			x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
-			linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-			telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
+telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
 		};
 
 		const target = shareUrls[platformId];

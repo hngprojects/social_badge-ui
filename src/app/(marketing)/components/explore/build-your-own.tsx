@@ -32,7 +32,7 @@ const BuildYourOwn = () => {
 				<Button
 					type="button"
 					onClick={() => router.push("/signup")}
-					className="mt-2 flex items-center cursor-pointer gap-2 bg-primary text-white text-[16px] font-medium px-6 py-3 rounded-full hover:bg-primary/90 transition-colors"
+					className="mt-2 flex items-center cursor-pointer gap-2 bg-primary text-white text-[16px] font-medium p-6 rounded-full hover:bg-primary/90 transition-colors"
 				>
 					Start Building For Free
 					<span className="flex items-center justify-center w-5 h-5 bg-white/50 rounded-full">

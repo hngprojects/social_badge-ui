@@ -22,7 +22,7 @@ const TemplateCard = ({ template, index }: TemplateCardProps) => {
 					alt={template.title}
 					fill
 					sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
-					className={`object-contain ${template.hasShadow ? "p-0 pt-2" : "p-4"}`}
+					className={`object-contain ${template.hasShadow ? "py-4" : "p-4"}`}
 				/>
 			</div>
 
