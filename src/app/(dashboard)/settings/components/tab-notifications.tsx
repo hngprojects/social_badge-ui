@@ -60,43 +60,6 @@ export default function TabNotifications() {
         />
       </CardContent>
 
-      <CardContent>
-        <h3 className="uppercase text-[12px] font-bold">From Flare Tag</h3>
-
-        <SettingsSubCard
-          id="product-updates"
-          bg="#FFEDDC"
-          src="/assets/dashboard/settings/bolt.svg"
-          alt="bolt icon"
-          head="Product updates"
-          detail="New features and product changes that affect you"
-          showIcon={true}
-          showSwitch={true}
-        />
-
-        <SettingsSubCard
-          id="tips-and-best-practices"
-          bg="#F4F0FF"
-          src="/assets/dashboard/settings/_ui-lightbulb.svg"
-          alt="lightbulb icon"
-          head="Tips & best practices"
-          detail="Caption ideas, layout tips, and what high engagement events do differently"
-          showIcon={true}
-          showSwitch={true}
-        />
-
-        <SettingsSubCard
-          id="marketing-and-offers"
-          bg="#EEEEEE"
-          src="/assets/dashboard/settings/megaphone.svg"
-          alt="megaphone icon"
-          head="Marketing & offers"
-          detail="Occasional promotions, partner offers, and seasonal campaigns"
-          showIcon={true}
-          showSwitch={true}
-        />
-      </CardContent>
-
       {/* BUTTON */}
       <CardAction className="py-3.5 px-6 flex justify-end w-full border-t bg-[#FBFAF7]">
         <Button

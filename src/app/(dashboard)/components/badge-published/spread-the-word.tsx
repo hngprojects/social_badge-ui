@@ -42,9 +42,6 @@ const SOCIAL_PLATFORMS: SocialPlatform[] = [
 		Icon: SlackIcon,
 	},
 ];
-
-//const QR_FORMATS = ["PNG", "SVG", "PDF"] as const;
-
 interface SpreadTheWordProps {
 	url: string;
 	badgeName: string;
@@ -179,17 +176,6 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 							<span className="text-[0.7rem] font-semibold text-gray-400 tracking-wide">
 								Download QR code as PNG
 							</span>
-							{/* {QR_FORMATS.map((fmt, i) => (
-								<span
-									key={fmt}
-									className="text-[0.7rem] font-semibold text-gray-400 tracking-wide"
-								>
-									{fmt}
-									{i < QR_FORMATS.length - 1 && (
-										<span className="ml-1.5">·</span>
-									)}
-								</span>
-							))} */}
 						</div>
 						<p className="text-[0.78rem] text-gray-400 leading-snug">
 							High-res, print-ready. Includes a version with the {badgeName}{" "}
