@@ -20,9 +20,9 @@ export function NotificationDropDown() {
               alt="Notification icon"
             />
           </div>
-          <span className="absolute bg-primary px-[4px] py-[1px] text-[7.5px] text-white rounded-full border-[2px] border-white font-medium top-0 right-0">
+          {/* <span className="absolute bg-primary px-[4px] py-[1px] text-[7.5px] text-white rounded-full border-[2px] border-white font-medium top-0 right-0">
             10
-          </span>
+          </span> */}
         </button>
       </DropdownMenuTrigger>
 
