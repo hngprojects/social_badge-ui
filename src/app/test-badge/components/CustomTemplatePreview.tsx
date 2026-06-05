@@ -40,11 +40,11 @@ export function Layout1({
 			/>
 			<div className="w-30 h-26.5 left-[32.5px] bg-rose-600 absolute top-17 rounded-full flex justify-center items-center text-white text-[10px] text-center overflow-hidden">
 				{participantPhotoUrl ? (
-					<Image
+					// eslint-disable-next-line @next/next/no-img-element
+					<img
 						src={participantPhotoUrl}
 						alt="Participant"
-						fill
-						className="object-cover"
+						className="w-full h-full object-cover"
 					/>
 				) : (
 					<span className="px-2">
@@ -111,11 +111,11 @@ export function Layout9({
 				</div>
 				<div className="bg-zinc-300 absolute bottom-8 w-35 h-35 right-10 rotate-10 flex items-center justify-center text-black text-[10px] overflow-hidden">
 					{participantPhotoUrl ? (
-						<Image
+						// eslint-disable-next-line @next/next/no-img-element
+						<img
 							src={participantPhotoUrl}
 							alt="Participant"
-							fill
-							className="object-cover"
+							className="w-full h-full object-cover"
 						/>
 					) : editor.allowParticipantPhoto ? (
 						"PHOTO"
@@ -151,13 +151,13 @@ export function Layout4({
 					className="mt-12 mb-6  w-full"
 					logoPreviewUrl={editor.logoPreviewUrl}
 				/>
-				<div className="w-35 h-35 rounded-full bg-white mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden relative">
+				<div className="w-35 h-35 rounded-full bg-white mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden">
 					{participantPhotoUrl ? (
-						<Image
+						// eslint-disable-next-line @next/next/no-img-element
+						<img
 							src={participantPhotoUrl}
 							alt="Participant"
-							fill
-							className="object-cover"
+							className="w-full h-full object-cover"
 						/>
 					) : editor.allowParticipantPhoto ? (
 						"PHOTO"
@@ -266,13 +266,13 @@ export function Layout7({
 						{editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Product designer") : ""}
 					</p>
 				</div>
-				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden relative">
+				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden">
 					{participantPhotoUrl ? (
-						<Image
+						// eslint-disable-next-line @next/next/no-img-element
+						<img
 							src={participantPhotoUrl}
 							alt="Participant"
-							fill
-							className="object-cover"
+							className="w-full h-full object-cover"
 						/>
 					) : editor.allowParticipantPhoto ? (
 						"PHOTO"
@@ -324,12 +324,14 @@ interface CustomTemplatePreviewProps {
 	templateId: string;
 	editor: CustomizeEditorState;
 	participantPhotoUrl?: string | null;
+	badgeRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 export function CustomTemplatePreview({
 	templateId,
 	editor,
 	participantPhotoUrl,
+	badgeRef,
 }: CustomTemplatePreviewProps) {
 	const LayoutComponent = LAYOUT_COMPONENTS[templateId];
 
@@ -349,7 +351,7 @@ export function CustomTemplatePreview({
 	}
 
 	return (
-		<div className="w-full max-w-79.5 h-106 shadow-2xl mx-auto">
+		<div className="w-full max-w-79.5 h-106 shadow-2xl mx-auto" ref={badgeRef}>
 			<LayoutComponent
 				editor={editor}
 				participantPhotoUrl={participantPhotoUrl}
