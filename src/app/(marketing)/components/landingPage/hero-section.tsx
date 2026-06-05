@@ -1,9 +1,16 @@
 "use client";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
+
+const heroImages = [
+  "/assets/landing-page/heroGroup1.png",
+  "/assets/landing-page/heroGroup2.svg",
+  "/assets/landing-page/heroGroup3.png",
+];
 
 // Text column children slide in from the right one after another
 const containerVariants = {
@@ -29,6 +36,15 @@ const itemVariants = {
 };
 
 export default function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="bg-[#F9F9F9]">
       <div className="max-w-360 mx-auto px-4 md:px-10 lg:px-30 overflow-hidden relative md:flex md:gap-8 lg:gap-12">
@@ -86,13 +102,12 @@ export default function Hero() {
           {/* Sub-copy */}
           <motion.div
             variants={itemVariants}
-            className="text-muted-foreground text-[12px] text-center mt-4 mb-8 md:text-left"
+            className="text-muted-foreground text-[15px] text-center mt-4 mb-8 md:text-left"
           >
             <p>
-              Design a branded badge once. Watch your participants share it
-              everywhere.
+              Give every participant a badge with their name on it. Watch your participants 
             </p>
-            <p>Track every click back to your event page.</p>
+            <p>share it everywhere. Watch your programme grow itself. No chasing required. </p>
           </motion.div>
 
           {/* CTA buttons */}
@@ -149,15 +164,26 @@ export default function Hero() {
               className="-ml-1 md:hidden"
               alt="badge preview"
             />{" "}
-            <Image
-              src="/assets/landing-page/heroGroup1.png"
-              width={600}
-              height={500}
-              loading="eager"
-              style={{ width: "100%", height: "auto" }}
-              className="hidden md:block"
-              alt="badge preview"
-            />
+            <div className="relative hidden md:block w-full" style={{ aspectRatio: "6/5" }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={heroImages[currentIndex]}
+                    fill
+                    loading="eager"
+                    className="object-contain"
+                    alt="badge preview"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </motion.div>
       </div>
