@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export function NotificationDropDown() {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button className="h-[40px] w-[40px] bg-[#FBF9F6] border border-[#ECE9E4] rounded-full grid place-content-center relative">
           <div className="relative">
