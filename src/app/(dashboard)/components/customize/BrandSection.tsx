@@ -19,6 +19,7 @@ interface BrandSectionProps {
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	layoutCaps: LayoutCapabilities;
+	eventNameValue: string;
 }
 
 export function BrandSection({
@@ -26,6 +27,7 @@ export function BrandSection({
 	editor,
 	onChange,
 	layoutCaps,
+	eventNameValue,
 }: BrandSectionProps) {
 	const currentBlobUrl = useRef<string | null>(null);
 
@@ -102,9 +104,9 @@ export function BrandSection({
 			<div>
 				<FieldLabel label="Event Name" required />
 				<TextInput
-					placeholder="e.g. DESIGNWEEKLAGOS"
+					placeholder={editor.eventName || "e.g. DESIGNWEEKLAGOS"}
 					{...register("eventName")}
-					value={editor.eventName}
+					value={eventNameValue || ""}
 					maxLength={25}
 				/>
 				<HelperText>Appears as the main title on the badge.</HelperText>
@@ -124,7 +126,7 @@ export function BrandSection({
 						<TextInput
 							placeholder="e.g. 10am"
 							{...register("eventTime")}
-							value={editor.eventTime}
+							value={editor.eventTime || ""}
 							maxLength={15}
 						/>
 						<HelperText>Shown alongside the date on the badge.</HelperText>

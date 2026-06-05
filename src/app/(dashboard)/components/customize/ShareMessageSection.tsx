@@ -45,7 +45,7 @@ export function ShareMessageSection({ register, editor }: ShareMessageSectionPro
         <TextArea
           placeholder="e.g. I'm at #Summit26 this weekend — who's joining?"
           {...register("defaultCaption")}
-          value={editor.defaultCaption}
+          value={editor.defaultCaption || ""}
           maxLength={200}
         />
         <HelperText>Auto-shortened for X / Twitter. WhatsApp and LinkedIn use the full text.</HelperText>

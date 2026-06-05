@@ -44,7 +44,7 @@ export function CustomizeBadgeForm({
   } = useForm<CustomizeBadgeFormValues>({
     resolver: zodResolver(customizeBadgeSchema),
     defaultValues: {
-      eventName: editor.eventName,
+      eventName: "",
       title: editor.title,
       eventDate: editor.eventDate,
       eventTime: editor.eventTime,
@@ -140,6 +140,7 @@ export function CustomizeBadgeForm({
           <BrandSection
             register={register}
             editor={previewEditor}
+            eventNameValue={formValues.eventName || ""}
             onChange={(p) => {
               patch(p);
               if (p.eventDate !== undefined) setValue("eventDate", p.eventDate);
