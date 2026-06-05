@@ -20,7 +20,6 @@ const SOCIAL_LINKS = [
 
 const PRODUCT_LINKS = [
 	{ label: "Features", href: "/#feature-section" },
-	// { label: "Pricing", href: "/pricing" },
 	{ label: "Explore", href: "/explore" },
 ] as const;
 
