@@ -38,19 +38,19 @@ export default function SideNav() {
             className={`flex ${!expanded && "flex-col"} relative mt-3 mb-2 items-center justify-between gap-6 p-4 pt-[18px] pb-6 whitespace-nowrap text-[#231F20]`}
           >
             <div className="flex items-center gap-2">
-              <Link href="/dashboard">
+              <Link href="/dashboard" className="flex items-center gap-2">
                 <Image
                   alt="logo"
                   src="/assets/logo.svg"
                   width={22}
                   height={27}
                 />
+                {expanded && (
+                  <p className="text-[20px] font-medium leading-[100%]">
+                    FlareTag
+                  </p>
+                )}
               </Link>
-              {expanded && (
-                <p className="text-[20px] font-medium leading-[100%]">
-                  FlareTag
-                </p>
-              )}
             </div>
 
             <button
@@ -64,7 +64,7 @@ export default function SideNav() {
             >
               <Image
                 alt="sidebar toggle"
-                src="/assets/dashboard/icons/chevron-left.svg"
+                src="/assets/dashboard/icons/sidebar-collapse.svg"
                 width={16}
                 height={16}
                 className="z-99"
