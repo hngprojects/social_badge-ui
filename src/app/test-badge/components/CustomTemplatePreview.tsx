@@ -95,7 +95,7 @@ export function Layout9({
 					/>
 					<div
 						style={fontStyle}
-						className="text-xs font-bold uppercase tracking-widest"
+						className="text-xs font-bold uppercase tracking-widest text-right"
 					>
 						{editor.eventName || "Event Name"}
 					</div>

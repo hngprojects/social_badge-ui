@@ -7,7 +7,7 @@ export interface PaletteSwatch {
 export const EDITOR_PALETTES: PaletteSwatch[] = [
   { id: "bg_color_dark", from: "#1A1A1A", to: "#1A1A1A" },
   { id: "bg_color_pink", from: "#F5C6D0", to: "#F5C6D0" },
-  { id: "bg_mesh_purple_teal", from: "#6543A1", to: "#68C4B9" },
+  { id: "bg_mesh_purple_teal", from: "#6543A1", to: "#6543A1" },
   { id: "bg_mesh_01", from: "#FF007A", to: "#FFB800" },
   { id: "bg_mesh_02", from: "#7928CA", to: "#FF0080" },
   { id: "bg_mesh_03", from: "#0070F3", to: "#00DFD8" },
@@ -19,6 +19,7 @@ export const EDITOR_PALETTES: PaletteSwatch[] = [
   { id: "bg_grad_ocean", from: "#43C6AC", to: "#191654" },
   { id: "bg_grad_sky", from: "#0074D9", to: "#7FDBFF" },
   { id: "bg_grad_fire", from: "#F12711", to: "#F5AF19" },
+  { id: "bg_grad_midnight", from: "#232526", to: "#414345" },
   { id: "bg_color_amber", from: "#FFD466", to: "#FFD466" },
   { id: "bg_color_teal", from: "#7CD7C5", to: "#7CD7C5" },
   { id: "bg_color_purple", from: "#C8B2FF", to: "#C8B2FF" },
@@ -28,7 +29,6 @@ export const EDITOR_PALETTES: PaletteSwatch[] = [
   { id: "bg_color_orange", from: "#FF9100", to: "#FF9100" },
   { id: "bg_color_yellow", from: "#FFEA00", to: "#FFEA00" },
   { id: "bg_color_indigo", from: "#3D5AFE", to: "#3D5AFE" },
-  { id: "bg_color_light_grey", from: "#EAEAE6", to: "#EAEAE6" },
 ];
 
 export const BACKGROUND_IMAGE_BY_PALETTE: Record<string, string> = {

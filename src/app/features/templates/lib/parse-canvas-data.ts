@@ -251,7 +251,7 @@ export function createDefaultEditorState(
 		logo: null,
 		logoPreviewUrl: null,
 		pendingLogoFile: null,
-		bgMode: "gradient",
+		bgMode: "solid",
 		paletteId: palette,
 		gradientColors: [fromPalette.from, fromPalette.to],
 		gradientDirection: "135deg",
