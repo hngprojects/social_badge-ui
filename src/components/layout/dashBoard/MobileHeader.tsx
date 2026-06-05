@@ -22,6 +22,7 @@ import { useDashboardTopbarState } from "@/app/(dashboard)/hooks/use-dashboard-t
 import type { TopBarAction } from "@/app/(dashboard)/types/dashboard/topbar";
 import { TopBarSearch } from "@/app/(dashboard)/components/topbar/topbar-search";
 import { DashboardUserAvatar } from "./dashboard-user-avatar";
+import { NotificationDropDown } from "@/app/(dashboard)/components/topbar/notification";
 
 function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
   const [open, setOpen] = useState(false);
@@ -182,10 +183,7 @@ export default function MobileHeader() {
           </div>
 
           {isCreatePage ? (
-            <TopBarSearch
-              placeholder="search badge layouts..."
-              className="min-w-[150px] max-w-[340px] flex-1"
-            />
+            <NotificationDropDown />
           ) : (
             <MobileActionMenu actions={menuActions} />
           )}
@@ -211,114 +209,117 @@ export default function MobileHeader() {
             </span>
           </Link>
 
-          <TopBarSearch
-            placeholder="search badge layouts..."
-            className="min-w-0 flex-1"
-          />
+          <div className="flex">
+            {/* Mobile Hamburger */}
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className={cn(
+                    "min-[1084px]:hidden flex items-center justify-center w-10 h-10 rounded-lg",
+                    "text-foreground hover:bg-muted",
+                    "transition-colors duration-150",
+                  )}
+                  aria-label="Open menu"
+                >
+                  {mobileOpen ? (
+                    <X className="w-5 h-5" />
+                  ) : (
+                    <Menu className="w-5 h-5" strokeWidth={2.2} />
+                  )}
+                </button>
+              </SheetTrigger>
 
-          {/* Mobile Hamburger */}
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>
-              <button
-                className={cn(
-                  "min-[1084px]:hidden flex items-center justify-center w-10 h-10 rounded-lg",
-                  "text-foreground hover:bg-muted",
-                  "transition-colors duration-150",
-                )}
-                aria-label="Open menu"
+              <SheetContent
+                side="right"
+                className="w-70 sm:w-[320px] p-0 bg-background border-l border-border"
               >
-                {mobileOpen ? (
-                  <X className="w-5 h-5" />
-                ) : (
-                  <Menu className="w-5 h-5" strokeWidth={2.2} />
-                )}
-              </button>
-            </SheetTrigger>
+                <VisuallyHidden>
+                  <SheetTitle>Navigation menu</SheetTitle>
+                  <SheetDescription>
+                    Main navigation links for Flare Tag
+                  </SheetDescription>
+                </VisuallyHidden>
 
-            <SheetContent
-              side="right"
-              className="w-70 sm:w-[320px] p-0 bg-background border-l border-border"
-            >
-              <VisuallyHidden>
-                <SheetTitle>Navigation menu</SheetTitle>
-                <SheetDescription>
-                  Main navigation links for Flare Tag
-                </SheetDescription>
-              </VisuallyHidden>
-
-              <div className="flex item flex-col h-full">
-                {/* Mobile sheet header */}
-                <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
-                  <Image
-                    src="/assets/logo.svg"
-                    alt="Flare Tag logo"
-                    width={28}
-                    height={28}
-                    className="w-6.75 h-6.75"
-                  />
-                  <span className="text-[17px] font-semibold tracking-tight text-foreground">
-                    Flare Tag
-                  </span>
-                </div>
-
-                {/* Mobile nav links */}
-                <nav className="flex flex-col gap-1  flex-1">
-                  {/* Mobile nav links */}
-                  <nav className="flex flex-col gap-1 px-3 py-4 pt-0 flex-1">
-                    {navigation.map(({ label, href }) => {
-                      const isActive = pathname === href;
-
-                      const handleClick = () => {
-                        setMobileOpen(false);
-                      };
-
-                      return (
-                        <Link
-                          key={label}
-                          href={href}
-                          onClick={handleClick}
-                          className={cn(
-                            "px-4 py-3 text-[15px] font-medium rounded-xl",
-                            "transition-colors duration-150",
-                            isActive
-                              ? "text-primary bg-secondary"
-                              : "text-foreground hover:bg-muted",
-                          )}
-                        >
-                          {label}
-                        </Link>
-                      );
-                    })}
-                  </nav>
-
-                  <div className="mt-auto border-t border-border px-3 py-4">
-                    <div className="flex items-center gap-3 mb-3 px-1">
-                      <DashboardUserAvatar
-                        user={user}
-                        displayName={displayName}
-                        className="h-10 w-10 text-sm"
-                      />
-                      <p className="truncate text-sm font-medium text-foreground">
-                        {displayName}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        logout();
-                        setMobileOpen(false);
-                      }}
-                      disabled={isLoggingOut}
-                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-60"
-                    >
-                      <LogOut className="h-5 w-5" strokeWidth={1.75} />
-                      {isLoggingOut ? "Logging out…" : "Log out"}
-                    </button>
+                <div className="flex item flex-col h-full">
+                  {/* Mobile sheet header */}
+                  <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
+                    <Image
+                      src="/assets/logo.svg"
+                      alt="Flare Tag logo"
+                      width={28}
+                      height={28}
+                      className="w-6.75 h-6.75"
+                    />
+                    <span className="text-[17px] font-semibold tracking-tight text-foreground">
+                      Flare Tag
+                    </span>
                   </div>
-                </nav>
-              </div>
-            </SheetContent>
-          </Sheet>
+
+                  {/* Mobile nav links */}
+                  <nav className="flex flex-col gap-1  flex-1">
+                    {/* Mobile nav links */}
+
+                    <nav className="flex flex-col gap-1 px-3 py-4 pt-0 flex-1">
+                      <TopBarSearch
+                        placeholder="search badge layouts..."
+                        className="min-w-0 py-2"
+                      />
+                      {navigation.map(({ label, href }) => {
+                        const isActive = pathname === href;
+
+                        const handleClick = () => {
+                          setMobileOpen(false);
+                        };
+
+                        return (
+                          <Link
+                            key={label}
+                            href={href}
+                            onClick={handleClick}
+                            className={cn(
+                              "px-4 py-3 text-[15px] font-medium rounded-xl",
+                              "transition-colors duration-150",
+                              isActive
+                                ? "text-primary bg-secondary"
+                                : "text-foreground hover:bg-muted",
+                            )}
+                          >
+                            {label}
+                          </Link>
+                        );
+                      })}
+                    </nav>
+
+                    <div className="mt-auto border-t border-border px-3 py-4">
+                      <div className="flex items-center gap-3 mb-3 px-1">
+                        <DashboardUserAvatar
+                          user={user}
+                          displayName={displayName}
+                          className="h-10 w-10 text-sm"
+                        />
+                        <p className="truncate text-sm font-medium text-foreground">
+                          {displayName}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          logout();
+                          setMobileOpen(false);
+                        }}
+                        disabled={isLoggingOut}
+                        className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-60"
+                      >
+                        <LogOut className="h-5 w-5" strokeWidth={1.75} />
+                        {isLoggingOut ? "Logging out…" : "Log out"}
+                      </button>
+                    </div>
+                  </nav>
+                </div>
+              </SheetContent>
+            </Sheet>
+            <NotificationDropDown />
+          </div>
         </div>
       )}
     </header>

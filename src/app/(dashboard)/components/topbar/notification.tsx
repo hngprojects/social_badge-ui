@@ -29,9 +29,9 @@ export function NotificationDropDown() {
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-[360px]">
+      <DropdownMenuContent className="w-[calc(100vw-2rem)] max-w-[360px]">
         <div className="flex justify-between items-center py-[18px] px-[16px]">
-          <p className="font-semibold text-[16px] text-[#3A3A3A]">
+          <p className="font-semibold text-[14px] sm:text-[16px] text-[#3A3A3A]">
             Notifications
           </p>
           <button
@@ -40,14 +40,14 @@ export function NotificationDropDown() {
               // TODO: Implement mark all as read logic
               console.log("Mark all as read clicked");
             }}
-            className="text-[#BDBDBD] text-[14px]"
+            className="text-[#BDBDBD] text-[12px] sm:text-[14px]"
           >
             Mark all as read
           </button>
         </div>
         <DropdownMenuSeparator />
 
-        <div className="w-full h-[360px] flex flex-col items-center justify-center gap-[16px]">
+        <div className="px-4 w-full h-[360px] flex flex-col items-center justify-center gap-[16px] ">
           <div className="bg-[#FFF0EC] h-[56px] w-[56px] rounded-[12px] grid place-content-center">
             <Image
               src="/assets/dashboard/icons/empty-notifications-icon.svg"
@@ -56,11 +56,11 @@ export function NotificationDropDown() {
               alt="empty notiification"
             />
           </div>
-          <p className="text-[16px] font-semibold text-[#3A3A3A]">
+          <p className="text-[14px] sm:text-[16px] font-semibold text-[#3A3A3A]">
             No notifications yet
           </p>
 
-          <p className="text-[#3A3A3A] text-[14px] text-center w-[281px]">
+          <p className="text-[#3A3A3A] text-[12px] sm:text-[14px] text-center w-[281px]">
             Start sharing your badge link to see activity here when people scan
             your tags.
           </p>
@@ -69,7 +69,7 @@ export function NotificationDropDown() {
         <DropdownMenuSeparator />
 
         <Link href="/settings" className="py-[22px] grid place-content-center">
-          <p className="text-primary text-[14px] leading-[14px] font-medium">
+          <p className="text-primary text-[12px] sm:text-[14px] leading-[12px] sm:leading-[14px] font-medium">
             Notification Settings
           </p>
         </Link>

@@ -34,7 +34,7 @@ function DropdownMenuTrigger({
 function DropdownMenuContent({
   className,
   align = "end",
-  sideOffset = 12,
+  sideOffset = 8,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {
   return (
