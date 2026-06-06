@@ -40,8 +40,8 @@ export default function NotificationsTabs() {
       onValueChange={handleTabChange}
       className="flex w-full flex-col gap-[6px]"
     >
-      <div className="w-fit rounded-[12px] border bg-white">
-        <TabsList className="flex gap-1.5 w-fit p-1.5 bg-white">
+      <div className="w-fit max-w-full overflow-hidden rounded-[12px] border bg-white">
+        <TabsList className="flex gap-1.5 p-1.5 bg-white">
           <TabsTrigger
             value="all"
             className="py-2 px-3.5 leading-[19.5px] rounded-[12px]"
