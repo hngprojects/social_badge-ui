@@ -35,7 +35,6 @@ export default function BadgeReady({
 	);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isDownloading, setIsDownloading] = useState(false);
-	const hasIncremented = useRef(false);
 	const incrementedSlugs = useRef(new Set<string>());
 
 	useEffect(() => {

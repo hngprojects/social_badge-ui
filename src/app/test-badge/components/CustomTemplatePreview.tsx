@@ -351,7 +351,7 @@ export function CustomTemplatePreview({
 	}
 
 	return (
-		<div className="w-full max-w-79.5 h-106 shadow-2xl mx-auto" ref={badgeRef}>
+		<div className="w-full max-w-79.5 h-106 mx-auto" ref={badgeRef}>
 			<LayoutComponent
 				editor={editor}
 				participantPhotoUrl={participantPhotoUrl}
