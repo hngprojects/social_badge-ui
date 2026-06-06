@@ -33,27 +33,27 @@ export const TemplateCard = ({
        (max-width: 768px) 50vw,
        (max-width: 1024px) 33vw,
        25vw"
-          className={`object-contain ${template.hasShadow ? "p-2" : "p-0"}`}
+          className={`object-contain ${template.hasShadow ? "p-5" : "p-0"}`}
         />
       </div>
 
       {/* Bottom half */}
       <div className="bg-[#F4F4F2] flex flex-col flex-1 justify-between">
         <div className="flex flex-col gap-1 p-4">
-          <span className="uppercase text-[10px] tracking-[1.2px] text-primary">
+          <span className="uppercase text-[11px] tracking-[1.2px] text-primary">
             {template.type}
           </span>
           <span className="font-fraunces text-[20px] capitalize font-semibold text-[#0A0A0A] line-clamp-2">
             {template.title}
           </span>
-          <span className="text-[#8A8A85] text-[12px]">
+          <span className="text-[#8A8A85] text-[13px]">
             by {template.creator} · {template.location}
           </span>
         </div>
 
         <div className="border-t border-[#DCDCD7] p-4 flex justify-between items-center">
           {/* Badge Count */}
-          <div className="text-[#8A8A85] uppercase text-[10px] tracking-[1px] flex items-center gap-2">
+          <div className="text-[#8A8A85] uppercase text-[11px] tracking-[1px] flex items-center gap-2">
             <span className="inline-block bg-primary rounded-full w-2 h-2" />
             <span>{template.badgeCount} badges made</span>
           </div>
