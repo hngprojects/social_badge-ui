@@ -3,9 +3,11 @@ export default function Loading() {
     <div
       role="status"
       aria-label="Loading"
-      className="flex min-h-[60vh] items-center justify-center p-6"
+      className="flex min-h-[60vh] items-center justify-center gap-2 p-6"
     >
-      <div className="border-muted-foreground/30 border-t-foreground h-8 w-8 animate-spin rounded-full border-2" />
+      <span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.3s]" />
+      <span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.15s]" />
+      <span className="h-3 w-3 animate-bounce rounded-full bg-primary-500" />
     </div>
   );
 }

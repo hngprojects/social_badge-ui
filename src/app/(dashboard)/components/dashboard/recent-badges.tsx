@@ -21,6 +21,7 @@ export default function RecentBadges() {
 	const {
 		templates,
 		total,
+		isLoading,
 		isError,
 	} = useRecentOrganizerBadges(page, RECENT_BADGES_LIMIT);
 	const totalPages = Math.ceil(total / RECENT_BADGES_LIMIT);
@@ -78,6 +79,7 @@ export default function RecentBadges() {
 
 			<RecentBadgesMobileList
 				templates={filtered}
+				loading={isLoading}
 				getTemplateThumbnail={getTemplateThumbnail}
 				onSelectTemplate={setSelectedTemplate}
 				onRequestDelete={setTemplateToDelete}
@@ -85,6 +87,7 @@ export default function RecentBadges() {
 			/>
 			<RecentBadgesTable
 				templates={filtered}
+				loading={isLoading}
 				getTemplateThumbnail={getTemplateThumbnail}
 				isError={isError}
 				onSelectTemplate={setSelectedTemplate}
