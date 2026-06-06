@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MoreMenu } from "./more-menu";
 import { RecentBadgesListProps } from "./recent-badges-types";
 import { formatLastEditedDate } from "./recent-badges-utils";
@@ -5,6 +6,7 @@ import { StatusPill } from "./status-pill";
 
 export function RecentBadgesMobileList({
   templates,
+  getTemplateThumbnail,
   onSelectTemplate,
   onRequestDelete,
   onRequestUnpublish,
@@ -12,7 +14,7 @@ export function RecentBadgesMobileList({
   return (
     <div className="md:hidden">
       {/* ... header ... */}
-      <div className="grid grid-cols-[1.3fr_0.9fr_1fr_0.7fr_32px] border-b border-t border-[#F0F0EE] bg-[#ECE9E4] px-3 py-3">
+      <div className="grid grid-cols-[2fr_0.8fr_0.9fr_0.5fr_32px] border-b border-t border-[#F0F0EE] bg-[#ECE9E4] px-3 py-3">
         <p className="text-[11px] font-semibold tracking-[0.12em] text-[#757575]">
           BADGE
         </p>
@@ -43,15 +45,27 @@ export function RecentBadgesMobileList({
                 onSelectTemplate(template);
               }
             }}
-            className="grid grid-cols-[1.3fr_0.9fr_1fr_0.7fr_32px] items-center border-b border-[#F0F0EE] px-3 py-5"
+            className="grid grid-cols-[2fr_0.8fr_0.9fr_0.5fr_32px] items-center border-b border-[#F0F0EE] px-3 py-4"
           >
-            <div className="min-w-0">
-              <h3 className="text-[14px] font-semibold leading-[1.25] text-[#3A3A3A]">
-                {template.title}
-              </h3>
-              <p className="mt-1 truncate text-[13px] text-[#B0B0B0]">
-                Template instance
-              </p>
+            <div className="flex min-w-0 items-center gap-2">
+              {getTemplateThumbnail?.(template) && (
+                <div className="shrink-0 overflow-hidden rounded-[8px]">
+                  <Image
+                    src={getTemplateThumbnail(template)!}
+                    height={36}
+                    width={36}
+                    alt="badge thumbnail"
+                  />
+                </div>
+              )}
+              <div className="min-w-0">
+                <h3 className="truncate text-[13px] font-semibold leading-tight text-[#3A3A3A]">
+                  {template.title}
+                </h3>
+                <p className="mt-0.5 truncate text-[11px] text-[#B0B0B0]">
+                  Template instance
+                </p>
+              </div>
             </div>
 
             <div>

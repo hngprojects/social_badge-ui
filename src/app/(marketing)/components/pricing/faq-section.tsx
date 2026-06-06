@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { FAQ_DATA } from '../../constants/pricing';
+import { AnimatePresence, motion } from 'motion/react';
+import { faqData } from '../../constants/home';
 import { Plus } from 'lucide-react';
 
 // ── Shared easing ─────────────────────────────────────────────────────────────
@@ -48,7 +48,7 @@ export default function FAQSection() {
       </motion.h2>
 
       <div className="text-left w-full max-w-220 mx-auto">
-        {FAQ_DATA.map((item, i) => {
+        {faqData.map((item, i) => {
           const isOpen = openIndex === i;
 
           return (
