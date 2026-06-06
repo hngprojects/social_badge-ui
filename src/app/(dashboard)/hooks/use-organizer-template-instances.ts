@@ -12,13 +12,16 @@ export const organizerTemplateInstancesKey = (page: number, limit: number) => [
 	limit,
 ];
 
+const REALTIME_REFETCH_INTERVAL_MS = 3000;
+
 // HOOK 1
 export function useOrganizerTemplateInstances(page = 1, limit = 20) {
 	return useQuery({
 		queryKey: organizerTemplateInstancesKey(page, limit),
 		queryFn: () => getOrganizerTemplateInstances(page, limit),
-		refetchInterval: 10000, // Sync with analytics polling (10s)
+		refetchInterval: REALTIME_REFETCH_INTERVAL_MS,
 		refetchIntervalInBackground: true,
+		refetchOnWindowFocus: true,
 		staleTime: 0,
 	});
 }

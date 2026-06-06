@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { ContactFormValues } from "../../types/contact";
 import {
@@ -22,6 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const MESSAGE_MAX_LENGTH = 250;
+
 const contactSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -32,7 +34,13 @@ const contactSchema = z.object({
       message: "Enter a valid email address",
     }),
   subject: z.string().min(1, "Please select a topic"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  message: z
+    .string()
+    .min(10, "Message must be at least 10 characters")
+    .max(
+      MESSAGE_MAX_LENGTH,
+      `Message cannot exceed ${MESSAGE_MAX_LENGTH} characters`,
+    ),
 });
 
 export default function ContactForm() {
@@ -62,6 +70,8 @@ export default function ContactForm() {
       message: "",
     },
   });
+  const messageValue = useWatch({ control, name: "message" });
+  const messageLength = messageValue.length;
 
   const onSubmit = (data: ContactFormValues) => {
     setStatus({ type: null, message: "" });
@@ -277,14 +287,23 @@ export default function ContactForm() {
           <Textarea
             id="message"
             rows={6}
+            wrap="soft"
+            maxLength={MESSAGE_MAX_LENGTH}
             placeholder="Tell us what's on your mind. The more detail the better — we'll actually read it."
             aria-invalid={!!errors.message}
-            className="min-h-[144px] rounded-[12px] border-[#EAEAE6] bg-[#F4F4F2] text-lg md:text-lg placeholder:text-[#757575] aria-invalid:border-red-400"
+            className="field-sizing-fixed block h-[144px] min-h-[144px] max-h-[144px] w-full min-w-0 max-w-full flex-none resize-none overflow-x-hidden overflow-y-auto rounded-[12px] border-[#EAEAE6] bg-[#F4F4F2] text-lg break-words whitespace-pre-wrap [field-sizing:fixed] [overflow-wrap:anywhere] md:text-lg placeholder:text-[#757575] aria-invalid:border-red-400"
             {...register("message")}
           />
-          {errors.message && (
-            <p className="text-xs text-red-500">{errors.message.message}</p>
-          )}
+          <div className="flex items-start justify-between gap-3">
+            {errors.message ? (
+              <p className="text-xs text-red-500">{errors.message.message}</p>
+            ) : (
+              <span />
+            )}
+            <p className="shrink-0 text-xs text-[#8A8A85]">
+              {messageLength}/{MESSAGE_MAX_LENGTH}
+            </p>
+          </div>
         </div>
 
         {status.type === "error" && (

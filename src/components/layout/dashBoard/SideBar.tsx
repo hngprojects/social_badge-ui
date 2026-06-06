@@ -41,7 +41,7 @@ export default function SideNav() {
           >
             <div className="flex min-w-0 items-center gap-2">
               <Link
-                href="/dashboard"
+                href="/"
                 className="flex min-w-0 items-center gap-2"
               >
                 <Image
@@ -129,7 +129,7 @@ export default function SideNav() {
                   className="shrink-0"
                 />
                 {expanded && (
-                  <span className="text-[14px] font-medium leading-none">
+                  <span className="text-[16px] font-medium leading-none">
                     Help
                   </span>
                 )}
@@ -153,7 +153,7 @@ export default function SideNav() {
                 className="shrink-0"
               />
               {expanded && (
-                <span className="text-[14px] font-medium leading-none">
+                <span className="text-[16px] font-medium leading-none">
                   {isLoggingOut ? "Logging out..." : "Log out"}
                 </span>
               )}
@@ -273,7 +273,7 @@ function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
         />
 
         {expanded && (
-          <span className="text-[14px] font-medium leading-[20px]">
+          <span className="text-[16px] font-medium leading-[22px]">
             {nav.label}
           </span>
         )}

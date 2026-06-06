@@ -33,7 +33,7 @@ export const TemplateCard = ({
        (max-width: 768px) 50vw,
        (max-width: 1024px) 33vw,
        25vw"
-          className={`object-contain ${template.hasShadow ? "p-2" : "p-0"}`}
+          className={`object-contain ${template.hasShadow ? "p-5" : "p-0"}`}
         />
       </div>
 

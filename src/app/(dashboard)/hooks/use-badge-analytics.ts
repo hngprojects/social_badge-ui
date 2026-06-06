@@ -3,12 +3,15 @@ import { getBadgeAnalytics } from "../services/get-badge-analytics";
 
 export const badgeAnalyticsKey = ["badge-analytics"];
 
+const REALTIME_REFETCH_INTERVAL_MS = 3000;
+
 export function useBadgeAnalytics() {
   return useQuery({
     queryKey: badgeAnalyticsKey,
     queryFn: getBadgeAnalytics,
-    refetchInterval: 10000, // Poll every 10s for real-time stats
-    refetchIntervalInBackground: true, // Keep polling even if window is blurred
-    staleTime: 0, // Ensure every poll actually triggers a network request
+    refetchInterval: REALTIME_REFETCH_INTERVAL_MS,
+    refetchIntervalInBackground: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 }
