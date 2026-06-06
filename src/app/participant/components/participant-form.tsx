@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-	participantSchema,
+	getParticipantSchema,
 	type ParticipantValues,
 } from "@/schemas/participants";
 import CaptionBox from "./caption-box";
@@ -15,6 +15,7 @@ import { DEFAULT_CAPTION } from "../constants";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
+import { useMemo } from "react";
 
 export default function ParticipantForm({
 	onSuccess,
@@ -31,6 +32,20 @@ export default function ParticipantForm({
 	onCaptionChange?: (caption: string) => void;
 	editorState: CustomizeEditorState | null;
 }) {
+	const showName = editorState?.participantNameVisible ?? true;
+	const showRole = editorState?.roleTitleVisible ?? true;
+	const roleRequired = editorState?.roleTitleRequired ?? false;
+
+	const schema = useMemo(
+		() =>
+			getParticipantSchema({
+				nameVisible: showName,
+				roleVisible: showRole,
+				roleRequired,
+			}),
+		[showName, showRole, roleRequired],
+	);
+
 	const {
 		register,
 		handleSubmit,
@@ -39,7 +54,7 @@ export default function ParticipantForm({
 		watch,
 		formState: { errors, isSubmitting, isValid },
 	} = useForm<ParticipantValues>({
-		resolver: zodResolver(participantSchema),
+		resolver: zodResolver(schema),
 		mode: "onChange",
 		defaultValues: {
 			name: "",
@@ -55,9 +70,6 @@ export default function ParticipantForm({
 			onCaptionChange?.(editorState.defaultCaption);
 		}
 	}, [editorState?.defaultCaption, setValue, onCaptionChange]);
-
-	const showName = editorState?.participantNameVisible ?? true;
-	const showRole = editorState?.roleTitleVisible ?? true;
 
 	// eslint-disable-next-line react-hooks/incompatible-library
 	const formValues = watch();
