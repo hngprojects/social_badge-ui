@@ -12,7 +12,7 @@ export default function ContactWays() {
 
 			{/* Email card */}
 			<a
-				href="mailto:flaretag@gmail.com"
+				href="mailto:flaretagme@gmail.com"
 				className="flex items-center gap-3 bg-white border border-[#EAEAE6] rounded-[14px] px-6 py-5 transition-colors hover:border-[#FF693E] hover:bg-[#FFF8F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF693E]/40"
 				aria-label="Email Flare Tag at flaretagme@gmail.com"
 			>
