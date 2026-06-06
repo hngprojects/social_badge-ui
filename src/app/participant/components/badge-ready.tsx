@@ -4,12 +4,12 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import CaptionBox from "./caption-box";
-import { DEFAULT_CAPTION, SOCIAL_PLATFORMS } from "../constants";
+import { DEFAULT_CAPTION } from "../constants";
 import { useState, useEffect, useRef } from "react";
 import ParticipantPopup from "./participant-popup";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
-import { SharePlatform } from "../types";
+//import { SharePlatform } from "../types";
 import { useSearchParams } from "next/navigation";
 import { useIncrementBadgeShare } from "../hooks/useIncrementBadgeShare";
 import { useIncrementBadgeCreation } from "../hooks/useIncrementBadgeCreation";
@@ -23,7 +23,6 @@ interface BadgeReadyProps {
 export default function BadgeReady({
 	onDownload,
 	defaultCaption,
-	shareUrl,
 }: BadgeReadyProps) {
 	const searchParams = useSearchParams();
 	const slug = searchParams.get("slug");
@@ -63,39 +62,39 @@ export default function BadgeReady({
 		}
 	};
 
-	const handleSocialShare = async (platformId: SharePlatform) => {
-		const url = shareUrl || window.location.href;
+	// const handleSocialShare = async (platformId: SharePlatform) => {
+	// 	const url = shareUrl || window.location.href;
 
-		if (navigator.share) {
-			try {
-				await navigator.share({ text: captionText, url });
-				if (slug) {
-					incrementShare(slug);
-				}
-				return;
-			} catch {
-				// user cancelled or API unavailable — fall through to platform URLs
-			}
-		}
+	// 	if (navigator.share) {
+	// 		try {
+	// 			await navigator.share({ text: captionText, url });
+	// 			if (slug) {
+	// 				incrementShare(slug);
+	// 			}
+	// 			return;
+	// 		} catch {
+	// 			// user cancelled or API unavailable — fall through to platform URLs
+	// 		}
+	// 	}
 
-		const encodedCaption = encodeURIComponent(captionText);
-		const encodedUrl = encodeURIComponent(url);
+	// 	const encodedCaption = encodeURIComponent(captionText);
+	// 	const encodedUrl = encodeURIComponent(url);
 
-		const shareUrls: Record<string, string> = {
-			whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
-			facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
-			x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
-			telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
-		};
+	// 	const shareUrls: Record<string, string> = {
+	// 		whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
+	// 		facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
+	// 		x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
+	// 		telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
+	// 	};
 
-		const target = shareUrls[platformId];
-		if (target) {
-			window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
-			if (slug) {
-				incrementShare(slug);
-			}
-		}
-	};
+	// 	const target = shareUrls[platformId];
+	// 	if (target) {
+	// 		window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
+	// 		if (slug) {
+	// 			incrementShare(slug);
+	// 		}
+	// 	}
+	// };
 
 	return (
 		<motion.div
