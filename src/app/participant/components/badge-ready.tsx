@@ -28,7 +28,7 @@ export default function BadgeReady({
 	const searchParams = useSearchParams();
 	const slug = searchParams.get("slug");
 	const { incrementShare } = useIncrementBadgeShare();
-	const { incrementCreation } = useIncrementBadgeCreation();
+	const { incrementCreationAsync } = useIncrementBadgeCreation();
 
 	const [captionText, setCaptionText] = useState(
 		defaultCaption || DEFAULT_CAPTION,
@@ -39,10 +39,13 @@ export default function BadgeReady({
 
 	useEffect(() => {
 		if (slug && !incrementedSlugs.current.has(slug)) {
-			incrementCreation(slug);
 			incrementedSlugs.current.add(slug);
+
+			incrementCreationAsync(slug).catch(() => {
+				incrementedSlugs.current.delete(slug);
+			});
 		}
-	}, [slug, incrementCreation]);
+	}, [slug, incrementCreationAsync]);
 
 	const handleDownload = async () => {
 		if (!onDownload) return;

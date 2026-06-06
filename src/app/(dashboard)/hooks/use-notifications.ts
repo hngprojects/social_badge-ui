@@ -27,6 +27,10 @@ export function useNotifications(page = 1, limit = 20, enabled = true) {
     queryKey: notificationsKey(page, limit),
     queryFn: () => getNotifications(page, limit),
     enabled,
+    refetchInterval: enabled ? 10000 : false,
+    refetchIntervalInBackground: true,
+    refetchOnMount: true,
+    staleTime: 0,
   });
 }
 
@@ -35,6 +39,10 @@ export function useUnreadNotificationCount(enabled = true) {
     queryKey: unreadNotificationCountKey,
     queryFn: getUnreadNotificationCount,
     enabled,
+    refetchInterval: enabled ? 10000 : false,
+    refetchIntervalInBackground: true,
+    refetchOnMount: true,
+    staleTime: 0,
   });
 }
 

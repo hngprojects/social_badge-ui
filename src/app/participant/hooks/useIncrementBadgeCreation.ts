@@ -2,21 +2,40 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { incrementBadgeCreation } from "../services/badge";
 import { badgeAnalyticsKey } from "@/app/(dashboard)/hooks/use-badge-analytics";
-import { notificationsRootKey } from "@/app/(dashboard)/hooks/use-notifications";
+import {
+	notificationsRootKey,
+	unreadNotificationCountKey,
+} from "@/app/(dashboard)/hooks/use-notifications";
 
 export const useIncrementBadgeCreation = () => {
 	const queryClient = useQueryClient();
 
-	const { mutate: incrementCreation, isPending: isLoading } = useMutation({
+	const refreshNotificationQueries = () => {
+		queryClient.invalidateQueries({
+			queryKey: notificationsRootKey,
+		});
+		queryClient.refetchQueries({
+			queryKey: notificationsRootKey,
+			type: "active",
+		});
+		queryClient.refetchQueries({
+			queryKey: unreadNotificationCountKey,
+		});
+	};
+
+	const {
+		mutate: incrementCreation,
+		mutateAsync: incrementCreationAsync,
+		isPending: isLoading,
+	} = useMutation({
 		mutationFn: incrementBadgeCreation,
 
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: badgeAnalyticsKey,
 			});
-			queryClient.invalidateQueries({
-				queryKey: notificationsRootKey,
-			});
+			refreshNotificationQueries();
+			setTimeout(refreshNotificationQueries, 1500);
 		},
 
 		onError: () => {
@@ -26,6 +45,7 @@ export const useIncrementBadgeCreation = () => {
 
 	return {
 		incrementCreation,
+		incrementCreationAsync,
 		isLoading,
 	};
 };
