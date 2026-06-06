@@ -22,7 +22,7 @@ export function NotificationData({
         return (
           <article
             className={cn(
-              "flex flex-col gap-1 border-b border-b-[#F2F0EC] border-l-2 p-3 transition-colors sm:p-4",
+              "flex flex-col gap-1 border-b border-b-[#F2F0EC] border-l-2 p-4 transition-colors",
               notification.is_read
                 ? "border-l-[#EEEEEE]"
                 : "cursor-pointer border-l-[#FF9B7E] hover:bg-[#FFFDFB]",
@@ -36,7 +36,7 @@ export function NotificationData({
           >
             <div className="flex items-center justify-between gap-3">
               <span
-                className={`rounded-full px-2.5 py-1 text-[11px] font-medium leading-none sm:text-[12px] ${
+                className={`rounded-full px-2.5 py-1 text-[12px] font-medium leading-none ${
                   notification.is_read
                     ? "bg-[#EEEEEE] text-[#BDBDBD]"
                     : `${style.bg} ${style.text}`
@@ -45,7 +45,7 @@ export function NotificationData({
                 {formatNotificationType(notification.type)}
               </span>
               <span
-                className={`shrink-0 text-[12px] leading-4 sm:text-[14px] sm:leading-4.5 ${
+                className={`shrink-0 text-[14px] leading-4.5 ${
                   notification.is_read ? "text-[#BDBDBD]" : "text-[#3A3A3A]"
                 }`}
               >
@@ -53,7 +53,7 @@ export function NotificationData({
               </span>
             </div>
             <p
-              className={`text-[14px] leading-5 sm:text-[16px] sm:leading-5.5 ${
+              className={`text-[16px] leading-5.5 ${
                 notification.is_read ? "text-[#BDBDBD]" : "text-[#3A3A3A]"
               }`}
             >

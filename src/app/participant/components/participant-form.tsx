@@ -83,19 +83,21 @@ export default function ParticipantForm({
 		onSuccess?.();
 	};
 
+	const handleCaptionResize = (target: HTMLTextAreaElement) => {
+		target.style.height = "auto";
+		target.style.height = `${target.scrollHeight}px`;
+	};
+
 	return (
 		<motion.form
 			onSubmit={handleSubmit(onSubmit)}
-			className="space-y-6 rounded-3xl border py-8 px-5 w-full max-w-147 min-w-0 bg-white"
+			className="space-y-6 rounded-3xl border py-8 px-5 w-full max-w-147 bg-white"
 			variants={containerVariants}
 			initial="hidden"
 			animate="show"
 		>
-			<motion.div
-				className="min-w-0 space-y-2 overflow-hidden"
-				variants={itemVariants}
-			>
-				<label className="mb-2 block h-5 overflow-hidden truncate text-[13.5px] font-bold leading-5">
+			<motion.div className="space-y-2" variants={itemVariants}>
+				<label className="text-[13.5px] font-bold mb-2">
 					Upload photo or avatar <span className="text-[#ff693E]">*</span>
 				</label>
 
@@ -131,27 +133,24 @@ export default function ParticipantForm({
 					}}
 				/>
 
-				<p className="text-neutral-400 text-[12.5px] font-sans break-words">
+				<p className="text-neutral-400 text-[12.5px] font-sans">
 					SVG recommended for crisp display. PNG works too (min 240 × 240px).
 				</p>
 
 				{selectedFile && (
-					<p className="text-sm break-all">Selected: {selectedFile.name}</p>
+					<p className="text-sm">Selected: {selectedFile.name}</p>
 				)}
 
 				{errors.avatar && (
-					<p className="text-sm text-red-500 break-words">{errors.avatar.message}</p>
+					<p className="text-sm text-red-500">{errors.avatar.message}</p>
 				)}
 			</motion.div>
 
 			{showName && (
-				<motion.div
-					className="min-w-0 space-y-4 overflow-hidden"
-					variants={itemVariants}
-				>
-					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
-						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">NAME <span className="text-[#ff693E]">*</span></span>
-						<span className="shrink-0 text-[10px] text-gray-400 font-medium">
+				<motion.div className="space-y-4" variants={itemVariants}>
+					<label className="text-[13.5px] font-bold flex justify-between items-center">
+						<span>NAME <span className="text-[#ff693E]">*</span></span>
+						<span className="text-[10px] text-gray-400 font-medium">
 							{formValues.name?.length ?? 0}/25
 						</span>
 					</label>
@@ -164,19 +163,16 @@ export default function ParticipantForm({
 					/>
 
 					{errors.name && (
-						<p className="text-sm text-red-500 break-words">{errors.name.message}</p>
+						<p className="text-sm text-red-500">{errors.name.message}</p>
 					)}
 				</motion.div>
 			)}
 
 			{showRole && (
-				<motion.div
-					className="min-w-0 space-y-4 overflow-hidden"
-					variants={itemVariants}
-				>
-					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
-						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">{editorState?.roleTitleLabel || "ROLE / TITLE"} {editorState?.roleTitleRequired && <span className="text-[#ff693E]">*</span>}</span>
-						<span className="shrink-0 text-[10px] text-gray-400 font-medium">
+				<motion.div className="space-y-4" variants={itemVariants}>
+					<label className="text-[13.5px] font-bold flex justify-between items-center">
+						<span>{editorState?.roleTitleLabel || "ROLE / TITLE"} {editorState?.roleTitleRequired && <span className="text-[#ff693E]">*</span>}</span>
+						<span className="text-[10px] text-gray-400 font-medium">
 							{formValues.role?.length ?? 0}/25
 						</span>
 					</label>
@@ -191,7 +187,7 @@ export default function ParticipantForm({
 					/>
 
 					{errors.role && (
-						<p className="text-sm text-red-500 break-words">{errors.role.message}</p>
+						<p className="text-sm text-red-500">{errors.role.message}</p>
 					)}
 				</motion.div>
 			)}
@@ -211,6 +207,9 @@ export default function ParticipantForm({
 							
 							onCaptionChange?.(e.target.value);
 
+							if (e.target instanceof HTMLTextAreaElement) {
+								handleCaptionResize(e.target);
+							}
 						},
 					})}
 					value={formValues.caption}
