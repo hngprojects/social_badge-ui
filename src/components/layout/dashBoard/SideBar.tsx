@@ -28,17 +28,22 @@ export default function SideNav() {
 
   return (
     <aside
-      className={`h-full shrink-0 overflow-visible border-r pb-6 text-black transition-[width] duration-300 ${
+      className={`h-full shrink-0 overflow-hidden border-r pb-6 text-black transition-[width] duration-300 ${
         expanded ? "w-[230px]" : "w-[76px]"
       }`}
     >
       <div className="flex h-full flex-col justify-between gap-[30px]">
         <div>
           <header
-            className={`flex ${!expanded && "flex-col"} relative mt-3 mb-2 items-center justify-between gap-6 p-4 pt-[18px] pb-6 whitespace-nowrap text-[#231F20]`}
+            className={`relative mt-3 mb-2 flex min-w-0 items-center justify-between gap-3 overflow-hidden p-4 pt-[18px] pb-6 whitespace-nowrap text-[#231F20] ${
+              expanded ? "" : "flex-col"
+            }`}
           >
-            <div className="flex items-center gap-2">
-              <Link href="/dashboard" className="flex items-center gap-2">
+            <div className="flex min-w-0 items-center gap-2">
+              <Link
+                href="/dashboard"
+                className="flex min-w-0 items-center gap-2"
+              >
                 <Image
                   alt="logo"
                   src="/assets/logo.svg"
@@ -46,7 +51,7 @@ export default function SideNav() {
                   height={27}
                 />
                 {expanded && (
-                  <p className="text-[20px] font-medium leading-[100%]">
+                  <p className="min-w-0 truncate text-[20px] font-medium leading-[28px]">
                     FlareTag
                   </p>
                 )}
@@ -54,8 +59,8 @@ export default function SideNav() {
             </div>
 
             <button
-              className={`absolute -right-4 top-4 z-30 flex h-8 w-8 cursor-pointer items-center ease-in-out
-                ${expanded ? "" : "rotate-180"} justify-center rounded-[8px] border bg-white`}
+              className={`grid size-10 shrink-0 cursor-pointer place-items-center rounded-[10px] border border-[#EEEEEE] bg-white shadow-[0_4px_14px_rgba(0,0,0,0.04)] transition-[background-color,transform] duration-200 ease-in-out hover:bg-[#FBFAF7]
+                ${expanded ? "" : "rotate-180"}`}
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
               aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
@@ -65,9 +70,8 @@ export default function SideNav() {
               <Image
                 alt="sidebar toggle"
                 src="/assets/dashboard/icons/sidebar-collapse.svg"
-                width={16}
-                height={16}
-                className="z-99"
+                width={18}
+                height={18}
               />
             </button>
           </header>
