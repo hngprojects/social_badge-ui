@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { incrementBadgeCreation } from "../services/badge";
 import { badgeAnalyticsKey } from "@/app/(dashboard)/hooks/use-badge-analytics";
+import { notificationsRootKey } from "@/app/(dashboard)/hooks/use-notifications";
 
 export const useIncrementBadgeCreation = () => {
 	const queryClient = useQueryClient();
@@ -12,6 +13,9 @@ export const useIncrementBadgeCreation = () => {
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: badgeAnalyticsKey,
+			});
+			queryClient.invalidateQueries({
+				queryKey: notificationsRootKey,
 			});
 		},
 

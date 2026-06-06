@@ -67,6 +67,9 @@ export default function BadgeReady({
 		if (navigator.share) {
 			try {
 				await navigator.share({ text: captionText, url });
+				if (slug) {
+					incrementShare(slug);
+				}
 				return;
 			} catch {
 				// user cancelled or API unavailable — fall through to platform URLs
@@ -86,6 +89,9 @@ telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
 		const target = shareUrls[platformId];
 		if (target) {
 			window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
+			if (slug) {
+				incrementShare(slug);
+			}
 		}
 	};
 
