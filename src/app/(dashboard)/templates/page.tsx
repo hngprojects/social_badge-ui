@@ -36,7 +36,7 @@ const handleFilterChange = (tab: string) => {
         templates={filteredTemplates}
         isLoading={isLoading}
         activeTab={activeFilter}
-        gridClassName="grid grid-cols-1 min-[350px]:grid-cols-2 md:grid-cols-3 min-[1330px]:!grid-cols-4 gap-5"
+        gridClassName="grid grid-cols-1 min-[350px]:grid-cols-2 md:grid-cols-3 min-[1330px]:grid-cols-4! gap-5"
       />
     </div>
   );
