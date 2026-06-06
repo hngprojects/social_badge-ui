@@ -185,8 +185,7 @@ function QRCodeCard({ url, badgeName }: QRCodeCardProps) {
 				</div>
 			</div>
 
-			{/* Centralized Action Buttons Layout */}
-			<div className="flex gap-3 justify-center items-center w-full mt-auto">
+			<div className="flex gap-3 justify-start items-center w-full mt-auto">
 				{/* Un-comment Preview if needed; the distribution is setup perfectly for both scenarios */}
 				{/* <Button variant="outline" className="flex-1 max-w-[180px] h-10 rounded-full text-[0.8125rem] font-semibold">
                     Preview

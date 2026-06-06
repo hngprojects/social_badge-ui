@@ -18,8 +18,8 @@ export default function DashboardLayout({
         >
           Skip to main content
         </a>
-        <section className="flex min-h-screen w-full min-w-0 overflow-x-hidden">
-        <div className="sticky top-0 z-30 hidden self-start lg:block">
+        <section className="flex min-h-screen w-full min-w-0">
+        <div className="sticky top-0 z-30 hidden h-dvh self-start overflow-visible lg:block">
           <SideNav />
         </div>
 
