@@ -44,12 +44,10 @@ export default function Dashboard() {
 				totalDrafts={totalDrafts}
 			/>
 
-			{isLoading ? (
-				<div className="h-[300px] animate-pulse rounded-lg bg-neutral-100" />
-			) : hasPublishedBadges ? (
-				<RecentBadges />
-			) : (
+			{!isLoading && !hasPublishedBadges ? (
 				<FirstBadgeCta />
+			) : (
+				<RecentBadges />
 			)}
 			<Steps />
 
