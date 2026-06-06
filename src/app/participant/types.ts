@@ -19,6 +19,4 @@ export type SharePlatform =
 	| "x"
 	| "whatsapp"
 	| "telegram"
-	| "facebook"
-	| "linkedin"
-	| "instagram";
+	| "facebook";
