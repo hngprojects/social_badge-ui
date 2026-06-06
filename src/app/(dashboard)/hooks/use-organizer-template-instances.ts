@@ -17,6 +17,9 @@ export function useOrganizerTemplateInstances(page = 1, limit = 20) {
 	return useQuery({
 		queryKey: organizerTemplateInstancesKey(page, limit),
 		queryFn: () => getOrganizerTemplateInstances(page, limit),
+		refetchInterval: 10000, // Sync with analytics polling (10s)
+		refetchIntervalInBackground: true,
+		staleTime: 0,
 	});
 }
 

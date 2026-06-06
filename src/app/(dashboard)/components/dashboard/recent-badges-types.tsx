@@ -9,6 +9,7 @@ export type RecentBadgesListProps = {
 	) => string | undefined;
 	onSelectTemplate: (template: OrganizerTemplateInstance) => void;
 	onRequestDelete: (template: OrganizerTemplateInstance) => void;
+	onRequestUnpublish: (template: OrganizerTemplateInstance) => void;
 	loading?: boolean;
 	isError?: boolean;
 };

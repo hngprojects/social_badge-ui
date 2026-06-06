@@ -24,10 +24,17 @@ export function StyleSection({
 	layoutCaps,
 }: StyleSectionProps) {
 	const sortedPalettes = useMemo(() => {
-		const defaultPalette = EDITOR_PALETTES.find((p) => p.id === layoutCaps.defaultPaletteId) ?? EDITOR_PALETTES[0];
-		const others = EDITOR_PALETTES.filter((p) => p.id !== defaultPalette.id);
+		const filtered = EDITOR_PALETTES.filter((p) => {
+			if (editor.bgMode === "gradient") return p.from !== p.to;
+			return p.from === p.to; // Strictly solids in solid tab
+		});
+
+		const defaultPalette = filtered.find((p) => p.id === layoutCaps.defaultPaletteId) ?? filtered[0];
+		if (!defaultPalette) return filtered;
+
+		const others = filtered.filter((p) => p.id !== defaultPalette.id);
 		return [defaultPalette, ...others];
-	}, [layoutCaps.defaultPaletteId]);
+	}, [layoutCaps.defaultPaletteId, editor.bgMode]);
 
 	return (
 		<SectionCard

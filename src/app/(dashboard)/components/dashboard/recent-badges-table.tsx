@@ -28,6 +28,7 @@ export function RecentBadgesTable({
 	getTemplateThumbnail,
 	onSelectTemplate,
 	onRequestDelete,
+	onRequestUnpublish,
 }: RecentBadgesListProps) {
 	const hasTemplates = templates.length > 0;
 
@@ -67,6 +68,7 @@ export function RecentBadgesTable({
 					) : (
 						templates.map((template) => {
 							const thumbnailUrl = getTemplateThumbnail?.(template);
+							const canUnpublish = template.is_published || template.status === "live";
 
 							return (
 								<TableRow
@@ -124,6 +126,7 @@ export function RecentBadgesTable({
 									>
 										<MoreMenu
 											onViewInfo={() => onSelectTemplate(template)}
+											onUnpublish={canUnpublish ? () => onRequestUnpublish(template) : undefined}
 											onDelete={() => onRequestDelete(template)}
 											editHref={`/create-badges/customize?id=${encodeURIComponent(template.id)}`}
 										/>
