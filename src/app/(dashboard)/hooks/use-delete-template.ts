@@ -6,7 +6,7 @@ import {
   organizerTemplateInstancesRootKey,
 } from "./use-organizer-template-instances";
 import { badgeAnalyticsKey } from "./use-badge-analytics";
-import { RECENT_BADGES_LIMIT } from "../components/dashboard/recent-badges-types";
+import { BADGES_FETCH_LIMIT } from "../components/dashboard/recent-badges-types";
 import { toast } from "sonner";
 
 export function useDeleteOrganizerTemplate() {
@@ -17,7 +17,7 @@ export function useDeleteOrganizerTemplate() {
 
     onSuccess: (_, deletedTemplateId) => {
       queryClient.setQueryData<OrganizerTemplateInstancesResult>(
-        organizerTemplateInstancesKey(1, RECENT_BADGES_LIMIT),
+        organizerTemplateInstancesKey(1, BADGES_FETCH_LIMIT),
         (prev) =>
           prev
             ? {

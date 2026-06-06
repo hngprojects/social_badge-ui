@@ -8,7 +8,7 @@ import { useUnpublishTemplate } from "../../hooks/use-unpublish-template";
 import { RecentBadgesHeader } from "./recent-badges-header";
 import { RecentBadgesMobileList } from "./recent-badges-mobile-list";
 import { RecentBadgesTable } from "./recent-badges-table";
-import { RECENT_BADGES_LIMIT, TemplateFilter } from "./recent-badges-types";
+import { BADGES_FETCH_LIMIT, RECENT_BADGES_LIMIT, TemplateFilter } from "./recent-badges-types";
 import { TemplateInfoModal } from "./template-info-modal";
 import { DeleteBadgeModal } from "./delete-badge-modal";
 
@@ -20,11 +20,9 @@ export default function RecentBadges() {
 
 	const {
 		templates,
-		total,
 		isLoading,
 		isError,
-	} = useRecentOrganizerBadges(page, RECENT_BADGES_LIMIT);
-	const totalPages = Math.ceil(total / RECENT_BADGES_LIMIT);
+	} = useRecentOrganizerBadges(1, BADGES_FETCH_LIMIT);
 
 	const { templates: platformTemplates } = usePlatformTemplates();
 	const [activeFilter, setActiveFilter] = useState<TemplateFilter>("All");
@@ -39,6 +37,17 @@ export default function RecentBadges() {
 			: templates.filter(
 					(template) => template.status === activeFilter.toLowerCase(),
 				);
+
+	const totalPages = Math.max(1, Math.ceil(filtered.length / RECENT_BADGES_LIMIT));
+	const pagedTemplates = filtered.slice(
+		(page - 1) * RECENT_BADGES_LIMIT,
+		page * RECENT_BADGES_LIMIT,
+	);
+
+	function handleFilterChange(filter: TemplateFilter) {
+		setActiveFilter(filter);
+		setPage(1);
+	}
 
 	const platformTemplatesById = useMemo(
 		() => new Map(platformTemplates.map((template) => [template.id, template])),
@@ -74,11 +83,11 @@ export default function RecentBadges() {
 		<div className="w-full overflow-hidden overflow-y-visible rounded-2xl border border-[#F0F0EE]">
 			<RecentBadgesHeader
 				activeFilter={activeFilter}
-				onFilterChange={setActiveFilter}
+				onFilterChange={handleFilterChange}
 			/>
 
 			<RecentBadgesMobileList
-				templates={filtered}
+				templates={pagedTemplates}
 				loading={isLoading}
 				getTemplateThumbnail={getTemplateThumbnail}
 				onSelectTemplate={setSelectedTemplate}
@@ -86,7 +95,7 @@ export default function RecentBadges() {
 				onRequestUnpublish={(template) => unpublishMutation.mutate(template.id)}
 			/>
 			<RecentBadgesTable
-				templates={filtered}
+				templates={pagedTemplates}
 				loading={isLoading}
 				getTemplateThumbnail={getTemplateThumbnail}
 				isError={isError}

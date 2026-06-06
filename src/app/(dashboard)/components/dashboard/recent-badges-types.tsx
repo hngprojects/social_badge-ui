@@ -17,3 +17,4 @@ export type RecentBadgesListProps = {
 export const FILTERS: TemplateFilter[] = ["All", "Draft", "Live"];
 
 export const RECENT_BADGES_LIMIT = 3;
+export const BADGES_FETCH_LIMIT = 100;
