@@ -77,11 +77,11 @@ export default function BadgeReady({
 
     const target = shareUrls[platformId];
     if (target) {
-      const popup = window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
-      if (!popup) {
-        toast.error("Popup was blocked. Please allow popups for this site to share.");
-        return;
-      }
+      const a = document.createElement("a");
+      a.href = target;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.click();
       if (slug) incrementShare(slug);
     }
   };
