@@ -29,7 +29,7 @@ export function useTemplateGallery() {
   });
 
   const templates = useMemo((): LayoutTemplate[] => {
-    if (apiTemplates && apiTemplates.length > 0) return apiTemplates;
+    if (apiTemplates && apiTemplates.length > 0) return [...apiTemplates].reverse();
     if (isError) return EXTENDED_MOCK_DB;
     return [];
   }, [apiTemplates, isError]);
