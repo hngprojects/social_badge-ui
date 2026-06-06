@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const MESSAGE_MAX_LENGTH = 250;
+const MESSAGE_MAX_LENGTH = 500;
 
 const contactSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -71,7 +71,7 @@ export default function ContactForm() {
     },
   });
   const messageValue = useWatch({ control, name: "message" });
-  const messageLength = messageValue.length;
+  const messageLength = messageValue?.length ?? 0;
 
   const onSubmit = (data: ContactFormValues) => {
     setStatus({ type: null, message: "" });

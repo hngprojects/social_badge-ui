@@ -11,12 +11,6 @@ export const useIncrementBadgeShare = () => {
 		mutationFn: incrementBadgeShare,
 
 		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: badgeAnalyticsKey,
-			});
-			queryClient.invalidateQueries({
-				queryKey: organizerTemplateInstancesRootKey,
-			});
 			queryClient.refetchQueries({
 				queryKey: badgeAnalyticsKey,
 				type: "active",
