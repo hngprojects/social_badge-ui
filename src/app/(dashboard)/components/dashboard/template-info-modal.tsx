@@ -19,11 +19,13 @@ export function TemplateInfoModal({
   thumbnailUrl,
   onClose,
   onRequestDelete,
+  onRequestUnpublish,
 }: {
   template: OrganizerTemplateInstance;
   thumbnailUrl?: string | null;
   onClose: () => void;
   onRequestDelete: (template: OrganizerTemplateInstance) => void;
+  onRequestUnpublish: (template: OrganizerTemplateInstance) => void;
 }) {
   const fullUrl = template.share_slug
     ? buildParticipantShareUrl(template.share_slug)
@@ -31,10 +33,10 @@ export function TemplateInfoModal({
   const displayUrl = fullUrl
     ? formatShareUrlForDisplay(fullUrl)
     : "Not yet published";
+  const isLive = template.is_published || template.status === "live";
   const statusDescription = fullUrl
     ? "The badge is live and sharable. Participants can claim this badge and share it on social media."
     : "This badge is not yet published. Publish it to create a shareable link for participants.";
-
   return (
     <Dialog open={true} onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent
@@ -130,7 +132,7 @@ export function TemplateInfoModal({
             </Button>
           </div>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <div className="mt-5 flex flex-wrap gap-3">
             <Button
               variant="outline"
               onClick={() => onRequestDelete(template)}
@@ -139,7 +141,20 @@ export function TemplateInfoModal({
               Delete badge
             </Button>
 
-            <Button asChild className="h-auto rounded-full bg-[#242424] px-5 py-2.5 text-[13px] font-semibold text-white hover:bg-[#242424]/90">
+            {isLive && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  onRequestUnpublish(template);
+                  onClose();
+                }}
+                className="h-auto rounded-full border border-gray-200 px-5 py-2.5 text-[13px] font-semibold text-gray-600 hover:bg-gray-50"
+              >
+                Unpublish
+              </Button>
+            )}
+
+            <Button asChild className="h-auto flex-1 rounded-full bg-[#242424] px-5 py-2.5 text-[13px] font-semibold text-white hover:bg-[#242424]/90">
               <Link href={`/create-badges/customize?id=${encodeURIComponent(template.id)}`}>
                 Edit badge
               </Link>

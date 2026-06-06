@@ -7,11 +7,13 @@ import Link from "next/link";
 export function MoreMenu({
   onEdit,
   onViewInfo,
+  onUnpublish,
   onDelete,
   editHref,
 }: {
   onEdit?: () => void;
   onViewInfo?: () => void;
+  onUnpublish?: () => void;
   onDelete?: () => void;
   editHref?: string;
 }) {
@@ -76,58 +78,70 @@ export function MoreMenu({
   }, [open]);
 
   function handleAction(action?: () => void) {
-    action?.();
+    if (!action) return;
+    action();
     setOpen(false);
   }
 
   return (
-    <div className="inline-block">
-      <KebabMenu buttonRef={buttonRef} toggleMenu={toggleMenu} open={open} />
+		<div className="inline-block">
+			<KebabMenu buttonRef={buttonRef} toggleMenu={toggleMenu} open={open} />
 
-      {open &&
-        createPortal(
-          <div
-            ref={menuRef}
-            role="menu"
-            style={{
-              position: "absolute",
-              top: position.top,
-              left: position.left,
-              zIndex: 9999,
-            }}
-            className="w-[190px] rounded-2xl border border-[#E5E7EB] bg-white p-2 text-left shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
-          >
-            {editHref && (
-              <Link
-                href={editHref}
-                role="menuitem"
-                onClick={() => handleAction(onEdit)}
-                className="inline-flex w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
-              >
-                Edit
-              </Link>
-            )}
+			{open &&
+				createPortal(
+					<div
+						ref={menuRef}
+						role="menu"
+						style={{
+							position: "absolute",
+							top: position.top,
+							left: position.left,
+							zIndex: 9999,
+						}}
+						className="w-[190px] rounded-2xl border border-[#E5E7EB] bg-white p-2 text-left shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
+					>
+						{editHref && (
+							<Link
+								href={editHref}
+								role="menuitem"
+								onClick={() => handleAction(onEdit)}
+								className="inline-flex w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
+							>
+								Edit
+							</Link>
+						)}
 
-            <button
-              type="button"
-              role="menuitem"
-              onClick={() => handleAction(onViewInfo)}
-              className="w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
-            >
-              View info
-            </button>
+						<button
+							type="button"
+							role="menuitem"
+							onClick={() => handleAction(onViewInfo)}
+							className="w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
+						>
+							View info
+						</button>
 
-            <button
-              type="button"
-              role="menuitem"
-              onClick={() => handleAction(onDelete)}
-              className="w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#DC2626] hover:bg-[#FEF2F2]"
-            >
-              Delete
-            </button>
-          </div>,
-          document.body,
-        )}
-    </div>
-  );
+						{onUnpublish && (
+							<button
+								type="button"
+								role="menuitem"
+								onClick={() => handleAction(onUnpublish)}
+								className="w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
+							>
+								Unpublish
+							</button>
+						)}
+
+						<button
+							type="button"
+							role="menuitem"
+							onClick={() => handleAction(onDelete)}
+							className="w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#DC2626] hover:bg-[#FEF2F2]"
+						>
+							Delete
+						</button>
+					</div>,
+					document.body,
+				)}
+		</div>
+	);
 }

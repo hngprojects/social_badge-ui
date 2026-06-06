@@ -79,7 +79,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			type: "participant_input",
 			label: "NAME",
 			placeholder: "Your name",
-			required: true,
+			required: state.participantNameVisible ? true : false,
 			visible: state.participantNameVisible,
 		});
 	}
@@ -90,7 +90,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			type: "participant_input",
 			label: "ROLE / TITLE",
 			placeholder: "e.g. Product Designer",
-			required: state.roleTitleRequired,
+			required: state.roleTitleVisible ? state.roleTitleRequired : false,
 			visible: state.roleTitleVisible,
 		});
 	}

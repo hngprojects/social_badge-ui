@@ -42,10 +42,16 @@ export default function Hero() {
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1140px)");
-    setIsDesktop(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    const onChange = (e: MediaQueryListEvent | { matches: boolean }) => setIsDesktop(e.matches);
+    
+    // Use requestAnimationFrame to avoid synchronous state update in effect
+    const raf = requestAnimationFrame(() => onChange(mq));
+
+    mq.addEventListener("change", onChange as EventListener);
+    return () => {
+      cancelAnimationFrame(raf);
+      mq.removeEventListener("change", onChange as EventListener);
+    };
   }, []);
 
   useEffect(() => {

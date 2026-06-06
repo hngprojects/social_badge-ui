@@ -28,7 +28,7 @@ export default function SideNav() {
 
   return (
     <aside
-      className={`h-dvh shrink-0 overflow-visible border-r pb-6 text-black transition-[width] duration-300 ${
+      className={`h-full shrink-0 overflow-visible border-r pb-6 text-black transition-[width] duration-300 ${
         expanded ? "w-[230px]" : "w-[76px]"
       }`}
     >

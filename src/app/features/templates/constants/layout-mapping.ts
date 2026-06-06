@@ -30,8 +30,6 @@ export function resolveLayoutId(
 
 	const mapped = PLATFORM_TEMPLATE_LAYOUT_MAP[platformTemplateId];
 	if (mapped) return mapped;
-
-	// Fallback should probably be one of the new ones
 	return "bold_name_pink_v1";
 }
 
