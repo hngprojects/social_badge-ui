@@ -85,7 +85,7 @@ export default function BadgeReady({
 			whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
 			facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
 			x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
-telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
+			telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
 		};
 
 		const target = shareUrls[platformId];
@@ -152,7 +152,7 @@ telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
 				</span>
 				<hr className="flex-1 border-t border-[#D1D5DB]" />
 			</motion.div>
-			<motion.div
+			{/* <motion.div
 				className="grid grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-2 w-full place-items-center sm:gap-y-8 px-10"
 				variants={containerVariants}
 			>
@@ -179,7 +179,7 @@ telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
 						</span>
 					</motion.button>
 				))}
-			</motion.div>
+			</motion.div> */}
 			<motion.div variants={itemVariants}>
 				<CaptionBox
 					value={captionText}
