@@ -101,7 +101,7 @@ export function NotificationDropDown() {
             className={cn(
               "text-[16px] leading-5 transition-colors",
               canMarkAllRead
-                ? "text-primary hover:text-primary/80"
+                ? "text-primary hover:text-primary/70"
                 : "cursor-not-allowed text-[#BDBDBD]",
             )}
           >
@@ -159,9 +159,9 @@ export function NotificationDropDown() {
               : "/settings?tab=notifications"
           }
           onClick={() => setOpen(false)}
-          className="grid place-content-center py-5"
+          className="grid place-content-center py-5 text-primary transition-colors hover:text-primary/70"
         >
-          <p className="text-[15px] font-medium leading-[19px] text-primary">
+          <p className="text-[15px] font-medium leading-[19px]">
             {notifications.length > 0
               ? "View all notifications"
               : "Notification Settings"}
