@@ -8,14 +8,8 @@ const BADGE_ANALYTICS_ENDPOINT = "/badges/analytics";
 
 export async function getBadgeAnalytics(): Promise<BadgeAnalyticsData> {
   const body = await apiClient<BadgeAnalyticsResponse>(
-    BADGE_ANALYTICS_ENDPOINT,
-    {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
-      },
-    },
+    `${BADGE_ANALYTICS_ENDPOINT}?t=${Date.now()}`,
+    { method: "GET" },
   );
 
   return body.data;
