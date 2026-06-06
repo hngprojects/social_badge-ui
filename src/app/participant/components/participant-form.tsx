@@ -151,7 +151,7 @@ export default function ParticipantForm({
 					<label className="text-[13.5px] font-bold flex justify-between items-center">
 						<span>NAME <span className="text-[#ff693E]">*</span></span>
 						<span className="text-[10px] text-gray-400 font-medium">
-							{formValues.name.length}/25
+							{formValues.name?.length ?? 0}/25
 						</span>
 					</label>
 

@@ -7,11 +7,13 @@ import Link from "next/link";
 export function MoreMenu({
   onEdit,
   onViewInfo,
+  onUnpublish,
   onDelete,
   editHref,
 }: {
   onEdit?: () => void;
   onViewInfo?: () => void;
+  onUnpublish?: () => void;
   onDelete?: () => void;
   editHref?: string;
 }) {
@@ -76,7 +78,8 @@ export function MoreMenu({
   }, [open]);
 
   function handleAction(action?: () => void) {
-    action?.();
+    if (!action) return;
+    action();
     setOpen(false);
   }
 
@@ -116,14 +119,18 @@ export function MoreMenu({
 						>
 							View info
 						</button>
-						<button
-							type="button"
-							role="menuitem"
-							onClick={() => handleAction(onViewInfo)}
-							className="w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
-						>
-Unpublish 
-						</button>
+
+						{onUnpublish && (
+							<button
+								type="button"
+								role="menuitem"
+								onClick={() => handleAction(onUnpublish)}
+								className="w-full rounded-xl px-4 py-3 text-left text-[16px] font-medium text-[#242424] hover:bg-[#F8F8F8]"
+							>
+								Unpublish
+							</button>
+						)}
+
 						<button
 							type="button"
 							role="menuitem"

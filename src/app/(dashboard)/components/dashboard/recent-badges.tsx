@@ -4,6 +4,7 @@ import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-templ
 import { useRecentOrganizerBadges } from "../../hooks/use-organizer-template-instances";
 import { usePlatformTemplates } from "../../hooks/use-platform-templates";
 import { useDeleteOrganizerTemplate } from "../../hooks/use-delete-template";
+import { useUnpublishTemplate } from "../../hooks/use-unpublish-template";
 import { RecentBadgesHeader } from "./recent-badges-header";
 import { RecentBadgesMobileList } from "./recent-badges-mobile-list";
 import { RecentBadgesTable } from "./recent-badges-table";
@@ -15,6 +16,7 @@ import { AnimatePresence, motion } from "motion/react";
 export default function RecentBadges() {
 	// GET RECENT ORGANIZERS BADGES WITH HOOK
 	const deleteMutation = useDeleteOrganizerTemplate();
+	const unpublishMutation = useUnpublishTemplate();
 	const [page, setPage] = useState(1);
 
 	const {
@@ -99,6 +101,7 @@ export default function RecentBadges() {
 				templates={filtered}
 				onSelectTemplate={setSelectedTemplate}
 				onRequestDelete={setTemplateToDelete}
+				onRequestUnpublish={(template) => unpublishMutation.mutate(template.id)}
 			/>
 
 			<AnimatePresence mode="wait" custom={direction}>
@@ -118,6 +121,7 @@ export default function RecentBadges() {
 						isError={isError}
 						onSelectTemplate={setSelectedTemplate}
 						onRequestDelete={setTemplateToDelete}
+						onRequestUnpublish={(template) => unpublishMutation.mutate(template.id)}
 					/>
 				</motion.div>
 			</AnimatePresence>
@@ -154,6 +158,7 @@ export default function RecentBadges() {
 						setSelectedTemplate(null);
 						setTemplateToDelete(template);
 					}}
+					onRequestUnpublish={(template) => unpublishMutation.mutate(template.id)}
 				/>
 			)}
 
