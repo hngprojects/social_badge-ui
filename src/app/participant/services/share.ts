@@ -54,31 +54,6 @@ export const shareService = {
         );
         break;
 
-      case "linkedin":
-        window.open(
-          `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-          "_blank",
-          "noopener,noreferrer",
-        );
-        break;
-
-      case "instagram":
-        try {
-          if (navigator.share) {
-            await navigator.share({ text });
-            break;
-          }
-        } catch {}
-        if (navigator.clipboard?.writeText) {
-          try {
-            await navigator.clipboard.writeText(text);
-            toast.message("Caption copied. Paste it into Instagram.");
-          } catch {
-            toast.error("Failed to write in clipboard");
-          }
-        }
-        break;
-
       default:
         console.warn("Unsupported platform");
     }

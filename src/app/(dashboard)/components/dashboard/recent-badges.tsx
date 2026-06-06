@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo, useCallback } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
-import { useRecentOrganizerBadges } from "../../hooks/use-organizer-template-instances";
+import { useAllOrganizerBadges } from "../../hooks/use-organizer-template-instances";
 import { usePlatformTemplates } from "../../hooks/use-platform-templates";
 import { useDeleteOrganizerTemplate } from "../../hooks/use-delete-template";
 import { useUnpublishTemplate } from "../../hooks/use-unpublish-template";
@@ -20,11 +20,9 @@ export default function RecentBadges() {
 
 	const {
 		templates,
-		total,
 		isLoading,
 		isError,
-	} = useRecentOrganizerBadges(page, RECENT_BADGES_LIMIT);
-	const totalPages = Math.ceil(total / RECENT_BADGES_LIMIT);
+	} = useAllOrganizerBadges();
 
 	const { templates: platformTemplates } = usePlatformTemplates();
 	const [activeFilter, setActiveFilter] = useState<TemplateFilter>("All");
@@ -39,6 +37,18 @@ export default function RecentBadges() {
 			: templates.filter(
 					(template) => template.status === activeFilter.toLowerCase(),
 				);
+
+	const totalPages = Math.max(1, Math.ceil(filtered.length / RECENT_BADGES_LIMIT));
+	const clampedPage = Math.min(page, totalPages);
+	const pagedTemplates = filtered.slice(
+		(clampedPage - 1) * RECENT_BADGES_LIMIT,
+		clampedPage * RECENT_BADGES_LIMIT,
+	);
+
+	function handleFilterChange(filter: TemplateFilter) {
+		setActiveFilter(filter);
+		setPage(1);
+	}
 
 	const platformTemplatesById = useMemo(
 		() => new Map(platformTemplates.map((template) => [template.id, template])),
@@ -74,11 +84,11 @@ export default function RecentBadges() {
 		<div className="w-full overflow-hidden overflow-y-visible rounded-2xl border border-[#F0F0EE]">
 			<RecentBadgesHeader
 				activeFilter={activeFilter}
-				onFilterChange={setActiveFilter}
+				onFilterChange={handleFilterChange}
 			/>
 
 			<RecentBadgesMobileList
-				templates={filtered}
+				templates={pagedTemplates}
 				loading={isLoading}
 				getTemplateThumbnail={getTemplateThumbnail}
 				onSelectTemplate={setSelectedTemplate}
@@ -86,7 +96,7 @@ export default function RecentBadges() {
 				onRequestUnpublish={(template) => unpublishMutation.mutate(template.id)}
 			/>
 			<RecentBadgesTable
-				templates={filtered}
+				templates={pagedTemplates}
 				loading={isLoading}
 				getTemplateThumbnail={getTemplateThumbnail}
 				isError={isError}
@@ -99,19 +109,19 @@ export default function RecentBadges() {
 			<div className="flex justify-end gap-2 border-t border-[#F0F0EE] p-4">
 				<button
 					onClick={handlePreviousPage}
-					disabled={page === 1}
+					disabled={clampedPage === 1}
 					className="rounded-md border px-4 py-2 disabled:opacity-50"
 				>
 					Previous
 				</button>
 
 				<span className="flex items-center text-sm">
-					Page {page} of {totalPages}
+					Page {clampedPage} of {totalPages}
 				</span>
 
 				<button
 					onClick={handleNextPage}
-					disabled={page === totalPages}
+					disabled={clampedPage === totalPages}
 					className="rounded-md border px-4 py-2 disabled:opacity-50"
 				>
 					Next

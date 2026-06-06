@@ -47,3 +47,30 @@ export function useRecentOrganizerBadges(page = 1, limit = 20) {
 		activeBadges,
 	};
 }
+
+// Probe page size — large enough to handle most organizers in one request,
+// but still bounded so the initial load isn't unbounded.
+const FETCH_PROBE_LIMIT = 100;
+
+
+export function useAllOrganizerBadges() {
+	const probe = useOrganizerTemplateInstances(1, FETCH_PROBE_LIMIT);
+	const total = probe.data?.total ?? 0;
+
+	const fullLimit = total > FETCH_PROBE_LIMIT ? total : FETCH_PROBE_LIMIT;
+	const all = useOrganizerTemplateInstances(1, fullLimit);
+
+	const templates = all.data?.templates ?? [];
+	const activeBadges = templates.filter(
+		(t) => t.is_published || t.status === "live",
+	).length;
+
+	return {
+		...all,
+		isLoading: probe.isLoading || all.isLoading,
+		isError: probe.isError || all.isError,
+		templates,
+		total,
+		activeBadges,
+	};
+}
