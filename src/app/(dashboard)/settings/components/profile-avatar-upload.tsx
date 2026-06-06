@@ -23,7 +23,7 @@ export function ProfileAvatarUpload({
             <h2 className="text-[#3A3A3A] text-[16px] font-bold">
               Profile Photo
             </h2>
-            <p>JPG, PNG, or GIF. Square ratio recommended. Max 2MB.</p>
+            <p>JPG, PNG, or GIF. Square ratio recommended. Max 10MB.</p>
           </div>
 
           <div className="flex items-center gap-4">
