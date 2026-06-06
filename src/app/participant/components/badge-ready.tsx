@@ -72,13 +72,16 @@ export default function BadgeReady({
       whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
       x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
       telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
     };
 
     const target = shareUrls[platformId];
     if (target) {
-      window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
+      const popup = window.open(target, "_blank", "noopener,noreferrer,width=600,height=500");
+      if (!popup) {
+        toast.error("Popup was blocked. Please allow popups for this site to share.");
+        return;
+      }
       if (slug) incrementShare(slug);
     }
   };

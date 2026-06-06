@@ -1,14 +1,14 @@
 "use client";
 import { useState, useMemo, useCallback } from "react";
 import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
-import { useRecentOrganizerBadges } from "../../hooks/use-organizer-template-instances";
+import { useAllOrganizerBadges } from "../../hooks/use-organizer-template-instances";
 import { usePlatformTemplates } from "../../hooks/use-platform-templates";
 import { useDeleteOrganizerTemplate } from "../../hooks/use-delete-template";
 import { useUnpublishTemplate } from "../../hooks/use-unpublish-template";
 import { RecentBadgesHeader } from "./recent-badges-header";
 import { RecentBadgesMobileList } from "./recent-badges-mobile-list";
 import { RecentBadgesTable } from "./recent-badges-table";
-import { BADGES_FETCH_LIMIT, RECENT_BADGES_LIMIT, TemplateFilter } from "./recent-badges-types";
+import { RECENT_BADGES_LIMIT, TemplateFilter } from "./recent-badges-types";
 import { TemplateInfoModal } from "./template-info-modal";
 import { DeleteBadgeModal } from "./delete-badge-modal";
 
@@ -22,7 +22,7 @@ export default function RecentBadges() {
 		templates,
 		isLoading,
 		isError,
-	} = useRecentOrganizerBadges(1, BADGES_FETCH_LIMIT);
+	} = useAllOrganizerBadges();
 
 	const { templates: platformTemplates } = usePlatformTemplates();
 	const [activeFilter, setActiveFilter] = useState<TemplateFilter>("All");
@@ -39,9 +39,10 @@ export default function RecentBadges() {
 				);
 
 	const totalPages = Math.max(1, Math.ceil(filtered.length / RECENT_BADGES_LIMIT));
+	const clampedPage = Math.min(page, totalPages);
 	const pagedTemplates = filtered.slice(
-		(page - 1) * RECENT_BADGES_LIMIT,
-		page * RECENT_BADGES_LIMIT,
+		(clampedPage - 1) * RECENT_BADGES_LIMIT,
+		clampedPage * RECENT_BADGES_LIMIT,
 	);
 
 	function handleFilterChange(filter: TemplateFilter) {
@@ -108,19 +109,19 @@ export default function RecentBadges() {
 			<div className="flex justify-end gap-2 border-t border-[#F0F0EE] p-4">
 				<button
 					onClick={handlePreviousPage}
-					disabled={page === 1}
+					disabled={clampedPage === 1}
 					className="rounded-md border px-4 py-2 disabled:opacity-50"
 				>
 					Previous
 				</button>
 
 				<span className="flex items-center text-sm">
-					Page {page} of {totalPages}
+					Page {clampedPage} of {totalPages}
 				</span>
 
 				<button
 					onClick={handleNextPage}
-					disabled={page === totalPages}
+					disabled={clampedPage === totalPages}
 					className="rounded-md border px-4 py-2 disabled:opacity-50"
 				>
 					Next
