@@ -44,7 +44,7 @@ export function CustomizeBadgeForm({
   } = useForm<CustomizeBadgeFormValues>({
     resolver: zodResolver(customizeBadgeSchema),
     defaultValues: {
-      eventName: "",
+      eventName: organiserTemplateId ? editor.eventName : "",
       title: editor.title,
       eventDate: editor.eventDate,
       eventTime: editor.eventTime,

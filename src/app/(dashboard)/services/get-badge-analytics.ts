@@ -11,6 +11,10 @@ export async function getBadgeAnalytics(): Promise<BadgeAnalyticsData> {
     BADGE_ANALYTICS_ENDPOINT,
     {
       method: "GET",
+      headers: {
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+      },
     },
   );
 
