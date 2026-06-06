@@ -11,6 +11,9 @@ export function SettingsSubCard({
   detail,
   bg,
   showSwitch,
+  switchChecked,
+  switchDisabled,
+  onSwitchChange,
   showIcon,
   danger,
   isHeader,
@@ -42,7 +45,14 @@ export function SettingsSubCard({
       </div>
 
       {/* CARD RIGHT */}
-      {showSwitch && id && <CardSwitch id={id} />}
+      {showSwitch && id && (
+        <CardSwitch
+          checked={switchChecked}
+          disabled={switchDisabled}
+          id={id}
+          onCheckedChange={onSwitchChange}
+        />
+      )}
     </div>
   );
 }

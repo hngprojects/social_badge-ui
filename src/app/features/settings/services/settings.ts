@@ -1,5 +1,8 @@
 import { apiClient } from "@/lib/api/client";
-import { UpdateProfileResponse, DeleteProfileResponse } from "../types";
+import {
+  DeleteProfileResponse,
+  UpdateProfileResponse,
+} from "../types";
 
 export const deleteProfile = async () => {
   return apiClient<DeleteProfileResponse>("/profile", {
