@@ -6,6 +6,7 @@ import { StatusPill } from "./status-pill";
 
 export function RecentBadgesMobileList({
   templates,
+  loading,
   getTemplateThumbnail,
   onSelectTemplate,
   onRequestDelete,
@@ -30,7 +31,13 @@ export function RecentBadgesMobileList({
         <span />
       </div>
 
-      {templates.map((template) => {
+      {loading ? (
+        <div className="flex justify-center gap-2 py-10">
+          <span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.3s]" />
+          <span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.15s]" />
+          <span className="h-3 w-3 animate-bounce rounded-full bg-primary-500" />
+        </div>
+      ) : templates.map((template) => {
         const canUnpublish = template.is_published || template.status === "live";
 
         return (
