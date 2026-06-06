@@ -72,6 +72,8 @@ export default function ContactForm() {
   });
   const messageValue = useWatch({ control, name: "message" });
   const messageLength = messageValue?.length ?? 0;
+  const isMessageTooShort = messageLength < 10;
+  const isSubmitDisabled = isSubmitting || isLoading || isMessageTooShort;
 
   const onSubmit = (data: ContactFormValues) => {
     setStatus({ type: null, message: "" });
@@ -298,7 +300,9 @@ export default function ContactForm() {
             {errors.message ? (
               <p className="text-xs text-red-500">{errors.message.message}</p>
             ) : (
-              <span />
+              <p className="text-xs text-[#8A8A85]">
+                Message should not exceed {MESSAGE_MAX_LENGTH} characters.
+              </p>
             )}
             <p className="shrink-0 text-xs text-[#8A8A85]">
               {messageLength}/{MESSAGE_MAX_LENGTH}
@@ -312,8 +316,8 @@ export default function ContactForm() {
 
         <Button
           type="submit"
-          disabled={isSubmitting || isLoading}
-          className="w-full h-14 text-base cursor-pointer font-light mt-1 gap-2 disabled:opacity-60"
+          disabled={isSubmitDisabled}
+          className="w-full h-14 text-base cursor-pointer font-light mt-1 gap-2 disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting || isLoading ? "Sending..." : "Send Message"}
           {!isSubmitting && !isLoading && (

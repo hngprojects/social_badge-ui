@@ -11,7 +11,11 @@ export default function ContactWays() {
 			</p>
 
 			{/* Email card */}
-			<div className="flex items-center gap-3 bg-white border border-[#EAEAE6] rounded-[14px] px-6 py-5">
+			<a
+				href="mailto:flaretag@gmail.com"
+				className="flex items-center gap-3 bg-white border border-[#EAEAE6] rounded-[14px] px-6 py-5 transition-colors hover:border-[#FF693E] hover:bg-[#FFF8F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF693E]/40"
+				aria-label="Email Flare Tag at flaretagme@gmail.com"
+			>
 				<div className="flex h-12 w-12 items-center justify-center rounded-xl shrink-0">
 					<Image
 						width={56}
@@ -25,7 +29,7 @@ export default function ContactWays() {
 					<p className="text-base font-semibold text-left">Email us</p>
 					<p className="text-[#8A8A85] text-sm mt-0.5">flaretagme@gmail.com</p>
 				</div>
-			</div>
+			</a>
 		</div>
 	);
 }
