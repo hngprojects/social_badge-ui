@@ -38,10 +38,10 @@ export default function NotificationsTabs() {
     <Tabs
       value={activeTab}
       onValueChange={handleTabChange}
-      className="flex w-full flex-1 flex-col gap-[6px]"
+      className="flex w-full flex-col gap-[6px]"
     >
-      <div className="w-fit max-w-full overflow-hidden rounded-[12px] border bg-white">
-        <TabsList className="flex gap-1.5 p-1.5 bg-white">
+      <div className="w-fit rounded-[12px] border bg-white">
+        <TabsList className="flex gap-1.5 w-fit p-1.5 bg-white">
           <TabsTrigger
             value="all"
             className="py-2 px-3.5 leading-[19.5px] rounded-[12px]"
@@ -59,11 +59,11 @@ export default function NotificationsTabs() {
       </div>
 
       {isLoading ? (
-        <div className="w-full rounded-[12px] bg-white px-4 py-8 text-center text-[14px] text-[#9CA3AF]">
+        <div className="w-full rounded-[12px] border border-[#F2F0EC] bg-white px-4 py-8 text-center text-[14px] text-[#9CA3AF]">
           Loading notifications...
         </div>
       ) : isError ? (
-        <div className="w-full rounded-[12px] bg-white px-4 py-8 text-center text-[14px] text-[#9CA3AF]">
+        <div className="w-full rounded-[12px] border border-[#F2F0EC] bg-white px-4 py-8 text-center text-[14px] text-[#9CA3AF]">
           Could not load notifications.
         </div>
       ) : (

@@ -12,7 +12,8 @@ export default function CaptionBox({
 	...props
 }: CaptionBoxProps & { value?: string; maxLength?: number }) {
 	return (
-		<div className="flex h-33.5 flex-col overflow-hidden rounded-2xl border bg-[#f6f5f5] p-3 transition-all duration-150">
+		/* Removed fixed 'h-40 md:h-33.5' so the container can expand dynamically */
+		<div className="space-y-2 rounded-2xl border bg-[#f6f5f5] p-3 min-h-33.5 h-auto transition-all duration-150">
 			<div className="flex items-center justify-between">
 				<h3 className="font-medium font-sans">Caption</h3>
 
@@ -31,8 +32,8 @@ export default function CaptionBox({
 			</div>
 
 			<Textarea
-				className="my-auto h-16 min-h-16 field-sizing-fixed resize-none overflow-y-auto border-0 bg-transparent text-[14px] font-medium focus-visible:ring-0"
-				rows={3}
+				className="border-0 bg-transparent text-[14px] font-medium focus-visible:ring-0 resize-none overflow-hidden min-h-[40px]"
+				rows={1} // Starts at 1 row and auto-expands cleanly via the form's onChange handle
 				value={value}
 				maxLength={maxLength}
 				{...props}
