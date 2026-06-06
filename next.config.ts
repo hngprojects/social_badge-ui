@@ -17,6 +17,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://api.staging.flaretag.hng14.com/api/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
