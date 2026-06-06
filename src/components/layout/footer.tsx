@@ -24,7 +24,7 @@ const PRODUCT_LINKS = [
 ] as const;
 
 const SUPPORT_LINKS = [
-	{ label: "FAQ", href: "/pricing#pricing-faq" },
+	{ label: "FAQ", href: "/#faq-section" },
 	{ label: "Contact Us", href: "/contact" },
 ] as const;
 

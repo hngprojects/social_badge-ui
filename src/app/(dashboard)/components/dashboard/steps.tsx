@@ -44,7 +44,9 @@ export default function Steps() {
               {step.number}
             </p>
           </div>
-          <p className="font-bold text-[15px] text-[#3A3A3A]">{step.head}</p>
+          <p className="font-bold text-[20px] leading-[1.3] text-[#3A3A3A]">
+            {step.head}
+          </p>
           <p>{step.body}</p>
         </article>
       ))}
