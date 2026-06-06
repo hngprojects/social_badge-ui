@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const MESSAGE_MIN_LENGTH = 10;
 const MESSAGE_MAX_LENGTH = 500;
 
 const contactSchema = z.object({
@@ -36,7 +37,10 @@ const contactSchema = z.object({
   subject: z.string().min(1, "Please select a topic"),
   message: z
     .string()
-    .min(10, "Message must be at least 10 characters")
+    .min(
+      MESSAGE_MIN_LENGTH,
+      `Message must be at least ${MESSAGE_MIN_LENGTH} characters`,
+    )
     .max(
       MESSAGE_MAX_LENGTH,
       `Message cannot exceed ${MESSAGE_MAX_LENGTH} characters`,
@@ -72,6 +76,8 @@ export default function ContactForm() {
   });
   const messageValue = useWatch({ control, name: "message" });
   const messageLength = messageValue?.length ?? 0;
+  const isMessageTooShort = messageLength < MESSAGE_MIN_LENGTH;
+  const isSubmitDisabled = isSubmitting || isLoading || isMessageTooShort;
 
   const onSubmit = (data: ContactFormValues) => {
     setStatus({ type: null, message: "" });
@@ -298,7 +304,10 @@ export default function ContactForm() {
             {errors.message ? (
               <p className="text-xs text-red-500">{errors.message.message}</p>
             ) : (
-              <span />
+              <p className="text-xs text-[#8A8A85]">
+                Message must be at least {MESSAGE_MIN_LENGTH} characters and
+                should not exceed {MESSAGE_MAX_LENGTH} characters.
+              </p>
             )}
             <p className="shrink-0 text-xs text-[#8A8A85]">
               {messageLength}/{MESSAGE_MAX_LENGTH}
@@ -312,8 +321,8 @@ export default function ContactForm() {
 
         <Button
           type="submit"
-          disabled={isSubmitting || isLoading}
-          className="w-full h-14 text-base cursor-pointer font-light mt-1 gap-2 disabled:opacity-60"
+          disabled={isSubmitDisabled}
+          className="w-full h-14 text-base cursor-pointer font-light mt-1 gap-2 disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting || isLoading ? "Sending..." : "Send Message"}
           {!isSubmitting && !isLoading && (
