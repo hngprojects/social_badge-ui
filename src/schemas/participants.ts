@@ -30,7 +30,13 @@ export const getParticipantSchema = ({
 			: z.string().optional(),
 
 		role: roleVisible
-			? z.string().trim().min(1, "Role is required")
+			? z
+					.string()
+					.trim()
+					.min(1, {
+						error: (issue) =>
+							issue.code === "too_small" ? "Role is required" : undefined,
+					})
 			: z.string().trim().optional(),
 
 		caption: z
