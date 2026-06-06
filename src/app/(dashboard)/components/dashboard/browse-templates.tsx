@@ -14,7 +14,7 @@ export default function BrowseTemplate() {
           <h1 className="text-[clamp(18px,2.5vw,20px)] font-semibold text-[#242424]">
             Get inspired
           </h1>
-          <p className="text-[13.5px] text-[#5C5C5C] text-balance">
+          <p className="text-[16px] text-[#5C5C5C] text-balance">
             Start from a trending template — you can always customise everything
             later.
           </p>

@@ -11,7 +11,6 @@ import { RecentBadgesTable } from "./recent-badges-table";
 import { RECENT_BADGES_LIMIT, TemplateFilter } from "./recent-badges-types";
 import { TemplateInfoModal } from "./template-info-modal";
 import { DeleteBadgeModal } from "./delete-badge-modal";
-import { AnimatePresence, motion } from "motion/react";
 
 export default function RecentBadges() {
 	// GET RECENT ORGANIZERS BADGES WITH HOOK
@@ -22,7 +21,7 @@ export default function RecentBadges() {
 	const {
 		templates,
 		total,
-		isLoading: loading,
+		isLoading,
 		isError,
 	} = useRecentOrganizerBadges(page, RECENT_BADGES_LIMIT);
 	const totalPages = Math.ceil(total / RECENT_BADGES_LIMIT);
@@ -56,30 +55,11 @@ export default function RecentBadges() {
 		[platformTemplatesById],
 	);
 
-	const [direction, setDirection] = useState(1);
-
-	const variants = {
-		enter: (direction: number) => ({
-			x: direction > 0 ? 30 : -30,
-			opacity: 0,
-		}),
-		center: {
-			x: 0,
-			opacity: 1,
-		},
-		exit: (direction: number) => ({
-			x: direction > 0 ? -30 : 30,
-			opacity: 0,
-		}),
-	};
-
 	function handleNextPage() {
-		setDirection(1);
 		setPage((p) => Math.min(p + 1, totalPages));
 	}
 
 	function handlePreviousPage() {
-		setDirection(-1);
 		setPage((p) => Math.max(p - 1, 1));
 	}
 
@@ -99,32 +79,21 @@ export default function RecentBadges() {
 
 			<RecentBadgesMobileList
 				templates={filtered}
+				loading={isLoading}
+				getTemplateThumbnail={getTemplateThumbnail}
 				onSelectTemplate={setSelectedTemplate}
 				onRequestDelete={setTemplateToDelete}
 				onRequestUnpublish={(template) => unpublishMutation.mutate(template.id)}
 			/>
-
-			<AnimatePresence mode="wait" custom={direction}>
-				<motion.div
-					key={page}
-					custom={direction}
-					variants={variants}
-					initial="enter"
-					animate="center"
-					exit="exit"
-					transition={{ duration: 0.35 }}
-				>
-					<RecentBadgesTable
-						templates={filtered}
-						getTemplateThumbnail={getTemplateThumbnail}
-						loading={loading}
-						isError={isError}
-						onSelectTemplate={setSelectedTemplate}
-						onRequestDelete={setTemplateToDelete}
-						onRequestUnpublish={(template) => unpublishMutation.mutate(template.id)}
-					/>
-				</motion.div>
-			</AnimatePresence>
+			<RecentBadgesTable
+				templates={filtered}
+				loading={isLoading}
+				getTemplateThumbnail={getTemplateThumbnail}
+				isError={isError}
+				onSelectTemplate={setSelectedTemplate}
+				onRequestDelete={setTemplateToDelete}
+				onRequestUnpublish={(template) => unpublishMutation.mutate(template.id)}
+			/>
 
 			{/* Previous and next buttons with page indicator */}
 			<div className="flex justify-end gap-2 border-t border-[#F0F0EE] p-4">

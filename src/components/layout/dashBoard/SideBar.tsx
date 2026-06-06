@@ -41,7 +41,7 @@ export default function SideNav() {
           >
             <div className="flex min-w-0 items-center gap-2">
               <Link
-                href="/dashboard"
+                href="/"
                 className="flex min-w-0 items-center gap-2"
               >
                 <Image
@@ -129,7 +129,7 @@ export default function SideNav() {
                   className="shrink-0"
                 />
                 {expanded && (
-                  <span className="text-[14px] font-medium leading-none">
+                  <span className="text-[15px] font-medium leading-none">
                     Help
                   </span>
                 )}
@@ -153,7 +153,7 @@ export default function SideNav() {
                 className="shrink-0"
               />
               {expanded && (
-                <span className="text-[14px] font-medium leading-none">
+                <span className="text-[15px] font-medium leading-none">
                   {isLoggingOut ? "Logging out..." : "Log out"}
                 </span>
               )}
@@ -176,10 +176,10 @@ export default function SideNav() {
 
             {expanded && (
               <div className="flex min-w-0 flex-col gap-1">
-                <p className="truncate text-[14px] font-medium leading-[20px] text-[#3A3A3A]">
+                <p className="truncate text-[15px] font-medium leading-[21px] text-[#3A3A3A]">
                   {displayName}
                 </p>
-                <p className="truncate text-[10px] font-medium tracking-[0.4px] leading-[12px] text-[#AFAFAF]">
+                <p className="truncate text-[11px] font-medium tracking-[0.4px] leading-[13px] text-[#AFAFAF]">
                   {email}
                 </p>
               </div>
@@ -273,7 +273,7 @@ function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
         />
 
         {expanded && (
-          <span className="text-[14px] font-medium leading-[20px]">
+          <span className="text-[15px] font-medium leading-[21px]">
             {nav.label}
           </span>
         )}

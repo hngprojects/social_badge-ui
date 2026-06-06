@@ -53,10 +53,16 @@ export function RecentBadgesTable({
 				</TableHeader>
 
 				<TableBody>
-					{loading && !hasTemplates ? (
-						<RecentBadgesTableMessage>
-							Loading recent badges...
-						</RecentBadgesTableMessage>
+					{loading ? (
+						<TableRow className="hover:bg-transparent">
+							<TableCell colSpan={TABLE_COLUMNS.length} className="px-4 py-10 text-center">
+								<div className="flex justify-center gap-2">
+									<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.3s]" />
+									<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.15s]" />
+									<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500" />
+								</div>
+							</TableCell>
+						</TableRow>
 					) : isError && !hasTemplates ? (
 						<RecentBadgesTableMessage className="text-red-500">
 							Could not load recent badges.
