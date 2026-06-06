@@ -43,7 +43,7 @@ export const TemplateCard = ({
           <span className="uppercase text-[10px] tracking-[1.2px] text-primary">
             {template.type}
           </span>
-          <span className="font-fraunces text-[20px] uppercase font-semibold text-[#0A0A0A] line-clamp-2">
+          <span className="font-fraunces text-[20px] capitalize font-semibold text-[#0A0A0A] line-clamp-2">
             {template.title}
           </span>
           <span className="text-[#8A8A85] text-[12px]">
