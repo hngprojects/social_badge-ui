@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getOrganizerTemplateInstances } from "../services/get-template-instances";
+import {
+	DASHBOARD_REFETCH_INTERVAL_MS,
+	DASHBOARD_STALE_TIME_MS,
+} from "../constants/query-refresh";
 
 // CACHE NAME
 export const organizerTemplateInstancesRootKey = [
@@ -17,9 +21,10 @@ export function useOrganizerTemplateInstances(page = 1, limit = 20) {
 	return useQuery({
 		queryKey: organizerTemplateInstancesKey(page, limit),
 		queryFn: () => getOrganizerTemplateInstances(page, limit),
-		refetchInterval: 10000, // Sync with analytics polling (10s)
-		refetchIntervalInBackground: true,
-		staleTime: 0,
+		refetchInterval: DASHBOARD_REFETCH_INTERVAL_MS,
+		refetchIntervalInBackground: false,
+		refetchOnWindowFocus: false,
+		staleTime: DASHBOARD_STALE_TIME_MS,
 	});
 }
 

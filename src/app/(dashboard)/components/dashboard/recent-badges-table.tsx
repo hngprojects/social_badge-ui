@@ -53,11 +53,7 @@ export function RecentBadgesTable({
 				</TableHeader>
 
 				<TableBody>
-					{loading && !hasTemplates ? (
-						<RecentBadgesTableMessage>
-							Loading recent badges...
-						</RecentBadgesTableMessage>
-					) : isError && !hasTemplates ? (
+					{isError && !hasTemplates ? (
 						<RecentBadgesTableMessage className="text-red-500">
 							Could not load recent badges.
 						</RecentBadgesTableMessage>

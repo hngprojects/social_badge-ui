@@ -11,7 +11,7 @@ export function UserWelcome() {
         <span className="italic font-fraunces text-[#C54B00]">{userName}</span>
       </p>
 
-      <p className="text-[14px] text-[#595959]">
+      <p className="text-[16px] text-[#595959]">
         Let&apos;s design your first badge - your attendees will be sharing it
         before the day&apos;s out.
       </p>
