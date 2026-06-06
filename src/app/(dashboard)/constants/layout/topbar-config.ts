@@ -53,6 +53,6 @@ export const topBarConfig: TopBarConfigItem[] = [
   },
   {
     match: "/support",
-    title: "Help",
+    title: "Support",
   },
 ];

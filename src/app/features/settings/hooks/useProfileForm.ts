@@ -86,7 +86,7 @@ export function useProfileForm() {
 
     if (file.size > MAX_AVATAR_SIZE) {
       const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-      toast.error(`Image is ${fileSizeMB}MB. Maximum allowed size is 2MB.`);
+      toast.error(`Image is ${fileSizeMB}MB. Maximum allowed size is 10MB.`);
       clearSelectedAvatar();
       event.target.value = "";
       return;
@@ -123,7 +123,7 @@ export function useProfileForm() {
     }
 
     if (avatarFile && avatarFile.size > MAX_AVATAR_SIZE) {
-      toast.error("Image size must be less than 2MB.");
+      toast.error("Image size must be less than 10MB.");
       return;
     }
 

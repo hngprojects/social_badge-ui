@@ -6,6 +6,9 @@ export type SettingsSubCardProps = {
   detail: string;
   bg: string;
   showSwitch?: boolean;
+  switchChecked?: boolean;
+  switchDisabled?: boolean;
+  onSwitchChange?: (checked: boolean) => void;
   showIcon?: boolean;
   danger?: boolean;
   isHeader?: boolean;

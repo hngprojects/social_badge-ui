@@ -289,7 +289,12 @@ export default function MobileHeader() {
                   </nav>
 
                   <div className="mt-auto border-t border-border px-3 py-4">
-                    <div className="flex items-center gap-3 mb-3 px-1">
+                    <Link
+                      href="/settings?tab=profile"
+                      onClick={() => setMobileOpen(false)}
+                      className="mb-3 flex items-center gap-3 rounded-xl px-1 py-2 transition-colors hover:bg-muted"
+                      aria-label="Open profile settings"
+                    >
                       <DashboardUserAvatar
                         user={user}
                         displayName={displayName}
@@ -298,7 +303,7 @@ export default function MobileHeader() {
                       <p className="truncate text-sm font-medium text-foreground">
                         {displayName}
                       </p>
-                    </div>
+                    </Link>
                     <button
                       type="button"
                       onClick={() => {
@@ -306,7 +311,7 @@ export default function MobileHeader() {
                         setMobileOpen(false);
                       }}
                       disabled={isLoggingOut}
-                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-60"
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-[#FF3445] transition-colors hover:bg-[#FFF0F1] disabled:opacity-60"
                     >
                       <LogOut className="h-5 w-5" strokeWidth={1.75} />
                       {isLoggingOut ? "Logging out…" : "Log out"}
