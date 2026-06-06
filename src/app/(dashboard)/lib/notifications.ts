@@ -1,4 +1,7 @@
-import type { NotificationTypeStyle } from "../types/dashboard/notifications";
+import type {
+  NotificationItem,
+  NotificationTypeStyle,
+} from "../types/dashboard/notifications";
 
 export const notificationTypeLabels: Record<string, string> = {
   badge_alert: "Badge Alert",
@@ -66,4 +69,25 @@ export function formatNotificationTime(
     month: "short",
     day: "numeric",
   }).format(new Date(createdAt));
+}
+
+function getNotificationTimestamp(notification: NotificationItem) {
+  const timestamp = new Date(notification.created_at).getTime();
+
+  return Number.isNaN(timestamp) ? 0 : timestamp;
+}
+
+export function sortNotificationsByReadState(
+  notifications: NotificationItem[],
+) {
+  return [...notifications].sort((firstNotification, secondNotification) => {
+    if (firstNotification.is_read !== secondNotification.is_read) {
+      return firstNotification.is_read ? 1 : -1;
+    }
+
+    return (
+      getNotificationTimestamp(secondNotification) -
+      getNotificationTimestamp(firstNotification)
+    );
+  });
 }

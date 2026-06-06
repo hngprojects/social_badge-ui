@@ -2,6 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
+import { toast } from "sonner";
 import {
   useMarkNotificationRead,
   useNotifications,
@@ -9,6 +10,7 @@ import {
 import { NotificationList } from "./components/notification-list";
 import { NotificationsPagination } from "./components/notifications-pagination";
 import type { NotificationsTabValue } from "../types/dashboard/notifications";
+import { sortNotificationsByReadState } from "../lib/notifications";
 
 const NOTIFICATIONS_PAGE_SIZE = 8;
 
@@ -21,7 +23,8 @@ export default function NotificationsTabs() {
   );
   const markNotificationReadMutation = useMarkNotificationRead();
   const notifications = data?.notifications ?? [];
-  const unreadNotifications = notifications.filter(
+  const orderedNotifications = sortNotificationsByReadState(notifications);
+  const unreadNotifications = orderedNotifications.filter(
     (notification) => !notification.is_read,
   );
   const totalNotifications = data?.total ?? 0;
@@ -35,7 +38,7 @@ export default function NotificationsTabs() {
     <Tabs
       value={activeTab}
       onValueChange={handleTabChange}
-      className="flex w-full flex-col gap-4.5"
+      className="flex w-full flex-col gap-[6px]"
     >
       <div className="w-fit rounded-[12px] border bg-white">
         <TabsList className="flex gap-1.5 w-fit p-1.5 bg-white">
@@ -67,9 +70,13 @@ export default function NotificationsTabs() {
         <>
           <TabsContent value="all">
             <NotificationList
-              notifications={notifications}
+              notifications={orderedNotifications}
               onMarkRead={(notification) =>
-                markNotificationReadMutation.mutate(notification.id)
+                markNotificationReadMutation.mutate(notification.id, {
+                  onError: () => {
+                    toast.error("Could not mark notification as read.");
+                  },
+                })
               }
               emptyState={{
                 title: "No notifications yet",
@@ -84,7 +91,11 @@ export default function NotificationsTabs() {
             <NotificationList
               notifications={unreadNotifications}
               onMarkRead={(notification) =>
-                markNotificationReadMutation.mutate(notification.id)
+                markNotificationReadMutation.mutate(notification.id, {
+                  onError: () => {
+                    toast.error("Could not mark notification as read.");
+                  },
+                })
               }
               emptyState={{
                 title: "No unread notifications",

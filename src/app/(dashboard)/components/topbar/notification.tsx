@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
 import {
   useMarkAllNotificationsRead,
   useMarkNotificationRead,
@@ -17,6 +18,7 @@ import {
 } from "../../hooks/use-notifications";
 import { NotificationData } from "./notifications-data";
 import { cn } from "@/lib/utils";
+import { sortNotificationsByReadState } from "../../lib/notifications";
 
 export function NotificationDropDown() {
   const [open, setOpen] = useState(false);
@@ -34,12 +36,16 @@ export function NotificationDropDown() {
   const { data: unreadCountData, refetch: refetchUnreadCount } =
     useUnreadNotificationCount();
   const notifications = data?.notifications ?? [];
-  const dropdownNotifications = notifications.slice(0, 5);
+  const orderedNotifications = sortNotificationsByReadState(notifications);
+  const dropdownNotifications = orderedNotifications.slice(0, 5);
   const unreadCount = unreadCountData?.unread_count ?? 0;
   const unreadLabel = unreadCount > 99 ? "99+" : unreadCount.toString();
+  const hasNotifications = orderedNotifications.length > 0;
   const hasUnreadNotifications = unreadCount > 0;
   const markAllReadMutation = useMarkAllNotificationsRead();
   const markNotificationReadMutation = useMarkNotificationRead();
+  const canMarkAllRead =
+    hasNotifications && hasUnreadNotifications && !markAllReadMutation.isPending;
 
   const handleOpenChange = (nextOpen: boolean) => {
     setOpen(nextOpen);
@@ -81,11 +87,20 @@ export function NotificationDropDown() {
           {/* MARK ALL AS READ */}
           <button
             type="button"
-            disabled={!hasUnreadNotifications || markAllReadMutation.isPending}
-            onClick={() => markAllReadMutation.mutate()}
+            disabled={!canMarkAllRead}
+            onClick={() =>
+              markAllReadMutation.mutate(undefined, {
+                onSuccess: () => {
+                  toast.success("All notifications marked as read.");
+                },
+                onError: () => {
+                  toast.error("Could not mark notifications as read.");
+                },
+              })
+            }
             className={cn(
               "text-[16px] leading-5 transition-colors",
-              hasUnreadNotifications
+              canMarkAllRead
                 ? "text-primary hover:text-primary/80"
                 : "cursor-not-allowed text-[#BDBDBD]",
             )}
@@ -103,11 +118,15 @@ export function NotificationDropDown() {
           <div className="flex h-[360px] items-center justify-center px-4 text-center text-[14px] text-[#6B6B6B]">
             Could not load notifications.
           </div>
-        ) : notifications.length > 0 ? (
+        ) : orderedNotifications.length > 0 ? (
           <NotificationData
             notifications={dropdownNotifications}
             onMarkRead={(notification) =>
-              markNotificationReadMutation.mutate(notification.id)
+              markNotificationReadMutation.mutate(notification.id, {
+                onError: () => {
+                  toast.error("Could not mark notification as read.");
+                },
+              })
             }
           />
         ) : (
