@@ -16,7 +16,7 @@ const mainLinks = navigationLinks.filter((nav) =>
   ["Dashboard", "Badges"].includes(nav.label),
 );
 const settingsLinks = navigationLinks.filter((nav) => nav.label === "Settings");
-const helpLink = navigationLinks.find((nav) => nav.label === "Support");
+const helpLink = navigationLinks.find((nav) => nav.label === "Help");
 
 export default function SideNav() {
   const [expanded, setExpanded] = useState(true);
@@ -79,7 +79,7 @@ export default function SideNav() {
           >
             <SidebarDivider expanded={expanded} />
 
-            <SidebarSection title="Main" expanded={expanded}>
+            <SidebarSection>
               {mainLinks.map((nav) => (
                 <SidebarItem
                   key={nav.label}
@@ -90,9 +90,9 @@ export default function SideNav() {
               ))}
             </SidebarSection>
 
-            <SidebarDivider expanded={expanded} className="mt-9" />
+            <SidebarDivider expanded={expanded} className="mt-6" />
 
-            <SidebarSection title="Settings" expanded={expanded}>
+            <SidebarSection className="pt-6">
               {settingsLinks.map((nav) => (
                 <SidebarItem
                   key={nav.label}
@@ -157,10 +157,12 @@ export default function SideNav() {
 
             <SidebarDivider expanded={expanded} className="mt-1" />
           </div>
-          <div
-            className={`flex min-w-0 items-center ${
+          <Link
+            href="/settings?tab=profile"
+            className={`flex min-w-0 items-center rounded-[8px] transition-colors hover:bg-[#F8F8F8] ${
               expanded ? "w-full gap-4" : "justify-center"
             }`}
+            aria-label="Open profile settings"
           >
             <DashboardUserAvatar
               user={user}
@@ -178,7 +180,7 @@ export default function SideNav() {
                 </p>
               </div>
             )}
-          </div>
+          </Link>
         </div>
       </div>
     </aside>
@@ -200,22 +202,14 @@ function SidebarDivider({
 }
 
 function SidebarSection({
-  title,
-  expanded,
+  className = "pt-8",
   children,
 }: {
-  title: string;
-  expanded: boolean;
+  className?: string;
   children: ReactNode;
 }) {
   return (
-    <section className="pt-8">
-      {expanded && (
-        <p className="mb-4 px-4 text-[10px] font-medium uppercase leading-[12px] tracking-[0.4px] text-[#8F8F8F]">
-          {title}
-        </p>
-      )}
-
+    <section className={className}>
       <ul className="m-0 flex list-none flex-col gap-2 p-0">{children}</ul>
     </section>
   );
@@ -238,7 +232,9 @@ function SidebarItem({ nav, expanded, pathname }: SidebarItemProps) {
     isBadgesPublishedPage;
 
   return (
-    <li className={`relative whitespace-nowrap ${expanded ? "" : "flex justify-center"}`}>
+    <li
+      className={`relative whitespace-nowrap ${expanded ? "" : "flex justify-center"}`}
+    >
       {!expanded && isActive && (
         <span
           aria-hidden="true"
