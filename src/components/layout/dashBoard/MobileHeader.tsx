@@ -209,7 +209,7 @@ export default function MobileHeader() {
             </span>
           </Link>
 
-          <div className="flex">
+          <div className="flex items-center gap-2">
             {/* Mobile Hamburger */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
