@@ -254,7 +254,7 @@ export default function ContactForm() {
                 <SelectContent>
                   <SelectItem value="general">General Inquiry</SelectItem>
                   <SelectItem value="partnership">Partnership</SelectItem>
-                  <SelectItem value="bug">Bug Report</SelectItem>
+                  <SelectItem value="bug_report">Bug Report</SelectItem>
                   <SelectItem value="feedback">Feedback</SelectItem>
                   <SelectItem value="billing">Billing</SelectItem>
                 </SelectContent>
