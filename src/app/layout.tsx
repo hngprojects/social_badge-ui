@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { DM_Sans } from "next/font/google";
-import { Plus_Jakarta_Sans, League_Gothic} from "next/font/google";
+import { Plus_Jakarta_Sans, League_Gothic, Bricolage_Grotesque} from "next/font/google";
 import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
 export const dmSans = DM_Sans({
@@ -17,6 +17,10 @@ const leagueGothic = League_Gothic({
   subsets: ["latin"],
   variable: "--font-league-gothic-font",
   weight: "400",
+});
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-bricolage",
 });
 export const metadata: Metadata = {
   title: {
@@ -39,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} ${plusJakartaSans.variable} ${leagueGothic.variable} bg-page text-ink antialiased`}
+        className={`${dmSans.variable} ${plusJakartaSans.variable} ${leagueGothic.variable} ${bricolageGrotesque.variable} bg-page text-ink antialiased`}
       >
         <Providers>{children}</Providers>
         <Toaster

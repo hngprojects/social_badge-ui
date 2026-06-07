@@ -16,6 +16,7 @@ import {
 import PlaceholderLogo from "./placeholder-logo";
 import { getPalette } from "@/app/features/templates/lib/palette-mapping";
 import { FONTS } from "@/app/(dashboard)/components/customize/constants";
+import BadgeSvg, { FivePercent } from "./badge-svg";
 
 interface TemplateLayoutProps {
 	editor: CustomizeEditorState;
@@ -119,19 +120,15 @@ export function Layout9({
 				<div className="px-8 my-6">
 					<h2 
 						style={textStyle}
-						className="text-3xl font-bold uppercase"
-					>
+						className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
 							: ""}
 					</h2>
 					<p 
 						style={textStyle}
-						className="text-base opacity-90"
 					>
-						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
-							: ""}
 					</p>
 				</div>
 				<div className="bg-zinc-300 absolute bottom-8 w-35 h-35 right-10 rotate-10 flex items-center justify-center text-black text-[10px] overflow-hidden">
@@ -384,6 +381,145 @@ export function Layout3({ editor, textColor }: TemplateLayoutProps) {
 	);
 }
 
+export function LayoutCard1({ editor }: TemplateLayoutProps) {
+	return (
+		<div
+			className="relative w-full h-full overflow-hidden rounded-[18px] flex flex-col  justify-center bg-cover bg-center text-white font-bricolage"
+			style={{ backgroundImage: "url('/assets/badges/hng_bg_one.webp')" }}
+		>
+			<Coffetti />
+			<InnerBadgeLayout
+				headingTextColor="#00AEFF"
+				roleBgColor="#00AEFF"
+				nameTextColor="#000000"
+				svgFill="text-[#00AEFF]"
+				percentIConFill="text-white"
+			/>
+		</div>
+	);
+}
+
+export function InnerBadgeLayout({
+	nameTextColor,
+	roleTextColor,
+	headingTextColor,
+	roleBgColor,
+	svgFill,
+	percentIConFill,
+}: {
+	nameTextColor?: string;
+	roleTextColor?: string;
+	headingTextColor?: string;
+	roleBgColor?: string;
+	svgFill?: string;
+	percentIConFill?: string;
+}) {
+	return (
+		<div className="z-100 h-[80%] w-[73%] min-w-70 min-h-99 mx-auto flex flex-col gap-[3.5%]">
+			<div className="flex justify-center items-center">
+				<Image
+					src={"/assets/badges/hng_logo_white.svg"}
+					width={100}
+					height={100}
+					alt="badge logo"
+				/>
+			</div>
+			<div className="flex flex-col justify-center text-center w-60 mx-auto">
+				<span
+					className="font-bricolage text-[53px] leading-none font-bold -mb-2.5 tracking-tighter"
+					style={{ color: headingTextColor }}
+				>
+					Finalist
+				</span>
+
+				<span
+					className="w-full border-4 border-white mx-auto rounded-full py-1.5 px-2 font-semibold"
+					style={{
+						backgroundColor: roleBgColor,
+						color: roleTextColor,
+					}}
+				>
+					Virtual Assistant
+				</span>
+			</div>
+
+			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white">
+				Photo
+				<div className="absolute -bottom-6 -right-7 w-20 h-20 flex justify-center items-center">
+					<BadgeSvg className={svgFill} />
+					<span className="absolute flex flex-col justify-center items-center font-semibold">
+						<FivePercent className={percentIConFill} />
+					</span>
+				</div>
+			</div>
+
+			<div className="text-center -mt-2">
+				<span
+					className="font-bricolage text-[24px] font-semibold"
+					style={{ color: nameTextColor }}
+				>
+					John Jane Josh Doe
+				</span>
+			</div>
+		</div>
+	);
+}
+
+export function LayoutCard2({ editor }: TemplateLayoutProps) {
+	return (
+		<div
+			className="relative w-full h-full overflow-hidden rounded-[18px] flex flex-col items-center justify-center bg-cover bg-center text-white font-bricolage"
+			style={{ backgroundImage: "url('/assets/badges/hng_bg_two.webp')" }}
+		>
+			{" "}
+			<Coffetti />
+			<InnerBadgeLayout
+				roleBgColor="#00AEFF"
+				headingTextColor="#00AEFF"
+				nameTextColor="#000000"
+				svgFill="text-[#00AEFF]"
+				percentIConFill="text-white"
+			/>
+		</div>
+	);
+}
+export function Coffetti() {
+	return (
+		<div className="z-50 absolute w-full h-1/2 top-0 overflow-hidden">
+			<Image
+				src={"/assets/badges/coffetti.webp"}
+				width={100}
+				height={100}
+				alt="badge logo"
+				className="w-[200%] rotate-15"
+			/>
+		</div>
+	);
+}
+export function LayoutCard3({ editor }: TemplateLayoutProps) {
+	return (
+		<div
+			className="relative w-full h-full overflow-hidden rounded-[18px] flex flex-col items-center justify-center bg-cover bg-center text-white font-bricolage"
+			style={{ backgroundImage: "url('/assets/badges/hng_bg_three.webp')" }}
+		>
+			<Coffetti />
+			<InnerBadgeLayout roleBgColor="#AFF47F" nameTextColor="#ffffff" roleTextColor="#000000"/>
+		</div>
+	);
+}
+
+export function LayoutCard4({ editor }: TemplateLayoutProps) {
+	return (
+		<div
+			className=" relative w-full h-full overflow-hidden rounded-[18px] flex flex-col items-center justify-center bg-cover bg-center text-white font-bricolage"
+			style={{ backgroundImage: "url('/assets/badges/hng_bg_four.webp')" }}
+		>
+			{" "}
+			<Coffetti />
+			<InnerBadgeLayout headingTextColor="#7E65EC" roleBgColor="#AFF47F" roleTextColor="#000000"/>
+		</div>
+	);
+}
 
 const LAYOUT_COMPONENTS: Record<
 	string,
@@ -393,6 +529,10 @@ const LAYOUT_COMPONENTS: Record<
 	circle_photo_dark_v1: Layout4,
 	dark_name_photo_v1: Layout7,
 	split_purple_teal_v1: Layout9,
+	card_1: LayoutCard1,
+	card_2: LayoutCard2,
+	card_3: LayoutCard3,
+	card_4: LayoutCard4,
 };
 
 interface CustomTemplatePreviewProps {
@@ -434,6 +574,6 @@ export function CustomTemplatePreview({
 				fontStyle={font.style}
 				textColor={editor.textColor}
 			/>
-			</div>
+		</div>
 	);
 }
