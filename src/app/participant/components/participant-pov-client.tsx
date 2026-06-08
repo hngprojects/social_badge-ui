@@ -124,7 +124,7 @@ export default function ParticipantPovClient() {
 			</header>
 
 			{/* Main section */}
-			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10">
+			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10 min-w-0">
 				{isBadgeReady ? (
 					<BadgeReady
 						onDownload={handleDownload}
@@ -144,7 +144,7 @@ export default function ParticipantPovClient() {
 				)}
 
 				{/* Badge preview */}
-				<div className="w-full max-w-135 shrink-0">
+				<div className="w-full max-w-135 shrink-0 min-w-0">
 					{!slug ? (
 						<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
 							<p className="text-sm text-gray-500">No badge link provided.</p>

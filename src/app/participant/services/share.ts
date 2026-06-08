@@ -1,4 +1,3 @@
-import { toast } from "sonner";
 import { SharePlatform } from "../types";
 const encode = (text: string) => encodeURIComponent(text);
 

@@ -9,7 +9,7 @@ export function NotificationsEmptyState({
   showDashboardLink,
 }: NotificationsEmptyStateConfig) {
   return (
-    <div className="flex min-h-[420px] w-full items-center justify-center px-4 py-12">
+    <div className="flex min-h-[560px] w-full items-center justify-center rounded-[12px] bg-white px-4 py-12">
       <div className="flex w-full max-w-[300px] flex-col items-center text-center">
         <div className="mb-6 grid size-14 place-content-center rounded-[12px] bg-[#FFF0EC]">
           <Image

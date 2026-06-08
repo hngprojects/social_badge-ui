@@ -191,7 +191,7 @@ export default function MobileHeader() {
       ) : (
         <div className="flex items-center justify-between gap-3 px-4 p-4">
           <Link
-            href="/dashboard"
+            href="/"
             className="flex shrink-0 items-center gap-2.5 group"
             aria-label="Flare Tag home"
           >
@@ -209,7 +209,7 @@ export default function MobileHeader() {
             </span>
           </Link>
 
-          <div className="flex">
+          <div className="flex items-center gap-2">
             {/* Mobile Hamburger */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
