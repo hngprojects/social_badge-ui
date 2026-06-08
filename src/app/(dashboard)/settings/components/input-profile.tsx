@@ -7,10 +7,11 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Asterisk } from "lucide-react";
+import { PROFILE_NAME_MAX_LENGTH } from "@/app/features/settings/constants";
 
 import { ProfileInputProps } from "../types/profile-input";
 
-export function ProfileInput({ values, onChange }: ProfileInputProps) {
+export function ProfileInput({ values, errors, onChange }: ProfileInputProps) {
   return (
     <FieldSet className="w-full text-[14px] font-normal text-[#B5B7BC]">
       <FieldGroup className="gap-4">
@@ -29,10 +30,17 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
             type="text"
             required
             aria-required="true"
+            aria-invalid={!!errors?.firstName}
             autoComplete="given-name"
+            maxLength={PROFILE_NAME_MAX_LENGTH}
             value={values.firstName}
             onChange={(e) => onChange("firstName", e.target.value)}
           />
+          {errors?.firstName && (
+            <FieldDescription className="text-error-500">
+              {errors.firstName}
+            </FieldDescription>
+          )}
         </Field>
         {/* LAST NAME */}
         <Field className="w-full gap-2">
@@ -48,11 +56,18 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
             id="lastName"
             required
             aria-required="true"
+            aria-invalid={!!errors?.lastName}
             autoComplete="family-name"
+            maxLength={PROFILE_NAME_MAX_LENGTH}
             type="text"
             value={values.lastName}
             onChange={(e) => onChange("lastName", e.target.value)}
           />
+          {errors?.lastName && (
+            <FieldDescription className="text-error-500">
+              {errors.lastName}
+            </FieldDescription>
+          )}
         </Field>
         {/* EMAIL ADDRESS*/}
         <Field className="w-full gap-2">
@@ -88,10 +103,13 @@ export function ProfileInput({ values, onChange }: ProfileInputProps) {
             placeholder="e.g. Community Manager"
             id="role"
             type="text"
+            aria-invalid={!!errors?.role}
             value={values.role}
             onChange={(e) => onChange("role", e.target.value)}
           />
-          <FieldDescription>Optional.</FieldDescription>
+          <FieldDescription className={errors?.role ? "text-error-500" : ""}>
+            {errors?.role ?? "Optional."}
+          </FieldDescription>
         </Field>
       </FieldGroup>
     </FieldSet>

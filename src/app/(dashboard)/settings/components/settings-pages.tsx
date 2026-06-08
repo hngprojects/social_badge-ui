@@ -19,8 +19,8 @@ export default function SettingTabs() {
 
   return (
     <Tabs key={tab} defaultValue={tab} className="w-full flex flex-col gap-4.5">
-      <div className="w-full border rounded-[12px] bg-white">
-        <TabsList className="flex gap-1.5 bg-transparent  p-1.5">
+      <div className="w-full min-w-0 overflow-hidden border rounded-[12px] bg-white">
+        <TabsList className="flex gap-1.5 bg-transparent p-1.5">
           <TabsTrigger
             value="profile"
             className="py-2 px-3.5 leading-[19.5px] rounded-[12px]"
