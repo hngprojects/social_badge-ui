@@ -11,7 +11,12 @@ export type CanvasLayoutId =
 	| "circle_photo_dark_v1"
 	| "dark_name_photo_v1"
 	| "bold_name_pink_v1"
-	| "split_purple_teal_v1";
+	| "split_purple_teal_v1"
+	| "hng_finalist_design_v1"
+	| "hng_finalist_dev_v1"
+	| "hng_finalist_pm_v1"
+	| "hng_finalist_flaretag_v1"
+	| "hng_finalist_v1";
 
 export type CanvasFieldType =
 	| "static"
@@ -44,7 +49,9 @@ export interface CanvasSolidBackground {
 
 export interface CanvasImageBackground {
 	type: "image";
-	image_url: string;
+	url?: string;
+	image_url?: string;
+	public_id?: string | null;
 	overlay_opacity?: number;
 }
 
@@ -63,9 +70,10 @@ export interface CanvasTypography {
 }
 
 export interface CanvasLogo {
-	url: string;
-	public_id: string;
+	url: string | null;
+	public_id: string | null;
 	position: LogoPosition;
+	has_logo?: boolean;
 }
 
 export interface CanvasOutput {

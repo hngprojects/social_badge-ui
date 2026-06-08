@@ -61,8 +61,9 @@ function backgroundToEditorState(
 	const fallbackPaletteId = caps?.defaultPaletteId ?? "bg_color_dark";
 
 	if (bg.type === "image") {
+		const imageUrl = bg.url || bg.image_url;
 		const match = EDITOR_PALETTES.find(
-			(p) => BACKGROUND_IMAGE_BY_PALETTE[p.id] === bg.image_url,
+			(p) => BACKGROUND_IMAGE_BY_PALETTE[p.id] === imageUrl,
 		);
 		return {
 			bgMode: "gradient",
@@ -70,7 +71,7 @@ function backgroundToEditorState(
 			gradientColors: ["#ff007a", "#ffa800"],
 			gradientDirection: "135deg",
 			solidColor: "#ff007a",
-			backgroundImageUrl: bg.image_url,
+			backgroundImageUrl: imageUrl ?? null,
 		};
 	}
 
@@ -203,14 +204,19 @@ export function parseCanvasDataToEditorState(
 }
 
 export function createDefaultEditorState(
-	platformTemplateId: string,
+	platformTemplateId: string | null,
 	canvasData?: CanvasData | null,
-): CustomizeEditorState {
+): CustomizeEditorState | null {
 	if (canvasData) {
-		return parseCanvasDataToEditorState(platformTemplateId, canvasData);
+		return parseCanvasDataToEditorState(
+			platformTemplateId ?? canvasData.layout_id,
+			canvasData,
+		);
 	}
 
 	const layoutId = resolveLayoutId(platformTemplateId);
+	if (!layoutId) return null;
+
 	const caps = LAYOUT_CAPABILITIES[layoutId];
 	const palette = caps.defaultPaletteId;
 	const fromPalette =
@@ -226,6 +232,41 @@ export function createDefaultEditorState(
 		},
 		bold_name_pink_v1: {
 			eventName: "#DesignWeekLagos",
+			participantNameLabel: "NAME",
+			participantNamePlaceholder: "",
+			roleTitleLabel: "ROLE / TITLE",
+			roleTitlePlaceholder: "",
+		},
+		hng_finalist_v1: {
+			eventName: "HNG FINALIST",
+			participantNameLabel: "NAME",
+			participantNamePlaceholder: "",
+			roleTitleLabel: "ROLE / TITLE",
+			roleTitlePlaceholder: "",
+		},
+		hng_finalist_dev_v1: {
+			eventName: "HNG FINALIST",
+			participantNameLabel: "NAME",
+			participantNamePlaceholder: "",
+			roleTitleLabel: "ROLE / TITLE",
+			roleTitlePlaceholder: "",
+		},
+		hng_finalist_design_v1: {
+			eventName: "HNG FINALIST",
+			participantNameLabel: "NAME",
+			participantNamePlaceholder: "",
+			roleTitleLabel: "ROLE / TITLE",
+			roleTitlePlaceholder: "",
+		},
+		hng_finalist_pm_v1: {
+			eventName: "HNG FINALIST",
+			participantNameLabel: "NAME",
+			participantNamePlaceholder: "",
+			roleTitleLabel: "ROLE / TITLE",
+			roleTitlePlaceholder: "",
+		},
+		hng_finalist_flaretag_v1: {
+			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
 			roleTitleLabel: "ROLE / TITLE",

@@ -19,7 +19,9 @@ function buildBackground(state: CustomizeEditorState): CanvasBackground {
 	if (state.backgroundImageUrl) {
 		return {
 			type: "image",
+			url: state.backgroundImageUrl,
 			image_url: state.backgroundImageUrl,
+			public_id: null,
 			overlay_opacity: 0.45,
 		};
 	}
@@ -131,6 +133,7 @@ export function buildCanvasData(state: CustomizeEditorState): CanvasData {
 					url: state.logo?.url || state.logoPreviewUrl || "",
 					public_id: state.logo?.public_id || "",
 					position: state.logo?.position ?? caps.defaultLogoPosition,
+					has_logo: true,
 				}
 			: null,
 		fields: buildFields(state),
