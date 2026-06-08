@@ -6,6 +6,7 @@ import { StyleSection } from "@/app/(dashboard)/components/customize/StyleSectio
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
 import { CustomTemplatePreview } from "./components/CustomTemplatePreview";
+import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 const TEST_TEMPLATES = [
 	{ id: "tpl_1", label: "Template 1" },
@@ -28,12 +29,41 @@ export default function TestBadgePage() {
 		() => createDefaultEditorState(selectedTemplate),
 		[selectedTemplate],
 	);
-	const { editor, patch, setPalette, setBgMode, layoutCaps } =
-		useCustomizeEditorState(initialEditor);
 
 	const handleTemplateChange = (templateId: string) => {
 		setSelectedTemplate(templateId);
 	};
+
+	if (!initialEditor) {
+		return <div className="p-8 text-center text-red-500 font-bold">Error: Template not found</div>;
+	}
+
+	return (
+		<TestBadgePageContent 
+			initialEditor={initialEditor} 
+			selectedTemplate={selectedTemplate} 
+			handleTemplateChange={handleTemplateChange} 
+			previewMode={previewMode} 
+			setPreviewMode={setPreviewMode} 
+		/>
+	);
+}
+
+function TestBadgePageContent({ 
+	initialEditor, 
+	selectedTemplate, 
+	handleTemplateChange,
+	previewMode,
+	setPreviewMode
+}: { 
+	initialEditor: CustomizeEditorState, 
+	selectedTemplate: string,
+	handleTemplateChange: (id: string) => void,
+	previewMode: "live" | "custom",
+	setPreviewMode: (mode: "live" | "custom") => void
+}) {
+	const { editor, patch, setPalette, setBgMode, layoutCaps } =
+		useCustomizeEditorState(initialEditor);
 
 	return (
 		<div className="min-h-screen bg-[#F5F5F5] p-8">

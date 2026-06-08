@@ -7,6 +7,7 @@ import {
 } from "../constants/field-keys";
 import type {
 	CanvasBackground,
+	CanvasBackgroundPart,
 	CanvasData,
 	CanvasField,
 	CustomizeEditorState,
@@ -19,8 +20,45 @@ function buildBackground(state: CustomizeEditorState): CanvasBackground {
 	if (state.backgroundImageUrl) {
 		return {
 			type: "image",
+			url: state.backgroundImageUrl,
 			image_url: state.backgroundImageUrl,
+			public_id: null,
 			overlay_opacity: 0.45,
+		};
+	}
+
+	const buildPart = (
+		mode: "gradient" | "solid",
+		solid: string,
+		grads: [string, string],
+		dir: string,
+	): CanvasBackgroundPart => {
+		if (mode === "solid") {
+			return { type: "solid", color: solid, gradient: null };
+		}
+		return {
+			type: "gradient",
+			color: null,
+			gradient: { colors: grads, direction: dir },
+		};
+	};
+
+	if (state.bgMode === "split" || state.isSplit) {
+		return {
+			type: "split",
+			split_ratio: state.splitRatio ?? 0.5,
+			primary: buildPart(
+				state.priBgMode ?? (state.bgMode === "split" ? "solid" : state.bgMode),
+				state.solidColor,
+				state.gradientColors,
+				state.gradientDirection,
+			),
+			secondary: buildPart(
+				state.secBgMode ?? "solid",
+				state.secSolidColor ?? state.solidColor,
+				state.secGradientColors ?? state.gradientColors,
+				state.secGradientDirection ?? "135deg",
+			),
 		};
 	}
 
@@ -81,6 +119,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			placeholder: "Your name",
 			required: state.participantNameVisible ? true : false,
 			visible: state.participantNameVisible,
+			color: state.textColor,
 		});
 	}
 
@@ -92,6 +131,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			placeholder: "e.g. Product Designer",
 			required: state.roleTitleVisible ? state.roleTitleRequired : false,
 			visible: state.roleTitleVisible,
+			color: state.textColor,
 		});
 	}
 
@@ -131,6 +171,7 @@ export function buildCanvasData(state: CustomizeEditorState): CanvasData {
 					url: state.logo?.url || state.logoPreviewUrl || "",
 					public_id: state.logo?.public_id || "",
 					position: state.logo?.position ?? caps.defaultLogoPosition,
+					has_logo: true,
 				}
 			: null,
 		fields: buildFields(state),
@@ -153,7 +194,7 @@ export function buildOrganiserTemplatePayload(
 
 export function paletteToBackgroundState(
 	paletteId: string,
-	bgMode: "gradient" | "solid",
+	bgMode: "gradient" | "solid" | "split",
 ): Pick<
 	CustomizeEditorState,
 	| "paletteId"

@@ -11,7 +11,12 @@ export type CanvasLayoutId =
 	| "circle_photo_dark_v1"
 	| "dark_name_photo_v1"
 	| "bold_name_pink_v1"
-	| "split_purple_teal_v1";
+	| "split_purple_teal_v1"
+	| "hng_finalist_design_v1"
+	| "hng_finalist_dev_v1"
+	| "hng_finalist_pm_v1"
+	| "hng_finalist_flaretag_v1"
+	| "hng_finalist_v1";
 
 export type CanvasFieldType =
 	| "static"
@@ -30,11 +35,20 @@ export interface CanvasGradientBackground {
 	};
 }
 
+export interface CanvasBackgroundPart {
+	type: "solid" | "gradient";
+	color?: string | null;
+	gradient?: {
+		colors: [string, string];
+		direction: string;
+	} | null;
+}
+
 export interface CanvasSplitBackground {
 	type: "split";
-	top_color: string;
-	bottom_color: string;
 	split_ratio: number;
+	primary: CanvasBackgroundPart;
+	secondary: CanvasBackgroundPart;
 }
 
 export interface CanvasSolidBackground {
@@ -44,7 +58,9 @@ export interface CanvasSolidBackground {
 
 export interface CanvasImageBackground {
 	type: "image";
-	image_url: string;
+	url?: string;
+	image_url?: string;
+	public_id?: string | null;
 	overlay_opacity?: number;
 }
 
@@ -63,9 +79,10 @@ export interface CanvasTypography {
 }
 
 export interface CanvasLogo {
-	url: string;
-	public_id: string;
+	url: string | null;
+	public_id: string | null;
 	position: LogoPosition;
+	has_logo?: boolean;
 }
 
 export interface CanvasOutput {
@@ -89,6 +106,7 @@ export interface CanvasParticipantInputField {
 	placeholder: string;
 	required: boolean;
 	visible: boolean;
+	color?: string;
 }
 
 export interface CanvasParticipantUploadField {
@@ -155,11 +173,21 @@ export interface CustomizeEditorState {
 	logo: CanvasLogo | null;
 	logoPreviewUrl: string | null;
 	pendingLogoFile: File | null;
-	bgMode: "gradient" | "solid";
+	bgMode: "gradient" | "solid" | "split";
 	paletteId: string;
+	priBgMode?: "gradient" | "solid";
 	gradientColors: [string, string];
 	gradientDirection: string;
 	solidColor: string;
+	// Secondary background (for split mode)
+	isSplit?: boolean;
+	splitRatio?: number;
+	secBgMode?: "gradient" | "solid";
+	secPaletteId?: string;
+	secGradientColors?: [string, string];
+	secSolidColor?: string;
+	secGradientDirection?: string;
+	textColor?: string;
 	backgroundImageUrl: string | null;
 	fontId: string;
 	titleSize: "SMALL" | "MEDIUM" | "LARGE";
