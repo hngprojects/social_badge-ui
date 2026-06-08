@@ -7,10 +7,9 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Asterisk } from "lucide-react";
+import { PROFILE_NAME_MAX_LENGTH } from "@/app/features/settings/constants";
 
 import { ProfileInputProps } from "../types/profile-input";
-
-const NAME_MAX_LENGTH = 50;
 
 export function ProfileInput({ values, errors, onChange }: ProfileInputProps) {
   return (
@@ -33,7 +32,7 @@ export function ProfileInput({ values, errors, onChange }: ProfileInputProps) {
             aria-required="true"
             aria-invalid={!!errors?.firstName}
             autoComplete="given-name"
-            maxLength={NAME_MAX_LENGTH}
+            maxLength={PROFILE_NAME_MAX_LENGTH}
             value={values.firstName}
             onChange={(e) => onChange("firstName", e.target.value)}
           />
@@ -59,7 +58,7 @@ export function ProfileInput({ values, errors, onChange }: ProfileInputProps) {
             aria-required="true"
             aria-invalid={!!errors?.lastName}
             autoComplete="family-name"
-            maxLength={NAME_MAX_LENGTH}
+            maxLength={PROFILE_NAME_MAX_LENGTH}
             type="text"
             value={values.lastName}
             onChange={(e) => onChange("lastName", e.target.value)}

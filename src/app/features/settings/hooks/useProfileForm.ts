@@ -3,18 +3,16 @@ import { toast } from "sonner";
 import { useUserStore } from "@/stores/use-user-store";
 import { getUserMail } from "@/lib/api/auth-session";
 import { useUpdateProfile } from "@/app/features/settings/hooks/useUpdateProfile";
-import { ALLOWED_AVATAR_TYPES, MAX_AVATAR_SIZE } from "../constants";
-
-const NAME_MAX_LENGTH = 50;
-const namePattern = /^[a-zA-Z\s'-]+$/;
-const rolePattern = /^[a-zA-Z0-9\s.,/&()+-]*$/;
-const sqlCommentPattern = /--|\/\*|\*\//;
-const riskySqlPattern =
-  /(\b(select|insert|update|delete|drop|alter|create|truncate|union|exec|execute)\b|--|\/\*|\*\/|;|'|"|`)/i;
-
-type ProfileFieldErrors = Partial<
-  Record<"firstName" | "lastName" | "role", string>
->;
+import {
+  ALLOWED_AVATAR_TYPES,
+  MAX_AVATAR_SIZE,
+  PROFILE_NAME_MAX_LENGTH,
+  PROFILE_NAME_PATTERN,
+  PROFILE_ROLE_PATTERN,
+  RISKY_SQL_PATTERN,
+  SQL_COMMENT_PATTERN,
+} from "../constants";
+import type { ProfileFieldErrors } from "../types";
 
 export function useProfileForm() {
   const { saveProfile, isLoading } = useUpdateProfile();
@@ -66,16 +64,16 @@ export function useProfileForm() {
 
   const isFormValid =
     formData.firstName.trim().length > 0 &&
-    formData.firstName.trim().length <= NAME_MAX_LENGTH &&
+    formData.firstName.trim().length <= PROFILE_NAME_MAX_LENGTH &&
     formData.lastName.trim().length > 0 &&
-    formData.lastName.trim().length <= NAME_MAX_LENGTH;
+    formData.lastName.trim().length <= PROFILE_NAME_MAX_LENGTH;
 
   const canSubmit = isFormValid && (hasTextChanges || hasAvatarChange);
 
   function handleChange(field: keyof typeof formData, value: string) {
     const nextValue =
       field === "firstName" || field === "lastName"
-        ? value.slice(0, NAME_MAX_LENGTH)
+        ? value.slice(0, PROFILE_NAME_MAX_LENGTH)
         : value;
 
     setFieldErrors((prev) => {
@@ -94,25 +92,28 @@ export function useProfileForm() {
 
     if (!firstName) {
       nextErrors.firstName = "First name is required.";
-    } else if (firstName.length > NAME_MAX_LENGTH) {
-      nextErrors.firstName = `First name must be ${NAME_MAX_LENGTH} characters or less.`;
-    } else if (sqlCommentPattern.test(firstName)) {
+    } else if (firstName.length > PROFILE_NAME_MAX_LENGTH) {
+      nextErrors.firstName = `First name must be ${PROFILE_NAME_MAX_LENGTH} characters or less.`;
+    } else if (SQL_COMMENT_PATTERN.test(firstName)) {
       nextErrors.firstName = "First name contains unsupported characters.";
-    } else if (!namePattern.test(firstName)) {
+    } else if (!PROFILE_NAME_PATTERN.test(firstName)) {
       nextErrors.firstName = "First name contains unsupported characters.";
     }
 
     if (!lastName) {
       nextErrors.lastName = "Last name is required.";
-    } else if (lastName.length > NAME_MAX_LENGTH) {
-      nextErrors.lastName = `Last name must be ${NAME_MAX_LENGTH} characters or less.`;
-    } else if (sqlCommentPattern.test(lastName)) {
+    } else if (lastName.length > PROFILE_NAME_MAX_LENGTH) {
+      nextErrors.lastName = `Last name must be ${PROFILE_NAME_MAX_LENGTH} characters or less.`;
+    } else if (SQL_COMMENT_PATTERN.test(lastName)) {
       nextErrors.lastName = "Last name contains unsupported characters.";
-    } else if (!namePattern.test(lastName)) {
+    } else if (!PROFILE_NAME_PATTERN.test(lastName)) {
       nextErrors.lastName = "Last name contains unsupported characters.";
     }
 
-    if (role && (riskySqlPattern.test(role) || !rolePattern.test(role))) {
+    if (
+      role &&
+      (RISKY_SQL_PATTERN.test(role) || !PROFILE_ROLE_PATTERN.test(role))
+    ) {
       nextErrors.role = "Role contains unsupported characters.";
     }
 

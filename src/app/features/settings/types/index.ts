@@ -1,5 +1,6 @@
 export type {
   DeleteProfileResponse,
+  ProfileFieldErrors,
   UpdateProfileResponse,
 } from "./profile";
 
