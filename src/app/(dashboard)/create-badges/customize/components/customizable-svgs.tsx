@@ -2,12 +2,20 @@ import { CustomizeEditorState } from "@/app/features/templates/types/canvas-data
 
 function GradientDefs({ id, editor }: { id: string; editor?: CustomizeEditorState }) {
 	if (!editor) return null;
+	const secId = `sec-${id}`;
+
 	return (
 		<defs>
 			{editor.bgMode === "gradient" && (
 				<linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
 					<stop offset="0%" stopColor={editor.gradientColors[0]} />
 					<stop offset="100%" stopColor={editor.gradientColors[1]} />
+				</linearGradient>
+			)}
+			{editor.secBgMode === "gradient" && (
+				<linearGradient id={secId} x1="0%" y1="0%" x2="100%" y2="100%">
+					<stop offset="0%" stopColor={editor.secGradientColors?.[0] ?? editor.gradientColors[0]} />
+					<stop offset="100%" stopColor={editor.secGradientColors?.[1] ?? editor.gradientColors[1]} />
 				</linearGradient>
 			)}
 			{editor.backgroundImageUrl && (
@@ -23,8 +31,14 @@ const getFill = (editor?: CustomizeEditorState, baseColor?: string, defaultColor
     return editor?.solidColor || baseColor || defaultColor || "#6543A1";
 };
 
+const getSecFill = (editor?: CustomizeEditorState, defaultColor?: string) => {
+	return editor?.secSolidColor || defaultColor || editor?.solidColor || "#E0074E";
+};
+
 export function Template9({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
     const main = getFill(editor, baseColor, "#6543A1");
+	const secFill = getSecFill(editor, "#68C4B9");
+
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +63,7 @@ export function Template9({ className, editor, baseColor }: { className?: string
 					rx="32"
 				/>
 				<path
-					fill="#68C4B9"
+					fill={editor?.secBgMode === "gradient" ? "url(#sec-grad9)" : secFill}
 					d="M-34 356c76.785 30.411 128.146 28.639 231.25 0L176 438c99.575-74.292 98.5-82 254-103l78 103v159c-118.468-22.568-197.188-5.004-350 57H-34V356Z"
 				/>
 				<path
@@ -100,6 +114,8 @@ export function Template7({ className, editor, baseColor }: { className?: string
 
 export function Template1({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
 	const fill = getFill(editor, baseColor, "#E8CAD4");
+	const secFill = getSecFill(editor, "#E0074E");
+
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +156,10 @@ export function Template1({ className, editor, baseColor }: { className?: string
 					d="M211.201 88.312a4.833 4.833 0 0 0 3.535-1.413 5.071 5.071 0 0 0 1.465-3.587c0-1.355-.527-2.65-1.465-3.588a4.833 4.833 0 0 0-3.535-1.412c-3.864.091-7.776-.027-11.906-.034-3.338-.006-6.799.123-10.215.504-11.001 1.26-22.168 2.2-33.457 4.965-22.042 5.88-44.799 11.455-64.514 24.758-14.012 10.389-28.59 21.574-36.848 37.696-8.295 16.211-6.924 34.822-4.212 51.859.648 4.002 1.377 7.85 2.193 11.835a285.497 285.497 0 0 1-1.698-11.904c-2.025-17.124-2.456-35.523 6.088-50.537 8.455-14.979 22.987-25.288 37.258-34.959 18.749-11.599 41.497-16.393 63.487-21.242 10.379-2.1 21.451-2.622 32.519-3.412 3.044-.21 6.067-.2 9.207-.065 3.87.166 7.957.46 12.098.536Z"
 				/>
 				<g clipPath="url(#b)">
-					<path fill="#E0074E" d="M0 527h480v124H0z" />
+					<path 
+						fill={editor?.secBgMode === "gradient" ? "url(#sec-grad1)" : secFill} 
+						d="M0 527h480v124H0z" 
+					/>
 					<path
 						stroke="#E8CAD4"
 						strokeLinecap="round"
@@ -192,6 +211,8 @@ export function Template5({ className, editor, baseColor }: { className?: string
 
 export function Template4({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
 	const fill = getFill(editor, baseColor, "#222");
+	const secFill = getSecFill(editor, "#CAC9C7");
+
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +235,10 @@ export function Template4({ className, editor, baseColor }: { className?: string
 				}
 				rx="32"
 			/>
-			<path fill="#CAC9C7" d="M0 492h480v148H0z" />
+			<path 
+				fill={editor?.secBgMode === "gradient" ? "url(#sec-grad4)" : secFill} 
+				d="M0 492h480v148H0z" 
+			/>
 		</svg>
 	);
 }

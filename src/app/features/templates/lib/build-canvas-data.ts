@@ -7,6 +7,7 @@ import {
 } from "../constants/field-keys";
 import type {
 	CanvasBackground,
+	CanvasBackgroundPart,
 	CanvasData,
 	CanvasField,
 	CustomizeEditorState,
@@ -23,6 +24,41 @@ function buildBackground(state: CustomizeEditorState): CanvasBackground {
 			image_url: state.backgroundImageUrl,
 			public_id: null,
 			overlay_opacity: 0.45,
+		};
+	}
+
+	const buildPart = (
+		mode: "gradient" | "solid",
+		solid: string,
+		grads: [string, string],
+		dir: string,
+	): CanvasBackgroundPart => {
+		if (mode === "solid") {
+			return { type: "solid", color: solid, gradient: null };
+		}
+		return {
+			type: "gradient",
+			color: null,
+			gradient: { colors: grads, direction: dir },
+		};
+	};
+
+	if (state.bgMode === "split" || state.isSplit) {
+		return {
+			type: "split",
+			split_ratio: 0.5,
+			primary: buildPart(
+				state.bgMode === "split" ? "solid" : state.bgMode,
+				state.solidColor,
+				state.gradientColors,
+				state.gradientDirection,
+			),
+			secondary: buildPart(
+				state.secBgMode ?? "solid",
+				state.secSolidColor ?? state.solidColor,
+				state.secGradientColors ?? state.gradientColors,
+				"135deg",
+			),
 		};
 	}
 
@@ -83,6 +119,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			placeholder: "Your name",
 			required: state.participantNameVisible ? true : false,
 			visible: state.participantNameVisible,
+			color: state.textColor,
 		});
 	}
 
@@ -94,6 +131,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			placeholder: "e.g. Product Designer",
 			required: state.roleTitleVisible ? state.roleTitleRequired : false,
 			visible: state.roleTitleVisible,
+			color: state.textColor,
 		});
 	}
 
@@ -156,7 +194,7 @@ export function buildOrganiserTemplatePayload(
 
 export function paletteToBackgroundState(
 	paletteId: string,
-	bgMode: "gradient" | "solid",
+	bgMode: "gradient" | "solid" | "split",
 ): Pick<
 	CustomizeEditorState,
 	| "paletteId"

@@ -22,6 +22,7 @@ interface TemplateLayoutProps {
 	participantPhotoUrl?: string | null;
 	baseColor?: string;
 	fontStyle?: React.CSSProperties;
+	textColor?: string;
 }
 
 // Placeholder for Template 1 Layout
@@ -30,7 +31,9 @@ export function Layout1({
 	participantPhotoUrl,
 	baseColor,
 	fontStyle,
+	textColor,
 }: TemplateLayoutProps) {
+	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			<Template1
@@ -53,12 +56,18 @@ export function Layout1({
 				)}
 			</div>
 			<div className="absolute top-48 px-8 w-full">
-				<h2 className="text-6xl font-normal uppercase text-black  tracking-tight font-league-gothic leading-[0.85]">
+				<h2 
+					style={textStyle}
+					className="text-6xl font-normal uppercase text-black  tracking-tight font-league-gothic leading-[0.85]"
+				>
 					{editor.participantNameVisible
 						? editor.participantNamePlaceholder || "Your full name"
 						: ""}
 				</h2>
-				<p className="text-md text-black/80 mt-2">
+				<p 
+					style={textStyle}
+					className="text-md text-black/80 mt-2"
+				>
 					{editor.roleTitleVisible
 						? editor.roleTitlePlaceholder || "Product Designer"
 						: ""}
@@ -82,7 +91,9 @@ export function Layout9({
 	participantPhotoUrl,
 	baseColor,
 	fontStyle,
+	textColor,
 }: TemplateLayoutProps) {
+	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
 			<Template9
@@ -106,12 +117,18 @@ export function Layout9({
 				</div>
 
 				<div className="px-8 my-6">
-					<h2 className="text-3xl font-bold uppercase">
+					<h2 
+						style={textStyle}
+						className="text-3xl font-bold uppercase"
+					>
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
 							: ""}
 					</h2>
-					<p className="text-base opacity-90">
+					<p 
+						style={textStyle}
+						className="text-base opacity-90"
+					>
 						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
 							: ""}
@@ -142,7 +159,9 @@ export function Layout4({
 	participantPhotoUrl,
 	baseColor,
 	fontStyle,
+	textColor,
 }: TemplateLayoutProps) {
+	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] border">
 			<Template4
@@ -180,12 +199,18 @@ export function Layout4({
 			</div>
 
 			<div className="absolute bottom-0 h-[23%] w-full pl-12 text-black">
-				<h2 style={fontStyle} className="text-xl mt-4 font-bold uppercase">
+				<h2 
+					style={{ ...fontStyle, ...textStyle }} 
+					className="text-xl mt-4 font-bold uppercase"
+				>
 					{editor.participantNameVisible
 						? editor.participantNamePlaceholder || "Your full name"
 						: ""}
 				</h2>
-				<p className="text-sm opacity-80">
+				<p 
+					style={textStyle}
+					className="text-sm opacity-80"
+				>
 					{editor.roleTitleVisible
 						? editor.roleTitlePlaceholder || "Product designer"
 						: ""}
@@ -232,7 +257,8 @@ export function LogoPlaceholder({
 	);
 }
 // Placeholder for Template 5 Layout
-export function Layout5({ editor }: TemplateLayoutProps) {
+export function Layout5({ editor, textColor }: TemplateLayoutProps) {
+	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			<Template5 className="w-full h-full" editor={editor} />
@@ -241,7 +267,10 @@ export function Layout5({ editor }: TemplateLayoutProps) {
 					{editor.eventName || "SUMMIT"}
 				</h2>
 				<div className="w-20 h-1 bg-white mb-6" />
-				<p className="text-xl font-bold text-white/90">
+				<p 
+					style={textStyle}
+					className="text-xl font-bold text-white/90"
+				>
 					{editor.participantNameVisible
 						? editor.participantNamePlaceholder || "Attendee"
 						: ""}
@@ -257,7 +286,9 @@ export function Layout7({
 	participantPhotoUrl,
 	baseColor,
 	fontStyle,
+	textColor,
 }: TemplateLayoutProps) {
+	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
 			<Template7
@@ -281,12 +312,18 @@ export function Layout7({
 				</div>
 
 				<div className="px-8 my-6 min-h-20">
-					<h2 className="text-3xl font-bold uppercase">
+					<h2 
+						style={textStyle}
+						className="text-3xl font-bold uppercase"
+					>
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
 							: ""}
 					</h2>
-					<p className="text-base opacity-90">
+					<p 
+						style={textStyle}
+						className="text-base opacity-90"
+					>
 						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
 							: ""}
@@ -311,7 +348,8 @@ export function Layout7({
 	);
 }
 
-export function Layout3({ editor }: TemplateLayoutProps) {
+export function Layout3({ editor, textColor }: TemplateLayoutProps) {
+	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-black">
 			<Template3 className="w-full h-full" editor={editor} />
@@ -323,12 +361,18 @@ export function Layout3({ editor }: TemplateLayoutProps) {
 				</div>
 
 				<div className="px-8 my-6">
-					<h2 className="text-3xl">
+					<h2 
+						style={textStyle}
+						className="text-3xl"
+					>
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Sandra Robinson"
 							: ""}
 					</h2>
-					<p className="text-base">
+					<p 
+						style={textStyle}
+						className="text-base"
+					>
 						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
 							: ""}
@@ -388,6 +432,7 @@ export function CustomTemplatePreview({
 				participantPhotoUrl={participantPhotoUrl}
 				baseColor={baseColor}
 				fontStyle={font.style}
+				textColor={editor.textColor}
 			/>
 			</div>
 	);

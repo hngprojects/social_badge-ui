@@ -4,6 +4,7 @@ import {
 } from "../constants/layout-mapping";
 import { CANVAS_FIELD_KEYS } from "../constants/field-keys";
 import type {
+	CanvasBackgroundPart,
 	CanvasData,
 	CanvasParticipantInputField,
 	CanvasStaticField,
@@ -55,10 +56,72 @@ function backgroundToEditorState(
 	| "gradientDirection"
 	| "solidColor"
 	| "backgroundImageUrl"
+	| "isSplit"
+	| "secBgMode"
+	| "secPaletteId"
+	| "secGradientColors"
+	| "secSolidColor"
 > {
 	const bg = canvas.background;
 	const caps = LAYOUT_CAPABILITIES[canvas.layout_id];
 	const fallbackPaletteId = caps?.defaultPaletteId ?? "bg_color_dark";
+
+	const partToState = (part?: CanvasBackgroundPart | null, fallbackColor?: string) => {
+		if (!part) {
+			const color = fallbackColor ?? "#000000";
+			return {
+				bgMode: "solid" as const,
+				paletteId: fallbackPaletteId,
+				gradientColors: [color, color] as [string, string],
+				gradientDirection: "135deg",
+				solidColor: color,
+			};
+		}
+
+		const mode = part.type;
+		const solid = part.color ?? "#000000";
+		const grads = part.gradient?.colors ?? [solid, solid];
+		const dir = part.gradient?.direction ?? "135deg";
+
+		const match = EDITOR_PALETTES.find((p) => {
+			if (mode === "solid") return p.from.toLowerCase() === solid.toLowerCase();
+			return (
+				p.from.toLowerCase() === grads[0].toLowerCase() &&
+				p.to.toLowerCase() === grads[1].toLowerCase()
+			);
+		});
+
+		return {
+			bgMode: mode,
+			paletteId: match?.id ?? fallbackPaletteId,
+			gradientColors: grads,
+			gradientDirection: dir,
+			solidColor: solid,
+		};
+	};
+
+	if (bg.type === "split") {
+		// Use unknown cast to safely check for legacy fields without 'any'
+		const rawSplit = bg as unknown as {
+			primary?: CanvasBackgroundPart;
+			secondary?: CanvasBackgroundPart;
+			top_color?: string;
+			bottom_color?: string;
+		};
+
+		const primary = partToState(rawSplit.primary, rawSplit.top_color);
+		const secondary = partToState(rawSplit.secondary, rawSplit.bottom_color);
+
+		return {
+			...primary,
+			isSplit: true,
+			secBgMode: secondary.bgMode,
+			secPaletteId: secondary.paletteId,
+			secGradientColors: secondary.gradientColors,
+			secSolidColor: secondary.solidColor,
+			backgroundImageUrl: null,
+		};
+	}
 
 	if (bg.type === "image") {
 		const imageUrl = bg.url || bg.image_url;
@@ -72,6 +135,7 @@ function backgroundToEditorState(
 			gradientDirection: "135deg",
 			solidColor: "#ff007a",
 			backgroundImageUrl: imageUrl ?? null,
+			isSplit: false,
 		};
 	}
 
@@ -86,24 +150,7 @@ function backgroundToEditorState(
 			gradientDirection: "135deg",
 			solidColor: bg.color,
 			backgroundImageUrl: null,
-		};
-	}
-
-	if (bg.type === "split") {
-		const from = bg.top_color;
-		const to = bg.bottom_color;
-		const match = EDITOR_PALETTES.find(
-			(p) =>
-				p.from.toLowerCase() === from.toLowerCase() &&
-				p.to.toLowerCase() === to.toLowerCase(),
-		);
-		return {
-			bgMode: "solid",
-			paletteId: match?.id ?? fallbackPaletteId,
-			gradientColors: [from, to],
-			gradientDirection: "180deg",
-			solidColor: from,
-			backgroundImageUrl: null,
+			isSplit: false,
 		};
 	}
 
@@ -121,6 +168,7 @@ function backgroundToEditorState(
 		gradientDirection: bg.gradient.direction,
 		solidColor: from,
 		backgroundImageUrl: null,
+		isSplit: false,
 	};
 }
 
@@ -193,6 +241,7 @@ export function parseCanvasDataToEditorState(
 		logoPreviewUrl: meta?.logo_url ?? canvas.logo?.url ?? null,
 		pendingLogoFile: null,
 		...bgState,
+		textColor: participantName?.color ?? roleTitle?.color,
 		fontId: FONT_FAMILY_TO_ID[canvas.typography.font_family] ?? "inter",
 		titleSize: sizePxToEnum(canvas.typography.size_px),
 		defaultCaption: meta?.default_caption ?? "",
@@ -277,7 +326,7 @@ export function createDefaultEditorState(
 	const preset = defaults[layoutId] ?? {};
 
 	return {
-		platformTemplateId,
+		platformTemplateId: platformTemplateId ?? "",
 		layoutId,
 		title: "",
 		eventName: "",

@@ -35,11 +35,20 @@ export interface CanvasGradientBackground {
 	};
 }
 
+export interface CanvasBackgroundPart {
+	type: "solid" | "gradient";
+	color?: string | null;
+	gradient?: {
+		colors: [string, string];
+		direction: string;
+	} | null;
+}
+
 export interface CanvasSplitBackground {
 	type: "split";
-	top_color: string;
-	bottom_color: string;
 	split_ratio: number;
+	primary: CanvasBackgroundPart;
+	secondary: CanvasBackgroundPart;
 }
 
 export interface CanvasSolidBackground {
@@ -97,6 +106,7 @@ export interface CanvasParticipantInputField {
 	placeholder: string;
 	required: boolean;
 	visible: boolean;
+	color?: string;
 }
 
 export interface CanvasParticipantUploadField {
@@ -163,11 +173,18 @@ export interface CustomizeEditorState {
 	logo: CanvasLogo | null;
 	logoPreviewUrl: string | null;
 	pendingLogoFile: File | null;
-	bgMode: "gradient" | "solid";
+	bgMode: "gradient" | "solid" | "split";
 	paletteId: string;
 	gradientColors: [string, string];
 	gradientDirection: string;
 	solidColor: string;
+	// Secondary background (for split mode)
+	isSplit?: boolean;
+	secBgMode?: "gradient" | "solid";
+	secPaletteId?: string;
+	secGradientColors?: [string, string];
+	secSolidColor?: string;
+	textColor?: string;
 	backgroundImageUrl: string | null;
 	fontId: string;
 	titleSize: "SMALL" | "MEDIUM" | "LARGE";

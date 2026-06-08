@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard/dashboard";
 import {
   extractPlatformTemplates,
@@ -11,42 +11,20 @@ import {
   getPlatformTemplates,
 } from "../services/templates";
 
-function findInPlatformTemplateCache(
-  queryClient: ReturnType<typeof useQueryClient>,
-  templateId: string,
-): LayoutTemplate | null {
-  const entries = queryClient.getQueriesData<LayoutTemplate[]>({
-    queryKey: ["platform-templates"],
-  });
-
-  for (const [, templates] of entries) {
-    const match = templates?.find((tpl) => tpl.id === templateId);
-    if (match) return match;
-  }
-
-  return null;
-}
-
 /** Loads platform template + canvas_data for /customize (gallery uses thumbnails only). */
 export function useLoadPlatformTemplate(platformTemplateId: string | null) {
-  const queryClient = useQueryClient();
-
   return useQuery({
     queryKey: ["platform-template", platformTemplateId],
     enabled: Boolean(platformTemplateId),
     queryFn: async (): Promise<LayoutTemplate | null> => {
       if (!platformTemplateId) return null;
 
-      const cached = findInPlatformTemplateCache(
-        queryClient,
-        platformTemplateId,
-      );
-      if (cached?.canvasData) return cached;
-
       try {
         const response = await getPlatformTemplate(platformTemplateId);
+        if (!response.data) return null;
         return mapPlatformTemplateToLayout(response.data);
       } catch {
+        // Fallback: search in list if detail fails
         const listResponse = await getPlatformTemplates({
           page: 1,
           limit: 100,
@@ -56,6 +34,6 @@ export function useLoadPlatformTemplate(platformTemplateId: string | null) {
         return match ? mapPlatformTemplateToLayout(match) : null;
       }
     },
-    retry: 1,
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }

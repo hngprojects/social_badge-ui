@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLoadOrganiserTemplate } from "@/app/features/templates/hooks/useLoadOrganiserTemplate";
 import { useLoadPlatformTemplate } from "@/app/features/templates/hooks/useLoadPlatformTemplate";
@@ -15,30 +16,55 @@ export function CustomizeBadgePageClient() {
     data: loadedState,
     isLoading: organiserLoading,
     isError: organiserError,
-  } =
-    useLoadOrganiserTemplate(organiserTemplateId);
-  const { data: platformTemplate, isLoading: platformLoading } = useLoadPlatformTemplate(
-    organiserTemplateId ? null : platformTemplateId,
-  );
+  } = useLoadOrganiserTemplate(organiserTemplateId);
 
-  const initialEditor =
-    loadedState ??
-    createDefaultEditorState(platformTemplateId, platformTemplate?.canvasData);
+  const {
+    data: platformTemplate,
+    isLoading: platformLoading,
+    isError: platformError,
+  } = useLoadPlatformTemplate(organiserTemplateId ? null : platformTemplateId);
 
-  const isLoading = (organiserTemplateId ? organiserLoading : platformLoading) || (!initialEditor && !organiserError);
+  // Compute initialEditor. It might be null if we have a UUID but no canvasData yet.
+  const initialEditor = useMemo(() => {
+    return (
+      loadedState ??
+      createDefaultEditorState(platformTemplateId, platformTemplate?.canvasData)
+    );
+  }, [loadedState, platformTemplateId, platformTemplate?.canvasData]);
+
+  // We are loading if a required query is still pending AND we don't have enough data to render the form.
+  const isFetching = organiserTemplateId ? organiserLoading : platformLoading;
+  const isLoading = isFetching && !initialEditor;
 
   if (isLoading) {
     return (
       <main className="flex min-h-[50vh] items-center justify-center bg-[#F5F5F5]">
-        <p className="text-sm text-gray-500">Loading template…</p>
+        <div className="flex flex-col items-center gap-2">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
+          <p className="text-sm text-gray-500">Loading template…</p>
+        </div>
       </main>
     );
   }
 
-  if (organiserTemplateId && (organiserError || !initialEditor)) {
+  // Error state: we finished fetching but couldn't get an editor state.
+  const hasError = 
+    (organiserTemplateId && organiserError) || 
+    (!organiserTemplateId && platformError) || 
+    (!initialEditor && !isFetching);
+
+  if (hasError) {
     return (
       <main className="flex min-h-[50vh] items-center justify-center bg-[#F5F5F5]">
-        <p className="text-sm text-red-500">Could not load this badge.</p>
+        <div className="text-center">
+          <p className="text-sm text-red-500 mb-2">Could not load this badge.</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="text-xs text-gray-500 underline"
+          >
+            Try refreshing the page
+          </button>
+        </div>
       </main>
     );
   }

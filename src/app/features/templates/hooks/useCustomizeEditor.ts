@@ -18,20 +18,20 @@ export function useCustomizeEditorState(initialEditor: CustomizeEditorState) {
   }, []);
 
   const setPalette = useCallback(
-    (paletteId: string, bgMode: "gradient" | "solid" = editor.bgMode) => {
+    (paletteId: string, bgMode: "gradient" | "solid" | "split" = editor.bgMode) => {
       setEditor((prev) => ({
         ...prev,
-        ...paletteToBackgroundState(paletteId, bgMode),
+        ...paletteToBackgroundState(paletteId, bgMode === "split" ? "solid" : bgMode),
         bgMode,
       }));
     },
     [editor.bgMode],
   );
 
-  const setBgMode = useCallback((bgMode: "gradient" | "solid") => {
+  const setBgMode = useCallback((bgMode: "gradient" | "solid" | "split") => {
     setEditor((prev) => ({
       ...prev,
-      ...paletteToBackgroundState(prev.paletteId, bgMode),
+      ...paletteToBackgroundState(prev.paletteId, bgMode === "split" ? "solid" : bgMode),
       bgMode,
     }));
   }, []);
