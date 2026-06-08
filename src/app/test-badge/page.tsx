@@ -6,6 +6,7 @@ import { StyleSection } from "@/app/(dashboard)/components/customize/StyleSectio
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
 import { CustomTemplatePreview } from "./components/CustomTemplatePreview";
+import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 const TEST_TEMPLATES = [
 	{ id: "tpl_1", label: "Template 1" },
