@@ -78,8 +78,10 @@ export function useProfileForm() {
 
     setFieldErrors((prev) => {
       if (!prev[field as keyof ProfileFieldErrors]) return prev;
-      const { [field as keyof ProfileFieldErrors]: _removed, ...rest } = prev;
-      return rest;
+      return {
+        ...prev,
+        [field]: undefined,
+      };
     });
     setFormData((prev) => ({ ...prev, [field]: nextValue }));
   }
