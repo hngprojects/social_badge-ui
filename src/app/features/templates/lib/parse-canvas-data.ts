@@ -52,15 +52,18 @@ function backgroundToEditorState(
 	CustomizeEditorState,
 	| "bgMode"
 	| "paletteId"
+	| "priBgMode"
 	| "gradientColors"
 	| "gradientDirection"
 	| "solidColor"
 	| "backgroundImageUrl"
 	| "isSplit"
+	| "splitRatio"
 	| "secBgMode"
 	| "secPaletteId"
 	| "secGradientColors"
 	| "secSolidColor"
+	| "secGradientDirection"
 > {
 	const bg = canvas.background;
 	const caps = LAYOUT_CAPABILITIES[canvas.layout_id];
@@ -107,6 +110,7 @@ function backgroundToEditorState(
 			secondary?: CanvasBackgroundPart;
 			top_color?: string;
 			bottom_color?: string;
+			split_ratio?: number;
 		};
 
 		const primary = partToState(rawSplit.primary, rawSplit.top_color);
@@ -114,11 +118,15 @@ function backgroundToEditorState(
 
 		return {
 			...primary,
+			bgMode: "split",
+			priBgMode: primary.bgMode,
 			isSplit: true,
+			splitRatio: rawSplit.split_ratio ?? 0.5,
 			secBgMode: secondary.bgMode,
 			secPaletteId: secondary.paletteId,
 			secGradientColors: secondary.gradientColors,
 			secSolidColor: secondary.solidColor,
+			secGradientDirection: secondary.gradientDirection,
 			backgroundImageUrl: null,
 		};
 	}
@@ -130,6 +138,7 @@ function backgroundToEditorState(
 		);
 		return {
 			bgMode: "gradient",
+			priBgMode: "gradient",
 			paletteId: match?.id ?? fallbackPaletteId,
 			gradientColors: ["#ff007a", "#ffa800"],
 			gradientDirection: "135deg",
@@ -145,6 +154,7 @@ function backgroundToEditorState(
 		);
 		return {
 			bgMode: "solid",
+			priBgMode: "solid",
 			paletteId: match?.id ?? fallbackPaletteId,
 			gradientColors: [bg.color, bg.color],
 			gradientDirection: "135deg",
@@ -163,6 +173,7 @@ function backgroundToEditorState(
 
 	return {
 		bgMode: "gradient",
+		priBgMode: "gradient",
 		paletteId: match?.id ?? fallbackPaletteId,
 		gradientColors: bg.gradient.colors,
 		gradientDirection: bg.gradient.direction,

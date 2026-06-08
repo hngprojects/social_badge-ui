@@ -46,9 +46,9 @@ function buildBackground(state: CustomizeEditorState): CanvasBackground {
 	if (state.bgMode === "split" || state.isSplit) {
 		return {
 			type: "split",
-			split_ratio: 0.5,
+			split_ratio: state.splitRatio ?? 0.5,
 			primary: buildPart(
-				state.bgMode === "split" ? "solid" : state.bgMode,
+				state.priBgMode ?? (state.bgMode === "split" ? "solid" : state.bgMode),
 				state.solidColor,
 				state.gradientColors,
 				state.gradientDirection,
@@ -57,7 +57,7 @@ function buildBackground(state: CustomizeEditorState): CanvasBackground {
 				state.secBgMode ?? "solid",
 				state.secSolidColor ?? state.solidColor,
 				state.secGradientColors ?? state.gradientColors,
-				"135deg",
+				state.secGradientDirection ?? "135deg",
 			),
 		};
 	}

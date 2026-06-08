@@ -6,7 +6,7 @@ function GradientDefs({ id, editor }: { id: string; editor?: CustomizeEditorStat
 
 	return (
 		<defs>
-			{editor.bgMode === "gradient" && (
+			{(editor.bgMode === "gradient" || editor.priBgMode === "gradient") && (
 				<linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
 					<stop offset="0%" stopColor={editor.gradientColors[0]} />
 					<stop offset="100%" stopColor={editor.gradientColors[1]} />
@@ -56,7 +56,7 @@ export function Template9({ className, editor, baseColor }: { className?: string
 					fill={
 						editor?.backgroundImageUrl
 							? "url(#img-grad9)"
-							: editor?.bgMode === "gradient"
+							: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
 							? "url(#grad9)"
 							: main
 					}
@@ -102,7 +102,7 @@ export function Template7({ className, editor, baseColor }: { className?: string
 				fill={
 					editor?.backgroundImageUrl
 						? "url(#img-grad7)"
-						: editor?.bgMode === "gradient"
+						: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
 						? "url(#grad7)"
 						: fill
 				}
@@ -133,7 +133,7 @@ export function Template1({ className, editor, baseColor }: { className?: string
 					fill={
 						editor?.backgroundImageUrl
 							? "url(#img-grad1)"
-							: editor?.bgMode === "gradient"
+							: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
 							? "url(#grad1)"
 							: fill
 					}
@@ -199,7 +199,7 @@ export function Template5({ className, editor, baseColor }: { className?: string
 				fill={
 					editor?.backgroundImageUrl
 						? "url(#img-grad5)"
-						: editor?.bgMode === "gradient"
+						: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
 						? "url(#grad5)"
 						: fill
 				}
@@ -229,7 +229,7 @@ export function Template4({ className, editor, baseColor }: { className?: string
 				fill={
 					editor?.backgroundImageUrl
 						? "url(#img-grad4)"
-						: editor?.bgMode === "gradient"
+						: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
 						? "url(#grad4)"
 						: fill
 				}
@@ -261,7 +261,7 @@ export function Template3({ className, editor, baseColor }: { className?: string
 				fill={
 					editor?.backgroundImageUrl
 						? "url(#img-grad3)"
-						: editor?.bgMode === "gradient"
+						: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
 						? "url(#grad3)"
 						: fill
 				}

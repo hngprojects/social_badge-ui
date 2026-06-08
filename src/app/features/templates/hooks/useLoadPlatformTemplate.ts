@@ -21,7 +21,9 @@ export function useLoadPlatformTemplate(platformTemplateId: string | null) {
 
       try {
         const response = await getPlatformTemplate(platformTemplateId);
-        if (!response.data) return null;
+        if (!response.data) {
+          throw new Error("Platform template detail response was empty");
+        }
         return mapPlatformTemplateToLayout(response.data);
       } catch {
         // Fallback: search in list if detail fails

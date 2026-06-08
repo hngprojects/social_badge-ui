@@ -22,15 +22,31 @@ export function CustomizeBadgePageClient() {
     data: platformTemplate,
     isLoading: platformLoading,
     isError: platformError,
-  } = useLoadPlatformTemplate(organiserTemplateId ? null : platformTemplateId);
+  } = useLoadPlatformTemplate(organiserTemplateId ? null : platformTemplateId) as { data: any, isLoading: boolean, isError: boolean };
 
   // Compute initialEditor. It might be null if we have a UUID but no canvasData yet.
   const initialEditor = useMemo(() => {
-    return (
-      loadedState ??
-      createDefaultEditorState(platformTemplateId, platformTemplate?.canvasData)
-    );
-  }, [loadedState, platformTemplateId, platformTemplate?.canvasData]);
+    if (loadedState) return loadedState;
+    if (
+      !organiserTemplateId &&
+      platformTemplateId &&
+      platformLoading &&
+      !platformTemplate?.canvasData
+    ) {
+      return null;
+    }
+    return createDefaultEditorState(platformTemplateId, platformTemplate?.canvasData);
+  }, [
+    loadedState,
+    organiserTemplateId,
+    platformTemplateId,
+    platformLoading,
+    platformTemplate?.canvasData,
+  ]);
+
+  const editorKey = useMemo(() => {
+    return `${organiserTemplateId ?? platformTemplateId ?? "new"}-${loadedState ? "loaded" : "new"}`;
+  }, [organiserTemplateId, platformTemplateId, loadedState]);
 
   // We are loading if a required query is still pending AND we don't have enough data to render the form.
   const isFetching = organiserTemplateId ? organiserLoading : platformLoading;
@@ -70,8 +86,6 @@ export function CustomizeBadgePageClient() {
   }
 
   // At this point, initialEditor is guaranteed to be non-null
-  const editorKey = `${organiserTemplateId ?? platformTemplateId ?? "new"}-${loadedState ? "loaded" : "new"}`;
-
   return (
     <CustomizeBadgeForm
       key={editorKey}

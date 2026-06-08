@@ -175,15 +175,18 @@ export interface CustomizeEditorState {
 	pendingLogoFile: File | null;
 	bgMode: "gradient" | "solid" | "split";
 	paletteId: string;
+	priBgMode?: "gradient" | "solid";
 	gradientColors: [string, string];
 	gradientDirection: string;
 	solidColor: string;
 	// Secondary background (for split mode)
 	isSplit?: boolean;
+	splitRatio?: number;
 	secBgMode?: "gradient" | "solid";
 	secPaletteId?: string;
 	secGradientColors?: [string, string];
 	secSolidColor?: string;
+	secGradientDirection?: string;
 	textColor?: string;
 	backgroundImageUrl: string | null;
 	fontId: string;

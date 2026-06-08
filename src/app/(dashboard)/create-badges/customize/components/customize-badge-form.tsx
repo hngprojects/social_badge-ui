@@ -57,7 +57,7 @@ export function CustomizeBadgeForm({
 			accessType: editor.accessType,
 			fontId: editor.fontId,
 			paletteId: editor.paletteId,
-			bgMode: editor.bgMode,
+			bgMode: editor.isSplit ? "split" : editor.bgMode,
 			secondaryColor: editor.secSolidColor,
 			textColor: editor.textColor,
 		},
