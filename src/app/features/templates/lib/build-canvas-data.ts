@@ -17,6 +17,14 @@ import { resolveFontFamily, resolveTitleSizePx } from "./font-mapping";
 import { BACKGROUND_IMAGE_BY_PALETTE, getPalette } from "./palette-mapping";
 
 function buildBackground(state: CustomizeEditorState): CanvasBackground {
+	if (state.bgMode === "image") {
+		return {
+			type: "image",
+			url: undefined, // FE-only asset
+			public_id: null,
+		};
+	}
+
 	if (state.backgroundImageUrl) {
 		return {
 			type: "image",

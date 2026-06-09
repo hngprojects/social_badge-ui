@@ -14,7 +14,7 @@ export const customizeBadgeSchema = z.object({
   accessType: z.number().optional(),
   fontId: z.string().optional(),
   paletteId: z.string().optional(),
-  bgMode: z.enum(["gradient", "solid", "split"]).optional(),
+  bgMode: z.enum(["gradient", "solid", "split", "image"]).optional(),
   secondaryColor: z.string().optional(),
   textColor: z.string().optional(),
 });

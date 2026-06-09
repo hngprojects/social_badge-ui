@@ -57,7 +57,7 @@ export function Layout1({
 				)}
 			</div>
 			<div className="absolute top-48 px-8 w-full">
-				<h2 
+				<h2
 					style={textStyle}
 					className="text-6xl font-normal uppercase text-black  tracking-tight font-league-gothic leading-[0.85]"
 				>
@@ -65,10 +65,7 @@ export function Layout1({
 						? editor.participantNamePlaceholder || "Your full name"
 						: ""}
 				</h2>
-				<p 
-					style={textStyle}
-					className="text-md text-black/80 mt-2"
-				>
+				<p style={textStyle} className="text-md text-black/80 mt-2">
 					{editor.roleTitleVisible
 						? editor.roleTitlePlaceholder || "Product Designer"
 						: ""}
@@ -118,17 +115,15 @@ export function Layout9({
 				</div>
 
 				<div className="px-8 my-6">
-					<h2 
-						style={textStyle}
-						className="text-3xl font-bold uppercase">
+					<h2 style={textStyle} className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
 							: ""}
 					</h2>
-					<p 
-						style={textStyle}
-					>
+					<p style={textStyle}>
+						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
+							: ""}
 					</p>
 				</div>
 				<div className="bg-zinc-300 absolute bottom-8 w-35 h-35 right-10 rotate-10 flex items-center justify-center text-black text-[10px] overflow-hidden">
@@ -196,18 +191,15 @@ export function Layout4({
 			</div>
 
 			<div className="absolute bottom-0 h-[23%] w-full pl-12 text-black">
-				<h2 
-					style={{ ...fontStyle, ...textStyle }} 
+				<h2
+					style={{ ...fontStyle, ...textStyle }}
 					className="text-xl mt-4 font-bold uppercase"
 				>
 					{editor.participantNameVisible
 						? editor.participantNamePlaceholder || "Your full name"
 						: ""}
 				</h2>
-				<p 
-					style={textStyle}
-					className="text-sm opacity-80"
-				>
+				<p style={textStyle} className="text-sm opacity-80">
 					{editor.roleTitleVisible
 						? editor.roleTitlePlaceholder || "Product designer"
 						: ""}
@@ -264,10 +256,7 @@ export function Layout5({ editor, textColor }: TemplateLayoutProps) {
 					{editor.eventName || "SUMMIT"}
 				</h2>
 				<div className="w-20 h-1 bg-white mb-6" />
-				<p 
-					style={textStyle}
-					className="text-xl font-bold text-white/90"
-				>
+				<p style={textStyle} className="text-xl font-bold text-white/90">
 					{editor.participantNameVisible
 						? editor.participantNamePlaceholder || "Attendee"
 						: ""}
@@ -309,18 +298,12 @@ export function Layout7({
 				</div>
 
 				<div className="px-8 my-6 min-h-20">
-					<h2 
-						style={textStyle}
-						className="text-3xl font-bold uppercase"
-					>
+					<h2 style={textStyle} className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
 							: ""}
 					</h2>
-					<p 
-						style={textStyle}
-						className="text-base opacity-90"
-					>
+					<p style={textStyle} className="text-base opacity-90">
 						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
 							: ""}
@@ -358,18 +341,12 @@ export function Layout3({ editor, textColor }: TemplateLayoutProps) {
 				</div>
 
 				<div className="px-8 my-6">
-					<h2 
-						style={textStyle}
-						className="text-3xl"
-					>
+					<h2 style={textStyle} className="text-3xl">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Sandra Robinson"
 							: ""}
 					</h2>
-					<p 
-						style={textStyle}
-						className="text-base"
-					>
+					<p style={textStyle} className="text-base">
 						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
 							: ""}
@@ -381,25 +358,47 @@ export function Layout3({ editor, textColor }: TemplateLayoutProps) {
 	);
 }
 
-export function LayoutCard1({ editor }: TemplateLayoutProps) {
+export function LayoutCard1({ editor, textColor }: TemplateLayoutProps) {
+	const bgStyle =
+		editor.bgMode === "gradient"
+			? {
+					background: `linear-gradient(${editor.gradientDirection || "135deg"}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
+				}
+			: editor.bgMode === "solid"
+				? { backgroundColor: editor.solidColor }
+				: {};
+
 	return (
-		<div
-			className="relative w-full h-full overflow-hidden rounded-[18px] flex flex-col  justify-center bg-cover bg-center text-white font-bricolage"
-			style={{ backgroundImage: "url('/assets/badges/hng_bg_one.webp')" }}
-		>
-			<Coffetti />
-			<InnerBadgeLayout
-				headingTextColor="#00AEFF"
-				roleBgColor="#00AEFF"
-				nameTextColor="#000000"
-				svgFill="text-[#00AEFF]"
-				percentIConFill="text-white"
-			/>
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				// eslint-disable-next-line @next/next/no-img-element
+				<img
+					src="/assets/badges/hng_bg_one.webp"
+					alt="background"
+					className="absolute inset-0 w-full h-full object-cover"
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Coffetti />
+				<InnerBadgeLayout
+					editor={editor}
+					headingTextColor="#00AEFF"
+					roleBgColor="#00AEFF"
+					nameTextColor={textColor || "#000000"}
+					roleTextColor={textColor}
+					svgFill="text-[#00AEFF]"
+					percentIConFill="text-white"
+				/>
+			</div>
 		</div>
 	);
 }
 
 export function InnerBadgeLayout({
+	editor,
 	nameTextColor,
 	roleTextColor,
 	headingTextColor,
@@ -407,6 +406,7 @@ export function InnerBadgeLayout({
 	svgFill,
 	percentIConFill,
 }: {
+	editor: CustomizeEditorState;
 	nameTextColor?: string;
 	roleTextColor?: string;
 	headingTextColor?: string;
@@ -415,7 +415,7 @@ export function InnerBadgeLayout({
 	percentIConFill?: string;
 }) {
 	return (
-		<div className="z-100 h-[80%] w-[73%] min-w-70 min-h-99 mx-auto flex flex-col gap-[3.5%]">
+		<div className="z-10 h-[80%] w-[73%] min-w-70 min-h-99 mx-auto flex flex-col gap-[3.5%] relative">
 			<div className="flex justify-center items-center">
 				<Image
 					src={"/assets/badges/hng_logo_white.svg"}
@@ -439,12 +439,14 @@ export function InnerBadgeLayout({
 						color: roleTextColor,
 					}}
 				>
-					Virtual Assistant
+					{editor.roleTitleVisible
+						? editor.roleTitlePlaceholder || "Virtual Assistant"
+						: ""}
 				</span>
 			</div>
 
-			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white">
-				Photo
+			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white overflow-hidden">
+				{editor.allowParticipantPhoto ? "Photo" : ""}
 				<div className="absolute -bottom-6 -right-7 w-20 h-20 flex justify-center items-center">
 					<BadgeSvg className={svgFill} />
 					<span className="absolute flex flex-col justify-center items-center font-semibold">
@@ -458,34 +460,56 @@ export function InnerBadgeLayout({
 					className="font-bricolage text-[24px] font-semibold"
 					style={{ color: nameTextColor }}
 				>
-					John Jane Josh Doe
+					{editor.participantNameVisible
+						? editor.participantNamePlaceholder || "John Jane Josh Doe"
+						: ""}
 				</span>
 			</div>
 		</div>
 	);
 }
 
-export function LayoutCard2({ editor }: TemplateLayoutProps) {
+export function LayoutCard2({ editor, textColor }: TemplateLayoutProps) {
+	const bgStyle =
+		editor.bgMode === "gradient"
+			? {
+					background: `linear-gradient(${editor.gradientDirection || "135deg"}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
+				}
+			: editor.bgMode === "solid"
+				? { backgroundColor: editor.solidColor }
+				: {};
+
 	return (
-		<div
-			className="relative w-full h-full overflow-hidden rounded-[18px] flex flex-col items-center justify-center bg-cover bg-center text-white font-bricolage"
-			style={{ backgroundImage: "url('/assets/badges/hng_bg_two.webp')" }}
-		>
-			{" "}
-			<Coffetti />
-			<InnerBadgeLayout
-				roleBgColor="#00AEFF"
-				headingTextColor="#00AEFF"
-				nameTextColor="#000000"
-				svgFill="text-[#00AEFF]"
-				percentIConFill="text-white"
-			/>
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				// eslint-disable-next-line @next/next/no-img-element
+				<img
+					src="/assets/badges/hng_bg_two.webp"
+					alt="background"
+					className="absolute inset-0 w-full h-full object-cover"
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Coffetti />
+				<InnerBadgeLayout
+					editor={editor}
+					roleBgColor="#00AEFF"
+					headingTextColor="#00AEFF"
+					nameTextColor={textColor || "#000000"}
+					roleTextColor={textColor}
+					svgFill="text-[#00AEFF]"
+					percentIConFill="text-white"
+				/>
+			</div>
 		</div>
 	);
 }
 export function Coffetti() {
 	return (
-		<div className="z-50 absolute w-full h-1/2 top-0 overflow-hidden">
+		<div className="z-1 absolute w-full h-1/2 top-0 overflow-hidden pointer-events-none">
 			<Image
 				src={"/assets/badges/coffetti.webp"}
 				width={100}
@@ -496,27 +520,75 @@ export function Coffetti() {
 		</div>
 	);
 }
-export function LayoutCard3({ editor }: TemplateLayoutProps) {
+export function LayoutCard3({ editor, textColor }: TemplateLayoutProps) {
+	const bgStyle =
+		editor.bgMode === "gradient"
+			? {
+					background: `linear-gradient(${editor.gradientDirection || "135deg"}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
+				}
+			: editor.bgMode === "solid"
+				? { backgroundColor: editor.solidColor }
+				: {};
+
 	return (
-		<div
-			className="relative w-full h-full overflow-hidden rounded-[18px] flex flex-col items-center justify-center bg-cover bg-center text-white font-bricolage"
-			style={{ backgroundImage: "url('/assets/badges/hng_bg_three.webp')" }}
-		>
-			<Coffetti />
-			<InnerBadgeLayout roleBgColor="#AFF47F" nameTextColor="#ffffff" roleTextColor="#000000"/>
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				// eslint-disable-next-line @next/next/no-img-element
+				<img
+					src="/assets/badges/hng_bg_three.webp"
+					alt="background"
+					className="absolute inset-0 w-full h-full object-cover"
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Coffetti />
+				<InnerBadgeLayout
+					editor={editor}
+					roleBgColor="#AFF47F"
+					nameTextColor={textColor || "#ffffff"}
+					roleTextColor={textColor || "#000000"}
+				/>
+			</div>
 		</div>
 	);
 }
 
-export function LayoutCard4({ editor }: TemplateLayoutProps) {
+export function LayoutCard4({ editor, textColor }: TemplateLayoutProps) {
+	const bgStyle =
+		editor.bgMode === "gradient"
+			? {
+					background: `linear-gradient(${editor.gradientDirection || "135deg"}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
+				}
+			: editor.bgMode === "solid"
+				? { backgroundColor: editor.solidColor }
+				: {};
+
 	return (
-		<div
-			className=" relative w-full h-full overflow-hidden rounded-[18px] flex flex-col items-center justify-center bg-cover bg-center text-white font-bricolage"
-			style={{ backgroundImage: "url('/assets/badges/hng_bg_four.webp')" }}
-		>
-			{" "}
-			<Coffetti />
-			<InnerBadgeLayout headingTextColor="#7E65EC" roleBgColor="#AFF47F" roleTextColor="#000000"/>
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				// eslint-disable-next-line @next/next/no-img-element
+				<img
+					src="/assets/badges/hng_bg_four.webp"
+					alt="background"
+					className="absolute inset-0 w-full h-full object-cover"
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Coffetti />
+				<InnerBadgeLayout
+					editor={editor}
+					headingTextColor="#7E65EC"
+					roleBgColor="#AFF47F"
+					nameTextColor={textColor}
+					roleTextColor={textColor || "#000000"}
+				/>
+			</div>
 		</div>
 	);
 }
@@ -529,6 +601,10 @@ const LAYOUT_COMPONENTS: Record<
 	circle_photo_dark_v1: Layout4,
 	dark_name_photo_v1: Layout7,
 	split_purple_teal_v1: Layout9,
+	hng_finalist_design_v1: LayoutCard1,
+	hng_finalist_dev_v1: LayoutCard2,
+	hng_finalist_pm_v1: LayoutCard3,
+	hng_finalist_flaretag_v1: LayoutCard4,
 	card_1: LayoutCard1,
 	card_2: LayoutCard2,
 	card_3: LayoutCard3,

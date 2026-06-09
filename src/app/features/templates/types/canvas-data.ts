@@ -173,7 +173,7 @@ export interface CustomizeEditorState {
 	logo: CanvasLogo | null;
 	logoPreviewUrl: string | null;
 	pendingLogoFile: File | null;
-	bgMode: "gradient" | "solid" | "split";
+	bgMode: "gradient" | "solid" | "split" | "image";
 	paletteId: string;
 	priBgMode?: "gradient" | "solid";
 	gradientColors: [string, string];
