@@ -266,15 +266,11 @@ export default function MobileHeader() {
 										{navigation.map(({ label, href }) => {
 											const isActive = pathname === href;
 
-											const handleClick = () => {
-												setMobileOpen(false);
-											};
-
 											return (
 												<Link
 													key={label}
 													href={href}
-													onClick={handleClick}
+													onClick={() => setMobileOpen(false)}
 													className={cn(
 														"px-4 py-3 text-[15px] font-medium rounded-xl",
 														"transition-colors duration-150",

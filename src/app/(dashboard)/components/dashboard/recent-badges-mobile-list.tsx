@@ -75,9 +75,7 @@ export function RecentBadgesMobileList({
 									{/* On xs: show status inline under title since the Status column is hidden */}
 									<p className="mt-0.5 truncate text-[11px] text-[#B0B0B0] sm:hidden">
 										{formatLastEditedDate(template.updated_at, template.status)}
-										{template.total_shares != null && (
-											<> &middot; {template.total_shares} shares</>
-										)}
+										<> &middot; {template.total_shares ?? 0} shares</>
 									</p>
 									<p className="mt-0.5 truncate text-[11px] text-[#B0B0B0] hidden sm:block">
 										Template instance

@@ -6,6 +6,7 @@ import { useLoadOrganiserTemplate } from "@/app/features/templates/hooks/useLoad
 import { useLoadPlatformTemplate } from "@/app/features/templates/hooks/useLoadPlatformTemplate";
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { CustomizeBadgeForm } from "./customize-badge-form";
+import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard/dashboard";
 
 export function CustomizeBadgePageClient() {
 	const searchParams = useSearchParams();
@@ -24,7 +25,7 @@ export function CustomizeBadgePageClient() {
 		isError: platformError,
 	} = useLoadPlatformTemplate(
 		organiserTemplateId ? null : platformTemplateId,
-	) as { data: any; isLoading: boolean; isError: boolean };
+	) as { data: LayoutTemplate | null; isLoading: boolean; isError: boolean };
 
 	// Compute initialEditor. It might be null if we have a UUID but no canvasData yet.
 	const initialEditor = useMemo(() => {
