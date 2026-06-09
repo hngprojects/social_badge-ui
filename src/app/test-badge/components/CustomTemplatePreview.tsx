@@ -224,11 +224,11 @@ export function LogoPlaceholder({
 		>
 			<div className="w-10 h-10 flex items-center justify-center overflow-hidden relative">
 				{logoPreviewUrl ? (
-					<Image
+					// eslint-disable-next-line @next/next/no-img-element
+					<img
 						src={logoPreviewUrl}
 						alt="Logo"
-						fill
-						className="object-contain"
+						className="object-contain w-full h-full"
 					/>
 				) : (
 					<PlaceholderLogo />
@@ -246,7 +246,7 @@ export function LogoPlaceholder({
 	);
 }
 // Placeholder for Template 5 Layout
-export function Layout5({ editor, textColor }: TemplateLayoutProps) {
+export function Layout5({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
 	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
@@ -328,7 +328,7 @@ export function Layout7({
 	);
 }
 
-export function Layout3({ editor, textColor }: TemplateLayoutProps) {
+export function Layout3({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
 	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-black">
@@ -358,7 +358,14 @@ export function Layout3({ editor, textColor }: TemplateLayoutProps) {
 	);
 }
 
-export function LayoutCard1({ editor, textColor }: TemplateLayoutProps) {
+
+
+
+{/*Hng finalist badges */}
+
+
+
+export function LayoutCard1({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
 	const bgStyle =
 		editor.bgMode === "gradient"
 			? {
@@ -373,7 +380,7 @@ export function LayoutCard1({ editor, textColor }: TemplateLayoutProps) {
 			{editor.bgMode === "image" && (
 				// eslint-disable-next-line @next/next/no-img-element
 				<img
-					src="/assets/badges/hng_bg_one.webp"
+					src="/assets/badges/hng_bg_two.webp"
 					alt="background"
 					className="absolute inset-0 w-full h-full object-cover"
 				/>
@@ -391,6 +398,8 @@ export function LayoutCard1({ editor, textColor }: TemplateLayoutProps) {
 					roleTextColor={textColor}
 					svgFill="text-[#00AEFF]"
 					percentIConFill="text-white"
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl="hng_logo_blue.svg"
 				/>
 			</div>
 		</div>
@@ -405,6 +414,8 @@ export function InnerBadgeLayout({
 	roleBgColor,
 	svgFill,
 	percentIConFill,
+	participantPhotoUrl,
+	logoUrl
 }: {
 	editor: CustomizeEditorState;
 	nameTextColor?: string;
@@ -413,12 +424,21 @@ export function InnerBadgeLayout({
 	roleBgColor?: string;
 	svgFill?: string;
 	percentIConFill?: string;
+	participantPhotoUrl?: string | null;
+	logoUrl?: string;
 }) {
+	const isHng = editor.layoutId.startsWith("hng_finalist_");
+	const badgeTitle = isHng ? (editor.badgeTitle || "Finalist") : "Finalist";
+	const trackValue = isHng 
+		? (editor.trackVisible !== false ? (editor.trackPlaceholder || "Virtual Assistant") : "")
+		: (editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Virtual Assistant") : "");
+
 	return (
 		<div className="z-10 h-[80%] w-[73%] min-w-70 min-h-99 mx-auto flex flex-col gap-[3.5%] relative">
 			<div className="flex justify-center items-center">
-				<Image
-					src={"/assets/badges/hng_logo_white.svg"}
+				{/* eslint-disable-next-line @next/next/no-img-element */}
+				<img
+					src={`/assets/badges/${logoUrl}`}
 					width={100}
 					height={100}
 					alt="badge logo"
@@ -429,24 +449,37 @@ export function InnerBadgeLayout({
 					className="font-bricolage text-[53px] leading-none font-bold -mb-2.5 tracking-tighter"
 					style={{ color: headingTextColor }}
 				>
-					Finalist
+					{badgeTitle}
 				</span>
 
-				<span
-					className="w-full border-4 border-white mx-auto rounded-full py-1.5 px-2 font-semibold"
-					style={{
-						backgroundColor: roleBgColor,
-						color: roleTextColor,
-					}}
-				>
-					{editor.roleTitleVisible
-						? editor.roleTitlePlaceholder || "Virtual Assistant"
-						: ""}
-				</span>
+				{trackValue && (
+					<span
+						className="w-full border-4 border-white mx-auto rounded-full py-1.5 px-2 font-semibold"
+						style={{
+							backgroundColor: roleBgColor,
+							color: roleTextColor,
+						}}
+					>
+						{trackValue}
+					</span>
+				)}
 			</div>
 
-			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white overflow-hidden">
-				{editor.allowParticipantPhoto ? "Photo" : ""}
+			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white">
+				<div className="w-full h-full rounded-4xl overflow-hidden">
+					{participantPhotoUrl ? (
+						// eslint-disable-next-line @next/next/no-img-element
+						<img
+							src={participantPhotoUrl}
+							alt="Participant"
+							className="w-full h-full object-cover"
+						/>
+					) : editor.allowParticipantPhoto ? (
+						"Photo"
+					) : (
+						""
+					)}
+				</div>
 				<div className="absolute -bottom-6 -right-7 w-20 h-20 flex justify-center items-center">
 					<BadgeSvg className={svgFill} />
 					<span className="absolute flex flex-col justify-center items-center font-semibold">
@@ -469,7 +502,7 @@ export function InnerBadgeLayout({
 	);
 }
 
-export function LayoutCard2({ editor, textColor }: TemplateLayoutProps) {
+export function LayoutCard2({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
 	const bgStyle =
 		editor.bgMode === "gradient"
 			? {
@@ -484,7 +517,7 @@ export function LayoutCard2({ editor, textColor }: TemplateLayoutProps) {
 			{editor.bgMode === "image" && (
 				// eslint-disable-next-line @next/next/no-img-element
 				<img
-					src="/assets/badges/hng_bg_two.webp"
+					src="/assets/badges/hng_bg_four.webp"
 					alt="background"
 					className="absolute inset-0 w-full h-full object-cover"
 				/>
@@ -502,6 +535,8 @@ export function LayoutCard2({ editor, textColor }: TemplateLayoutProps) {
 					roleTextColor={textColor}
 					svgFill="text-[#00AEFF]"
 					percentIConFill="text-white"
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl="hng_logo_blue.svg"
 				/>
 			</div>
 		</div>
@@ -510,7 +545,8 @@ export function LayoutCard2({ editor, textColor }: TemplateLayoutProps) {
 export function Coffetti() {
 	return (
 		<div className="z-1 absolute w-full h-1/2 top-0 overflow-hidden pointer-events-none">
-			<Image
+			{/* eslint-disable-next-line @next/next/no-img-element */}
+			<img
 				src={"/assets/badges/coffetti.webp"}
 				width={100}
 				height={100}
@@ -520,7 +556,7 @@ export function Coffetti() {
 		</div>
 	);
 }
-export function LayoutCard3({ editor, textColor }: TemplateLayoutProps) {
+export function LayoutCard3({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
 	const bgStyle =
 		editor.bgMode === "gradient"
 			? {
@@ -550,13 +586,15 @@ export function LayoutCard3({ editor, textColor }: TemplateLayoutProps) {
 					roleBgColor="#AFF47F"
 					nameTextColor={textColor || "#ffffff"}
 					roleTextColor={textColor || "#000000"}
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl="hng_logo_white.svg"
 				/>
 			</div>
 		</div>
 	);
 }
 
-export function LayoutCard4({ editor, textColor }: TemplateLayoutProps) {
+export function LayoutCard4({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
 	const bgStyle =
 		editor.bgMode === "gradient"
 			? {
@@ -571,7 +609,7 @@ export function LayoutCard4({ editor, textColor }: TemplateLayoutProps) {
 			{editor.bgMode === "image" && (
 				// eslint-disable-next-line @next/next/no-img-element
 				<img
-					src="/assets/badges/hng_bg_four.webp"
+					src="/assets/badges/hng_bg_one.webp"
 					alt="background"
 					className="absolute inset-0 w-full h-full object-cover"
 				/>
@@ -587,6 +625,46 @@ export function LayoutCard4({ editor, textColor }: TemplateLayoutProps) {
 					roleBgColor="#AFF47F"
 					nameTextColor={textColor}
 					roleTextColor={textColor || "#000000"}
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl="hng_logo_black.svg"
+				/>
+			</div>
+		</div>
+	);
+}
+export function LayoutCard5({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
+	const bgStyle =
+		editor.bgMode === "gradient"
+			? {
+					background: `linear-gradient(${editor.gradientDirection || "135deg"}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
+				}
+			: editor.bgMode === "solid"
+				? { backgroundColor: editor.solidColor }
+				: {};
+
+	return (
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				// eslint-disable-next-line @next/next/no-img-element
+				<img
+					src="/assets/badges/hng_bg_five.webp"
+					alt="background"
+					className="absolute inset-0 w-full h-full object-cover"
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Coffetti />
+				<InnerBadgeLayout
+					editor={editor}
+					headingTextColor="#7E65EC"
+					roleBgColor="#AFF47F"
+					nameTextColor={textColor}
+					roleTextColor={textColor || "#000000"}
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl="hng_logo_orange.svg"
 				/>
 			</div>
 		</div>
@@ -601,14 +679,11 @@ const LAYOUT_COMPONENTS: Record<
 	circle_photo_dark_v1: Layout4,
 	dark_name_photo_v1: Layout7,
 	split_purple_teal_v1: Layout9,
-	hng_finalist_design_v1: LayoutCard1,
-	hng_finalist_dev_v1: LayoutCard2,
-	hng_finalist_pm_v1: LayoutCard3,
-	hng_finalist_flaretag_v1: LayoutCard4,
-	card_1: LayoutCard1,
-	card_2: LayoutCard2,
-	card_3: LayoutCard3,
-	card_4: LayoutCard4,
+	hng_finalist_design_v1: LayoutCard4,
+	hng_finalist_dev_v1: LayoutCard1,
+	hng_finalist_pm_v1: LayoutCard2,
+	hng_finalist_v1: LayoutCard3,
+	hng_finalist_flaretag_v1: LayoutCard5,
 };
 
 interface CustomTemplatePreviewProps {

@@ -131,15 +131,33 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 		});
 	}
 
-	if (caps.participantFields.includes("role_title")) {
+	if (caps.participantFields.includes("role_title") || (caps.participantFields as any).includes("track")) {
+		const isTrack = (caps.participantFields as any).includes("track");
 		fields.push({
-			key: CANVAS_FIELD_KEYS.ROLE_TITLE,
+			key: isTrack ? ("track" as any) : CANVAS_FIELD_KEYS.ROLE_TITLE,
 			type: "participant_input",
-			label: "ROLE / TITLE",
-			placeholder: "e.g. Product Designer",
-			required: state.roleTitleVisible ? state.roleTitleRequired : false,
-			visible: state.roleTitleVisible,
+			label: isTrack ? "TRACK" : "ROLE / TITLE",
+			placeholder: isTrack ? (state.trackPlaceholder || "e.g. Design") : "e.g. Product Designer",
+			required: isTrack ? (state.trackRequired ?? false) : (state.roleTitleVisible ? state.roleTitleRequired : false),
+			visible: isTrack ? (state.trackVisible ?? true) : state.roleTitleVisible,
 			color: state.textColor,
+		});
+	}
+
+	if (state.layoutId.startsWith("hng_finalist_")) {
+		fields.push({
+			key: "badge_title" as any,
+			type: "static",
+			label: "Badge Title",
+			value: state.badgeTitle || "Finalist",
+			visible: true,
+		});
+		fields.push({
+			key: "percentile_badge" as any,
+			type: "static",
+			label: "Percentile",
+			value: state.percentileBadge || "Top 5%",
+			visible: true,
 		});
 	}
 

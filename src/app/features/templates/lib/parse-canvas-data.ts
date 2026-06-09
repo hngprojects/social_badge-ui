@@ -229,6 +229,20 @@ export function parseCanvasDataToEditorState(
 	const hasPhoto = canvas.fields.some(
 		(f) => f.key === CANVAS_FIELD_KEYS.PARTICIPANT_PHOTO,
 	);
+	const trackField = canvas.fields.find(
+		(f) => f.key === ("track" as any),
+	);
+	const trackPlaceholder = trackField?.type === "participant_input" 
+		? trackField.placeholder 
+		: (trackField?.type === "static" ? trackField.value : "");
+
+	const badgeTitleField = canvas.fields.find(
+		(f): f is CanvasStaticField => f.key === ("badge_title" as any),
+	);
+	const percentileField = canvas.fields.find(
+		(f): f is CanvasStaticField => f.key === ("percentile_badge" as any),
+	);
+
 	const dateParts = parseEventDateParts(eventDateField?.value ?? "");
 
 	const bgState = backgroundToEditorState(canvas);
@@ -247,12 +261,18 @@ export function parseCanvasDataToEditorState(
 		roleTitlePlaceholder: roleTitle?.placeholder ?? "e.g. Product Designer",
 		roleTitleVisible: Boolean(roleTitle?.visible ?? true),
 		roleTitleRequired: Boolean(roleTitle?.required ?? false),
+		trackLabel: "TRACK",
+		trackPlaceholder: trackPlaceholder || "e.g. Design",
+		trackVisible: Boolean(trackField?.visible ?? true),
+		trackRequired: trackField?.type === "participant_input" ? trackField.required : false,
+		badgeTitle: badgeTitleField?.value ?? "Finalist",
+		percentileBadge: percentileField?.value ?? "Top 5%",
 		allowParticipantPhoto: hasPhoto,
 		logo: canvas.logo,
 		logoPreviewUrl: meta?.logo_url ?? canvas.logo?.url ?? null,
 		pendingLogoFile: null,
 		...bgState,
-		textColor: participantName?.color ?? roleTitle?.color,
+		textColor: participantName?.color ?? roleTitle?.color ?? (trackField as any)?.color,
 		fontId: FONT_FAMILY_TO_ID[canvas.typography.font_family] ?? "inter",
 		titleSize: sizePxToEnum(canvas.typography.size_px),
 		defaultCaption: meta?.default_caption ?? "",
@@ -301,36 +321,46 @@ export function createDefaultEditorState(
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "Design",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 		hng_finalist_dev_v1: {
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "Dev",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 		hng_finalist_design_v1: {
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "Design",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 		hng_finalist_pm_v1: {
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "PM",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 		hng_finalist_flaretag_v1: {
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "Flaretag",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 	};
 
