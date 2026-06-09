@@ -89,7 +89,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 	},
 	hng_finalist_design_v1: {
 		staticFields: ["event_name"],
-		participantFields: ["participant_name", "role_title", "participant_photo"],
+		participantFields: ["participant_name", "track", "participant_photo"],
 		hasHeaderLogo: true,
 		defaultLogoPosition: "top-left",
 		defaultPaletteId: "bg_color_dark",
@@ -97,7 +97,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 	},
 	hng_finalist_dev_v1: {
 		staticFields: ["event_name"],
-		participantFields: ["participant_name", "role_title", "participant_photo"],
+		participantFields: ["participant_name", "track", "participant_photo"],
 		hasHeaderLogo: true,
 		defaultLogoPosition: "top-left",
 		defaultPaletteId: "bg_color_dark",
@@ -105,7 +105,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 	},
 	hng_finalist_pm_v1: {
 		staticFields: ["event_name"],
-		participantFields: ["participant_name", "role_title", "participant_photo"],
+		participantFields: ["participant_name", "track", "participant_photo"],
 		hasHeaderLogo: true,
 		defaultLogoPosition: "top-left",
 		defaultPaletteId: "bg_color_dark",
@@ -113,7 +113,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 	},
 	hng_finalist_flaretag_v1: {
 		staticFields: ["event_name"],
-		participantFields: ["participant_name", "role_title", "participant_photo"],
+		participantFields: ["participant_name", "track", "participant_photo"],
 		hasHeaderLogo: true,
 		defaultLogoPosition: "top-left",
 		defaultPaletteId: "bg_color_dark",
@@ -121,7 +121,7 @@ export const LAYOUT_CAPABILITIES: Record<CanvasLayoutId, LayoutCapabilities> = {
 	},
 	hng_finalist_v1: {
 		staticFields: ["event_name"],
-		participantFields: ["participant_name", "role_title", "participant_photo"],
+		participantFields: ["participant_name", "track", "participant_photo"],
 		hasHeaderLogo: true,
 		defaultLogoPosition: "top-left",
 		defaultPaletteId: "bg_color_dark",

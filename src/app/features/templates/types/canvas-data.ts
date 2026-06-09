@@ -3,6 +3,9 @@ export type CanvasFieldKey =
 	| "event_date"
 	| "participant_name"
 	| "role_title"
+	| "track"
+	| "badge_title"
+	| "percentile_badge"
 	| "participant_photo";
 
 export type PreviewFieldKey = CanvasFieldKey | "brand_initials";
@@ -92,7 +95,7 @@ export interface CanvasOutput {
 }
 
 export interface CanvasStaticField {
-	key: Extract<CanvasFieldKey, "event_name" | "event_date">;
+	key: Extract<CanvasFieldKey, "event_name" | "event_date" | "badge_title" | "track" | "percentile_badge">;
 	type: "static";
 	label: string;
 	value: string;
@@ -100,7 +103,7 @@ export interface CanvasStaticField {
 }
 
 export interface CanvasParticipantInputField {
-	key: Extract<CanvasFieldKey, "participant_name" | "role_title">;
+	key: Extract<CanvasFieldKey, "participant_name" | "role_title" | "track">;
 	type: "participant_input";
 	label: string;
 	placeholder: string;
@@ -169,6 +172,12 @@ export interface CustomizeEditorState {
 	roleTitleLabel: string;
 	roleTitlePlaceholder: string;
 	roleTitleRequired: boolean;
+	trackLabel?: string;
+	trackPlaceholder?: string;
+	trackVisible?: boolean;
+	trackRequired?: boolean;
+	badgeTitle?: string;
+	percentileBadge?: string;
 	allowParticipantPhoto: boolean;
 	logo: CanvasLogo | null;
 	logoPreviewUrl: string | null;

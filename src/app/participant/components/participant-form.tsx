@@ -32,9 +32,14 @@ export default function ParticipantForm({
 	onCaptionChange?: (caption: string) => void;
 	editorState: CustomizeEditorState | null;
 }) {
+	const isHng = editorState?.layoutId.startsWith("hng_finalist_");
 	const showName = editorState?.participantNameVisible ?? true;
-	const showRole = editorState?.roleTitleVisible ?? true;
-	const roleRequired = editorState?.roleTitleRequired ?? false;
+	const showRole = isHng 
+		? (editorState?.trackVisible ?? true)
+		: (editorState?.roleTitleVisible ?? true);
+	const roleRequired = isHng
+		? (editorState?.trackRequired ?? false)
+		: (editorState?.roleTitleRequired ?? false);
 
 	const schema = useMemo(
 		() =>
@@ -82,6 +87,11 @@ export default function ParticipantForm({
 	const onSubmit = async () => {
 		onSuccess?.();
 	};
+
+	const roleLabel = isHng ? (editorState?.trackLabel || "TRACK") : (editorState?.roleTitleLabel || "ROLE / TITLE");
+	const rolePlaceholder = isHng 
+		? (editorState?.trackPlaceholder || "e.g. Design") 
+		: (editorState?.roleTitlePlaceholder || "e.g. Product Designer");
 
 	return (
 		<motion.form
@@ -175,7 +185,7 @@ export default function ParticipantForm({
 					variants={itemVariants}
 				>
 					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
-						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">{editorState?.roleTitleLabel || "ROLE / TITLE"} {editorState?.roleTitleRequired && <span className="text-[#ff693E]">*</span>}</span>
+						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">{roleLabel} {roleRequired && <span className="text-[#ff693E]">*</span>}</span>
 						<span className="shrink-0 text-[10px] text-gray-400 font-medium">
 							{formValues.role?.length ?? 0}/25
 						</span>
@@ -183,7 +193,7 @@ export default function ParticipantForm({
 
 					<Input
 						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-						placeholder={editorState?.roleTitlePlaceholder || "e.g. Product Designer"}
+						placeholder={rolePlaceholder}
 						maxLength={25}
 						{...register("role", { 
 							onChange: (e) => onRoleChange?.(e.target.value),

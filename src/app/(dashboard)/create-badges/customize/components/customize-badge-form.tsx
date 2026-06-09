@@ -50,6 +50,7 @@ export function CustomizeBadgeForm({
 			eventTime: editor.eventTime,
 			participantNameVisible: editor.participantNameVisible,
 			roleTitleVisible: editor.roleTitleVisible,
+			trackVisible: editor.trackVisible ?? true,
 			roleTitleRequired: editor.roleTitleRequired,
 			allowParticipantPhoto: editor.allowParticipantPhoto,
 			defaultCaption: editor.defaultCaption,
