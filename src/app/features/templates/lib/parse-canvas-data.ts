@@ -137,12 +137,12 @@ function backgroundToEditorState(
 			(p) => BACKGROUND_IMAGE_BY_PALETTE[p.id] === imageUrl,
 		);
 		return {
-			bgMode: "gradient",
-			priBgMode: "gradient",
+			bgMode: "image",
+			priBgMode: "solid",
 			paletteId: match?.id ?? fallbackPaletteId,
-			gradientColors: ["#ff007a", "#ffa800"],
+			gradientColors: ["#1a1a1a", "#1a1a1a"],
 			gradientDirection: "135deg",
-			solidColor: "#ff007a",
+			solidColor: "#1a1a1a",
 			backgroundImageUrl: imageUrl ?? null,
 			isSplit: false,
 		};
@@ -336,6 +336,8 @@ export function createDefaultEditorState(
 
 	const preset = defaults[layoutId] ?? {};
 
+	const isHng = layoutId.startsWith("hng_finalist_");
+
 	return {
 		platformTemplateId: platformTemplateId ?? "",
 		layoutId,
@@ -352,7 +354,7 @@ export function createDefaultEditorState(
 		logo: null,
 		logoPreviewUrl: null,
 		pendingLogoFile: null,
-		bgMode: "solid",
+		bgMode: isHng ? "image" : "solid",
 		paletteId: palette,
 		gradientColors: [fromPalette.from, fromPalette.to],
 		gradientDirection: "135deg",
