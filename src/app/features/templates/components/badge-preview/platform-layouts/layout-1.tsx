@@ -1,5 +1,7 @@
 import { Template1 } from "@/app/(dashboard)/create-badges/customize/components/customizable-svgs";
+import { ParticipantPhoto } from "../shared/participant-photo";
 import type { TemplateLayoutProps } from "../types";
+import { getSafeImageUrl } from "../utils";
 
 export function Layout1({
 	editor,
@@ -17,11 +19,9 @@ export function Layout1({
 				baseColor={baseColor}
 			/>
 			<div className="w-30 h-26.5 left-8.5 bg-rose-600 absolute top-20 rounded-full flex justify-center items-center text-white text-[10px] text-center overflow-hidden">
-				{participantPhotoUrl ? (
-					// eslint-disable-next-line @next/next/no-img-element
-					<img
-						src={participantPhotoUrl}
-						alt="Participant"
+				{getSafeImageUrl(participantPhotoUrl) ? (
+					<ParticipantPhoto
+						url={participantPhotoUrl}
 						className="w-full h-full object-cover"
 					/>
 				) : (

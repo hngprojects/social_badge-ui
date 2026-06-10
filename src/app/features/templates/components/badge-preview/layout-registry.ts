@@ -14,10 +14,7 @@ import {
 } from "./hng-layouts";
 import type { TemplateLayoutProps } from "./types";
 
-export const LAYOUT_COMPONENTS: Record<
-	string,
-	ComponentType<TemplateLayoutProps>
-> = {
+const layoutComponents = {
 	bold_name_pink_v1: Layout1,
 	circle_photo_dark_v1: Layout4,
 	dark_name_photo_v1: Layout7,
@@ -32,3 +29,10 @@ export const LAYOUT_COMPONENTS: Record<
 	card_3: LayoutCard3,
 	card_4: LayoutCard4,
 };
+
+export type LayoutId = keyof typeof layoutComponents;
+
+export const LAYOUT_COMPONENTS: Record<
+	LayoutId,
+	ComponentType<TemplateLayoutProps>
+> = layoutComponents;

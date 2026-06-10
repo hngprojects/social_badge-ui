@@ -12,7 +12,15 @@ export function HngBackgroundImage({
 	editor: CustomizeEditorState;
 }) {
 	const [imageFailed, setImageFailed] = useState(false);
-	const fallbackStyle = buildBgStyle({ ...editor, bgMode: "gradient" });
+	const hasValidGradient =
+		Array.isArray(editor.gradientColors) && editor.gradientColors.length >= 2;
+	const fallbackStyle = hasValidGradient
+		? buildBgStyle({ ...editor, bgMode: "gradient" })
+		: buildBgStyle({
+				...editor,
+				bgMode: "solid",
+				solidColor: editor.solidColor || "#1a1a1a",
+			});
 
 	if (imageFailed) {
 		return (
@@ -31,10 +39,7 @@ export function HngBackgroundImage({
 			alt=""
 			className="absolute inset-0 w-full h-full object-cover"
 			onLoad={() => setImageFailed(false)}
-			onError={(e) => {
-				e.currentTarget.src = "";
-				setImageFailed(true);
-			}}
+			onError={() => setImageFailed(true)}
 		/>
 	);
 }

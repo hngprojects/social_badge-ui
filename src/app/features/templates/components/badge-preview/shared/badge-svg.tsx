@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function BadgeSvg({ className = "text-[#AFF47F]" }) {
+interface BadgeSvgProps {
+	className?: string;
+}
+
+export default function BadgeSvg({
+	className = "text-[#AFF47F]",
+}: BadgeSvgProps) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +26,7 @@ export default function BadgeSvg({ className = "text-[#AFF47F]" }) {
 	);
 }
 
-export function FivePercent({ className = "text-black" }) {
+export function FivePercent({ className = "text-black" }: BadgeSvgProps) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

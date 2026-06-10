@@ -1,6 +1,8 @@
 import { Template7 } from "@/app/(dashboard)/create-badges/customize/components/customizable-svgs";
 import { LogoPlaceholder } from "../shared/logo-placeholder";
+import { ParticipantPhoto } from "../shared/participant-photo";
 import type { TemplateLayoutProps } from "../types";
+import { getSafeImageUrl } from "../utils";
 
 export function Layout7({
 	editor,
@@ -44,11 +46,9 @@ export function Layout7({
 					</p>
 				</div>
 				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden">
-					{participantPhotoUrl ? (
-						// eslint-disable-next-line @next/next/no-img-element
-						<img
-							src={participantPhotoUrl}
-							alt="Participant"
+					{getSafeImageUrl(participantPhotoUrl) ? (
+						<ParticipantPhoto
+							url={participantPhotoUrl}
 							className="w-full h-full object-cover"
 						/>
 					) : editor.allowParticipantPhoto ? (

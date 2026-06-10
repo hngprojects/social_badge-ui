@@ -1,6 +1,8 @@
-export default function PlaceholderLogo({ className = "" }) {
-
-export default function PlaceholderLogo({ className = "" }: { className?: string }) {
+export default function PlaceholderLogo({
+	className = "",
+}: {
+	className?: string;
+}) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

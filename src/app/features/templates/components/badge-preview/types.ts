@@ -1,5 +1,6 @@
 import type { CSSProperties, RefObject } from "react";
 import type { CustomizeEditorState } from "../../types/canvas-data";
+import type { LayoutId } from "./layout-registry";
 
 export interface TemplateLayoutProps {
 	editor: CustomizeEditorState;
@@ -23,7 +24,7 @@ export interface InnerBadgeLayoutProps {
 }
 
 export interface CustomTemplatePreviewProps {
-	templateId: string;
+	templateId: LayoutId;
 	editor: CustomizeEditorState;
 	participantPhotoUrl?: string | null;
 	badgeRef?: RefObject<HTMLDivElement | null>;
