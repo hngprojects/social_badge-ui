@@ -188,6 +188,7 @@ const FONT_FAMILY_TO_ID: Record<string, string> = {
 	"Playfair Display": "fraunces",
 	"ui-monospace": "mono",
 	Georgia: "display",
+	"Bricolage Grotesque": "bricolage",
 };
 
 function sizePxToEnum(px: number): "SMALL" | "MEDIUM" | "LARGE" {

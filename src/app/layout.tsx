@@ -20,7 +20,7 @@ const leagueGothic = League_Gothic({
 });
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-bricolage",
+  variable: "--font-bricolage-font",
 });
 export const metadata: Metadata = {
   title: {

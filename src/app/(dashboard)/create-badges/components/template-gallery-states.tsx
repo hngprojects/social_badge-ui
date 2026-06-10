@@ -37,9 +37,10 @@ export function TemplateEmptyState({ activeFilter, onViewAll }: TemplateEmptySta
 
 interface TemplateErrorStateProps {
   onRetry: () => void;
+  isRetrying: boolean;
 }
 
-export function TemplateErrorState({ onRetry }: TemplateErrorStateProps) {
+export function TemplateErrorState({ onRetry, isRetrying }: TemplateErrorStateProps) {
   return (
     <div
       role="alert"
@@ -67,10 +68,12 @@ export function TemplateErrorState({ onRetry }: TemplateErrorStateProps) {
       <button
         type="button"
         onClick={onRetry}
+        disabled={isRetrying}
         aria-label="Retry loading templates"
-        className="mt-4 px-4 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-full hover:bg-red-700 transition-colors"
+        aria-busy={isRetrying}
+        className="mt-4 px-4 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-full hover:bg-red-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        Retry
+        {isRetrying ? "Retrying…" : "Retry"}
       </button>
     </div>
   );

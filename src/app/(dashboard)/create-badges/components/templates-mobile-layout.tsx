@@ -17,6 +17,7 @@ interface TemplatesMobileLayoutProps {
   onFilterChange: (tab: string) => void;
   isLoading: boolean;
   isError: boolean;
+  isRetrying: boolean;
   onRetry: () => void;
   filteredTemplates: LayoutTemplate[];
   activeTemplate: LayoutTemplate | null;
@@ -29,6 +30,7 @@ export function TemplatesMobileLayout({
   onFilterChange,
   isLoading,
   isError,
+  isRetrying,
   onRetry,
   filteredTemplates,
   activeTemplate,
@@ -45,7 +47,7 @@ export function TemplatesMobileLayout({
       {isLoading ? (
         <TemplateLoadingState />
       ) : isError ? (
-        <TemplateErrorState onRetry={onRetry} />
+        <TemplateErrorState onRetry={onRetry} isRetrying={isRetrying} />
       ) : filteredTemplates.length > 0 ? (
         <>
           <TemplateGalleryGrid
