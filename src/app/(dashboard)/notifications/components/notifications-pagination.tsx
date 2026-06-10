@@ -50,7 +50,7 @@ export function NotificationsPagination({
   return (
     <nav
       aria-label="Notifications pagination"
-      className="flex w-full items-center justify-center gap-2 pt-5"
+      className="mt-auto flex w-full items-center justify-center gap-2 pt-5"
     >
       <button
         type="button"

@@ -13,3 +13,7 @@ export type UpdateProfileResponse = {
   message: string;
   data: User;
 };
+
+export type ProfileFieldErrors = Partial<
+  Record<"firstName" | "lastName" | "role", string>
+>;

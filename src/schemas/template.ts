@@ -7,6 +7,8 @@ export const customizeBadgeSchema = z.object({
   eventTime: z.string().optional(),
   participantNameVisible: z.boolean().default(true),
   roleTitleVisible: z.boolean().default(true),
+  trackVisible: z.boolean().default(true),
+  trackRequired: z.boolean().default(false),
   roleTitleRequired: z.boolean().default(false),
   allowParticipantPhoto: z.boolean().default(true),
   defaultCaption: z.string().optional(),
@@ -14,7 +16,9 @@ export const customizeBadgeSchema = z.object({
   accessType: z.number().optional(),
   fontId: z.string().optional(),
   paletteId: z.string().optional(),
-  bgMode: z.enum(["gradient", "solid"]).optional(),
+  bgMode: z.enum(["gradient", "solid", "split", "image"]).optional(),
+  secondaryColor: z.string().optional(),
+  textColor: z.string().optional(),
 });
 
 export type CustomizeBadgeSchema = z.infer<typeof customizeBadgeSchema>;

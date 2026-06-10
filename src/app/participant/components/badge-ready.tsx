@@ -52,9 +52,6 @@ export default function BadgeReady({
     setIsDownloading(true);
     try {
       await onDownload();
-      if (slug) {
-        incrementShare(slug);
-      }
       setIsPopupOpen(true);
     } catch {
       toast.error("Failed to download badge. Please try again.");

@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
-import { CustomTemplatePreview } from "@/app/test-badge/components/CustomTemplatePreview";
+import { CustomTemplatePreview } from "@/app/features/templates/components/badge-preview/CustomTemplatePreview";
 
 interface LivePreviewProps {
 	editor: CustomizeEditorState;
@@ -34,13 +34,13 @@ export function LivePreview({
 
 			<div className={hideExtras ? "" : " rounded-2xl bg-orange-50 p-5"}>
 				<div
-					className={`mx-auto ${badgeClassName && "w-full max-w-full h-152 flex flex-col items-center justify-center"}`}
-					ref={badgeRef}
+					className={`mx-auto ${badgeClassName ?? ""} ${badgeClassName ? "flex h-152 w-full max-w-full flex-col items-center justify-center" : ""}`}
 				>
 					<CustomTemplatePreview
 						templateId={editor.layoutId}
 						editor={editor}
 						participantPhotoUrl={participantPhotoUrl}
+						badgeRef={badgeRef}
 					/>
 				</div>
 			</div>

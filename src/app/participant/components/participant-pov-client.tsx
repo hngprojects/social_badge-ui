@@ -9,6 +9,7 @@ import ParticipantForm from "./participant-form";
 import BadgeReady from "./badge-ready";
 import { LivePreview } from "@/app/(dashboard)/components/customize/LivePreview";
 import { getPublicParticipantPage } from "@/app/features/templates/services/templates";
+import { getBadgeCaptureBackground } from "@/app/features/templates/components/badge-preview/utils";
 import { parseCanvasDataToEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 
 export default function ParticipantPovClient() {
@@ -22,29 +23,6 @@ export default function ParticipantPovClient() {
 	const badgeRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
 	const slug = searchParams.get("slug");
-
-	const getBadgeFile = useCallback(async (): Promise<File | null> => {
-		if (!badgeRef.current) return null;
-		const { toBlob } = await import("html-to-image");
-		const blob = await toBlob(badgeRef.current, { pixelRatio: 2 });
-		if (!blob) return null;
-		return new File([blob], `${participantName || "badge"}.png`, {
-			type: "image/png",
-		});
-	}, [participantName]);
-
-	const handleDownload = useCallback(async () => {
-		const file = await getBadgeFile();
-		if (!file) return;
-		const url = URL.createObjectURL(file);
-		const link = document.createElement("a");
-		link.download = file.name;
-		link.href = url;
-		document.body.appendChild(link);
-		link.click();
-		link.remove();
-		setTimeout(() => URL.revokeObjectURL(url), 0);
-	}, [getBadgeFile]);
 
 	const {
 		data: badgeResponse,
@@ -69,6 +47,7 @@ export default function ParticipantPovClient() {
 
 	const editorState = useMemo(() => {
 		if (!baseEditorState) return null;
+		const isHng = baseEditorState.layoutId.startsWith("hng_finalist_");
 		const state = {
 			...baseEditorState,
 			// Pass the actual values being typed to the editor state properties
@@ -76,10 +55,42 @@ export default function ParticipantPovClient() {
 			participantNamePlaceholder:
 				participantName || baseEditorState.participantNamePlaceholder,
 			roleTitlePlaceholder:
-				participantRole || baseEditorState.roleTitlePlaceholder,
+				!isHng ? (participantRole || baseEditorState.roleTitlePlaceholder) : baseEditorState.roleTitlePlaceholder,
+			trackPlaceholder:
+				isHng ? (participantRole || baseEditorState.trackPlaceholder) : baseEditorState.trackPlaceholder,
 		};
 		return state;
 	}, [baseEditorState, participantName, participantRole]);
+
+	const getBadgeFile = useCallback(async (): Promise<File | null> => {
+		if (!badgeRef.current || !editorState) return null;
+		try {
+			const { toBlob } = await import("html-to-image");
+			const blob = await toBlob(badgeRef.current, {
+				pixelRatio: 2,
+				backgroundColor: getBadgeCaptureBackground(editorState),
+			});
+			if (!blob) return null;
+			return new File([blob], `${participantName || "badge"}.png`, {
+				type: "image/png",
+			});
+		} catch {
+			return null;
+		}
+	}, [editorState, participantName]);
+
+	const handleDownload = useCallback(async () => {
+		const file = await getBadgeFile();
+		if (!file) return;
+		const url = URL.createObjectURL(file);
+		const link = document.createElement("a");
+		link.download = file.name;
+		link.href = url;
+		document.body.appendChild(link);
+		link.click();
+		link.remove();
+		setTimeout(() => URL.revokeObjectURL(url), 0);
+	}, [getBadgeFile]);
 
 	return (
 		<div className="relative min-h-screen bg-primary-50 flex flex-col items-center justify-center py-28 lg:py-0 overflow-hidden">
@@ -124,7 +135,7 @@ export default function ParticipantPovClient() {
 			</header>
 
 			{/* Main section */}
-			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10">
+			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10 min-w-0">
 				{isBadgeReady ? (
 					<BadgeReady
 						onDownload={handleDownload}
@@ -144,7 +155,7 @@ export default function ParticipantPovClient() {
 				)}
 
 				{/* Badge preview */}
-				<div className="w-full max-w-135 shrink-0">
+				<div className="w-full max-w-135 shrink-0 min-w-0">
 					{!slug ? (
 						<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
 							<p className="text-sm text-gray-500">No badge link provided.</p>
