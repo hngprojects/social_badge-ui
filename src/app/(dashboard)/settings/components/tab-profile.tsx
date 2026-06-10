@@ -17,6 +17,7 @@ export default function ProfileCard() {
   const user = useUserStore((state) => state.user);
   const {
     formData,
+    fieldErrors,
     avatarPreview,
     fileInputRef,
     canSubmit,
@@ -50,7 +51,11 @@ export default function ProfileCard() {
             onAvatarChange={handleAvatarChange}
           />
 
-          <ProfileInput values={formData} onChange={handleChange} />
+          <ProfileInput
+            values={formData}
+            errors={fieldErrors}
+            onChange={handleChange}
+          />
         </CardContent>
 
         <CardAction className="py-3.5 px-6 flex justify-end w-full bg-[#FBFAF7]">

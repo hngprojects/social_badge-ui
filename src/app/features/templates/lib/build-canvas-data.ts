@@ -7,6 +7,7 @@ import {
 } from "../constants/field-keys";
 import type {
 	CanvasBackground,
+	CanvasBackgroundPart,
 	CanvasData,
 	CanvasField,
 	CustomizeEditorState,
@@ -16,11 +17,60 @@ import { resolveFontFamily, resolveTitleSizePx } from "./font-mapping";
 import { BACKGROUND_IMAGE_BY_PALETTE, getPalette } from "./palette-mapping";
 
 function buildBackground(state: CustomizeEditorState): CanvasBackground {
+	if (state.bgMode === "image") {
+		// Image-bg contract: CanvasImageBackground url/image_url are optional.
+		// parse-canvas-data reads bg.url || bg.image_url for backgroundImageUrl/paletteId
+		// (with fallbacks); badge-preview renders layout hardcoded assets when
+		// editor.bgMode === "image", not a populated background URL from canvas data.
+		return {
+			type: "image",
+			url: undefined,
+			public_id: null,
+		};
+	}
+
 	if (state.backgroundImageUrl) {
 		return {
 			type: "image",
+			url: state.backgroundImageUrl,
 			image_url: state.backgroundImageUrl,
+			public_id: null,
 			overlay_opacity: 0.45,
+		};
+	}
+
+	const buildPart = (
+		mode: "gradient" | "solid",
+		solid: string,
+		grads: [string, string],
+		dir: string,
+	): CanvasBackgroundPart => {
+		if (mode === "solid") {
+			return { type: "solid", color: solid, gradient: null };
+		}
+		return {
+			type: "gradient",
+			color: null,
+			gradient: { colors: grads, direction: dir },
+		};
+	};
+
+	if (state.bgMode === "split" || state.isSplit) {
+		return {
+			type: "split",
+			split_ratio: state.splitRatio ?? 0.5,
+			primary: buildPart(
+				state.priBgMode ?? (state.bgMode === "split" ? "solid" : state.bgMode),
+				state.solidColor,
+				state.gradientColors,
+				state.gradientDirection,
+			),
+			secondary: buildPart(
+				state.secBgMode ?? "solid",
+				state.secSolidColor ?? state.solidColor,
+				state.secGradientColors ?? state.gradientColors,
+				state.secGradientDirection ?? "135deg",
+			),
 		};
 	}
 
@@ -81,17 +131,37 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			placeholder: "Your name",
 			required: state.participantNameVisible ? true : false,
 			visible: state.participantNameVisible,
+			color: state.textColor,
 		});
 	}
 
-	if (caps.participantFields.includes("role_title")) {
+	if (caps.participantFields.includes("role_title") || caps.participantFields.includes("track")) {
+		const isTrack = caps.participantFields.includes("track");
 		fields.push({
-			key: CANVAS_FIELD_KEYS.ROLE_TITLE,
+			key: isTrack ? CANVAS_FIELD_KEYS.TRACK : CANVAS_FIELD_KEYS.ROLE_TITLE,
 			type: "participant_input",
-			label: "ROLE / TITLE",
-			placeholder: "e.g. Product Designer",
-			required: state.roleTitleVisible ? state.roleTitleRequired : false,
-			visible: state.roleTitleVisible,
+			label: isTrack ? "TRACK" : "ROLE / TITLE",
+			placeholder: isTrack ? (state.trackPlaceholder || "e.g. Design") : "e.g. Product Designer",
+			required: isTrack ? ((state.trackVisible ?? true) ? (state.trackRequired ?? false) : false) : (state.roleTitleVisible ? state.roleTitleRequired : false),
+			visible: isTrack ? (state.trackVisible ?? true) : state.roleTitleVisible,
+			color: state.textColor,
+		});
+	}
+
+	if (state.layoutId.startsWith("hng_finalist_")) {
+		fields.push({
+			key: CANVAS_FIELD_KEYS.BADGE_TITLE,
+			type: "static",
+			label: "Badge Title",
+			value: state.badgeTitle || "Finalist",
+			visible: true,
+		});
+		fields.push({
+			key: CANVAS_FIELD_KEYS.PERCENTILE_BADGE,
+			type: "static",
+			label: "Percentile",
+			value: state.percentileBadge || "Top 5%",
+			visible: true,
 		});
 	}
 
@@ -131,6 +201,7 @@ export function buildCanvasData(state: CustomizeEditorState): CanvasData {
 					url: state.logo?.url || state.logoPreviewUrl || "",
 					public_id: state.logo?.public_id || "",
 					position: state.logo?.position ?? caps.defaultLogoPosition,
+					has_logo: true,
 				}
 			: null,
 		fields: buildFields(state),
@@ -153,7 +224,7 @@ export function buildOrganiserTemplatePayload(
 
 export function paletteToBackgroundState(
 	paletteId: string,
-	bgMode: "gradient" | "solid",
+	bgMode: "gradient" | "solid" | "split",
 ): Pick<
 	CustomizeEditorState,
 	| "paletteId"

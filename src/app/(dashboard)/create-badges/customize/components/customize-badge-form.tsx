@@ -35,31 +35,35 @@ export function CustomizeBadgeForm({
   const [savingAction, setSavingAction] = useState<"draft" | "publish" | null>(null);
 
   const {
-    register,
-    handleSubmit,
-    control,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm<CustomizeBadgeFormValues>({
-    resolver: zodResolver(customizeBadgeSchema),
-    defaultValues: {
-      eventName: organiserTemplateId ? editor.eventName : "",
-      title: editor.title,
-      eventDate: editor.eventDate,
-      eventTime: editor.eventTime,
-      participantNameVisible: editor.participantNameVisible,
-      roleTitleVisible: editor.roleTitleVisible,
-      roleTitleRequired: editor.roleTitleRequired,
-      allowParticipantPhoto: editor.allowParticipantPhoto,
-      defaultCaption: editor.defaultCaption,
-      hashtags: editor.hashtags,
-      accessType: editor.accessType,
-      fontId: editor.fontId,
-      paletteId: editor.paletteId,
-      bgMode: editor.bgMode,
-    },
-  });
+		register,
+		handleSubmit,
+		control,
+		watch,
+		setValue,
+		formState: { errors },
+	} = useForm<CustomizeBadgeFormValues>({
+		resolver: zodResolver(customizeBadgeSchema),
+		defaultValues: {
+			eventName: organiserTemplateId ? editor.eventName : "",
+			title: editor.title,
+			eventDate: editor.eventDate,
+			eventTime: editor.eventTime,
+			participantNameVisible: editor.participantNameVisible,
+			roleTitleVisible: editor.roleTitleVisible,
+			trackVisible: editor.trackVisible ?? true,
+			trackRequired: editor.trackRequired ?? false,
+			roleTitleRequired: editor.roleTitleRequired,
+			allowParticipantPhoto: editor.allowParticipantPhoto,
+			defaultCaption: editor.defaultCaption,
+			hashtags: editor.hashtags,
+			accessType: editor.accessType,
+			fontId: editor.fontId,
+			paletteId: editor.paletteId,
+			bgMode: editor.isSplit ? "split" : editor.bgMode,
+			secondaryColor: editor.secSolidColor,
+			textColor: editor.textColor,
+		},
+	});
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const formValues = watch();
@@ -70,6 +74,8 @@ export function CustomizeBadgeForm({
     ...formValues,
     title: formValues.eventName || editor.title,
     eventName: formValues.eventName || editor.eventName,
+    bgMode: formValues.bgMode ?? editor.bgMode,
+    secSolidColor: formValues.secondaryColor ?? editor.secSolidColor,
   };
 
   const onFormSubmit = async (data: CustomizeBadgeFormValues, shouldPublish = true) => {
@@ -84,7 +90,9 @@ export function CustomizeBadgeForm({
       ...editor,
       ...data,
       title: data.eventName, // Use eventName as title
-    } as CustomizeEditorState); // Temporary fix to satisfy payload builder type
+      bgMode: data.bgMode ?? editor.bgMode,
+      secSolidColor: data.secondaryColor ?? editor.secSolidColor,
+    });
 
     try {
       await saveTemplateAsync({
@@ -108,11 +116,11 @@ export function CustomizeBadgeForm({
   };
 
   const handlePaletteChange = (id: string) => {
-    setPalette(id, formValues.bgMode);
+    setPalette(id, formValues.bgMode || editor.bgMode);
     setValue("paletteId", id);
   };
 
-  const handleBgModeChange = (mode: "gradient" | "solid") => {
+  const handleBgModeChange = (mode: "gradient" | "solid" | "split" | "image") => {
     setBgMode(mode);
     setValue("bgMode", mode);
   };
@@ -153,6 +161,8 @@ export function CustomizeBadgeForm({
             onChange={(p) => {
               patch(p);
               if (p.fontId !== undefined) setValue("fontId", p.fontId);
+              if (p.textColor !== undefined) setValue("textColor", p.textColor);
+              if (p.secSolidColor !== undefined) setValue("secondaryColor", p.secSolidColor);
             }}
             onPaletteChange={handlePaletteChange}
             onBgModeChange={handleBgModeChange}

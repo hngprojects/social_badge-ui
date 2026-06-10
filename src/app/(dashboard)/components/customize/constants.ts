@@ -3,6 +3,7 @@ export const FONTS = [
   { id: "fraunces", label: "FRAUNCES", style: { fontFamily: "Fraunces, serif", fontStyle: "italic" as const } },
   { id: "mono",     label: "MONO",     style: { fontFamily: "ui-monospace, monospace" } },
   { id: "display",  label: "DISPLAY",  style: { fontFamily: "Georgia, serif", fontWeight: 700 } },
+  { id: "bricolage", label: "BRICOLAGE", style: { fontFamily: "var(--font-bricolage), sans-serif" } },
 ];
 
 export const SIZES = ["SMALL", "MEDIUM", "LARGE"] as const;

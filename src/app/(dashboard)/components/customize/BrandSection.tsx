@@ -92,7 +92,7 @@ export function BrandSection({
 						</label>
 						<span className="text-sm text-gray-400 truncate max-w-[200px]">
 							{editor.pendingLogoFile?.name ??
-								(editor.logo ? "Logo uploaded" : "No file chosen")}
+								(editor.logoPreviewUrl || editor.logo?.url ? "Logo uploaded" : "No file chosen")}
 						</span>
 					</div>
 					<HelperText>

@@ -41,7 +41,7 @@ export default function SideNav() {
           >
             <div className="flex min-w-0 items-center gap-2">
               <Link
-                href="/dashboard"
+                href="/"
                 className="flex min-w-0 items-center gap-2"
               >
                 <Image

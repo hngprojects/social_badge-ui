@@ -3,7 +3,16 @@ import { toast } from "sonner";
 import { useUserStore } from "@/stores/use-user-store";
 import { getUserMail } from "@/lib/api/auth-session";
 import { useUpdateProfile } from "@/app/features/settings/hooks/useUpdateProfile";
-import { ALLOWED_AVATAR_TYPES, MAX_AVATAR_SIZE } from "../constants";
+import {
+  ALLOWED_AVATAR_TYPES,
+  MAX_AVATAR_SIZE,
+  PROFILE_NAME_MAX_LENGTH,
+  PROFILE_NAME_PATTERN,
+  PROFILE_ROLE_PATTERN,
+  RISKY_SQL_PATTERN,
+  SQL_COMMENT_PATTERN,
+} from "../constants";
+import type { ProfileFieldErrors } from "../types";
 
 export function useProfileForm() {
   const { saveProfile, isLoading } = useUpdateProfile();
@@ -21,6 +30,7 @@ export function useProfileForm() {
     role: user?.role ?? "",
   }));
 
+  const [fieldErrors, setFieldErrors] = useState<ProfileFieldErrors>({});
   const [savedFormData, setSavedFormData] = useState(formData);
 
   useEffect(() => {
@@ -42,6 +52,7 @@ export function useProfileForm() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setFormData(nextFormData);
     setSavedFormData(nextFormData);
+    setFieldErrors({});
   }, [user?.first_name, user?.last_name, user?.role, emailAddress]);
 
   const hasTextChanges =
@@ -52,12 +63,71 @@ export function useProfileForm() {
   const hasAvatarChange = avatarFile !== null;
 
   const isFormValid =
-    formData.firstName.trim().length > 0 && formData.lastName.trim().length > 0;
+    formData.firstName.trim().length > 0 &&
+    formData.firstName.trim().length <= PROFILE_NAME_MAX_LENGTH &&
+    formData.lastName.trim().length > 0 &&
+    formData.lastName.trim().length <= PROFILE_NAME_MAX_LENGTH;
 
   const canSubmit = isFormValid && (hasTextChanges || hasAvatarChange);
 
   function handleChange(field: keyof typeof formData, value: string) {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    const nextValue =
+      field === "firstName" || field === "lastName"
+        ? value.slice(0, PROFILE_NAME_MAX_LENGTH)
+        : value;
+
+    setFieldErrors((prev) => {
+      if (!prev[field as keyof ProfileFieldErrors]) return prev;
+      return {
+        ...prev,
+        [field]: undefined,
+      };
+    });
+    setFormData((prev) => ({ ...prev, [field]: nextValue }));
+  }
+
+  function validateProfileFields() {
+    const nextErrors: ProfileFieldErrors = {};
+    const firstName = formData.firstName.trim();
+    const lastName = formData.lastName.trim();
+    const role = formData.role.trim();
+
+    if (!firstName) {
+      nextErrors.firstName = "First name is required.";
+    } else if (firstName.length > PROFILE_NAME_MAX_LENGTH) {
+      nextErrors.firstName = `First name must be ${PROFILE_NAME_MAX_LENGTH} characters or less.`;
+    } else if (SQL_COMMENT_PATTERN.test(firstName)) {
+      nextErrors.firstName = "First name contains unsupported characters.";
+    } else if (!PROFILE_NAME_PATTERN.test(firstName)) {
+      nextErrors.firstName = "First name contains unsupported characters.";
+    }
+
+    if (!lastName) {
+      nextErrors.lastName = "Last name is required.";
+    } else if (lastName.length > PROFILE_NAME_MAX_LENGTH) {
+      nextErrors.lastName = `Last name must be ${PROFILE_NAME_MAX_LENGTH} characters or less.`;
+    } else if (SQL_COMMENT_PATTERN.test(lastName)) {
+      nextErrors.lastName = "Last name contains unsupported characters.";
+    } else if (!PROFILE_NAME_PATTERN.test(lastName)) {
+      nextErrors.lastName = "Last name contains unsupported characters.";
+    }
+
+    if (
+      role &&
+      (RISKY_SQL_PATTERN.test(role) || !PROFILE_ROLE_PATTERN.test(role))
+    ) {
+      nextErrors.role = "Role contains unsupported characters.";
+    }
+
+    setFieldErrors(nextErrors);
+
+    const firstError = Object.values(nextErrors)[0];
+    if (firstError) {
+      toast.error(firstError);
+      return false;
+    }
+
+    return true;
   }
 
   function handleUploadClick() {
@@ -104,6 +174,8 @@ export function useProfileForm() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (!validateProfileFields()) return;
+
     const profilePayload: {
       first_name?: string;
       last_name?: string;
@@ -111,15 +183,15 @@ export function useProfileForm() {
     } = {};
 
     if (formData.firstName !== savedFormData.firstName) {
-      profilePayload.first_name = formData.firstName;
+      profilePayload.first_name = formData.firstName.trim();
     }
 
     if (formData.lastName !== savedFormData.lastName) {
-      profilePayload.last_name = formData.lastName;
+      profilePayload.last_name = formData.lastName.trim();
     }
 
     if (formData.role !== savedFormData.role) {
-      profilePayload.role = formData.role;
+      profilePayload.role = formData.role.trim();
     }
 
     if (avatarFile && avatarFile.size > MAX_AVATAR_SIZE) {
@@ -140,6 +212,7 @@ export function useProfileForm() {
 
   return {
     formData,
+    fieldErrors,
     avatarPreview,
     fileInputRef,
     canSubmit,

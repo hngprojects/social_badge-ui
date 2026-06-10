@@ -32,7 +32,9 @@ export const getParticipantSchema = ({
 
 		role:
 			roleVisible
-				? z.string().trim().min(1, "Role is required")
+				? roleRequired 
+					? z.string().trim().min(1, "Role is required")
+					: z.string().trim().optional()
 				: z.string().trim().optional(),
 
 		caption: z

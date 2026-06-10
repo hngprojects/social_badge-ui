@@ -33,7 +33,7 @@ export default function Dashboard() {
 	return (
 		<section className="flex flex-col gap-6 pt-[32px]">
 			<header>
-				<h1 className="capitalize text-[#595959] text-[15px]">Dashboard</h1>
+				<h1 className="capitalize text-[#9CA3AF] text-[15px]">Dashboard</h1>
 				<UserWelcome />
 			</header>
 
@@ -44,11 +44,7 @@ export default function Dashboard() {
 				totalDrafts={totalDrafts}
 			/>
 
-			{!isLoading && !hasPublishedBadges ? (
-				<FirstBadgeCta />
-			) : (
-				<RecentBadges />
-			)}
+			{!isLoading && !hasPublishedBadges ? <FirstBadgeCta /> : <RecentBadges />}
 			<Steps />
 
 			<BrowseTemplate />
