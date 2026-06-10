@@ -20,7 +20,7 @@ function buildBackground(state: CustomizeEditorState): CanvasBackground {
 	if (state.bgMode === "image") {
 		// Image-bg contract: CanvasImageBackground url/image_url are optional.
 		// parse-canvas-data reads bg.url || bg.image_url for backgroundImageUrl/paletteId
-		// (with fallbacks); CustomTemplatePreview renders layout hardcoded assets when
+		// (with fallbacks); badge-preview renders layout hardcoded assets when
 		// editor.bgMode === "image", not a populated background URL from canvas data.
 		return {
 			type: "image",

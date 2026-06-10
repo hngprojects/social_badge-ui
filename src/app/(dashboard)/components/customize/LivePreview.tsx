@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
-import { CustomTemplatePreview } from "@/app/test-badge/components/CustomTemplatePreview";
+import { CustomTemplatePreview } from "@/app/features/templates/components/badge-preview/CustomTemplatePreview";
 
 interface LivePreviewProps {
 	editor: CustomizeEditorState;

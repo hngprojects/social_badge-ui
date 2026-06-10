@@ -5,7 +5,7 @@ import { LivePreview } from "@/app/(dashboard)/components/customize/LivePreview"
 import { StyleSection } from "@/app/(dashboard)/components/customize/StyleSection";
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
-import { CustomTemplatePreview } from "./components/CustomTemplatePreview";
+import { CustomTemplatePreview } from "@/app/features/templates/components/badge-preview/CustomTemplatePreview";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 
 const TEST_TEMPLATES = [
@@ -204,7 +204,7 @@ function TestBadgePageContent({
 									<p className="text-xs text-blue-800">
 										<strong>Development Note:</strong> Use{" "}
 										<code>
-											src/app/test-badge/components/CustomTemplatePreview.tsx
+											src/app/features/templates/components/badge-preview/
 										</code>{" "}
 										to edit the layout for <strong>{selectedTemplate}</strong>.
 									</p>
