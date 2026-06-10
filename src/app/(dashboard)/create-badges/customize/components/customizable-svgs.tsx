@@ -114,7 +114,7 @@ export function Template7({ className, editor, baseColor }: { className?: string
 
 export function Template1({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
 	const fill = getFill(editor, baseColor, "#E8CAD4");
-	const secFill = getSecFill(editor, "#E0074E");
+	const secFill = getSecFill(editor, "#E61B62");
 
 	return (
 		<svg
