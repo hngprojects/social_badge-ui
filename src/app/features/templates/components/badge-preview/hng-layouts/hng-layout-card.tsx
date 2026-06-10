@@ -1,7 +1,7 @@
 import { HngBackgroundImage } from "../shared/hng-background-image";
 import type { HngCardThemeKey, TemplateLayoutProps } from "../types";
 import { buildBgStyle } from "../utils";
-import { Coffetti } from "./coffetti";
+import { Confetti } from "./coffetti";
 import { HNG_CARD_THEMES } from "./hng-card-config";
 import { InnerBadgeLayout } from "./inner-badge-layout";
 
@@ -36,7 +36,7 @@ export function HngLayoutCard({
 				/>
 			)}
 			<div className={contentClassName} style={bgStyle}>
-				<Coffetti />
+				<Confetti />
 				<InnerBadgeLayout
 					editor={editor}
 					participantPhotoUrl={participantPhotoUrl}

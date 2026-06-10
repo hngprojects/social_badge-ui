@@ -1,6 +1,6 @@
 import { HNG_ASSETS } from "../constants";
 
-export function Coffetti() {
+export function Confetti() {
 	return (
 		<div className="z-1 absolute w-full h-1/2 top-0 overflow-hidden pointer-events-none">
 			{/* eslint-disable-next-line @next/next/no-img-element */}

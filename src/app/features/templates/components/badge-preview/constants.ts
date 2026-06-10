@@ -13,7 +13,7 @@ export const HNG_ASSETS = {
 		orange: "/assets/badges/hng_logo_orange.svg",
 	},
 	decorations: {
-		confetti: "/assets/badges/coffetti.webp",
+		confetti: "/assets/badges/confetti.webp",
 	},
 } as const;
 
