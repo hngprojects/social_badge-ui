@@ -41,7 +41,10 @@ interface TemplateErrorStateProps {
 
 export function TemplateErrorState({ onRetry }: TemplateErrorStateProps) {
   return (
-    <div className="w-full flex flex-col items-center justify-center text-center p-8 sm:p-12 bg-red-50 rounded-[24px] border border-red-200 border-dashed py-16">
+    <div
+      role="alert"
+      className="w-full flex flex-col items-center justify-center text-center p-8 sm:p-12 bg-red-50 rounded-[24px] border border-red-200 border-dashed py-16"
+    >
       <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
         <svg
           className="w-6 h-6 text-red-600"
@@ -64,6 +67,7 @@ export function TemplateErrorState({ onRetry }: TemplateErrorStateProps) {
       <button
         type="button"
         onClick={onRetry}
+        aria-label="Retry loading templates"
         className="mt-4 px-4 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-full hover:bg-red-700 transition-colors"
       >
         Retry

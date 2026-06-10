@@ -25,12 +25,22 @@ const TEST_TEMPLATES = [
 	{ id: "photo_gradient_v1", label: "Live: Photo Gradient" },
 ];
 
+const TEST_TEMPLATE_LAYOUT_MAP: Record<string, string> = {
+	card_1: "hng_finalist_dev_v1",
+	card_2: "hng_finalist_pm_v1",
+	card_3: "hng_finalist_v1",
+	card_4: "hng_finalist_design_v1",
+};
+
 export default function TestBadgePage() {
 	const [selectedTemplate, setSelectedTemplate] = useState(TEST_TEMPLATES[0].id);
 	const [previewMode, setPreviewMode] = useState<"live" | "custom">("custom");
 
 	const initialEditor = useMemo(
-		() => createDefaultEditorState(selectedTemplate),
+		() =>
+			createDefaultEditorState(
+				TEST_TEMPLATE_LAYOUT_MAP[selectedTemplate] ?? selectedTemplate,
+			),
 		[selectedTemplate],
 	);
 

@@ -399,5 +399,6 @@ export function createDefaultEditorState(
 		roleTitleVisible: true,
 		status: "draft",
 		...preset,
+		...(isHng ? { trackRequired: true } : {}),
 	};
 }

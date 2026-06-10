@@ -8,6 +8,7 @@ export const customizeBadgeSchema = z.object({
   participantNameVisible: z.boolean().default(true),
   roleTitleVisible: z.boolean().default(true),
   trackVisible: z.boolean().default(true),
+  trackRequired: z.boolean().default(false),
   roleTitleRequired: z.boolean().default(false),
   allowParticipantPhoto: z.boolean().default(true),
   defaultCaption: z.string().optional(),
