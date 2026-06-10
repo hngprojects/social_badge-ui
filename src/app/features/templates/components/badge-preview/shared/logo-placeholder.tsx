@@ -11,7 +11,9 @@ export function LogoPlaceholder({
 }) {
 	return (
 		<div
-			className={`flex gap-2 items-center justify-center text-white  ${className}`}
+		<div
+			className={`flex gap-2 items-center justify-center text-white ${className}`}
+		>
 		>
 			<div className="w-10 h-10 flex items-center justify-center overflow-hidden relative">
 				{logoPreviewUrl ? (
