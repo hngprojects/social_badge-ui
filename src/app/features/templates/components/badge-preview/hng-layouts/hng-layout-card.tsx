@@ -1,0 +1,63 @@
+import { HngBackgroundImage } from "../shared/hng-background-image";
+import type { HngCardThemeKey, TemplateLayoutProps } from "../types";
+import { buildBgStyle } from "../utils";
+import { Coffetti } from "./coffetti";
+import { HNG_CARD_THEMES } from "./hng-card-config";
+import { InnerBadgeLayout } from "./inner-badge-layout";
+
+interface HngLayoutCardProps extends TemplateLayoutProps {
+	themeKey: HngCardThemeKey;
+}
+
+export function HngLayoutCard({
+	editor,
+	textColor,
+	participantPhotoUrl,
+	themeKey,
+}: HngLayoutCardProps) {
+	const theme = HNG_CARD_THEMES[themeKey];
+	const bgStyle = buildBgStyle(editor);
+	const contentClassName = theme.centerContent
+		? "relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+		: "relative z-10 w-full h-full flex flex-col justify-center text-white font-bricolage";
+
+	return (
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				<HngBackgroundImage
+					key={theme.background}
+					src={theme.background}
+					editor={editor}
+				/>
+			)}
+			<div className={contentClassName} style={bgStyle}>
+				<Coffetti />
+				<InnerBadgeLayout
+					editor={editor}
+					participantPhotoUrl={participantPhotoUrl}
+					{...theme.resolveInnerProps(textColor)}
+				/>
+			</div>
+		</div>
+	);
+}
+
+export function LayoutCard1(props: TemplateLayoutProps) {
+	return <HngLayoutCard {...props} themeKey="dev" />;
+}
+
+export function LayoutCard2(props: TemplateLayoutProps) {
+	return <HngLayoutCard {...props} themeKey="pm" />;
+}
+
+export function LayoutCard3(props: TemplateLayoutProps) {
+	return <HngLayoutCard {...props} themeKey="default" />;
+}
+
+export function LayoutCard4(props: TemplateLayoutProps) {
+	return <HngLayoutCard {...props} themeKey="design" />;
+}
+
+export function LayoutCard5(props: TemplateLayoutProps) {
+	return <HngLayoutCard {...props} themeKey="flaretag" />;
+}
