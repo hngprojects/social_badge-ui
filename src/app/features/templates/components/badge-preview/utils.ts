@@ -8,11 +8,18 @@ export function isHngLayout(layoutId: string): boolean {
 
 export function buildBgStyle(editor: CustomizeEditorState): CSSProperties {
 	if (editor.bgMode === "gradient") {
+		const colors = editor.gradientColors;
+		if (!colors || colors.length < 2) {
+			return {};
+		}
 		return {
-			background: `linear-gradient(${editor.gradientDirection || "135deg"}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
+			background: `linear-gradient(${editor.gradientDirection || "135deg"}, ${colors[0]}, ${colors[1]})`,
 		};
 	}
 	if (editor.bgMode === "solid") {
+		if (!editor.solidColor) {
+			return {};
+		}
 		return { backgroundColor: editor.solidColor };
 	}
 	return {};
