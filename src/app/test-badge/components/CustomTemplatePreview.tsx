@@ -32,7 +32,7 @@ const HNG_ASSETS = {
 		orange: "/assets/badges/hng_logo_orange.svg",
 	},
 	decorations: {
-		confetti: "/assets/badges/coffetti.webp",
+		confetti: "/assets/badges/confetti.webp",
 	},
 } as const;
 
@@ -458,7 +458,7 @@ export function LayoutCard1({ editor, textColor, participantPhotoUrl }: Template
 				className="relative z-10 w-full h-full flex flex-col justify-center text-white font-bricolage"
 				style={bgStyle}
 			>
-				<Coffetti />
+				<Confetti />
 				<InnerBadgeLayout
 					editor={editor}
 					headingTextColor="#00AEFF"
@@ -593,7 +593,7 @@ export function LayoutCard2({ editor, textColor, participantPhotoUrl }: Template
 				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
 				style={bgStyle}
 			>
-				<Coffetti />
+				<Confetti />
 				<InnerBadgeLayout
 					editor={editor}
 					roleBgColor="#00AEFF"
@@ -609,7 +609,7 @@ export function LayoutCard2({ editor, textColor, participantPhotoUrl }: Template
 		</div>
 	);
 }
-export function Coffetti() {
+export function Confetti() {
 	return (
 		<div className="z-1 absolute w-full h-1/2 top-0 overflow-hidden pointer-events-none">
 			{/* eslint-disable-next-line @next/next/no-img-element */}
@@ -639,7 +639,7 @@ export function LayoutCard3({ editor, textColor, participantPhotoUrl }: Template
 				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
 				style={bgStyle}
 			>
-				<Coffetti />
+				<Confetti />
 				<InnerBadgeLayout
 					editor={editor}
 					roleBgColor="#AFF47F"
@@ -669,7 +669,7 @@ export function LayoutCard4({ editor, textColor, participantPhotoUrl }: Template
 				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
 				style={bgStyle}
 			>
-				<Coffetti />
+				<Confetti />
 				<InnerBadgeLayout
 					editor={editor}
 					headingTextColor="#7E65EC"
@@ -699,7 +699,7 @@ export function LayoutCard5({ editor, textColor, participantPhotoUrl }: Template
 				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
 				style={bgStyle}
 			>
-				<Coffetti />
+				<Confetti />
 				<InnerBadgeLayout
 					editor={editor}
 					headingTextColor="#FF693E"

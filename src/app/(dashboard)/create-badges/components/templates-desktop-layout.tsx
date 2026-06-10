@@ -17,6 +17,7 @@ interface TemplatesDesktopLayoutProps {
   onFilterChange: (tab: string) => void;
   isLoading: boolean;
   isError: boolean;
+  isRetrying: boolean;
   onRetry: () => void;
   filteredTemplates: LayoutTemplate[];
   activeTemplate: LayoutTemplate | null;
@@ -29,6 +30,7 @@ export function TemplatesDesktopLayout({
   onFilterChange,
   isLoading,
   isError,
+  isRetrying,
   onRetry,
   filteredTemplates,
   activeTemplate,
@@ -49,7 +51,7 @@ export function TemplatesDesktopLayout({
         {isLoading ? (
           <TemplateLoadingState />
         ) : isError ? (
-          <TemplateErrorState onRetry={onRetry} />
+          <TemplateErrorState onRetry={onRetry} isRetrying={isRetrying} />
         ) : filteredTemplates.length > 0 ? (
           <TemplateGalleryGrid
             templates={filteredTemplates}

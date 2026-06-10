@@ -142,7 +142,7 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 			type: "participant_input",
 			label: isTrack ? "TRACK" : "ROLE / TITLE",
 			placeholder: isTrack ? (state.trackPlaceholder || "e.g. Design") : "e.g. Product Designer",
-			required: isTrack ? (state.trackRequired ?? false) : (state.roleTitleVisible ? state.roleTitleRequired : false),
+			required: isTrack ? ((state.trackVisible ?? true) ? (state.trackRequired ?? false) : false) : (state.roleTitleVisible ? state.roleTitleRequired : false),
 			visible: isTrack ? (state.trackVisible ?? true) : state.roleTitleVisible,
 			color: state.textColor,
 		});

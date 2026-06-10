@@ -3,7 +3,7 @@ const FONT_ID_TO_FAMILY: Record<string, string> = {
   fraunces: "Playfair Display",
   mono: "ui-monospace",
   display: "Georgia",
-  bricolage: "var(--font-bricolage)",
+  bricolage: "Bricolage Grotesque",
 };
 
 const SIZE_TO_PX: Record<"SMALL" | "MEDIUM" | "LARGE", number> = {

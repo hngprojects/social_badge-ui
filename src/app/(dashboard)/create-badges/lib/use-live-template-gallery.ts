@@ -12,6 +12,7 @@ export function useLiveTemplateGallery() {
     data: apiTemplates,
     isLoading: areTemplatesLoading,
     isError,
+    isRefetching,
     refetch,
   } = usePlatformTemplates({
     page: 1,
@@ -74,6 +75,7 @@ export function useLiveTemplateGallery() {
     selectTemplate,
     isLoading: areTemplatesLoading,
     isError,
+    isRetrying: isRefetching,
     refetch,
     filterTabs: FILTER_TABS,
   };
