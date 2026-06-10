@@ -35,6 +35,16 @@ export function getSafeImageUrl(
 	return null;
 }
 
+export function getBadgeCaptureBackground(editor: CustomizeEditorState): string {
+	if (editor.bgMode === "solid" && editor.solidColor) {
+		return editor.solidColor;
+	}
+	if (editor.bgMode === "gradient" && editor.gradientColors?.[0]) {
+		return editor.gradientColors[0];
+	}
+	return "#ffffff";
+}
+
 export function buildBgStyle(editor: CustomizeEditorState): CSSProperties {
 	if (editor.bgMode === "gradient") {
 		const colors = editor.gradientColors;

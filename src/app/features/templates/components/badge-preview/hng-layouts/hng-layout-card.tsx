@@ -1,7 +1,7 @@
 import { HngBackgroundImage } from "../shared/hng-background-image";
 import type { HngCardThemeKey, TemplateLayoutProps } from "../types";
 import { buildBgStyle } from "../utils";
-import { Coffetti } from "./coffetti";
+import { Confetti } from "./coffetti";
 import { HNG_CARD_THEMES } from "./hng-card-config";
 import { InnerBadgeLayout } from "./inner-badge-layout";
 
@@ -14,6 +14,7 @@ export function HngLayoutCard({
 	textColor,
 	participantPhotoUrl,
 	themeKey,
+	badgeRef,
 }: HngLayoutCardProps) {
 	const theme = HNG_CARD_THEMES[themeKey];
 	const bgStyle = buildBgStyle(editor);
@@ -22,7 +23,11 @@ export function HngLayoutCard({
 		: "relative z-10 w-full h-full flex flex-col justify-center text-white font-bricolage";
 
 	return (
-		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+		<div
+			ref={badgeRef}
+			data-badge-root
+			className="relative h-full w-full overflow-hidden rounded-[18px]"
+		>
 			{editor.bgMode === "image" && (
 				<HngBackgroundImage
 					key={theme.background}
@@ -31,7 +36,7 @@ export function HngLayoutCard({
 				/>
 			)}
 			<div className={contentClassName} style={bgStyle}>
-				<Coffetti />
+				<Confetti />
 				<InnerBadgeLayout
 					editor={editor}
 					participantPhotoUrl={participantPhotoUrl}
