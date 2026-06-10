@@ -29,13 +29,14 @@ export function CustomTemplatePreview({
 	}
 
 	return (
-		<div className="w-full max-w-79.5 h-112.75 mx-auto" ref={badgeRef}>
+		<div className="mx-auto h-112.75 w-full max-w-79.5">
 			<LayoutComponent
 				editor={editor}
 				participantPhotoUrl={participantPhotoUrl}
 				baseColor={baseColor}
 				fontStyle={font.style}
 				textColor={editor.textColor}
+				badgeRef={badgeRef}
 			/>
 		</div>
 	);

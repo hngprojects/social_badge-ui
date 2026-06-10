@@ -10,10 +10,15 @@ export function Layout9({
 	baseColor,
 	fontStyle,
 	textColor,
+	badgeRef,
 }: TemplateLayoutProps) {
 	const textStyle = textColor ? { color: textColor } : {};
 	return (
-		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-white">
+		<div
+			ref={badgeRef}
+			data-badge-root
+			className="relative h-full w-full overflow-hidden rounded-[18px] text-white"
+		>
 			<Template9
 				className="w-full h-full"
 				editor={editor}

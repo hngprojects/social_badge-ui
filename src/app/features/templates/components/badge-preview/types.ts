@@ -8,6 +8,7 @@ export interface TemplateLayoutProps {
 	baseColor?: string;
 	fontStyle?: CSSProperties;
 	textColor?: string;
+	badgeRef?: RefObject<HTMLDivElement | null>;
 }
 
 export interface InnerBadgeLayoutProps {
