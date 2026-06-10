@@ -230,17 +230,17 @@ export function parseCanvasDataToEditorState(
 		(f) => f.key === CANVAS_FIELD_KEYS.PARTICIPANT_PHOTO,
 	);
 	const trackField = canvas.fields.find(
-		(f) => f.key === ("track" as any),
+		(f) => f.key === CANVAS_FIELD_KEYS.TRACK,
 	);
 	const trackPlaceholder = trackField?.type === "participant_input" 
 		? trackField.placeholder 
 		: (trackField?.type === "static" ? trackField.value : "");
 
 	const badgeTitleField = canvas.fields.find(
-		(f): f is CanvasStaticField => f.key === ("badge_title" as any),
+		(f): f is CanvasStaticField => f.key === CANVAS_FIELD_KEYS.BADGE_TITLE,
 	);
 	const percentileField = canvas.fields.find(
-		(f): f is CanvasStaticField => f.key === ("percentile_badge" as any),
+		(f): f is CanvasStaticField => f.key === CANVAS_FIELD_KEYS.PERCENTILE_BADGE,
 	);
 
 	const dateParts = parseEventDateParts(eventDateField?.value ?? "");
@@ -272,7 +272,7 @@ export function parseCanvasDataToEditorState(
 		logoPreviewUrl: meta?.logo_url ?? canvas.logo?.url ?? null,
 		pendingLogoFile: null,
 		...bgState,
-		textColor: participantName?.color ?? roleTitle?.color ?? (trackField as any)?.color,
+		textColor: participantName?.color ?? roleTitle?.color ?? (trackField?.type === "participant_input" ? trackField.color : undefined),
 		fontId: FONT_FAMILY_TO_ID[canvas.typography.font_family] ?? "inter",
 		titleSize: sizePxToEnum(canvas.typography.size_px),
 		defaultCaption: meta?.default_caption ?? "",

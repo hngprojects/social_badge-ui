@@ -34,7 +34,7 @@ export default function ParticipantPovClient() {
 			return new File([blob], `${participantName || "badge"}.png`, {
 				type: "image/png",
 			});
-		} catch (err) {
+		} catch {
 			return null;
 		}
 	}, [participantName]);

@@ -32,7 +32,7 @@ export function StyleSection({
 	const sortedPalettes = useMemo(() => {
 		let currentMode: "gradient" | "solid" | "image" = "solid";
 		if (activeTab === "background") {
-			currentMode = editor.bgMode === "split" ? (editor.priBgMode ?? "solid") : (editor.bgMode === "image" ? "solid" : editor.bgMode);
+			currentMode = editor.bgMode === "split" ? (editor.priBgMode ?? "solid") : editor.bgMode;
 		}
 		else if (activeTab === "secondary") currentMode = editor.secBgMode ?? "solid";
 		else if (activeTab === "text") currentMode = "solid";
@@ -205,7 +205,7 @@ export function StyleSection({
 									Background Mode
 								</p>
 								{renderModeSwitcher(
-									editor.bgMode === "split" ? (editor.priBgMode ?? "solid") : (editor.bgMode as any),
+									editor.bgMode === "split" ? (editor.priBgMode ?? "solid") : editor.bgMode,
 									onBgModeChange,
 									editor.solidColor,
 									editor.gradientColors,
@@ -215,7 +215,7 @@ export function StyleSection({
 							<div>
 								{renderPaletteGrid(
 									editor.paletteId,
-									editor.bgMode === "split" ? "solid" : (editor.bgMode as any),
+									editor.bgMode === "split" ? "solid" : editor.bgMode,
 									onPaletteChange,
 									"id"
 								)}

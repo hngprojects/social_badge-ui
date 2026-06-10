@@ -46,7 +46,7 @@ export function resolveLayoutId(
 export interface LayoutCapabilities {
 	staticFields: Array<"event_name" | "event_date">;
 	participantFields: Array<
-		"participant_name" | "role_title" | "participant_photo"
+		"participant_name" | "role_title" | "track" | "participant_photo"
 	>;
 	hasHeaderLogo: boolean;
 	defaultLogoPosition: "top-center" | "top-left" | "top-right";
