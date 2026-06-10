@@ -18,9 +18,13 @@ import { BACKGROUND_IMAGE_BY_PALETTE, getPalette } from "./palette-mapping";
 
 function buildBackground(state: CustomizeEditorState): CanvasBackground {
 	if (state.bgMode === "image") {
+		// Image-bg contract: CanvasImageBackground url/image_url are optional.
+		// parse-canvas-data reads bg.url || bg.image_url for backgroundImageUrl/paletteId
+		// (with fallbacks); CustomTemplatePreview renders layout hardcoded assets when
+		// editor.bgMode === "image", not a populated background URL from canvas data.
 		return {
 			type: "image",
-			url: undefined, // FE-only asset
+			url: undefined,
 			public_id: null,
 		};
 	}
