@@ -13,6 +13,7 @@ export function Layout7({
 	badgeRef,
 }: TemplateLayoutProps) {
 	const textStyle = textColor ? { color: textColor } : {};
+
 	return (
 		<div
 			ref={badgeRef}
@@ -20,12 +21,12 @@ export function Layout7({
 			className="relative h-full w-full overflow-hidden rounded-[18px] text-white"
 		>
 			<Template7
-				className="w-full h-full"
+				className="absolute inset-0 w-full h-full"
 				editor={editor}
 				baseColor={baseColor}
 			/>
 			<div className="absolute w-full h-full top-0 py-8">
-				<div className="flex border-white  justify-between items-start px-8">
+				<div className="flex border-white justify-between items-start px-8">
 					<LogoPlaceholder
 						isHidden={!editor.logo}
 						logoPreviewUrl={editor.logoPreviewUrl}

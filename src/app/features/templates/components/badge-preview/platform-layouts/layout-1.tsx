@@ -12,6 +12,7 @@ export function Layout1({
 	badgeRef,
 }: TemplateLayoutProps) {
 	const textStyle = textColor ? { color: textColor } : {};
+
 	return (
 		<div
 			ref={badgeRef}
@@ -19,7 +20,7 @@ export function Layout1({
 			className="relative h-full w-full overflow-hidden rounded-[18px]"
 		>
 			<Template1
-				className="w-full h-full"
+				className="absolute inset-0 w-full h-full"
 				editor={editor}
 				baseColor={baseColor}
 			/>
@@ -38,7 +39,7 @@ export function Layout1({
 			<div className="absolute top-48 px-8 w-full">
 				<h2
 					style={textStyle}
-					className="text-6xl font-normal uppercase text-black  tracking-tight font-league-gothic leading-[0.85]"
+					className="text-6xl font-normal uppercase text-black tracking-tight font-league-gothic leading-[0.85]"
 				>
 					{editor.participantNameVisible
 						? editor.participantNamePlaceholder || "Your full name"

@@ -34,19 +34,26 @@ const getFill = (editor?: CustomizeEditorState, baseColor?: string, defaultColor
 const getSecFill = (editor?: CustomizeEditorState, defaultColor?: string) => {
 	return editor?.secSolidColor || defaultColor || editor?.solidColor || "#E0074E";
 };
-
-export function Template9({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
-    const main = getFill(editor, baseColor, "#6543A1");
+export function Template9({
+	className,
+	editor,
+	baseColor,
+}: {
+	className?: string;
+	editor?: CustomizeEditorState;
+	baseColor?: string;
+}) {
+	const main = getFill(editor, baseColor, "#6543A1");
 	const secFill = getSecFill(editor, "#68C4B9");
 
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="480"
-			height="640"
-			fill="none"
 			viewBox="0 0 480 640"
+			fill="none"
+			preserveAspectRatio="xMidYMid slice"
 			className={className}
+			style={{ display: "block", width: "100%", height: "100%" }}
 		>
 			<GradientDefs id="grad9" editor={editor} />
 			<g clipPath="url(#a)">
@@ -56,9 +63,10 @@ export function Template9({ className, editor, baseColor }: { className?: string
 					fill={
 						editor?.backgroundImageUrl
 							? "url(#img-grad9)"
-							: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
-							? "url(#grad9)"
-							: main
+							: editor?.bgMode === "gradient" ||
+								  editor?.priBgMode === "gradient"
+								? "url(#grad9)"
+								: main
 					}
 					rx="32"
 				/>
@@ -84,16 +92,25 @@ export function Template9({ className, editor, baseColor }: { className?: string
 	);
 }
 
-export function Template7({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+export function Template7({
+	className,
+	editor,
+	baseColor,
+}: {
+	className?: string;
+	editor?: CustomizeEditorState;
+	baseColor?: string;
+}) {
 	const fill = getFill(editor, baseColor, "#1E1E1E");
+
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="480"
-			height="640"
-			fill="none"
 			viewBox="0 0 480 640"
+			fill="none"
+			preserveAspectRatio="xMidYMid slice"
 			className={className}
+			style={{ display: "block", width: "100%", height: "100%" }}
 		>
 			<GradientDefs id="grad7" editor={editor} />
 			<rect
@@ -102,9 +119,9 @@ export function Template7({ className, editor, baseColor }: { className?: string
 				fill={
 					editor?.backgroundImageUrl
 						? "url(#img-grad7)"
-						: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
-						? "url(#grad7)"
-						: fill
+						: editor?.bgMode === "gradient" || editor?.priBgMode === "gradient"
+							? "url(#grad7)"
+							: fill
 				}
 				rx="32"
 			/>
@@ -112,18 +129,26 @@ export function Template7({ className, editor, baseColor }: { className?: string
 	);
 }
 
-export function Template1({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+export function Template1({
+	className,
+	editor,
+	baseColor,
+}: {
+	className?: string;
+	editor?: CustomizeEditorState;
+	baseColor?: string;
+}) {
 	const fill = getFill(editor, baseColor, "#E8CAD4");
 	const secFill = getSecFill(editor, "#E61B62");
 
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="480"
-			height="640"
-			fill="none"
 			viewBox="0 0 480 640"
+			fill="none"
+			preserveAspectRatio="xMidYMid slice"
 			className={className}
+			style={{ display: "block", width: "100%", height: "100%" }}
 		>
 			<GradientDefs id="grad1" editor={editor} />
 			<g clipPath="url(#a)">
@@ -133,9 +158,10 @@ export function Template1({ className, editor, baseColor }: { className?: string
 					fill={
 						editor?.backgroundImageUrl
 							? "url(#img-grad1)"
-							: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
-							? "url(#grad1)"
-							: fill
+							: editor?.bgMode === "gradient" ||
+								  editor?.priBgMode === "gradient"
+								? "url(#grad1)"
+								: fill
 					}
 					rx="32"
 				/>
@@ -156,9 +182,11 @@ export function Template1({ className, editor, baseColor }: { className?: string
 					d="M211.201 88.312a4.833 4.833 0 0 0 3.535-1.413 5.071 5.071 0 0 0 1.465-3.587c0-1.355-.527-2.65-1.465-3.588a4.833 4.833 0 0 0-3.535-1.412c-3.864.091-7.776-.027-11.906-.034-3.338-.006-6.799.123-10.215.504-11.001 1.26-22.168 2.2-33.457 4.965-22.042 5.88-44.799 11.455-64.514 24.758-14.012 10.389-28.59 21.574-36.848 37.696-8.295 16.211-6.924 34.822-4.212 51.859.648 4.002 1.377 7.85 2.193 11.835a285.497 285.497 0 0 1-1.698-11.904c-2.025-17.124-2.456-35.523 6.088-50.537 8.455-14.979 22.987-25.288 37.258-34.959 18.749-11.599 41.497-16.393 63.487-21.242 10.379-2.1 21.451-2.622 32.519-3.412 3.044-.21 6.067-.2 9.207-.065 3.87.166 7.957.46 12.098.536Z"
 				/>
 				<g clipPath="url(#b)">
-					<path 
-						fill={editor?.secBgMode === "gradient" ? "url(#sec-grad1)" : secFill} 
-						d="M0 527h480v124H0z" 
+					<path
+						fill={
+							editor?.secBgMode === "gradient" ? "url(#sec-grad1)" : secFill
+						}
+						d="M0 527h480v124H0z"
 					/>
 					<path
 						stroke="#E8CAD4"
@@ -173,7 +201,6 @@ export function Template1({ className, editor, baseColor }: { className?: string
 					<rect width="480" height="640" fill="#fff" rx="32" />
 				</clipPath>
 				<clipPath id="b">
-                    
 					<path fill="#fff" d="M0 527h480v124H0z" />
 				</clipPath>
 			</defs>
@@ -209,18 +236,26 @@ export function Template5({ className, editor, baseColor }: { className?: string
 	);
 }
 
-export function Template4({ className, editor, baseColor }: { className?: string; editor?: CustomizeEditorState; baseColor?: string }) {
+export function Template4({
+	className,
+	editor,
+	baseColor,
+}: {
+	className?: string;
+	editor?: CustomizeEditorState;
+	baseColor?: string;
+}) {
 	const fill = getFill(editor, baseColor, "#222");
 	const secFill = getSecFill(editor, "#CAC9C7");
 
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="480"
-			height="640"
-			fill="none"
 			viewBox="0 0 480 640"
+			fill="none"
+			preserveAspectRatio="xMidYMid slice"
 			className={className}
+			style={{ display: "block", width: "100%", height: "100%" }}
 		>
 			<GradientDefs id="grad4" editor={editor} />
 			<rect
@@ -229,15 +264,15 @@ export function Template4({ className, editor, baseColor }: { className?: string
 				fill={
 					editor?.backgroundImageUrl
 						? "url(#img-grad4)"
-						: (editor?.bgMode === "gradient" || editor?.priBgMode === "gradient")
-						? "url(#grad4)"
-						: fill
+						: editor?.bgMode === "gradient" || editor?.priBgMode === "gradient"
+							? "url(#grad4)"
+							: fill
 				}
 				rx="32"
 			/>
-			<path 
-				fill={editor?.secBgMode === "gradient" ? "url(#sec-grad4)" : secFill} 
-				d="M0 492h480v148H0z" 
+			<path
+				fill={editor?.secBgMode === "gradient" ? "url(#sec-grad4)" : secFill}
+				d="M0 492h480v148H0z"
 			/>
 		</svg>
 	);

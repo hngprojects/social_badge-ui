@@ -17,6 +17,7 @@ export function Layout4({
 	badgeRef,
 }: TemplateLayoutProps) {
 	const textStyle = textColor ? { color: textColor } : {};
+
 	return (
 		<div
 			ref={badgeRef}
@@ -24,7 +25,7 @@ export function Layout4({
 			className="relative h-full w-full overflow-hidden rounded-[18px] border"
 		>
 			<Template4
-				className="w-full h-full"
+				className="absolute inset-0 w-full h-full"
 				editor={editor}
 				baseColor={baseColor}
 			/>
@@ -36,7 +37,7 @@ export function Layout4({
 			<div className="h-[77%] w-full absolute top-0">
 				<LogoPlaceholder
 					isHidden={!editor.logo}
-					className="mt-12 mb-6  w-full"
+					className="mt-12 mb-6 w-full"
 					logoPreviewUrl={editor.logoPreviewUrl}
 				/>
 				<div className="w-35 h-35 rounded-full bg-white mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden">
