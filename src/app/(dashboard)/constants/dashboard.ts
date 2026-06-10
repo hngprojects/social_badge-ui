@@ -39,6 +39,7 @@ export const FILTER_TABS = [
   "All layouts",
   "Summit",
   "Conference",
+  "Internship",
 ];
 
 export const BADGES: Badge[] = [
