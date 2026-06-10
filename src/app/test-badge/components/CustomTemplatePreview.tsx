@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import {
 	Template1,
@@ -66,6 +66,41 @@ function buildBgStyle(editor: CustomizeEditorState): React.CSSProperties {
 		return { backgroundColor: editor.solidColor };
 	}
 	return {};
+}
+
+function HngBackgroundImage({
+	src,
+	editor,
+}: {
+	src: string;
+	editor: CustomizeEditorState;
+}) {
+	const [imageFailed, setImageFailed] = useState(false);
+	const fallbackStyle = buildBgStyle({ ...editor, bgMode: "gradient" });
+
+	if (imageFailed) {
+		return (
+			<div
+				className="absolute inset-0 w-full h-full"
+				style={fallbackStyle}
+				aria-hidden
+			/>
+		);
+	}
+
+	return (
+		// eslint-disable-next-line @next/next/no-img-element
+		<img
+			src={src}
+			alt=""
+			className="absolute inset-0 w-full h-full object-cover"
+			onLoad={() => setImageFailed(false)}
+			onError={(e) => {
+				e.currentTarget.src = "";
+				setImageFailed(true);
+			}}
+		/>
+	);
 }
 
 // Placeholder for Template 1 Layout
@@ -413,11 +448,10 @@ export function LayoutCard1({ editor, textColor, participantPhotoUrl }: Template
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			{editor.bgMode === "image" && (
-				// eslint-disable-next-line @next/next/no-img-element
-				<img
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.dev}
 					src={HNG_ASSETS.backgrounds.dev}
-					alt="background"
-					className="absolute inset-0 w-full h-full object-cover"
+					editor={editor}
 				/>
 			)}
 			<div
@@ -549,11 +583,10 @@ export function LayoutCard2({ editor, textColor, participantPhotoUrl }: Template
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			{editor.bgMode === "image" && (
-				// eslint-disable-next-line @next/next/no-img-element
-				<img
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.pm}
 					src={HNG_ASSETS.backgrounds.pm}
-					alt="background"
-					className="absolute inset-0 w-full h-full object-cover"
+					editor={editor}
 				/>
 			)}
 			<div
@@ -596,11 +629,10 @@ export function LayoutCard3({ editor, textColor, participantPhotoUrl }: Template
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			{editor.bgMode === "image" && (
-				// eslint-disable-next-line @next/next/no-img-element
-				<img
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.default}
 					src={HNG_ASSETS.backgrounds.default}
-					alt="background"
-					className="absolute inset-0 w-full h-full object-cover"
+					editor={editor}
 				/>
 			)}
 			<div
@@ -627,11 +659,10 @@ export function LayoutCard4({ editor, textColor, participantPhotoUrl }: Template
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			{editor.bgMode === "image" && (
-				// eslint-disable-next-line @next/next/no-img-element
-				<img
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.design}
 					src={HNG_ASSETS.backgrounds.design}
-					alt="background"
-					className="absolute inset-0 w-full h-full object-cover"
+					editor={editor}
 				/>
 			)}
 			<div
@@ -658,11 +689,10 @@ export function LayoutCard5({ editor, textColor, participantPhotoUrl }: Template
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
 			{editor.bgMode === "image" && (
-				// eslint-disable-next-line @next/next/no-img-element
-				<img
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.flaretag}
 					src={HNG_ASSETS.backgrounds.flaretag}
-					alt="background"
-					className="absolute inset-0 w-full h-full object-cover"
+					editor={editor}
 				/>
 			)}
 			<div
