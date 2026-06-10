@@ -5,6 +5,9 @@ export const CANVAS_FIELD_KEYS = {
   EVENT_DATE: "event_date",
   PARTICIPANT_NAME: "participant_name",
   ROLE_TITLE: "role_title",
+  TRACK: "track",
+  BADGE_TITLE: "badge_title",
+  PERCENTILE_BADGE: "percentile_badge",
   PARTICIPANT_PHOTO: "participant_photo",
 } as const satisfies Record<string, CanvasFieldKey>;
 

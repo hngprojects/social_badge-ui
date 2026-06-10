@@ -25,12 +25,18 @@ export default function ParticipantPovClient() {
 
 	const getBadgeFile = useCallback(async (): Promise<File | null> => {
 		if (!badgeRef.current) return null;
-		const { toBlob } = await import("html-to-image");
-		const blob = await toBlob(badgeRef.current, { pixelRatio: 2 });
-		if (!blob) return null;
-		return new File([blob], `${participantName || "badge"}.png`, {
-			type: "image/png",
-		});
+		try {
+			const { toBlob } = await import("html-to-image");
+			const blob = await toBlob(badgeRef.current, { 
+				pixelRatio: 2,
+			});
+			if (!blob) return null;
+			return new File([blob], `${participantName || "badge"}.png`, {
+				type: "image/png",
+			});
+		} catch {
+			return null;
+		}
 	}, [participantName]);
 
 	const handleDownload = useCallback(async () => {
@@ -69,6 +75,7 @@ export default function ParticipantPovClient() {
 
 	const editorState = useMemo(() => {
 		if (!baseEditorState) return null;
+		const isHng = baseEditorState.layoutId.startsWith("hng_finalist_");
 		const state = {
 			...baseEditorState,
 			// Pass the actual values being typed to the editor state properties
@@ -76,7 +83,9 @@ export default function ParticipantPovClient() {
 			participantNamePlaceholder:
 				participantName || baseEditorState.participantNamePlaceholder,
 			roleTitlePlaceholder:
-				participantRole || baseEditorState.roleTitlePlaceholder,
+				!isHng ? (participantRole || baseEditorState.roleTitlePlaceholder) : baseEditorState.roleTitlePlaceholder,
+			trackPlaceholder:
+				isHng ? (participantRole || baseEditorState.trackPlaceholder) : baseEditorState.trackPlaceholder,
 		};
 		return state;
 	}, [baseEditorState, participantName, participantRole]);

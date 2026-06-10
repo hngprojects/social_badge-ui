@@ -50,6 +50,8 @@ export function CustomizeBadgeForm({
 			eventTime: editor.eventTime,
 			participantNameVisible: editor.participantNameVisible,
 			roleTitleVisible: editor.roleTitleVisible,
+			trackVisible: editor.trackVisible ?? true,
+			trackRequired: editor.trackRequired ?? false,
 			roleTitleRequired: editor.roleTitleRequired,
 			allowParticipantPhoto: editor.allowParticipantPhoto,
 			defaultCaption: editor.defaultCaption,
@@ -118,7 +120,7 @@ export function CustomizeBadgeForm({
     setValue("paletteId", id);
   };
 
-  const handleBgModeChange = (mode: "gradient" | "solid" | "split") => {
+  const handleBgModeChange = (mode: "gradient" | "solid" | "split" | "image") => {
     setBgMode(mode);
     setValue("bgMode", mode);
   };

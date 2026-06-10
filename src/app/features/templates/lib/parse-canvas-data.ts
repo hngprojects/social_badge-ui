@@ -137,12 +137,12 @@ function backgroundToEditorState(
 			(p) => BACKGROUND_IMAGE_BY_PALETTE[p.id] === imageUrl,
 		);
 		return {
-			bgMode: "gradient",
-			priBgMode: "gradient",
+			bgMode: "image",
+			priBgMode: "solid",
 			paletteId: match?.id ?? fallbackPaletteId,
-			gradientColors: ["#ff007a", "#ffa800"],
+			gradientColors: ["#1a1a1a", "#1a1a1a"],
 			gradientDirection: "135deg",
-			solidColor: "#ff007a",
+			solidColor: "#1a1a1a",
 			backgroundImageUrl: imageUrl ?? null,
 			isSplit: false,
 		};
@@ -188,6 +188,7 @@ const FONT_FAMILY_TO_ID: Record<string, string> = {
 	"Playfair Display": "fraunces",
 	"ui-monospace": "mono",
 	Georgia: "display",
+	"Bricolage Grotesque": "bricolage",
 };
 
 function sizePxToEnum(px: number): "SMALL" | "MEDIUM" | "LARGE" {
@@ -229,6 +230,20 @@ export function parseCanvasDataToEditorState(
 	const hasPhoto = canvas.fields.some(
 		(f) => f.key === CANVAS_FIELD_KEYS.PARTICIPANT_PHOTO,
 	);
+	const trackField = canvas.fields.find(
+		(f) => f.key === CANVAS_FIELD_KEYS.TRACK,
+	);
+	const trackPlaceholder = trackField?.type === "participant_input" 
+		? trackField.placeholder 
+		: (trackField?.type === "static" ? trackField.value : "");
+
+	const badgeTitleField = canvas.fields.find(
+		(f): f is CanvasStaticField => f.key === CANVAS_FIELD_KEYS.BADGE_TITLE,
+	);
+	const percentileField = canvas.fields.find(
+		(f): f is CanvasStaticField => f.key === CANVAS_FIELD_KEYS.PERCENTILE_BADGE,
+	);
+
 	const dateParts = parseEventDateParts(eventDateField?.value ?? "");
 
 	const bgState = backgroundToEditorState(canvas);
@@ -247,12 +262,18 @@ export function parseCanvasDataToEditorState(
 		roleTitlePlaceholder: roleTitle?.placeholder ?? "e.g. Product Designer",
 		roleTitleVisible: Boolean(roleTitle?.visible ?? true),
 		roleTitleRequired: Boolean(roleTitle?.required ?? false),
+		trackLabel: "TRACK",
+		trackPlaceholder: trackPlaceholder || "e.g. Design",
+		trackVisible: Boolean(trackField?.visible ?? true),
+		trackRequired: trackField?.type === "participant_input" ? trackField.required : false,
+		badgeTitle: badgeTitleField?.value ?? "Finalist",
+		percentileBadge: percentileField?.value ?? "Top 5%",
 		allowParticipantPhoto: hasPhoto,
 		logo: canvas.logo,
 		logoPreviewUrl: meta?.logo_url ?? canvas.logo?.url ?? null,
 		pendingLogoFile: null,
 		...bgState,
-		textColor: participantName?.color ?? roleTitle?.color,
+		textColor: participantName?.color ?? roleTitle?.color ?? (trackField?.type === "participant_input" ? trackField.color : undefined),
 		fontId: FONT_FAMILY_TO_ID[canvas.typography.font_family] ?? "inter",
 		titleSize: sizePxToEnum(canvas.typography.size_px),
 		defaultCaption: meta?.default_caption ?? "",
@@ -301,40 +322,52 @@ export function createDefaultEditorState(
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "Design",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 		hng_finalist_dev_v1: {
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "Dev",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 		hng_finalist_design_v1: {
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "Design",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 		hng_finalist_pm_v1: {
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "PM",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 		hng_finalist_flaretag_v1: {
 			eventName: "HNG FINALIST",
 			participantNameLabel: "NAME",
 			participantNamePlaceholder: "",
-			roleTitleLabel: "ROLE / TITLE",
-			roleTitlePlaceholder: "",
+			trackLabel: "TRACK",
+			trackPlaceholder: "Flaretag",
+			badgeTitle: "Finalist",
+			percentileBadge: "Top 5%",
 		},
 	};
 
 	const preset = defaults[layoutId] ?? {};
+
+	const isHng = layoutId.startsWith("hng_finalist_");
 
 	return {
 		platformTemplateId: platformTemplateId ?? "",
@@ -352,7 +385,7 @@ export function createDefaultEditorState(
 		logo: null,
 		logoPreviewUrl: null,
 		pendingLogoFile: null,
-		bgMode: "solid",
+		bgMode: isHng ? "image" : "solid",
 		paletteId: palette,
 		gradientColors: [fromPalette.from, fromPalette.to],
 		gradientDirection: "135deg",
@@ -367,5 +400,6 @@ export function createDefaultEditorState(
 		roleTitleVisible: true,
 		status: "draft",
 		...preset,
+		...(isHng ? { trackRequired: true } : {}),
 	};
 }

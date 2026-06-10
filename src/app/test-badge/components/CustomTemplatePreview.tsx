@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import {
 	Template1,
@@ -16,6 +15,38 @@ import {
 import PlaceholderLogo from "./placeholder-logo";
 import { getPalette } from "@/app/features/templates/lib/palette-mapping";
 import { FONTS } from "@/app/(dashboard)/components/customize/constants";
+import BadgeSvg, { FivePercent } from "./badge-svg";
+
+const HNG_ASSETS = {
+	backgrounds: {
+		dev: "/assets/badges/hng_bg_two.webp",
+		pm: "/assets/badges/hng_bg_four.webp",
+		default: "/assets/badges/hng_bg_three.webp",
+		design: "/assets/badges/hng_bg_one.webp",
+		flaretag: "/assets/badges/hng_bg_five.webp",
+	},
+	logos: {
+		blue: "/assets/badges/hng_logo_blue.svg",
+		white: "/assets/badges/hng_logo_white.svg",
+		black: "/assets/badges/hng_logo_black.svg",
+		orange: "/assets/badges/hng_logo_orange.svg",
+	},
+	decorations: {
+		confetti: "/assets/badges/confetti.webp",
+	},
+} as const;
+
+const HNG_LAYOUT_IDS = new Set([
+	"hng_finalist_design_v1",
+	"hng_finalist_dev_v1",
+	"hng_finalist_pm_v1",
+	"hng_finalist_flaretag_v1",
+	"hng_finalist_v1",
+]);
+
+function isHngLayout(layoutId: string): boolean {
+	return HNG_LAYOUT_IDS.has(layoutId);
+}
 
 interface TemplateLayoutProps {
 	editor: CustomizeEditorState;
@@ -23,6 +54,53 @@ interface TemplateLayoutProps {
 	baseColor?: string;
 	fontStyle?: React.CSSProperties;
 	textColor?: string;
+}
+
+function buildBgStyle(editor: CustomizeEditorState): React.CSSProperties {
+	if (editor.bgMode === "gradient") {
+		return {
+			background: `linear-gradient(${editor.gradientDirection || "135deg"}, ${editor.gradientColors[0]}, ${editor.gradientColors[1]})`,
+		};
+	}
+	if (editor.bgMode === "solid") {
+		return { backgroundColor: editor.solidColor };
+	}
+	return {};
+}
+
+function HngBackgroundImage({
+	src,
+	editor,
+}: {
+	src: string;
+	editor: CustomizeEditorState;
+}) {
+	const [imageFailed, setImageFailed] = useState(false);
+	const fallbackStyle = buildBgStyle({ ...editor, bgMode: "gradient" });
+
+	if (imageFailed) {
+		return (
+			<div
+				className="absolute inset-0 w-full h-full"
+				style={fallbackStyle}
+				aria-hidden
+			/>
+		);
+	}
+
+	return (
+		// eslint-disable-next-line @next/next/no-img-element
+		<img
+			src={src}
+			alt=""
+			className="absolute inset-0 w-full h-full object-cover"
+			onLoad={() => setImageFailed(false)}
+			onError={(e) => {
+				e.currentTarget.src = "";
+				setImageFailed(true);
+			}}
+		/>
+	);
 }
 
 // Placeholder for Template 1 Layout
@@ -56,7 +134,7 @@ export function Layout1({
 				)}
 			</div>
 			<div className="absolute top-48 px-8 w-full">
-				<h2 
+				<h2
 					style={textStyle}
 					className="text-6xl font-normal uppercase text-black  tracking-tight font-league-gothic leading-[0.85]"
 				>
@@ -64,10 +142,7 @@ export function Layout1({
 						? editor.participantNamePlaceholder || "Your full name"
 						: ""}
 				</h2>
-				<p 
-					style={textStyle}
-					className="text-md text-black/80 mt-2"
-				>
+				<p style={textStyle} className="text-md text-black/80 mt-2">
 					{editor.roleTitleVisible
 						? editor.roleTitlePlaceholder || "Product Designer"
 						: ""}
@@ -117,18 +192,12 @@ export function Layout9({
 				</div>
 
 				<div className="px-8 my-6">
-					<h2 
-						style={textStyle}
-						className="text-3xl font-bold uppercase"
-					>
+					<h2 style={textStyle} className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
 							: ""}
 					</h2>
-					<p 
-						style={textStyle}
-						className="text-base opacity-90"
-					>
+					<p style={textStyle}>
 						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
 							: ""}
@@ -199,18 +268,15 @@ export function Layout4({
 			</div>
 
 			<div className="absolute bottom-0 h-[23%] w-full pl-12 text-black">
-				<h2 
-					style={{ ...fontStyle, ...textStyle }} 
+				<h2
+					style={{ ...fontStyle, ...textStyle }}
 					className="text-xl mt-4 font-bold uppercase"
 				>
 					{editor.participantNameVisible
 						? editor.participantNamePlaceholder || "Your full name"
 						: ""}
 				</h2>
-				<p 
-					style={textStyle}
-					className="text-sm opacity-80"
-				>
+				<p style={textStyle} className="text-sm opacity-80">
 					{editor.roleTitleVisible
 						? editor.roleTitlePlaceholder || "Product designer"
 						: ""}
@@ -235,11 +301,11 @@ export function LogoPlaceholder({
 		>
 			<div className="w-10 h-10 flex items-center justify-center overflow-hidden relative">
 				{logoPreviewUrl ? (
-					<Image
+					// eslint-disable-next-line @next/next/no-img-element
+					<img
 						src={logoPreviewUrl}
 						alt="Logo"
-						fill
-						className="object-contain"
+						className="object-contain w-full h-full"
 					/>
 				) : (
 					<PlaceholderLogo />
@@ -267,10 +333,7 @@ export function Layout5({ editor, textColor }: TemplateLayoutProps) {
 					{editor.eventName || "SUMMIT"}
 				</h2>
 				<div className="w-20 h-1 bg-white mb-6" />
-				<p 
-					style={textStyle}
-					className="text-xl font-bold text-white/90"
-				>
+				<p style={textStyle} className="text-xl font-bold text-white/90">
 					{editor.participantNameVisible
 						? editor.participantNamePlaceholder || "Attendee"
 						: ""}
@@ -312,18 +375,12 @@ export function Layout7({
 				</div>
 
 				<div className="px-8 my-6 min-h-20">
-					<h2 
-						style={textStyle}
-						className="text-3xl font-bold uppercase"
-					>
+					<h2 style={textStyle} className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
 							: ""}
 					</h2>
-					<p 
-						style={textStyle}
-						className="text-base opacity-90"
-					>
+					<p style={textStyle} className="text-base opacity-90">
 						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
 							: ""}
@@ -361,18 +418,12 @@ export function Layout3({ editor, textColor }: TemplateLayoutProps) {
 				</div>
 
 				<div className="px-8 my-6">
-					<h2 
-						style={textStyle}
-						className="text-3xl"
-					>
+					<h2 style={textStyle} className="text-3xl">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Sandra Robinson"
 							: ""}
 					</h2>
-					<p 
-						style={textStyle}
-						className="text-base"
-					>
+					<p style={textStyle} className="text-base">
 						{editor.roleTitleVisible
 							? editor.roleTitlePlaceholder || "Product designer"
 							: ""}
@@ -385,6 +436,287 @@ export function Layout3({ editor, textColor }: TemplateLayoutProps) {
 }
 
 
+
+
+{/*Hng finalist badges */}
+
+
+
+export function LayoutCard1({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
+	const bgStyle = buildBgStyle(editor);
+
+	return (
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.dev}
+					src={HNG_ASSETS.backgrounds.dev}
+					editor={editor}
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Confetti />
+				<InnerBadgeLayout
+					editor={editor}
+					headingTextColor="#00AEFF"
+					roleBgColor="#00AEFF"
+					nameTextColor={textColor || "#000000"}
+					roleTextColor={textColor}
+					svgFill="text-[#00AEFF]"
+					percentIConFill="text-white"
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl={HNG_ASSETS.logos.blue}
+				/>
+			</div>
+		</div>
+	);
+}
+
+export function InnerBadgeLayout({
+	editor,
+	nameTextColor,
+	roleTextColor,
+	headingTextColor,
+	roleBgColor,
+	svgFill,
+	percentIConFill,
+	participantPhotoUrl,
+	logoUrl,
+	roleBorderColor
+}: {
+	editor: CustomizeEditorState;
+	nameTextColor?: string;
+	roleTextColor?: string;
+	headingTextColor?: string;
+	roleBgColor?: string;
+	svgFill?: string;
+	percentIConFill?: string;
+	participantPhotoUrl?: string | null;
+	logoUrl?: string;
+	roleBorderColor?: string;
+}) {
+	const isHng = isHngLayout(editor.layoutId);
+	const badgeTitle = isHng ? editor.badgeTitle || "Finalist" : "Finalist";
+	const trackValue = isHng
+		? editor.trackVisible === true
+			? editor.trackPlaceholder || "Virtual Assistant"
+			: ""
+		: editor.roleTitleVisible === true
+			? editor.roleTitlePlaceholder || "Virtual Assistant"
+			: "";
+
+	return (
+		<div className="z-10 h-[80%] w-[73%] min-w-70 min-h-99 mx-auto flex flex-col gap-[3.5%] relative">
+			<div className="flex justify-center items-center h-10 w-full overflow-hidden">
+				{/* eslint-disable-next-line @next/next/no-img-element */}
+				<img
+					src={editor.logoPreviewUrl || logoUrl}
+					alt="badge logo"
+					className="max-h-full max-w-full object-contain"
+				/>
+			</div>
+			<div className="flex flex-col justify-center text-center w-60 mx-auto">
+				<span
+					className="font-bricolage text-[53px] leading-none font-bold -mb-2.5 tracking-tighter"
+					style={{ color: headingTextColor }}
+				>
+					{badgeTitle}
+				</span>
+
+				{trackValue && (
+					<span
+						className="w-full border-4 border-white mx-auto rounded-full py-1.5 px-2 font-semibold"
+						style={{
+							backgroundColor: roleBgColor,
+							color: roleTextColor,
+							borderColor: roleBorderColor,
+						}}
+					>
+						{trackValue}
+					</span>
+				)}
+			</div>
+
+			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white">
+				<div className="w-full h-full flex justify-center items-center rounded-4xl overflow-hidden text-black">
+					{participantPhotoUrl ? (
+						// eslint-disable-next-line @next/next/no-img-element
+						<img
+							src={participantPhotoUrl}
+							alt="Participant"
+							className="w-full h-full object-cover"
+						/>
+					) : editor.allowParticipantPhoto ? (
+						"Photo"
+					) : (
+						""
+					)}
+				</div>
+				<div className="absolute -bottom-6 -right-7 w-20 h-20 flex justify-center items-center">
+					<BadgeSvg className={svgFill} />
+					<span className="absolute flex flex-col justify-center items-center font-semibold">
+						<FivePercent className={percentIConFill} />
+					</span>
+				</div>
+			</div>
+
+			<div className="text-center -mt-2">
+				<span
+					className="font-bricolage text-[24px] font-semibold"
+					style={{ color: nameTextColor }}
+				>
+					{editor.participantNameVisible
+						? editor.participantNamePlaceholder || "John Jane Josh Doe"
+						: ""}
+				</span>
+			</div>
+		</div>
+	);
+}
+
+export function LayoutCard2({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
+	const bgStyle = buildBgStyle(editor);
+
+	return (
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.pm}
+					src={HNG_ASSETS.backgrounds.pm}
+					editor={editor}
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Confetti />
+				<InnerBadgeLayout
+					editor={editor}
+					roleBgColor="#00AEFF"
+					headingTextColor="#00AEFF"
+					nameTextColor={textColor || "#000000"}
+					roleTextColor={textColor}
+					svgFill="text-[#00AEFF]"
+					percentIConFill="text-white"
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl={HNG_ASSETS.logos.blue}
+				/>
+			</div>
+		</div>
+	);
+}
+export function Confetti() {
+	return (
+		<div className="z-1 absolute w-full h-1/2 top-0 overflow-hidden pointer-events-none">
+			{/* eslint-disable-next-line @next/next/no-img-element */}
+			<img
+				src={HNG_ASSETS.decorations.confetti}
+				width={100}
+				height={100}
+				alt="badge logo"
+				className="w-[200%] rotate-15"
+			/>
+		</div>
+	);
+}
+export function LayoutCard3({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
+	const bgStyle = buildBgStyle(editor);
+
+	return (
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.default}
+					src={HNG_ASSETS.backgrounds.default}
+					editor={editor}
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Confetti />
+				<InnerBadgeLayout
+					editor={editor}
+					roleBgColor="#AFF47F"
+					nameTextColor={textColor || "#ffffff"}
+					roleTextColor={textColor || "#000000"}
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl={HNG_ASSETS.logos.white}
+				/>
+			</div>
+		</div>
+	);
+}
+
+export function LayoutCard4({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
+	const bgStyle = buildBgStyle(editor);
+
+	return (
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.design}
+					src={HNG_ASSETS.backgrounds.design}
+					editor={editor}
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Confetti />
+				<InnerBadgeLayout
+					editor={editor}
+					headingTextColor="#7E65EC"
+					roleBgColor="#AFF47F"
+					nameTextColor={textColor}
+					roleTextColor={textColor || "#000000"}
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl={HNG_ASSETS.logos.black}
+				/>
+			</div>
+		</div>
+	);
+}
+export function LayoutCard5({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
+	const bgStyle = buildBgStyle(editor);
+
+	return (
+		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
+			{editor.bgMode === "image" && (
+				<HngBackgroundImage
+					key={HNG_ASSETS.backgrounds.flaretag}
+					src={HNG_ASSETS.backgrounds.flaretag}
+					editor={editor}
+				/>
+			)}
+			<div
+				className="relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
+				style={bgStyle}
+			>
+				<Confetti />
+				<InnerBadgeLayout
+					editor={editor}
+					headingTextColor="#FF693E"
+					roleBgColor="#FFFFFF"
+					roleBorderColor="#FFD700"
+					nameTextColor={textColor || "#fecaca"}
+					roleTextColor={textColor || "#000000"}
+					participantPhotoUrl={participantPhotoUrl}
+					logoUrl={HNG_ASSETS.logos.orange}
+					svgFill="text-[#F1C21C]"
+					percentIConFill="text-white"
+				/>
+			</div>
+		</div>
+	);
+}
+
 const LAYOUT_COMPONENTS: Record<
 	string,
 	React.ComponentType<TemplateLayoutProps>
@@ -393,6 +725,15 @@ const LAYOUT_COMPONENTS: Record<
 	circle_photo_dark_v1: Layout4,
 	dark_name_photo_v1: Layout7,
 	split_purple_teal_v1: Layout9,
+	hng_finalist_design_v1: LayoutCard4,
+	hng_finalist_dev_v1: LayoutCard1,
+	hng_finalist_pm_v1: LayoutCard2,
+	hng_finalist_v1: LayoutCard3,
+	hng_finalist_flaretag_v1: LayoutCard5,
+	card_1: LayoutCard1,
+	card_2: LayoutCard2,
+	card_3: LayoutCard3,
+	card_4: LayoutCard4,
 };
 
 interface CustomTemplatePreviewProps {
@@ -434,6 +775,6 @@ export function CustomTemplatePreview({
 				fontStyle={font.style}
 				textColor={editor.textColor}
 			/>
-			</div>
+		</div>
 	);
 }

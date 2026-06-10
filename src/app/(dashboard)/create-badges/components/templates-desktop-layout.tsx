@@ -5,6 +5,7 @@ import { TemplateGalleryGrid } from "./template-gallery-grid";
 import { TemplateGalleryHeader } from "./template-gallery-header";
 import {
   TemplateEmptyState,
+  TemplateErrorState,
   TemplateLoadingState,
 } from "./template-gallery-states";
 import { TemplateLivePreview } from "./template-live-preview";
@@ -15,6 +16,9 @@ interface TemplatesDesktopLayoutProps {
   activeFilter: string;
   onFilterChange: (tab: string) => void;
   isLoading: boolean;
+  isError: boolean;
+  isRetrying: boolean;
+  onRetry: () => void;
   filteredTemplates: LayoutTemplate[];
   activeTemplate: LayoutTemplate | null;
   onSelectTemplate: (template: LayoutTemplate) => void;
@@ -25,6 +29,9 @@ export function TemplatesDesktopLayout({
   activeFilter,
   onFilterChange,
   isLoading,
+  isError,
+  isRetrying,
+  onRetry,
   filteredTemplates,
   activeTemplate,
   onSelectTemplate,
@@ -43,6 +50,8 @@ export function TemplatesDesktopLayout({
 
         {isLoading ? (
           <TemplateLoadingState />
+        ) : isError ? (
+          <TemplateErrorState onRetry={onRetry} isRetrying={isRetrying} />
         ) : filteredTemplates.length > 0 ? (
           <TemplateGalleryGrid
             templates={filteredTemplates}

@@ -15,18 +15,32 @@ const TEST_TEMPLATES = [
 	{ id: "tpl_5", label: "Template 5" },
 	{ id: "tpl_7", label: "Template 7" },
 	{ id: "tpl_9", label: "Template 9" },
+	{ id: "card_1", label: "Card 1" },
+	{ id: "card_2", label: "Card 2" },
+	{ id: "card_3", label: "Card 3" },
+	{ id: "card_4", label: "Card 4" },
 	{ id: "dev_summit_dark_v1", label: "Live: Dev Summit" },
 	{ id: "name_role_dark_v1", label: "Live: Name Role" },
 	{ id: "next_gen_mint_v1", label: "Live: Next Gen" },
 	{ id: "photo_gradient_v1", label: "Live: Photo Gradient" },
 ];
 
+const TEST_TEMPLATE_LAYOUT_MAP: Record<string, string> = {
+	card_1: "hng_finalist_dev_v1",
+	card_2: "hng_finalist_pm_v1",
+	card_3: "hng_finalist_v1",
+	card_4: "hng_finalist_design_v1",
+};
+
 export default function TestBadgePage() {
 	const [selectedTemplate, setSelectedTemplate] = useState(TEST_TEMPLATES[0].id);
 	const [previewMode, setPreviewMode] = useState<"live" | "custom">("custom");
 
 	const initialEditor = useMemo(
-		() => createDefaultEditorState(selectedTemplate),
+		() =>
+			createDefaultEditorState(
+				TEST_TEMPLATE_LAYOUT_MAP[selectedTemplate] ?? selectedTemplate,
+			),
 		[selectedTemplate],
 	);
 

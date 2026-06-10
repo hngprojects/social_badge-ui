@@ -14,6 +14,8 @@ interface BadgeContentSectionProps {
 
 export function BadgeContentSection({ control, layoutCaps }: BadgeContentSectionProps) {
   const showRole = layoutCaps.participantFields.includes("role_title");
+  const showTrack = layoutCaps.participantFields.includes("track");
+  const isHng = showTrack;
 
   return (
     <SectionCard
@@ -43,14 +45,18 @@ export function BadgeContentSection({ control, layoutCaps }: BadgeContentSection
         />
       </div>
 
-      {showRole && (
+      {(showRole || showTrack) && (
         <div className="flex items-start justify-between gap-4 pt-4 border-t border-gray-100">
           <div>
-            <p className="text-sm font-semibold text-gray-800">Show Role / title field</p>
-            <p className="text-xs text-gray-400 mt-0.5">Allow attendees to provide their role or title.</p>
+            <p className="text-sm font-semibold text-gray-800">
+              {isHng ? "Show Track field" : "Show Role / title field"}
+            </p>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Allow attendees to provide their {isHng ? "track" : "role or title"}.
+            </p>
           </div>
           <Controller
-            name="roleTitleVisible"
+            name={isHng ? "trackVisible" : "roleTitleVisible"}
             control={control}
             render={({ field }) => (
               <Toggle
