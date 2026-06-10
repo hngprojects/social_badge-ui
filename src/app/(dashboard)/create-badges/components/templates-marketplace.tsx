@@ -12,6 +12,7 @@ export function TemplatesMarketplace() {
     setActiveFilter,
     selectTemplate,
     isLoading,
+    isError,
     filterTabs,
   } = useLiveTemplateGallery();
 
@@ -20,6 +21,7 @@ export function TemplatesMarketplace() {
     activeFilter,
     onFilterChange: setActiveFilter,
     isLoading,
+    isError,
     filteredTemplates,
     activeTemplate,
     onSelectTemplate: selectTemplate,

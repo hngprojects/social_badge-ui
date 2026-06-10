@@ -22,26 +22,29 @@ export function CustomizeBadgePageClient() {
     data: platformTemplate,
     isLoading: platformLoading,
     isError: platformError,
-  } = useLoadPlatformTemplate(organiserTemplateId ? null : platformTemplateId) as { data: any, isLoading: boolean, isError: boolean };
+  } = useLoadPlatformTemplate(organiserTemplateId ? null : platformTemplateId);
 
   // Compute initialEditor. It might be null if we have a UUID but no canvasData yet.
   const initialEditor = useMemo(() => {
     if (loadedState) return loadedState;
+    
+    const canvasData = platformTemplate?.canvasData;
+
     if (
       !organiserTemplateId &&
       platformTemplateId &&
       platformLoading &&
-      !platformTemplate?.canvasData
+      !canvasData
     ) {
       return null;
     }
-    return createDefaultEditorState(platformTemplateId, platformTemplate?.canvasData);
+    return createDefaultEditorState(platformTemplateId, canvasData);
   }, [
     loadedState,
     organiserTemplateId,
     platformTemplateId,
     platformLoading,
-    platformTemplate?.canvasData,
+    platformTemplate,
   ]);
 
   const editorKey = useMemo(() => {

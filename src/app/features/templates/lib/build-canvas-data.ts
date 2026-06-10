@@ -131,10 +131,10 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 		});
 	}
 
-	if (caps.participantFields.includes("role_title") || (caps.participantFields as any).includes("track")) {
-		const isTrack = (caps.participantFields as any).includes("track");
+	if (caps.participantFields.includes("role_title") || caps.participantFields.includes("track")) {
+		const isTrack = caps.participantFields.includes("track");
 		fields.push({
-			key: isTrack ? ("track" as any) : CANVAS_FIELD_KEYS.ROLE_TITLE,
+			key: isTrack ? CANVAS_FIELD_KEYS.TRACK : CANVAS_FIELD_KEYS.ROLE_TITLE,
 			type: "participant_input",
 			label: isTrack ? "TRACK" : "ROLE / TITLE",
 			placeholder: isTrack ? (state.trackPlaceholder || "e.g. Design") : "e.g. Product Designer",
@@ -146,14 +146,14 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 
 	if (state.layoutId.startsWith("hng_finalist_")) {
 		fields.push({
-			key: "badge_title" as any,
+			key: CANVAS_FIELD_KEYS.BADGE_TITLE,
 			type: "static",
 			label: "Badge Title",
 			value: state.badgeTitle || "Finalist",
 			visible: true,
 		});
 		fields.push({
-			key: "percentile_badge" as any,
+			key: CANVAS_FIELD_KEYS.PERCENTILE_BADGE,
 			type: "static",
 			label: "Percentile",
 			value: state.percentileBadge || "Top 5%",

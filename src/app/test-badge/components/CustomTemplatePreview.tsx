@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import {
 	Template1,
@@ -246,7 +245,7 @@ export function LogoPlaceholder({
 	);
 }
 // Placeholder for Template 5 Layout
-export function Layout5({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
+export function Layout5({ editor, textColor }: TemplateLayoutProps) {
 	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px]">
@@ -328,7 +327,7 @@ export function Layout7({
 	);
 }
 
-export function Layout3({ editor, textColor, participantPhotoUrl }: TemplateLayoutProps) {
+export function Layout3({ editor, textColor }: TemplateLayoutProps) {
 	const textStyle = textColor ? { color: textColor } : {};
 	return (
 		<div className="relative w-full h-full overflow-hidden rounded-[18px] text-black">
@@ -415,7 +414,8 @@ export function InnerBadgeLayout({
 	svgFill,
 	percentIConFill,
 	participantPhotoUrl,
-	logoUrl
+	logoUrl,
+	roleBorderColor
 }: {
 	editor: CustomizeEditorState;
 	nameTextColor?: string;
@@ -426,22 +426,26 @@ export function InnerBadgeLayout({
 	percentIConFill?: string;
 	participantPhotoUrl?: string | null;
 	logoUrl?: string;
+	roleBorderColor?: string;
 }) {
 	const isHng = editor.layoutId.startsWith("hng_finalist_");
-	const badgeTitle = isHng ? (editor.badgeTitle || "Finalist") : "Finalist";
-	const trackValue = isHng 
-		? (editor.trackVisible !== false ? (editor.trackPlaceholder || "Virtual Assistant") : "")
-		: (editor.roleTitleVisible ? (editor.roleTitlePlaceholder || "Virtual Assistant") : "");
+	const badgeTitle = isHng ? editor.badgeTitle || "Finalist" : "Finalist";
+	const trackValue = isHng
+		? editor.trackVisible !== false
+			? editor.trackPlaceholder || "Virtual Assistant"
+			: ""
+		: editor.roleTitleVisible
+			? editor.roleTitlePlaceholder || "Virtual Assistant"
+			: "";
 
 	return (
 		<div className="z-10 h-[80%] w-[73%] min-w-70 min-h-99 mx-auto flex flex-col gap-[3.5%] relative">
-			<div className="flex justify-center items-center">
+			<div className="flex justify-center items-center h-10 w-full overflow-hidden">
 				{/* eslint-disable-next-line @next/next/no-img-element */}
 				<img
-					src={`/assets/badges/${logoUrl}`}
-					width={100}
-					height={100}
+					src={editor.logoPreviewUrl || `/assets/badges/${logoUrl}`}
 					alt="badge logo"
+					className="max-h-full max-w-full object-contain"
 				/>
 			</div>
 			<div className="flex flex-col justify-center text-center w-60 mx-auto">
@@ -458,6 +462,7 @@ export function InnerBadgeLayout({
 						style={{
 							backgroundColor: roleBgColor,
 							color: roleTextColor,
+							borderColor: roleBorderColor,
 						}}
 					>
 						{trackValue}
@@ -466,7 +471,7 @@ export function InnerBadgeLayout({
 			</div>
 
 			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white">
-				<div className="w-full h-full rounded-4xl overflow-hidden">
+				<div className="w-full h-full flex justify-center items-center rounded-4xl overflow-hidden text-black">
 					{participantPhotoUrl ? (
 						// eslint-disable-next-line @next/next/no-img-element
 						<img
@@ -659,12 +664,15 @@ export function LayoutCard5({ editor, textColor, participantPhotoUrl }: Template
 				<Coffetti />
 				<InnerBadgeLayout
 					editor={editor}
-					headingTextColor="#7E65EC"
-					roleBgColor="#AFF47F"
-					nameTextColor={textColor}
+					headingTextColor="#FF693E"
+					roleBgColor="#FFFFFF"
+					roleBorderColor="#FFD700"
+					nameTextColor={textColor || "#fecaca"}
 					roleTextColor={textColor || "#000000"}
 					participantPhotoUrl={participantPhotoUrl}
 					logoUrl="hng_logo_orange.svg"
+					svgFill="text-[#F1C21C]"
+					percentIConFill="text-white"
 				/>
 			</div>
 		</div>

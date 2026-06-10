@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { usePlatformTemplates } from "@/app/features/templates/hooks/usePlatformTemplates";
-import { EXTENDED_MOCK_DB, FILTER_TABS } from "../../constants/dashboard";
+import { FILTER_TABS } from "../../constants/dashboard";
 import { useBadgeAnalytics } from "../../hooks/use-badge-analytics";
 import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 import { normalizeTemplateCategory } from "./template-category";
@@ -20,7 +20,7 @@ export function useLiveTemplateGallery() {
 
   const templates = useMemo((): LayoutTemplate[] => {
     if (apiTemplates && apiTemplates.length > 0) {
-      if (!badgeAnalytics) return apiTemplates;
+      if (!badgeAnalytics) return [...apiTemplates].reverse();
 
       const liveBadgeCounts = new Map(
         badgeAnalytics.platform_template_usage.map((usage) => [
@@ -29,7 +29,7 @@ export function useLiveTemplateGallery() {
         ]),
       );
 
-      return apiTemplates.map((template) => ({
+      return [...apiTemplates].reverse().map((template) => ({
         ...template,
         usageCount: `${(
           liveBadgeCounts.get(template.id) ?? 0
@@ -37,9 +37,8 @@ export function useLiveTemplateGallery() {
       }));
     }
 
-    if (isError) return EXTENDED_MOCK_DB;
     return [];
-  }, [apiTemplates, badgeAnalytics, isError]);
+  }, [apiTemplates, badgeAnalytics]);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState("All layouts");
@@ -73,6 +72,7 @@ export function useLiveTemplateGallery() {
     setActiveFilter,
     selectTemplate,
     isLoading: areTemplatesLoading,
+    isError,
     filterTabs: FILTER_TABS,
   };
 }

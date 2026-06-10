@@ -14,7 +14,7 @@ interface BadgeContentSectionProps {
 
 export function BadgeContentSection({ control, layoutCaps }: BadgeContentSectionProps) {
   const showRole = layoutCaps.participantFields.includes("role_title");
-  const showTrack = (layoutCaps.participantFields as any).includes("track");
+  const showTrack = layoutCaps.participantFields.includes("track");
   const isHng = showTrack;
 
   return (
@@ -56,7 +56,7 @@ export function BadgeContentSection({ control, layoutCaps }: BadgeContentSection
             </p>
           </div>
           <Controller
-            name={isHng ? ("trackVisible" as any) : "roleTitleVisible"}
+            name={isHng ? "trackVisible" : "roleTitleVisible"}
             control={control}
             render={({ field }) => (
               <Toggle

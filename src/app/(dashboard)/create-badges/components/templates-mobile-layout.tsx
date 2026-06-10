@@ -5,6 +5,7 @@ import { TemplateGalleryGrid } from "./template-gallery-grid";
 import { TemplateGalleryHeader } from "./template-gallery-header";
 import {
   TemplateEmptyState,
+  TemplateErrorState,
   TemplateLoadingState,
 } from "./template-gallery-states";
 import { TemplateLivePreview } from "./template-live-preview";
@@ -15,6 +16,7 @@ interface TemplatesMobileLayoutProps {
   activeFilter: string;
   onFilterChange: (tab: string) => void;
   isLoading: boolean;
+  isError: boolean;
   filteredTemplates: LayoutTemplate[];
   activeTemplate: LayoutTemplate | null;
   onSelectTemplate: (template: LayoutTemplate) => void;
@@ -25,6 +27,7 @@ export function TemplatesMobileLayout({
   activeFilter,
   onFilterChange,
   isLoading,
+  isError,
   filteredTemplates,
   activeTemplate,
   onSelectTemplate,
@@ -39,6 +42,8 @@ export function TemplatesMobileLayout({
 
       {isLoading ? (
         <TemplateLoadingState />
+      ) : isError ? (
+        <TemplateErrorState onRetry={() => window.location.reload()} />
       ) : filteredTemplates.length > 0 ? (
         <>
           <TemplateGalleryGrid

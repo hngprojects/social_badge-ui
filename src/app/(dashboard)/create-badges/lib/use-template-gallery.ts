@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { usePlatformTemplates } from "@/app/features/templates/hooks/usePlatformTemplates";
-import { EXTENDED_MOCK_DB, FILTER_TABS } from "../../constants/dashboard";
+import { FILTER_TABS } from "../../constants/dashboard";
 import type { LayoutTemplate } from "../../types/dashboard/dashboard";
 
 function normalizeTemplateCategory(category: string) {
@@ -30,9 +30,8 @@ export function useTemplateGallery() {
 
   const templates = useMemo((): LayoutTemplate[] => {
     if (apiTemplates && apiTemplates.length > 0) return [...apiTemplates].reverse();
-    if (isError) return EXTENDED_MOCK_DB;
     return [];
-  }, [apiTemplates, isError]);
+  }, [apiTemplates]);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState("All layouts");
@@ -65,6 +64,7 @@ export function useTemplateGallery() {
     setActiveFilter,
     selectTemplate,
     isLoading,
+    isError,
     filterTabs: FILTER_TABS,
   };
 }
