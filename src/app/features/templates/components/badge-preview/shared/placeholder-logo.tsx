@@ -1,4 +1,4 @@
-import React from "react";
+export default function PlaceholderLogo({ className = "" }) {
 
 export default function PlaceholderLogo({ className = "" }: { className?: string }) {
 	return (
