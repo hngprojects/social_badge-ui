@@ -9,11 +9,13 @@ import type { LayoutCapabilities } from "@/app/features/templates/constants/layo
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { paletteToBackgroundState } from "@/app/features/templates/lib/build-canvas-data";
 
+import { Switch } from "@/components/ui/switch";
+
 interface StyleSectionProps {
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	onPaletteChange: (paletteId: string) => void;
-	onBgModeChange: (mode: "gradient" | "solid") => void;
+	onBgModeChange: (mode: "gradient" | "solid" | "image") => void;
 	layoutCaps: LayoutCapabilities;
 }
 
@@ -25,9 +27,10 @@ export function StyleSection({
 	layoutCaps,
 }: StyleSectionProps) {
 	const [activeTab, setActiveTab] = useState("background");
+	const isHngLayout = editor.layoutId.startsWith("hng_finalist_");
 
 	const sortedPalettes = useMemo(() => {
-		let currentMode: "gradient" | "solid" = "solid";
+		let currentMode: "gradient" | "solid" | "image" = "solid";
 		if (activeTab === "background") {
 			currentMode = editor.bgMode === "split" ? (editor.priBgMode ?? "solid") : editor.bgMode;
 		}
@@ -49,7 +52,7 @@ export function StyleSection({
 	}, [layoutCaps.defaultPaletteId, editor.bgMode, editor.priBgMode, editor.secBgMode, activeTab]);
 
 	const renderModeSwitcher = (
-		mode: "gradient" | "solid",
+		mode: "gradient" | "solid" | "image",
 		onModeChange: (m: "gradient" | "solid") => void,
 		primaryColor: string,
 		gradientColors: [string, string],
@@ -84,7 +87,7 @@ export function StyleSection({
 
 	const renderPaletteGrid = (
 		activeValue: string,
-		currentMode: "gradient" | "solid",
+		currentMode: "gradient" | "solid" | "image",
 		onSelect: (id: string) => void,
 		compareBy: "id" | "color" = "id",
 	) => (
@@ -176,30 +179,60 @@ export function StyleSection({
 				</TabsList>
 
 				<TabsContent value="background" className="space-y-6">
-					<div>
-						<p className="text-sm font-medium text-gray-800 mb-2">
-							Background Mode
-						</p>
-						{renderModeSwitcher(
-							editor.bgMode === "split" ? (editor.priBgMode ?? "solid") : editor.bgMode,
-							onBgModeChange,
-							editor.solidColor,
-							editor.gradientColors,
-						)}
-					</div>
+					{isHngLayout && (
+						<div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100">
+							<div className="space-y-0.5">
+								<p className="text-sm font-semibold text-gray-900">
+									Custom Background Colors
+								</p>
+								<p className="text-[11px] text-gray-500">
+									Enable to use solid or gradient colors instead of the design asset.
+								</p>
+							</div>
+							<Switch
+								checked={editor.bgMode !== "image"}
+								onCheckedChange={(checked) => {
+									onBgModeChange(checked ? "solid" : "image");
+								}}
+							/>
+						</div>
+					)}
 
-					<div>
-						{renderPaletteGrid(
-							editor.paletteId,
-							editor.bgMode === "split" ? "solid" : editor.bgMode,
-							onPaletteChange,
-							"id"
-						)}
-						<HelperText>
-							Pick from curated palettes designed for high-contrast share
-							posts.
-						</HelperText>
-					</div>
+					{editor.bgMode !== "image" && (
+						<>
+							<div>
+								<p className="text-sm font-medium text-gray-800 mb-2">
+									Background Mode
+								</p>
+								{renderModeSwitcher(
+									editor.bgMode === "split" ? (editor.priBgMode ?? "solid") : editor.bgMode,
+									onBgModeChange,
+									editor.solidColor,
+									editor.gradientColors,
+								)}
+							</div>
+
+							<div>
+								{renderPaletteGrid(
+									editor.paletteId,
+									editor.bgMode === "split" ? "solid" : editor.bgMode,
+									onPaletteChange,
+									"id"
+								)}
+								<HelperText>
+									Pick from curated palettes designed for high-contrast share
+									posts.
+								</HelperText>
+							</div>
+						</>
+					)}
+					{editor.bgMode === "image" && (
+						<div className="py-2">
+							<HelperText>
+								Currently using the default HNG finalist background asset.
+							</HelperText>
+						</div>
+					)}
 				</TabsContent>
 
 				{editor.isSplit && (

@@ -6,7 +6,6 @@ import { useLoadOrganiserTemplate } from "@/app/features/templates/hooks/useLoad
 import { useLoadPlatformTemplate } from "@/app/features/templates/hooks/useLoadPlatformTemplate";
 import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
 import { CustomizeBadgeForm } from "./customize-badge-form";
-import type { LayoutTemplate } from "@/app/(dashboard)/types/dashboard/dashboard";
 
 export function CustomizeBadgePageClient() {
 	const searchParams = useSearchParams();
@@ -19,36 +18,34 @@ export function CustomizeBadgePageClient() {
 		isError: organiserError,
 	} = useLoadOrganiserTemplate(organiserTemplateId);
 
-	const {
-		data: platformTemplate,
-		isLoading: platformLoading,
-		isError: platformError,
-	} = useLoadPlatformTemplate(
-		organiserTemplateId ? null : platformTemplateId,
-	) as { data: LayoutTemplate | null; isLoading: boolean; isError: boolean };
+  const {
+    data: platformTemplate,
+    isLoading: platformLoading,
+    isError: platformError,
+  } = useLoadPlatformTemplate(organiserTemplateId ? null : platformTemplateId);
 
-	// Compute initialEditor. It might be null if we have a UUID but no canvasData yet.
-	const initialEditor = useMemo(() => {
-		if (loadedState) return loadedState;
-		if (
-			!organiserTemplateId &&
-			platformTemplateId &&
-			platformLoading &&
-			!platformTemplate?.canvasData
-		) {
-			return null;
-		}
-		return createDefaultEditorState(
-			platformTemplateId,
-			platformTemplate?.canvasData,
-		);
-	}, [
-		loadedState,
-		organiserTemplateId,
-		platformTemplateId,
-		platformLoading,
-		platformTemplate?.canvasData,
-	]);
+  // Compute initialEditor. It might be null if we have a UUID but no canvasData yet.
+  const initialEditor = useMemo(() => {
+    if (loadedState) return loadedState;
+    
+    const canvasData = platformTemplate?.canvasData;
+
+    if (
+      !organiserTemplateId &&
+      platformTemplateId &&
+      platformLoading &&
+      !canvasData
+    ) {
+      return null;
+    }
+    return createDefaultEditorState(platformTemplateId, canvasData);
+  }, [
+    loadedState,
+    organiserTemplateId,
+    platformTemplateId,
+    platformLoading,
+    platformTemplate,
+  ]);
 
 	const editorKey = useMemo(() => {
 		return `${organiserTemplateId ?? platformTemplateId ?? "new"}-${loadedState ? "loaded" : "new"}`;

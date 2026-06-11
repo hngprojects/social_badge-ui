@@ -17,6 +17,18 @@ import { resolveFontFamily, resolveTitleSizePx } from "./font-mapping";
 import { BACKGROUND_IMAGE_BY_PALETTE, getPalette } from "./palette-mapping";
 
 function buildBackground(state: CustomizeEditorState): CanvasBackground {
+	if (state.bgMode === "image") {
+		// Image-bg contract: CanvasImageBackground url/image_url are optional.
+		// parse-canvas-data reads bg.url || bg.image_url for backgroundImageUrl/paletteId
+		// (with fallbacks); badge-preview renders layout hardcoded assets when
+		// editor.bgMode === "image", not a populated background URL from canvas data.
+		return {
+			type: "image",
+			url: undefined,
+			public_id: null,
+		};
+	}
+
 	if (state.backgroundImageUrl) {
 		return {
 			type: "image",
@@ -123,15 +135,33 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 		});
 	}
 
-	if (caps.participantFields.includes("role_title")) {
+	if (caps.participantFields.includes("role_title") || caps.participantFields.includes("track")) {
+		const isTrack = caps.participantFields.includes("track");
 		fields.push({
-			key: CANVAS_FIELD_KEYS.ROLE_TITLE,
+			key: isTrack ? CANVAS_FIELD_KEYS.TRACK : CANVAS_FIELD_KEYS.ROLE_TITLE,
 			type: "participant_input",
-			label: "ROLE / TITLE",
-			placeholder: "e.g. Product Designer",
-			required: state.roleTitleVisible ? state.roleTitleRequired : false,
-			visible: state.roleTitleVisible,
+			label: isTrack ? "TRACK" : "ROLE / TITLE",
+			placeholder: isTrack ? (state.trackPlaceholder || "e.g. Design") : "e.g. Product Designer",
+			required: isTrack ? ((state.trackVisible ?? true) ? (state.trackRequired ?? false) : false) : (state.roleTitleVisible ? state.roleTitleRequired : false),
+			visible: isTrack ? (state.trackVisible ?? true) : state.roleTitleVisible,
 			color: state.textColor,
+		});
+	}
+
+	if (state.layoutId.startsWith("hng_finalist_")) {
+		fields.push({
+			key: CANVAS_FIELD_KEYS.BADGE_TITLE,
+			type: "static",
+			label: "Badge Title",
+			value: state.badgeTitle || "Finalist",
+			visible: true,
+		});
+		fields.push({
+			key: CANVAS_FIELD_KEYS.PERCENTILE_BADGE,
+			type: "static",
+			label: "Percentile",
+			value: state.percentileBadge || "Top 5%",
+			visible: true,
 		});
 	}
 

@@ -32,9 +32,14 @@ export default function ParticipantForm({
 	onCaptionChange?: (caption: string) => void;
 	editorState: CustomizeEditorState | null;
 }) {
+	const isHng = editorState?.layoutId.startsWith("hng_finalist_");
 	const showName = editorState?.participantNameVisible ?? true;
-	const showRole = editorState?.roleTitleVisible ?? true;
-	const roleRequired = editorState?.roleTitleRequired ?? false;
+	const showRole = isHng
+		? (editorState?.trackVisible ?? true)
+		: (editorState?.roleTitleVisible ?? true);
+	const roleRequired = isHng
+		? (editorState?.trackRequired ?? false)
+		: (editorState?.roleTitleRequired ?? false);
 
 	const schema = useMemo(
 		() =>
@@ -82,6 +87,13 @@ export default function ParticipantForm({
 	const onSubmit = async () => {
 		onSuccess?.();
 	};
+
+	const roleLabel = isHng
+		? editorState?.trackLabel || "TRACK"
+		: editorState?.roleTitleLabel || "ROLE / TITLE";
+	const rolePlaceholder = isHng
+		? editorState?.trackPlaceholder || "e.g. Design"
+		: editorState?.roleTitlePlaceholder || "e.g. Product Designer";
 
 	return (
 		<motion.form
@@ -219,11 +231,7 @@ export default function ParticipantForm({
 							editorState?.roleTitlePlaceholder || "e.g. Product Designer"
 						}
 						maxLength={25}
-						onKeyDown={(e) => {
-							const val = formValues.role ?? "";
-							const isAdding = e.key.length === 1 && !e.ctrlKey && !e.metaKey;
-							if (val.length >= 25 && isAdding) e.preventDefault();
-						}}
+						onKeyDown={(e) => {}}
 						{...register("role", {
 							onChange: (e) => onRoleChange?.(e.target.value),
 						})}
