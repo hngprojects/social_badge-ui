@@ -11,8 +11,10 @@ export default function CaptionBox({
 	maxLength = 200,
 	...props
 }: CaptionBoxProps & { value?: string; maxLength?: number }) {
+	const atLimit = (value ?? "").length >= maxLength;
+
 	return (
-		<div className="flex h-33.5 flex-col overflow-hidden rounded-2xl border bg-[#f6f5f5] p-3 transition-all duration-150">
+		<div className="flex flex-col overflow-hidden rounded-2xl border bg-[#f6f5f5] p-3 transition-all duration-150">
 			<div className="flex items-center justify-between">
 				<h3 className="font-medium font-sans">Caption</h3>
 
@@ -31,16 +33,29 @@ export default function CaptionBox({
 			</div>
 
 			<Textarea
-				className="my-auto h-16 min-h-16 field-sizing-fixed resize-none overflow-y-auto border-0 bg-transparent text-[14px] font-medium focus-visible:ring-0"
-				rows={3}
+				className="my-auto min-h-16 field-sizing-content resize-none overflow-hidden border-0 bg-transparent text-[14px] font-medium focus-visible:ring-0"
 				value={value}
 				maxLength={maxLength}
+				onKeyDown={(e) => {
+					const isAdding = e.key.length === 1 && !e.ctrlKey && !e.metaKey;
+					if ((value ?? "").length >= maxLength && isAdding) e.preventDefault();
+				}}
 				{...props}
 			/>
 
 			<div className="flex justify-between items-center mt-1">
-				{error ? <p className="text-sm text-red-500">{error}</p> : <div />}
-				<p className="text-[10px] text-gray-400 font-medium">
+				{atLimit ? (
+					<p className="text-sm text-amber-500">
+						Maximum 200 characters reached
+					</p>
+				) : error ? (
+					<p className="text-sm text-red-500">{error}</p>
+				) : (
+					<div />
+				)}
+				<p
+					className={`text-[10px] font-medium ${atLimit ? "text-amber-500" : "text-gray-400"}`}
+				>
 					{(value ?? "").length}/{maxLength}
 				</p>
 			</div>

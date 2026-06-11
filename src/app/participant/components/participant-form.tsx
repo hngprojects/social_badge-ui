@@ -124,10 +124,14 @@ export default function ParticipantForm({
 					accept=".png,.jpg,.jpeg,.svg"
 					onChange={(e) => {
 						const file = e.target.files?.[0];
-						if (file) {
-							setValue("avatar", file, { shouldValidate: true });
-							onPhotoChange?.(URL.createObjectURL(file));
-						}
+						if (!file) return;
+
+						setValue("avatar", file, {
+							shouldValidate: true,
+							shouldDirty: true,
+						});
+
+						onPhotoChange?.(URL.createObjectURL(file));
 					}}
 				/>
 
@@ -140,7 +144,9 @@ export default function ParticipantForm({
 				)}
 
 				{errors.avatar && (
-					<p className="text-sm text-red-500 break-words">{errors.avatar.message}</p>
+					<p className="text-sm text-red-500 break-words">
+						{errors.avatar.message}
+					</p>
 				)}
 			</motion.div>
 
@@ -150,8 +156,12 @@ export default function ParticipantForm({
 					variants={itemVariants}
 				>
 					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
-						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">NAME <span className="text-[#ff693E]">*</span></span>
-						<span className="shrink-0 text-[10px] text-gray-400 font-medium">
+						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">
+							NAME <span className="text-[#ff693E]">*</span>
+						</span>
+						<span
+							className={`shrink-0 text-[10px]  font-medium ${formValues.name?.length === 25 ? "text-amber-500" : "text-gray-400"}`}
+						>
 							{formValues.name?.length ?? 0}/25
 						</span>
 					</label>
@@ -160,11 +170,26 @@ export default function ParticipantForm({
 						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
 						placeholder={editorState?.participantNamePlaceholder || "Your name"}
 						maxLength={25}
-						{...register("name", { onChange: (e) => onNameChange?.(e.target.value) })}
+						onKeyDown={(e) => {
+							const val = formValues.name ?? "";
+							const isAdding = e.key.length === 1 && !e.ctrlKey && !e.metaKey;
+							if (val.length >= 25 && isAdding) e.preventDefault();
+						}}
+						{...register("name", {
+							onChange: (e) => onNameChange?.(e.target.value),
+						})}
 					/>
 
+					{(formValues.name?.length ?? 0) >= 25 && (
+						<p className="text-sm text-amber-500 break-words">
+							Maximum 25 characters reached
+						</p>
+					)}
+
 					{errors.name && (
-						<p className="text-sm text-red-500 break-words">{errors.name.message}</p>
+						<p className="text-sm text-red-500 break-words">
+							{errors.name.message}
+						</p>
 					)}
 				</motion.div>
 			)}
@@ -175,23 +200,45 @@ export default function ParticipantForm({
 					variants={itemVariants}
 				>
 					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
-						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">{editorState?.roleTitleLabel || "ROLE / TITLE"} {editorState?.roleTitleRequired && <span className="text-[#ff693E]">*</span>}</span>
-						<span className="shrink-0 text-[10px] text-gray-400 font-medium">
+						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">
+							{editorState?.roleTitleLabel || "ROLE / TITLE"}{" "}
+							{editorState?.roleTitleRequired && (
+								<span className="text-[#ff693E]">*</span>
+							)}
+						</span>
+						<span
+							className={`shrink-0 text-[10px]  font-medium ${formValues.role?.length === 25 ? "text-amber-500" : "text-gray-400"}`}
+						>
 							{formValues.role?.length ?? 0}/25
 						</span>
 					</label>
 
 					<Input
 						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-						placeholder={editorState?.roleTitlePlaceholder || "e.g. Product Designer"}
+						placeholder={
+							editorState?.roleTitlePlaceholder || "e.g. Product Designer"
+						}
 						maxLength={25}
-						{...register("role", { 
+						onKeyDown={(e) => {
+							const val = formValues.role ?? "";
+							const isAdding = e.key.length === 1 && !e.ctrlKey && !e.metaKey;
+							if (val.length >= 25 && isAdding) e.preventDefault();
+						}}
+						{...register("role", {
 							onChange: (e) => onRoleChange?.(e.target.value),
 						})}
 					/>
 
+					{(formValues.role?.length ?? 0) >= 25 && (
+						<p className="text-sm text-amber-500 break-words">
+							Maximum 25 characters reached
+						</p>
+					)}
+
 					{errors.role && (
-						<p className="text-sm text-red-500 break-words">{errors.role.message}</p>
+						<p className="text-sm text-red-500 break-words">
+							{errors.role.message}
+						</p>
 					)}
 				</motion.div>
 			)}
@@ -199,19 +246,7 @@ export default function ParticipantForm({
 			<motion.div variants={itemVariants}>
 				<CaptionBox
 					{...register("caption", {
-						onChange: (e) => {
-							const start = e.target.selectionStart;
-							const end = e.target.selectionEnd;
-							const val = e.target.value;
-
-							if (val.length > 200) {
-								e.target.value = val.slice(0, 200);
-								e.target.setSelectionRange(start, end);
-							}
-							
-							onCaptionChange?.(e.target.value);
-
-						},
+						onChange: (e) => onCaptionChange?.(e.target.value),
 					})}
 					value={formValues.caption}
 					error={errors.caption?.message}

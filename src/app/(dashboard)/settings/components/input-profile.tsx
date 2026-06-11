@@ -1,9 +1,9 @@
 import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
+	Field,
+	FieldDescription,
+	FieldGroup,
+	FieldLabel,
+	FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Asterisk } from "lucide-react";
@@ -11,107 +11,124 @@ import { PROFILE_NAME_MAX_LENGTH } from "@/app/features/settings/constants";
 
 import { ProfileInputProps } from "../types/profile-input";
 
-export function ProfileInput({ values, errors, onChange }: ProfileInputProps) {
-  return (
-    <FieldSet className="w-full text-[14px] font-normal text-[#B5B7BC]">
-      <FieldGroup className="gap-4">
-        {/* FIRST NAME */}
-        <Field className="w-full gap-2">
-          <FieldLabel
-            className="w-full text-[#3A3A3A] gap-0 font-medium"
-            htmlFor="firstName"
-          >
-            First name
-            <Asterisk className="w-2 h-auto text-error-500 font-medium tracking-normal leading-0" />
-          </FieldLabel>
-          <Input
-            className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] font-medium bg-[#E7E8E94D]/30"
-            id="firstName"
-            type="text"
-            required
-            aria-required="true"
-            aria-invalid={!!errors?.firstName}
-            autoComplete="given-name"
-            maxLength={PROFILE_NAME_MAX_LENGTH}
-            value={values.firstName}
-            onChange={(e) => onChange("firstName", e.target.value)}
-          />
-          {errors?.firstName && (
-            <FieldDescription className="text-error-500">
-              {errors.firstName}
-            </FieldDescription>
-          )}
-        </Field>
-        {/* LAST NAME */}
-        <Field className="w-full gap-2">
-          <FieldLabel
-            className="w-full text-[#3A3A3A] gap-0 font-medium"
-            htmlFor="lastName"
-          >
-            Last name
-            <Asterisk className="w-2 h-auto text-error-500 font-medium tracking-normal leading-0" />
-          </FieldLabel>
-          <Input
-            className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#121217] placeholder:text-[#B5B7BC] font-medium bg-[#E7E8E94D]/30"
-            id="lastName"
-            required
-            aria-required="true"
-            aria-invalid={!!errors?.lastName}
-            autoComplete="family-name"
-            maxLength={PROFILE_NAME_MAX_LENGTH}
-            type="text"
-            value={values.lastName}
-            onChange={(e) => onChange("lastName", e.target.value)}
-          />
-          {errors?.lastName && (
-            <FieldDescription className="text-error-500">
-              {errors.lastName}
-            </FieldDescription>
-          )}
-        </Field>
-        {/* EMAIL ADDRESS*/}
-        <Field className="w-full gap-2">
-          <FieldLabel
-            className="w-full text-[#3A3A3A] gap-0 font-medium"
-            htmlFor="email"
-          >
-            Email address
-            <Asterisk className="w-2 h-auto text-error-500" />
-          </FieldLabel>
-          <Input
-            className="w-full rounded-[8px] py-2 px-4 text-[14px] text-[#B5B7BC] bg-[#E7E8E94D]/30"
-            id="email"
-            type="email"
-            readOnly
-            aria-readonly="true"
-            value={values.email}
-          />
-          <FieldDescription>
-            Your email address cannot be changed
-          </FieldDescription>
-        </Field>
-        {/* ROLE/TITLE*/}
-        <Field className="w-full gap-2">
-          <FieldLabel
-            className="w-full text-[#121217] gap-0 font-medium"
-            htmlFor="role"
-          >
-            Role / Title
-          </FieldLabel>
-          <Input
-            className="w-full rounded-[8px] py-2 px-4 font-medium text-[14px] text-[#121217] placeholder:text-[#B5B7BC] bg-[#E7E8E94D]/30"
-            placeholder="e.g. Community Manager"
-            id="role"
-            type="text"
-            aria-invalid={!!errors?.role}
-            value={values.role}
-            onChange={(e) => onChange("role", e.target.value)}
-          />
-          <FieldDescription className={errors?.role ? "text-error-500" : ""}>
-            {errors?.role ?? "Optional."}
-          </FieldDescription>
-        </Field>
-      </FieldGroup>
-    </FieldSet>
-  );
+export function ProfileInput({
+	register,
+	errors,
+	values,
+	firstNameAtMax,
+	lastNameAtMax,
+	roleAtMax,
+}: ProfileInputProps) {
+	return (
+		<FieldSet className="w-full text-[14px] font-normal text-[#B5B7BC]">
+			<FieldGroup className="gap-4">
+				<Field className="w-full gap-2">
+					<FieldLabel
+						htmlFor="firstName"
+						className="block text-sm font-medium text-[#121217]"
+					>
+						First name <Asterisk className="w-2 h-auto text-[#F53D6B]" />
+					</FieldLabel>
+
+					<Input
+						id="firstName"
+						maxLength={PROFILE_NAME_MAX_LENGTH}
+						aria-invalid={!!errors.firstName}
+						className="h-12.5 p-4 mt-1 rounded-md text-black placeholder:text-[#6C6C89] border border-[#D1D1DB] bg-[#FFFFFF] shadow-[0px_1px_2px_0px_#1212170D] focus-visible:border-[#7d7777] focus-visible:ring-0 text-sm"
+						{...register("firstName")}
+					/>
+
+					{firstNameAtMax && (
+						<FieldDescription className="text-xs -mt-1 text-[#F59E0B]">
+							You have reached the maximum character limit.
+						</FieldDescription>
+					)}
+
+					{errors.firstName && (
+						<FieldDescription className="text-xs -mt-1 text-[#EF4444]">
+							{errors.firstName.message}
+						</FieldDescription>
+					)}
+				</Field>
+
+				<Field className="w-full gap-2">
+					<FieldLabel
+						htmlFor="lastName"
+						className="block text-sm font-medium text-[#121217]"
+					>
+						Last name <Asterisk className="w-2 h-auto text-[#F53D6B]" />
+					</FieldLabel>
+
+					<Input
+						id="lastName"
+						maxLength={PROFILE_NAME_MAX_LENGTH}
+						aria-invalid={!!errors.lastName}
+						className="h-12.5 p-4 mt-1 rounded-md text-black placeholder:text-[#6C6C89] border border-[#D1D1DB] bg-[#FFFFFF] shadow-[0px_1px_2px_0px_#1212170D] focus-visible:border-[#7d7777] focus-visible:ring-0 text-sm"
+						{...register("lastName")}
+					/>
+
+					{lastNameAtMax && (
+						<FieldDescription className="text-xs -mt-1 text-[#F59E0B]">
+							You have reached the maximum character limit.
+						</FieldDescription>
+					)}
+
+					{errors.lastName && (
+						<FieldDescription className="text-xs -mt-1 text-[#EF4444]">
+							{errors.lastName.message}
+						</FieldDescription>
+					)}
+				</Field>
+
+				<Field className="w-full gap-2">
+					<FieldLabel
+						htmlFor="email"
+						className="block text-sm font-medium text-[#121217]"
+					>
+						Email address
+					</FieldLabel>
+
+					<Input
+						id="email"
+						readOnly
+						value={values.email}
+						className="h-12.5 p-4 mt-1 rounded-md text-[#6C6C89] bg-[#F9FAFB] border border-[#D1D1DB]"
+					/>
+
+					<FieldDescription>
+						Your email address cannot be changed
+					</FieldDescription>
+				</Field>
+
+				<Field className="w-full gap-2">
+					<FieldLabel
+						htmlFor="role"
+						className="block text-sm font-medium text-[#121217]"
+					>
+						Role / Title
+					</FieldLabel>
+
+					<Input
+						id="role"
+						placeholder="e.g. Community Manager"
+						aria-invalid={!!errors.role}
+						maxLength={PROFILE_NAME_MAX_LENGTH}
+						className="h-12.5 p-4 mt-1 rounded-md text-black placeholder:text-[#6C6C89] border border-[#D1D1DB] bg-[#FFFFFF] shadow-[0px_1px_2px_0px_#1212170D] focus-visible:border-[#7d7777] focus-visible:ring-0 text-sm"
+						{...register("role")}
+					/>
+					{roleAtMax && (
+						<FieldDescription className="text-xs -mt-1 text-[#F59E0B]">
+							You have reached the maximum character limit.
+						</FieldDescription>
+					)}
+
+					<FieldDescription
+						className={errors.role ? "text-xs -mt-1 text-[#EF4444]" : ""}
+					>
+						{errors.role?.message ?? "Optional."}
+					</FieldDescription>
+				</Field>
+			</FieldGroup>
+		</FieldSet>
+	);
 }

@@ -217,7 +217,7 @@ export default function PrivacyPolicyPage() {
 							contact page
 						</Link>
 					</p>
-					<p>Badge Build Ltd. 14 Victoria Island, Lagos, Nigeria</p>
+					{/* <p>Badge Build Ltd. 14 Victoria Island, Lagos, Nigeria</p> */}
 				</div>
 			</section>
 		</LegalLayout>
