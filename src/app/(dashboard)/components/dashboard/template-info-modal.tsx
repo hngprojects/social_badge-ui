@@ -128,6 +128,7 @@ export function TemplateInfoModal({
 						<Button
 							type="button"
 							variant="outline"
+							disabled={!fullUrl}
 							onClick={async () => {
 								if (!fullUrl) return;
 								await navigator.clipboard.writeText(fullUrl);

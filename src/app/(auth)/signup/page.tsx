@@ -12,7 +12,7 @@ const Page = () => {
 				</p>
 			</div>
 
-			<div className="overflow-y-scroll">
+			<div className="overflow-y-auto">
 				<SignupForm />
 			</div>
 		</div>

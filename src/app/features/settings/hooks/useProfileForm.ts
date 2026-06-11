@@ -117,8 +117,10 @@ export function useProfileForm() {
 			profilePayload.last_name = data.lastName;
 		}
 
-		if (data.role !== user?.role) {
-			profilePayload.role = data.role;
+		const currentRole = (user?.role ?? "").trim();
+		const nextRole = (data.role ?? "").trim();
+		if (nextRole !== currentRole) {
+			profilePayload.role = nextRole;
 		}
 
 		if (!Object.keys(profilePayload).length && !avatarFile) {

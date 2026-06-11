@@ -46,7 +46,7 @@ export default function CaptionBox({
 			<div className="flex justify-between items-center mt-1">
 				{atLimit ? (
 					<p className="text-sm text-amber-500">
-						Maximum 200 characters reached
+						Maximum {maxLength} characters reached
 					</p>
 				) : error ? (
 					<p className="text-sm text-red-500">{error}</p>
