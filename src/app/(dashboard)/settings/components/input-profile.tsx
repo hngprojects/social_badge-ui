@@ -14,9 +14,9 @@ import { ProfileInputProps } from "../types/profile-input";
 export function ProfileInput({
 	register,
 	errors,
-	values,
 	firstNameAtMax,
 	lastNameAtMax,
+	email,
 	roleAtMax,
 }: ProfileInputProps) {
 	return (
@@ -91,7 +91,7 @@ export function ProfileInput({
 					<Input
 						id="email"
 						readOnly
-						value={values.email}
+						value={email || ""}
 						className="h-12.5 p-4 mt-1 rounded-md text-[#6C6C89] bg-[#F9FAFB] border border-[#D1D1DB]"
 					/>
 

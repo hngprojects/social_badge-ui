@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ProfileInput } from "./input-profile";
 import { ProfileAvatarUpload } from "./profile-avatar-upload";
 import { SettingsSubCard } from "./settings-subcard";
+import { useWatch } from "react-hook-form";
 
 import { useProfileForm } from "@/app/features/settings/hooks/useProfileForm";
 import { useUserStore } from "@/stores/use-user-store";
@@ -23,19 +24,19 @@ export default function ProfileCard() {
 		register,
 		handleSubmit,
 		errors,
-		formData,
 		avatarPreview,
 		fileInputRef,
 		canSubmit,
 		isLoading,
+		control,
 		handleUploadClick,
 		handleAvatarChange,
-		watch,
 	} = useProfileForm();
 
-	const firstName = watch("firstName");
-	const lastName = watch("lastName");
-	const role = watch("role");
+	const firstName = useWatch({ control, name: "firstName" });
+	const lastName = useWatch({ control, name: "lastName" });
+	const role = useWatch({ control, name: "role" });
+	const email = useWatch({ control, name: "email" });
 
 	const firstNameAtMax = (firstName?.length ?? 0) >= PROFILE_NAME_MAX_LENGTH;
 
@@ -68,10 +69,10 @@ export default function ProfileCard() {
 					<ProfileInput
 						register={register}
 						errors={errors}
-						values={formData}
 						firstNameAtMax={firstNameAtMax}
 						lastNameAtMax={lastNameAtMax}
 						roleAtMax={roleAtMax}
+						email={email}
 					/>
 				</CardContent>
 

@@ -13,6 +13,12 @@ import { ALLOWED_AVATAR_TYPES, MAX_AVATAR_SIZE } from "../constants";
 
 import { profileSchema, ProfileFormValues } from "@/schemas/profile";
 
+type ProfilePayload = {
+	first_name?: string;
+	last_name?: string;
+	role?: string;
+};
+
 export function useProfileForm() {
 	const user = useUserStore((state) => state.user);
 	const emailAddress = getUserMail(user);
@@ -28,7 +34,7 @@ export function useProfileForm() {
 		register,
 		handleSubmit,
 		reset,
-		watch,
+		control,
 		formState: { errors, isDirty, isValid },
 	} = useForm<ProfileFormValues>({
 		resolver: zodResolver(profileSchema),
@@ -40,8 +46,6 @@ export function useProfileForm() {
 			email: emailAddress,
 		},
 	});
-
-	const formData = watch();
 
 	useEffect(() => {
 		const next = {
@@ -103,7 +107,7 @@ export function useProfileForm() {
 	}
 
 	const onSubmit = async (data: ProfileFormValues) => {
-		const profilePayload: any = {};
+		const profilePayload: ProfilePayload = {};
 
 		if (data.firstName !== user?.first_name) {
 			profilePayload.first_name = data.firstName;
@@ -137,8 +141,7 @@ export function useProfileForm() {
 		register,
 		handleSubmit: handleSubmit(onSubmit),
 		errors,
-		formData,
-		watch,
+		control,
 		fileInputRef,
 		avatarPreview,
 		canSubmit,
