@@ -22,7 +22,8 @@ export const customizeBadgeSchema = z.object({
   accessCode: z.string().optional(),
 }).refine((data) => {
   if (data.accessType === 1) {
-    return !!data.accessCode && data.accessCode.length >= 4 && data.accessCode.length <= 10;
+    const trimmed = data.accessCode?.trim() || "";
+    return trimmed.length >= 4 && trimmed.length <= 10;
   }
   return true;
 }, {
