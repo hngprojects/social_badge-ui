@@ -66,14 +66,14 @@ export default function PasscodeGate({ slug, onSuccess }: PasscodeGateProps) {
 					/>
 				</div>
 
-				<Button
-					type="submit"
-					variant="cta"
-					className="w-full h-12 rounded-full font-semibold"
-					disabled={isValidating || !accessCode}
-				>
-					{isValidating ? "Verifying..." : "Verify Access"}
-				</Button>
+			<Button
+				type="submit"
+				variant="cta"
+				className="w-full h-12 rounded-full font-semibold"
+				disabled={isValidating || accessCode.length < 4}
+			>
+				{isValidating ? "Verifying..." : "Verify Access"}
+			</Button>
 			</form>
 		</div>
 	);
