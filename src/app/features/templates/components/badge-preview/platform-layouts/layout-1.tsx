@@ -24,7 +24,7 @@ export function Layout1({
 				editor={editor}
 				baseColor={baseColor}
 			/>
-			<div className="w-30 h-26.5 left-8.5 bg-rose-600 absolute top-20 rounded-full flex justify-center items-center text-white text-[10px] text-center overflow-hidden">
+			<div className="w-32 h-27 left-6.5 bg-rose-600 absolute top-19 rounded-full flex justify-center items-center text-white text-[10px] text-center overflow-hidden">
 				{getSafeImageUrl(participantPhotoUrl) ? (
 					<ParticipantPhoto
 						url={participantPhotoUrl}
@@ -36,7 +36,7 @@ export function Layout1({
 					</span>
 				)}
 			</div>
-			<div className="absolute top-48 px-8 w-full">
+			<div className="absolute top-52 px-8 w-full">
 				<h2
 					style={textStyle}
 					className="text-6xl font-normal uppercase text-black tracking-tight font-league-gothic leading-[0.85]"
@@ -51,7 +51,7 @@ export function Layout1({
 						: ""}
 				</p>
 			</div>
-			<div className="absolute bottom-8.5 w-full text-right px-6">
+			<div className="absolute bottom-8 w-full text-right px-6">
 				<p
 					style={fontStyle}
 					className="text-xl font-normal text-stone-300 font-league-gothic"
