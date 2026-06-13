@@ -63,12 +63,26 @@ export default function ParticipantForm({
 		mode: "onChange",
 		defaultValues: {
 			name: "",
-			role: "",
+			role: editorState?.layoutId === "hng_finalist_pm_v1" 
+				? "Product Management" 
+				: editorState?.layoutId === "hng_finalist_design_v1" 
+				? "Product Design" 
+				: "",
 			caption: editorState?.defaultCaption || DEFAULT_CAPTION,
 		},
 	});
 
 	// Sync initial caption when editorState loads
+	useEffect(() => {
+		if (editorState?.layoutId === "hng_finalist_pm_v1") {
+			setValue("role", "Product Management", { shouldValidate: true });
+			onRoleChange?.("Product Management");
+		} else if (editorState?.layoutId === "hng_finalist_design_v1") {
+			setValue("role", "Product Design", { shouldValidate: true });
+			onRoleChange?.("Product Design");
+		}
+	}, [editorState?.layoutId, setValue, onRoleChange]);
+
 	useEffect(() => {
 		if (editorState?.defaultCaption) {
 			setValue("caption", editorState.defaultCaption, { shouldValidate: true });
@@ -229,6 +243,10 @@ export default function ParticipantForm({
 						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
 						placeholder={rolePlaceholder}
 						maxLength={25}
+						readOnly={
+							editorState?.layoutId === "hng_finalist_pm_v1" ||
+							editorState?.layoutId === "hng_finalist_design_v1"
+						}
 						onKeyDown={() => {}}
 						{...register("role", {
 							onChange: (e) => onRoleChange?.(e.target.value),
