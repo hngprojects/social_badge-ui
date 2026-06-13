@@ -60,9 +60,10 @@ export default function PasscodeGate({ slug, onSuccess }: PasscodeGateProps) {
 						placeholder="Enter access code"
 						value={accessCode}
 						onChange={(e) => setAccessCode(e.target.value)}
-						className="h-12 px-4 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-primary-500/20 focus-visible:border-primary-500"
+						className="h-12 px-4 rounded-xl border-[`#BDBDBD`] bg-[`#F6F6F6`] text-[`#595959`] text-sm font-medium focus-visible:ring-primary-500/20 focus-visible:border-primary-500"
 						disabled={isValidating}
 						autoFocus
+						maxLength={10}
 					/>
 				</div>
 
