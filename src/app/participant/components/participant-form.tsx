@@ -213,8 +213,8 @@ export default function ParticipantForm({
 				>
 					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
 						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">
-							{editorState?.roleTitleLabel || "ROLE / TITLE"}{" "}
-							{editorState?.roleTitleRequired && (
+							{roleLabel}{" "}
+							{roleRequired && (
 								<span className="text-[#ff693E]">*</span>
 							)}
 						</span>
@@ -227,11 +227,9 @@ export default function ParticipantForm({
 
 					<Input
 						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-						placeholder={
-							editorState?.roleTitlePlaceholder || "e.g. Product Designer"
-						}
+						placeholder={rolePlaceholder}
 						maxLength={25}
-						onKeyDown={(e) => {}}
+						onKeyDown={() => {}}
 						{...register("role", {
 							onChange: (e) => onRoleChange?.(e.target.value),
 						})}

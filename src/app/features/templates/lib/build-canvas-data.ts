@@ -137,13 +137,14 @@ function buildFields(state: CustomizeEditorState): CanvasField[] {
 
 	if (caps.participantFields.includes("role_title") || caps.participantFields.includes("track")) {
 		const isTrack = caps.participantFields.includes("track");
+		const visible = isTrack ? (state.trackVisible ?? true) : state.roleTitleVisible;
 		fields.push({
 			key: isTrack ? CANVAS_FIELD_KEYS.TRACK : CANVAS_FIELD_KEYS.ROLE_TITLE,
 			type: "participant_input",
 			label: isTrack ? "TRACK" : "ROLE / TITLE",
 			placeholder: isTrack ? (state.trackPlaceholder || "e.g. Design") : "e.g. Product Designer",
-			required: isTrack ? ((state.trackVisible ?? true) ? (state.trackRequired ?? false) : false) : (state.roleTitleVisible ? state.roleTitleRequired : false),
-			visible: isTrack ? (state.trackVisible ?? true) : state.roleTitleVisible,
+			required: visible, // If visible, it must be required
+			visible: visible,
 			color: state.textColor,
 		});
 	}

@@ -28,8 +28,8 @@ export default function PasscodeGate({ slug, onSuccess }: PasscodeGateProps) {
 			await validateBadgeAccess(slug, accessCode);
 			toast.success("Access granted!");
 			onSuccess();
-		} catch (error: any) {
-			const message = error?.response?.data?.message || "Invalid access code. Please try again.";
+		} catch (error: unknown) {
+			const message = (error as { response?: { data?: { message?: string } } })?.response?.data?.message || "Invalid access code. Please try again.";
 			toast.error(message);
 		} finally {
 			setIsValidating(false);
