@@ -15,15 +15,17 @@ import { useIncrementBadgeShare } from "../hooks/useIncrementBadgeShare";
 import { useIncrementBadgeCreation } from "../hooks/useIncrementBadgeCreation";
 
 interface BadgeReadyProps {
-	onDownload?: () => Promise<void>;
+	onDownload?: () => Promise<boolean>;
 	defaultCaption?: string;
 	shareUrl?: string;
+	isGenerating?: boolean;
 }
 
 export default function BadgeReady({
 	onDownload,
 	defaultCaption,
 	shareUrl,
+	isGenerating = false,
 }: BadgeReadyProps) {
 	const searchParams = useSearchParams();
 	const slug = searchParams.get("slug");
@@ -51,10 +53,14 @@ export default function BadgeReady({
 		if (!onDownload) return;
 		setIsDownloading(true);
 		try {
-			await onDownload();
-			setIsPopupOpen(true);
+			const success = await onDownload();
+			if (success) {
+				setIsPopupOpen(true);
+			} else {
+				toast.error("Failed to generate badge. Please try again.");
+			}
 		} catch {
-			toast.error("Failed to download badge. Please try again.");
+			toast.error("An error occurred. Please try again.");
 		} finally {
 			setIsDownloading(false);
 		}
@@ -122,10 +128,10 @@ export default function BadgeReady({
 				<Button
 					type="button"
 					onClick={handleDownload}
-					disabled={isDownloading}
-					className="w-full h-10 bg-[#020202] font-sans text-[14px]"
+					disabled={isDownloading || isGenerating}
+					className="w-full h-10 bg-[#020202] font-sans text-[14px] disabled:bg-[#d1d5db] disabled:text-gray-500"
 				>
-					{isDownloading ? "Downloading…" : "Download badge"}
+					{isDownloading ? "Downloading…" : isGenerating ? "Preparing badge…" : "Download badge"}
 				</Button>
 			</motion.div>
 			<motion.div

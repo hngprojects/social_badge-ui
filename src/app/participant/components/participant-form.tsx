@@ -19,6 +19,7 @@ import { useMemo } from "react";
 
 export default function ParticipantForm({
 	onSuccess,
+	onGenerating,
 	onNameChange,
 	onRoleChange,
 	onPhotoChange,
@@ -26,6 +27,7 @@ export default function ParticipantForm({
 	editorState,
 }: {
 	onSuccess?: () => void;
+	onGenerating?: (generating: boolean) => void;
 	onNameChange?: (name: string) => void;
 	onRoleChange?: (role: string) => void;
 	onPhotoChange?: (url: string | null) => void;
@@ -102,15 +104,11 @@ export default function ParticipantForm({
 	});
 
 	const onSubmit = async () => {
-		onSuccess?.();
+		onGenerating?.(true);
+		onSuccess?.(); // badge mounts immediately
+		await new Promise((resolve) => setTimeout(resolve, 3000)); // browser paints images
+		onGenerating?.(false); // overlay lifts, download button appears
 	};
-
-	const roleLabel = isHng
-		? editorState?.trackLabel || "TRACK"
-		: editorState?.roleTitleLabel || "ROLE / TITLE";
-	const rolePlaceholder = isHng
-		? editorState?.trackPlaceholder || "e.g. Design"
-		: editorState?.roleTitlePlaceholder || "e.g. Product Designer";
 
 	return (
 		<motion.form
@@ -151,7 +149,7 @@ export default function ParticipantForm({
                     file:cursor-pointer
                     "
 					accept=".png,.jpg,.jpeg,.svg"
-					onChange={(e) => {
+					onChange={async (e) => {
 						const file = e.target.files?.[0];
 						if (!file) return;
 
@@ -160,7 +158,21 @@ export default function ParticipantForm({
 							shouldDirty: true,
 						});
 
-						onPhotoChange?.(URL.createObjectURL(file));
+						const toBase64 = (f: File): Promise<string> =>
+							new Promise((res, rej) => {
+								const reader = new FileReader();
+								reader.onload = () => res(reader.result as string);
+								reader.onerror = rej;
+								reader.readAsDataURL(f);
+							});
+
+						try {
+							const base64 = await toBase64(file);
+							onPhotoChange?.(base64);
+						} catch (err) {
+							console.error("Failed to convert image to base64:", err);
+							onPhotoChange?.(URL.createObjectURL(file));
+						}
 					}}
 				/>
 
@@ -286,7 +298,7 @@ export default function ParticipantForm({
 					className="w-full h-11"
 					disabled={isSubmitting || !isValid}
 				>
-					Generate badge
+					{isSubmitting ? "Generating..." : "Generate badge"}
 				</Button>
 			</motion.div>
 		</motion.form>
