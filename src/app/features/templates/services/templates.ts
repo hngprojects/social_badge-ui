@@ -146,6 +146,9 @@ export async function validateBadgeAccess(
   shareSlug: string,
   accessCode: string,
 ): Promise<ApiEnvelope<void>> {
+  if (!shareSlug?.trim() || !accessCode?.trim()) {
+    throw new Error("Share slug and access code are required");
+  }
   return apiClient<ApiEnvelope<void>>(
     `/badges/public/${encodeURIComponent(shareSlug)}/validate-access`,
     {
