@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ParticipantForm from "./participant-form";
 import BadgeReady from "./badge-ready";
+import PasscodeGate from "./passcode-gate";
 import { LivePreview } from "@/app/(dashboard)/components/customize/LivePreview";
 import { getPublicParticipantPage } from "@/app/features/templates/services/templates";
 import { getBadgeCaptureBackground } from "@/app/features/templates/components/badge-preview/utils";
@@ -14,6 +15,7 @@ import { parseCanvasDataToEditorState } from "@/app/features/templates/lib/parse
 
 export default function ParticipantPovClient() {
 	const [isBadgeReady, setIsBadgeReady] = useState(false);
+	const [isUnlocked, setIsUnlocked] = useState(false);
 	const [participantName, setParticipantName] = useState("");
 	const [participantRole, setParticipantRole] = useState("");
 	const [participantPhotoUrl, setParticipantPhotoUrl] = useState<string | null>(
@@ -42,6 +44,7 @@ export default function ParticipantPovClient() {
 			default_caption: d.default_caption ?? "",
 			hashtags: d.hashtags ?? [],
 			logo_url: d.logo_url,
+			access_type: d.access_type,
 		});
 	}, [badgeResponse]);
 
@@ -92,6 +95,9 @@ export default function ParticipantPovClient() {
 		setTimeout(() => URL.revokeObjectURL(url), 0);
 	}, [getBadgeFile]);
 
+	const isProtected = badgeResponse?.data?.access_type === 1;
+	const showGate = isProtected && !isUnlocked;
+
 	return (
 		<div className="relative min-h-screen bg-primary-50 flex flex-col items-center justify-center py-28 lg:py-0 overflow-hidden">
 			{/* Background Blobs */}
@@ -136,53 +142,61 @@ export default function ParticipantPovClient() {
 
 			{/* Main section */}
 			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10 min-w-0">
-				{isBadgeReady ? (
-					<BadgeReady
-						onDownload={handleDownload}
-						defaultCaption={
-							participantCaption || baseEditorState?.defaultCaption
-						}
-					/>
+				{showGate ? (
+					<div className="w-full flex justify-center py-12">
+						<PasscodeGate slug={slug!} onSuccess={() => setIsUnlocked(true)} />
+					</div>
 				) : (
-					<ParticipantForm
-						onSuccess={() => setIsBadgeReady(true)}
-						onNameChange={setParticipantName}
-						onRoleChange={setParticipantRole}
-						onPhotoChange={setParticipantPhotoUrl}
-						onCaptionChange={setParticipantCaption}
-						editorState={editorState}
-					/>
-				)}
+					<>
+						{isBadgeReady ? (
+							<BadgeReady
+								onDownload={handleDownload}
+								defaultCaption={
+									participantCaption || baseEditorState?.defaultCaption
+								}
+							/>
+						) : (
+							<ParticipantForm
+								onSuccess={() => setIsBadgeReady(true)}
+								onNameChange={setParticipantName}
+								onRoleChange={setParticipantRole}
+								onPhotoChange={setParticipantPhotoUrl}
+								onCaptionChange={setParticipantCaption}
+								editorState={editorState}
+							/>
+						)}
 
-				{/* Badge preview */}
-				<div className="w-full max-w-135 shrink-0 min-w-0">
-					{!slug ? (
-						<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-							<p className="text-sm text-gray-500">No badge link provided.</p>
+						{/* Badge preview */}
+						<div className="w-full max-w-135 shrink-0 min-w-0">
+							{!slug ? (
+								<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
+									<p className="text-sm text-gray-500">No badge link provided.</p>
+								</div>
+							) : isLoading ? (
+								<div className="bg-primary-300 w-full h-125 lg:h-155 rounded-3xl animate-pulse" />
+							) : isError ? (
+								<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
+									<p className="text-sm text-gray-500">
+										Failed to load badge. Please try again.
+									</p>
+								</div>
+							) : editorState ? (
+								<LivePreview
+									editor={editorState}
+									participantPhotoUrl={participantPhotoUrl}
+									badgeRef={badgeRef}
+									hideExtras
+									badgeClassName="w-full max-w-110 h-140"
+								/>
+							) : (
+								<div
+									aria-hidden="true"
+									className="preview-section bg-primary-300 w-full max-w-135 h-125 lg:h-155 rounded-3xl"
+								/>
+							)}
 						</div>
-					) : isLoading ? (
-						<div className="bg-primary-300 w-full h-125 lg:h-155 rounded-3xl animate-pulse" />
-					) : isError ? (
-						<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-							<p className="text-sm text-gray-500">
-								Failed to load badge. Please try again.
-							</p>
-						</div>
-					) : editorState ? (
-						<LivePreview
-							editor={editorState}
-							participantPhotoUrl={participantPhotoUrl}
-							badgeRef={badgeRef}
-							hideExtras
-							badgeClassName="w-full max-w-110 h-140"
-						/>
-					) : (
-						<div
-							aria-hidden="true"
-							className="preview-section bg-primary-300 w-full max-w-135 h-125 lg:h-155 rounded-3xl"
-						/>
-					)}
-				</div>
+					</>
+				)}
 			</div>
 		</div>
 	);

@@ -11,6 +11,7 @@ import { BrandSection } from "../../../components/customize/BrandSection";
 import { StyleSection } from "../../../components/customize/StyleSection";
 import { BadgeContentSection } from "../../../components/customize/BadgeContentSection";
 import { ShareMessageSection } from "../../../components/customize/ShareMessageSection";
+import { VisibilitySection } from "../../../components/customize/VisibilitySection";
 import { LivePreview } from "../../../components/customize/LivePreview";
 
 import { customizeBadgeSchema, type CustomizeBadgeFormValues } from "@/schemas/template";
@@ -57,6 +58,7 @@ export function CustomizeBadgeForm({
 			defaultCaption: editor.defaultCaption,
 			hashtags: editor.hashtags,
 			accessType: editor.accessType,
+			accessCode: editor.accessCode,
 			fontId: editor.fontId,
 			paletteId: editor.paletteId,
 			bgMode: editor.isSplit ? "split" : editor.bgMode,
@@ -128,9 +130,9 @@ export function CustomizeBadgeForm({
   const isPublished = editor.status === "live";
 
   return (
-    <main className="grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-8 w-full items-start">
+    <main className="grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-8 w-full items-start border">
       <section className="order-2 lg:order-1 lg:col-span-7 w-full min-w-0 overflow-hidden p-6 space-y-6">
-        <div className="pb-2 border-b border-gray-100">
+        <div className=" border-b border-gray-100">
           <p className="text-xs text-gray-400">
             <Link href="/dashboard" className="hover:text-gray-600 transition-colors">Dashboard</Link>
             &nbsp;/&nbsp;
@@ -139,10 +141,7 @@ export function CustomizeBadgeForm({
             <span className="text-gray-500">Customize</span>
           </p>
           <h1 className="mt-1 text-2xl font-bold text-[#3A3A3A]">Customize your badge</h1>
-          <p className="text-xs text-gray-400 mt-1">
-            Make it yours — your changes appear live on the right.
-          </p>
-        </div>
+          </div>
 
         <form id="badge-form" onSubmit={(e) => e.preventDefault()} className="w-full space-y-6 mt-9">
           <BrandSection
@@ -177,6 +176,13 @@ export function CustomizeBadgeForm({
           <ShareMessageSection
             register={register}
             editor={previewEditor}
+          />
+
+          <VisibilitySection
+            register={register}
+            control={control}
+            isProtected={formValues.accessType === 1}
+            accessCode={formValues.accessCode}
           />
         </form>
 
@@ -214,7 +220,7 @@ export function CustomizeBadgeForm({
         </div>
       </section>
 
-      <section className="order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:pt-6 lg:pb-6">
+      <section className="order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full lg:sticky lg:top-18 lg:h-screen lg:overflow-y-auto lg:pt-6 lg:pb-6">
         <LivePreview editor={previewEditor} />
       </section>
     </main>

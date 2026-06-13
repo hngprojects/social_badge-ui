@@ -142,6 +142,19 @@ export async function getPublicParticipantPage(
   );
 }
 
+export async function validateBadgeAccess(
+  shareSlug: string,
+  accessCode: string,
+): Promise<ApiEnvelope<void>> {
+  return apiClient<ApiEnvelope<void>>(
+    `/badges/public/${encodeURIComponent(shareSlug)}/validate-access`,
+    {
+      method: "POST",
+      data: { access_code: accessCode },
+    },
+  );
+}
+
 
 export async function getOrganiserTemplate(
   templateId: string,
@@ -171,6 +184,7 @@ export function buildEditTemplateRequest(
     default_caption: payload.default_caption,
     hashtags: payload.hashtags,
     access_type: payload.access_type,
+    access_code: payload.access_code,
   };
 }
 

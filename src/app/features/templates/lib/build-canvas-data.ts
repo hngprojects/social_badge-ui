@@ -219,6 +219,7 @@ export function buildOrganiserTemplatePayload(
 		default_caption: state.defaultCaption.trim(),
 		hashtags: state.hashtags.filter(Boolean),
 		access_type: state.accessType,
+		access_code: state.accessType === 1 ? state.accessCode : undefined,
 	};
 }
 

@@ -13,12 +13,21 @@ export const customizeBadgeSchema = z.object({
   allowParticipantPhoto: z.boolean().default(true),
   defaultCaption: z.string().optional(),
   hashtags: z.array(z.string()).optional(),
-  accessType: z.number().optional(),
   fontId: z.string().optional(),
   paletteId: z.string().optional(),
   bgMode: z.enum(["gradient", "solid", "split", "image"]).optional(),
   secondaryColor: z.string().optional(),
   textColor: z.string().optional(),
+  accessType: z.number().default(0),
+  accessCode: z.string().optional(),
+}).refine((data) => {
+  if (data.accessType === 1) {
+    return !!data.accessCode && data.accessCode.length >= 4 && data.accessCode.length <= 10;
+  }
+  return true;
+}, {
+  message: "Access code must be between 4 and 10 characters",
+  path: ["accessCode"],
 });
 
 export type CustomizeBadgeSchema = z.infer<typeof customizeBadgeSchema>;
