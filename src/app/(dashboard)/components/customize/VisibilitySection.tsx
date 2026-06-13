@@ -60,7 +60,7 @@ export function VisibilitySection({
 
 			{isProtected && (
 				<div className="pt-2 animate-in fade-in slide-in-from-top-2 duration-200">
-					<FieldLabel label="Access Passcode" required />
+					<FieldLabel label="Access Code" required />
 					<TextInput
 						placeholder="Enter 4-10 character passcode"
 						{...register("accessCode")}

@@ -15,7 +15,7 @@ import { parseCanvasDataToEditorState } from "@/app/features/templates/lib/parse
 
 export default function ParticipantPovClient() {
 	const [isBadgeReady, setIsBadgeReady] = useState(false);
-	const [isUnlocked, setIsUnlocked] = useState(false);
+	const [accessCode, setAccessCode] = useState("");
 	const [participantName, setParticipantName] = useState("");
 	const [participantRole, setParticipantRole] = useState("");
 	const [participantPhotoUrl, setParticipantPhotoUrl] = useState<string | null>(
@@ -29,11 +29,16 @@ export default function ParticipantPovClient() {
 	const {
 		data: badgeResponse,
 		isLoading,
+		error,
 		isError,
 	} = useQuery({
-		queryKey: ["public-participant", slug],
-		queryFn: () => getPublicParticipantPage(slug!),
+		queryKey: ["public-participant", slug, accessCode],
+		queryFn: () => getPublicParticipantPage(slug!, accessCode),
 		enabled: Boolean(slug),
+		retry: (failureCount, error: any) => {
+			if (error?.response?.status === 401) return false;
+			return failureCount < 3;
+		},
 	});
 
 	const baseEditorState = useMemo(() => {
@@ -95,8 +100,20 @@ export default function ParticipantPovClient() {
 		setTimeout(() => URL.revokeObjectURL(url), 0);
 	}, [getBadgeFile]);
 
-	const isProtected = badgeResponse?.data?.access_type === 1;
-	const showGate = isProtected && !isUnlocked;
+	const isUnauthorized = (error as any)?.response?.status === 401;
+	const showGate = isUnauthorized;
+
+	if (isLoading && !badgeResponse) {
+		return (
+			<div className="relative min-h-screen bg-primary-50 flex flex-col items-center justify-center overflow-hidden">
+				<div className="flex items-center justify-center gap-2 p-6">
+					<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.3s]" />
+					<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.15s]" />
+					<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500" />
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="relative min-h-screen bg-primary-50 flex flex-col items-center justify-center py-28 lg:py-0 overflow-hidden">
@@ -144,7 +161,7 @@ export default function ParticipantPovClient() {
 			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10 min-w-0">
 				{showGate ? (
 					<div className="w-full flex justify-center py-12">
-						<PasscodeGate slug={slug!} onSuccess={() => setIsUnlocked(true)} />
+						<PasscodeGate slug={slug!} onSuccess={(code) => setAccessCode(code)} />
 					</div>
 				) : (
 					<>

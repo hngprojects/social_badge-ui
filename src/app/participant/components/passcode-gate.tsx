@@ -4,12 +4,12 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { validateBadgeAccess } from "@/app/features/templates/services/templates";
+import { getPublicParticipantPage } from "@/app/features/templates/services/templates";
 import { Lock } from "lucide-react";
 
 interface PasscodeGateProps {
 	slug: string;
-	onSuccess: () => void;
+	onSuccess: (code: string) => void;
 }
 
 export default function PasscodeGate({ slug, onSuccess }: PasscodeGateProps) {
@@ -25,11 +25,14 @@ export default function PasscodeGate({ slug, onSuccess }: PasscodeGateProps) {
 
 		setIsValidating(true);
 		try {
-			await validateBadgeAccess(slug, accessCode);
+			await getPublicParticipantPage(slug, accessCode);
 			toast.success("Access granted!");
-			onSuccess();
+			onSuccess(accessCode);
 		} catch (error: unknown) {
-			const message = (error as { response?: { data?: { message?: string } } })?.response?.data?.message || "Invalid access code. Please try again.";
+			const status = (error as any)?.response?.status;
+			const message = status === 401 
+				? "Invalid access code. Please try again." 
+				: "An error occurred. Please try again.";
 			toast.error(message);
 		} finally {
 			setIsValidating(false);
@@ -56,7 +59,7 @@ export default function PasscodeGate({ slug, onSuccess }: PasscodeGateProps) {
 					</label>
 					<Input
 						id="accessCode"
-						type="password"
+						type="text"
 						placeholder="Enter access code"
 						value={accessCode}
 						onChange={(e) => setAccessCode(e.target.value)}

@@ -136,24 +136,13 @@ export async function getPlatformTemplate(
 
 export async function getPublicParticipantPage(
   shareSlug: string,
+  accessCode?: string,
 ): Promise<PublicParticipantPageResponse> {
   return apiClient<PublicParticipantPageResponse>(
     `/badges/public/${encodeURIComponent(shareSlug)}`,
-  );
-}
-
-export async function validateBadgeAccess(
-  shareSlug: string,
-  accessCode: string,
-): Promise<ApiEnvelope<void>> {
-  if (!shareSlug?.trim() || !accessCode?.trim()) {
-    throw new Error("Share slug and access code are required");
-  }
-  return apiClient<ApiEnvelope<void>>(
-    `/badges/public/${encodeURIComponent(shareSlug)}/validate-access`,
     {
-      method: "POST",
-      data: { access_code: accessCode },
+      method: "GET",
+      params: accessCode ? { access_code: accessCode } : undefined,
     },
   );
 }
