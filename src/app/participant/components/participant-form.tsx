@@ -80,6 +80,9 @@ export default function ParticipantForm({
 		} else if (editorState?.layoutId === "hng_finalist_design_v1") {
 			setValue("role", "Product Design", { shouldValidate: true });
 			onRoleChange?.("Product Design");
+		} else {
+			setValue("role", "", { shouldValidate: true });
+			onRoleChange?.("");
 		}
 	}, [editorState?.layoutId, setValue, onRoleChange]);
 
