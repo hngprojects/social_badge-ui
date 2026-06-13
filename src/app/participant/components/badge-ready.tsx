@@ -23,7 +23,6 @@ interface BadgeReadyProps {
 export default function BadgeReady({
 	onDownload,
 	defaultCaption,
-	shareUrl,
 }: BadgeReadyProps) {
 	const searchParams = useSearchParams();
 	const slug = searchParams.get("slug");
@@ -61,15 +60,13 @@ export default function BadgeReady({
 	};
 
 	const handleSocialShare = (platformId: SharePlatform) => {
-		const url = shareUrl || window.location.href;
 		const encodedCaption = encodeURIComponent(captionText);
-		const encodedUrl = encodeURIComponent(url);
 
 		const shareUrls: Record<string, string> = {
-			whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
-			facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
-			x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
-			telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
+			whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}`,
+			facebook: `https://www.facebook.com/sharer/sharer.php?&quote=${encodedCaption}`,
+			x: `https://twitter.com/intent/tweet?text=${encodedCaption}`,
+			telegram: `https://t.me/share/url?&text=${encodedCaption}`,
 		};
 
 		const target = shareUrls[platformId];
