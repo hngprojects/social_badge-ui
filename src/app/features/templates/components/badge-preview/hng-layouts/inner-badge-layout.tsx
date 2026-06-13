@@ -56,29 +56,29 @@ export function InnerBadgeLayout({
 				)}
 			</div>
 
-			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white">
-				<div className="w-full h-full flex justify-center items-center rounded-4xl overflow-hidden text-black">
-					{participantPhotoUrl ? (
-						// eslint-disable-next-line @next/next/no-img-element
+			<div className="w-full h-full flex justify-center items-center rounded-4xl overflow-hidden text-black relative">
+				{participantPhotoUrl ? (
+					<>
+						{/* 1. The Background Layer: Stretched and blurred to fill the sides */}
+						<img
+							src={participantPhotoUrl}
+							alt=""
+							className="absolute inset-0 w-full h-full object-cover blur-md scale-110 opacity-50"
+						/>
+
+						{/* 2. The Foreground Layer: Perfectly proportioned, showing the whole picture */}
 						<img
 							src={participantPhotoUrl}
 							alt="Participant"
-							className="w-full h-full object-cover"
+							className="relative z-10 w-full h-full object-contain"
 						/>
-					) : editor.allowParticipantPhoto ? (
-						"Photo"
-					) : (
-						""
-					)}
-				</div>
-				<div className="absolute -bottom-6 -right-7 w-20 h-20 flex justify-center items-center">
-					<BadgeSvg className={svgFill} />
-					<span className="absolute flex flex-col justify-center items-center font-semibold">
-						<FivePercent className={percentIConFill} />
-					</span>
-				</div>
+					</>
+				) : editor.allowParticipantPhoto ? (
+					"Photo"
+				) : (
+					""
+				)}
 			</div>
-
 			<div className="text-center -mt-2">
 				<span
 					className="font-bricolage text-[24px] font-semibold"

@@ -55,7 +55,7 @@ export function Layout7({
 					{getSafeImageUrl(participantPhotoUrl) ? (
 						<ParticipantPhoto
 							url={participantPhotoUrl}
-							className="w-full h-full object-cover"
+							className="w-full h-full object-contain"
 						/>
 					) : editor.allowParticipantPhoto ? (
 						"PHOTO"

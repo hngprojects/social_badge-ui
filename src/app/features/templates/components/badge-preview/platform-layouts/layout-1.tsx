@@ -24,17 +24,28 @@ export function Layout1({
 				editor={editor}
 				baseColor={baseColor}
 			/>
-			<div className="w-30 h-26.5 left-8.5 bg-rose-600 absolute top-20 rounded-full flex justify-center items-center text-white text-[10px] text-center overflow-hidden">
-				{getSafeImageUrl(participantPhotoUrl) ? (
-					<ParticipantPhoto
-						url={participantPhotoUrl}
-						className="w-full h-full object-cover"
-					/>
-				) : (
-					<span className="px-2">
-						{editor.allowParticipantPhoto ? "Profile Photo" : ""}
-					</span>
-				)}
+			<div className="w-30 h-26.5 left-8.5 absolute top-20 rounded-full shadow-lg shadow-black/30">
+				{/* 2. Inner wrapper maintains the clean circular crop */}
+				<div className="w-full h-full bg-transparent rounded-full flex justify-center items-center text-white text-[10px] text-center overflow-hidden relative">
+					{getSafeImageUrl(participantPhotoUrl) ? (
+						<>
+							{/* Background Layer: Blurs and fills the empty edges */}
+							<ParticipantPhoto
+								url={participantPhotoUrl}
+								className="absolute inset-0 w-full h-full object-cover blur-md scale-110 opacity-50"
+							/>
+							{/* Foreground Layer: Keeps perfect proportions without cropping */}
+							<ParticipantPhoto
+								url={participantPhotoUrl}
+								className="relative z-10 w-full h-full object-contain"
+							/>
+						</>
+					) : (
+						<span className="px-2 z-10">
+							{editor.allowParticipantPhoto ? "Profile Photo" : ""}
+						</span>
+					)}
+				</div>
 			</div>
 			<div className="absolute top-48 px-8 w-full">
 				<h2
