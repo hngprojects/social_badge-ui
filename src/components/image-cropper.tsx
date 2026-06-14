@@ -90,10 +90,17 @@ export function ImageCropper({
 						/>
 					</div>
 					<DialogFooter className="gap-2 sm:gap-0">
-						<Button variant="outline" onClick={onCancel} className="flex-1">
+						<Button
+							variant="outline"
+							onClick={onCancel}
+							className="flex-1 min-h-10 rounded-lg"
+						>
 							Cancel
 						</Button>
-						<Button onClick={handleCrop} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white">
+						<Button
+							onClick={handleCrop}
+							className="min-h-10 rounded-lg flex-1 bg-orange-500 hover:bg-orange-600 text-white"
+						>
 							Apply Crop
 						</Button>
 					</DialogFooter>
