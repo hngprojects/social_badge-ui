@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { AxiosError } from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getPublicParticipantPage } from "@/app/features/templates/services/templates";
@@ -28,8 +29,9 @@ export default function PasscodeGate({ slug, onSuccess }: PasscodeGateProps) {
 			await getPublicParticipantPage(slug, accessCode);
 			toast.success("Access granted!");
 			onSuccess(accessCode);
-		} catch (error: any) {
-			const message = error?.response?.data?.message || (error?.response?.status === 401 
+		} catch (error: unknown) {
+			const axiosError = error as AxiosError<{ message?: string }>;
+			const message = axiosError?.response?.data?.message || (axiosError?.response?.status === 401 
 				? "Invalid access code. Please try again." 
 				: "An error occurred. Please try again.");
 			toast.error(message);

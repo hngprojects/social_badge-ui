@@ -4,17 +4,21 @@ import CopyIcon from "../../badges/published/icons/copy-icon";
 import Link from "next/link";
 import ArrowUp from "../../badges/published/icons/arrow-up";
 import GradientBgSm, { GradientBgLg } from "../../badges/published/icons/gradient-bg";
+import { Lock } from "lucide-react";
 
 interface ShareableLinkCardProps {
 	url: string;
 	fullUrl: string;
+	access_code?: string | null;
 }
 
 export default function ShareableLinkCard({
 	url,
 	fullUrl,
+	access_code,
 }: ShareableLinkCardProps) {
 	const [copied, setCopied] = useState(false);
+	const [codeCopied, setCodeCopied] = useState(false);
 
 	const handleCopy = async () => {
 		try {
@@ -31,10 +35,26 @@ export default function ShareableLinkCard({
 		setTimeout(() => setCopied(false), 2000);
 	};
 
+	const handleCopyCode = async () => {
+		if (!access_code) return;
+		try {
+			await navigator.clipboard.writeText(access_code);
+		} catch {
+			const el = document.createElement("textarea");
+			el.value = access_code;
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand("copy");
+			document.body.removeChild(el);
+		}
+		setCodeCopied(true);
+		setTimeout(() => setCodeCopied(false), 2000);
+	};
+
 	return (
-		<div className="bg-[#1a1a1a] relative overflow-hidden rounded-2xl p-4 sm:p-6 md:pt-[38px] md:pb-7 md:px-8 mb-9 md:h-[163px] flex justify-between flex-col md:flex-row max-w-full min-w-0">
+		<div className="bg-[#1a1a1a] relative overflow-hidden rounded-2xl p-4 sm:p-6 md:pt-[38px] md:pb-7 md:px-8 mb-9 md:min-h-[163px] flex justify-between flex-col md:flex-row max-w-full min-w-0">
 			<div className="absolute inset-0 pointer-events-none">
-				<div className="absolute top-0 right-0 hidden md:block">
+				<div className="absolute top-0 right-0 hidden md:block h-full">
 					<GradientBgLg />
 				</div>
 				<div className="absolute top-0 right-0 md:hidden">
@@ -42,7 +62,7 @@ export default function ShareableLinkCard({
 				</div>
 			</div>
 
-			<div className="relative min-w-0">
+			<div className="relative min-w-0 flex-1">
 				<div className="inline-flex h-5 items-center gap-1.5 bg-[#2a2a2a] border border-[#333] rounded-full px-2.5 py-2 mb-3">
 					<span className="relative w-[5px] h-[5px] flex-shrink-0" aria-hidden="true">
 						<span className="absolute inset-0 rounded-full bg-[#4ADE80] opacity-40 scale-[2.2]" />
@@ -64,6 +84,31 @@ export default function ShareableLinkCard({
 					Works on any device · No login required · Updates instantly when you
 					edit
 				</p>
+
+				{/* Access Code Section */}
+				{access_code && (
+					<div className="mt-4 flex items-center gap-4 border-t border-white/5 pt-4">
+						<div className="flex items-center gap-2 text-neutral-400">
+							<Lock size={14} className="shrink-0" />
+							<span className="text-xs font-semibold uppercase tracking-wider">Access code:</span>
+						</div>
+						<button 
+							onClick={handleCopyCode}
+							className="group flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+						>
+							<span className="font-mono text-white text-sm font-bold tracking-widest">{access_code}</span>
+							<div className="flex items-center gap-1.5 pl-2 border-l border-white/10">
+								<CopyIcon 
+									className="w-3.5 h-3.5 text-neutral-500 group-hover:text-neutral-300" 
+									stroke="currentColor"
+								/>
+								<span className="text-[10px] text-neutral-500 group-hover:text-neutral-300 font-bold uppercase">
+									{codeCopied ? "Copied!" : "Copy"}
+								</span>
+							</div>
+						</button>
+					</div>
+				)}
 			</div>
 
 			{/* Actions */}

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function CopyIcon() {
+export default function CopyIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -8,9 +8,10 @@ export default function CopyIcon() {
 			height="19"
 			fill="none"
 			viewBox="0 0 19 19"
+			{...props}
 		>
 			<path
-				stroke="#FFF0EC"
+				stroke={props.stroke || "#FFF0EC"}
 				strokeLinecap="round"
 				strokeLinejoin="round"
 				strokeWidth="1.4"
