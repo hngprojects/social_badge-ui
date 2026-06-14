@@ -13,6 +13,7 @@ import { SharePlatform } from "../types";
 import { useSearchParams } from "next/navigation";
 import { useIncrementBadgeShare } from "../hooks/useIncrementBadgeShare";
 import { useIncrementBadgeCreation } from "../hooks/useIncrementBadgeCreation";
+import { shareService } from "../services/share";
 
 interface BadgeReadyProps {
 	onDownload?: () => Promise<boolean>;
@@ -66,27 +67,9 @@ export default function BadgeReady({
 		}
 	};
 
-	const handleSocialShare = (platformId: SharePlatform) => {
-		const url = shareUrl || window.location.href;
-		const encodedCaption = encodeURIComponent(captionText);
-		const encodedUrl = encodeURIComponent(url);
-
-		const shareUrls: Record<string, string> = {
-			whatsapp: `https://api.whatsapp.com/send?text=${encodedCaption}%20${encodedUrl}`,
-			facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedCaption}`,
-			x: `https://twitter.com/intent/tweet?text=${encodedCaption}&url=${encodedUrl}`,
-			telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedCaption}`,
-		};
-
-		const target = shareUrls[platformId];
-		if (target) {
-			const a = document.createElement("a");
-			a.href = target;
-			a.target = "_blank";
-			a.rel = "noopener noreferrer";
-			a.click();
-			if (slug) incrementShare(slug);
-		}
+	const handleSocialShare = async (platformId: SharePlatform) => {
+		if (slug) incrementShare(slug);
+		await shareService.share(platformId, captionText);
 	};
 
 	return (
