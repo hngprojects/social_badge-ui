@@ -284,13 +284,25 @@ export default function ParticipantPovClient() {
 									</p>
 								</div>
 							) : editorState ? (
-								<LivePreview
-									editor={editorState}
-									participantPhotoUrl={participantPhotoUrl}
-									badgeRef={badgeRef}
-									hideExtras
-									badgeClassName="w-full max-w-110 h-140"
-								/>
+								<div className="relative">
+									<LivePreview
+										editor={editorState}
+										participantPhotoUrl={participantPhotoUrl}
+										badgeRef={badgeRef}
+										hideExtras
+										badgeClassName="w-full max-w-110 h-140"
+									/>
+									{isGenerating && (
+										<div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] rounded-3xl flex items-center justify-center z-20">
+											<div className="flex flex-col items-center gap-3">
+												<div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin" />
+												<p className="text-white font-medium">
+													Generating your badge...
+												</p>
+											</div>
+										</div>
+									)}
+								</div>
 							) : (
 								<div
 									aria-hidden="true"
@@ -298,41 +310,8 @@ export default function ParticipantPovClient() {
 								/>
 							)}
 						</div>
-					) : isLoading ? (
-						<div className="bg-primary-300 w-full h-125 lg:h-155 rounded-3xl animate-pulse" />
-					) : isError ? (
-						<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-							<p className="text-sm text-gray-500">
-								Failed to load badge. Please try again.
-							</p>
-						</div>
-					) : editorState ? (
-						<div className="relative">
-							<LivePreview
-								editor={editorState}
-								participantPhotoUrl={participantPhotoUrl}
-								badgeRef={badgeRef}
-								hideExtras
-								badgeClassName="w-full max-w-110 h-140"
-							/>
-							{isGenerating && (
-								<div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] rounded-3xl flex items-center justify-center z-20">
-									<div className="flex flex-col items-center gap-3">
-										<div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin" />
-										<p className="text-white font-medium">
-											Generating your badge...
-										</p>
-									</div>
-								</div>
-							)}
-						</div>
-					) : (
-						<div
-							aria-hidden="true"
-							className="preview-section bg-primary-300 w-full max-w-135 h-125 lg:h-155 rounded-3xl"
-						/>
-					)}
-				</div>
+					</>
+				)}
 			</div>
 		</div>
 	);
