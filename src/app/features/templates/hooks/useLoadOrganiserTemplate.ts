@@ -18,6 +18,7 @@ export function useLoadOrganiserTemplate(organiserTemplateId: string | null) {
           default_caption: response.default_caption,
           hashtags: response.hashtags,
           access_type: response.access_type,
+          access_code: response.access_code ?? undefined,
           updated_at: response.updated_at,
           is_published: response.is_published,
           logo_url: response.logo_url,

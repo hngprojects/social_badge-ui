@@ -19,6 +19,7 @@ default_caption?: string | null | undefined;
 destination_link?: string | null | undefined;
   thumbnail_url?: string | null;
   access_type?: number | null;
+  access_code?: string | null;
   hashtags?: string[] | null;
 }
 
@@ -32,6 +33,7 @@ export interface OrganiserTemplateDetail {
   thumbnail_url?: string | null;
   logo_url?: string | null;
   access_type: number;
+  access_code?: string | null;
   is_published?: boolean;
   share_slug?: string | null;
   published_at?: string | null;

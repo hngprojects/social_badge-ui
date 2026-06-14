@@ -143,6 +143,7 @@ export interface OrganiserTemplatePayload {
 	default_caption: string;
 	hashtags: string[];
 	access_type: number;
+	access_code?: string;
 }
 
 export interface OrganiserTemplateResponse {
@@ -152,6 +153,7 @@ export interface OrganiserTemplateResponse {
 default_caption?: string | null | undefined;
 	hashtags: string[];
 	access_type: number;
+	access_code?: string;
 }
 
 export interface LogoUploadResponse {
@@ -205,6 +207,7 @@ export interface CustomizeEditorState {
 	defaultCaption: string;
 	hashtags: string[];
 	accessType: number;
+	accessCode?: string;
 	status?: "draft" | "live";
 	savedAt?: string | null;
 }

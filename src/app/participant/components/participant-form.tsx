@@ -63,12 +63,29 @@ export default function ParticipantForm({
 		mode: "onChange",
 		defaultValues: {
 			name: "",
-			role: "",
+			role: editorState?.layoutId === "hng_finalist_pm_v1" 
+				? "Product Management" 
+				: editorState?.layoutId === "hng_finalist_design_v1" 
+				? "Product Design" 
+				: "",
 			caption: editorState?.defaultCaption || DEFAULT_CAPTION,
 		},
 	});
 
 	// Sync initial caption when editorState loads
+	useEffect(() => {
+		if (editorState?.layoutId === "hng_finalist_pm_v1") {
+			setValue("role", "Product Management", { shouldValidate: true });
+			onRoleChange?.("Product Management");
+		} else if (editorState?.layoutId === "hng_finalist_design_v1") {
+			setValue("role", "Product Design", { shouldValidate: true });
+			onRoleChange?.("Product Design");
+		} else {
+			setValue("role", "", { shouldValidate: true });
+			onRoleChange?.("");
+		}
+	}, [editorState?.layoutId, setValue, onRoleChange]);
+
 	useEffect(() => {
 		if (editorState?.defaultCaption) {
 			setValue("caption", editorState.defaultCaption, { shouldValidate: true });
@@ -213,8 +230,8 @@ export default function ParticipantForm({
 				>
 					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
 						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">
-							{editorState?.roleTitleLabel || "ROLE / TITLE"}{" "}
-							{editorState?.roleTitleRequired && (
+							{roleLabel}{" "}
+							{roleRequired && (
 								<span className="text-[#ff693E]">*</span>
 							)}
 						</span>
@@ -227,11 +244,13 @@ export default function ParticipantForm({
 
 					<Input
 						className="h-10 rounded-sm text-[14px] placeholder:text-neutral-400 font-sans bg-none mt-2"
-						placeholder={
-							editorState?.roleTitlePlaceholder || "e.g. Product Designer"
-						}
+						placeholder={rolePlaceholder}
 						maxLength={25}
-						onKeyDown={(e) => {}}
+						readOnly={
+							editorState?.layoutId === "hng_finalist_pm_v1" ||
+							editorState?.layoutId === "hng_finalist_design_v1"
+						}
+						onKeyDown={() => {}}
 						{...register("role", {
 							onChange: (e) => onRoleChange?.(e.target.value),
 						})}

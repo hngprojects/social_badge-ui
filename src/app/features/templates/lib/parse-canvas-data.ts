@@ -207,6 +207,7 @@ export function parseCanvasDataToEditorState(
 			| "default_caption"
 			| "hashtags"
 			| "access_type"
+			| "access_code"
 		>
 	> & { logo_url?: string | null; updated_at?: string | null; is_published?: boolean },
 ): CustomizeEditorState {
@@ -279,6 +280,7 @@ export function parseCanvasDataToEditorState(
 		defaultCaption: meta?.default_caption ?? "",
 		hashtags: meta?.hashtags ?? [],
 		accessType: meta?.access_type ?? 0,
+		accessCode: meta?.access_code ?? "",
 		status: meta?.is_published ? "live" : "draft",
 		savedAt: meta?.updated_at ?? null,
 	};
