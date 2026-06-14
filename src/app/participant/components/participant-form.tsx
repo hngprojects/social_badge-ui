@@ -189,6 +189,7 @@ export default function ParticipantForm({
 						image={tempImage}
 						onCropComplete={async (croppedImage) => {
 							setIsCropperOpen(false);
+							setTempImage(null);
 							onPhotoChange?.(croppedImage);
 
 							// Convert base64 to File for form validation

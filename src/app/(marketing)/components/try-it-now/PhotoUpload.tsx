@@ -68,12 +68,20 @@ export function PhotoUpload({ photoPreview, onUpload }: PhotoUploadProps) {
         <ImageCropper
           open={isCropperOpen}
           image={tempImage}
-          onCropComplete={(croppedImage) => {
+          onCropComplete={async (croppedImage) => {
             setIsCropperOpen(false);
-            // Convert base64 back to a blob/file if the parent strictly needs it, 
-            // but usually base64 is enough for preview.
-            // For the mockup we'll just pass a dummy file and the cropped base64.
-            onUpload(new File([], 'cropped-image.jpg'), croppedImage);
+            setTempImage(null);
+            
+            try {
+              const res = await fetch(croppedImage);
+              const blob = await res.blob();
+              const file = new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' });
+              onUpload(file, croppedImage);
+            } catch (err) {
+              console.error("Failed to convert cropped image to file:", err);
+              // Fallback if needed, though fetch(base64) is reliable
+              onUpload(new File([], 'cropped-image.jpg'), croppedImage);
+            }
           }}
           onCancel={() => {
             setIsCropperOpen(false);
