@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import ParticipantForm from "./participant-form";
@@ -16,6 +17,7 @@ import { parseCanvasDataToEditorState } from "@/app/features/templates/lib/parse
 export default function ParticipantPovClient() {
 	const [isBadgeReady, setIsBadgeReady] = useState(false);
 	const [accessCode, setAccessCode] = useState("");
+	const [isGenerating, setIsGenerating] = useState(false);
 	const [participantName, setParticipantName] = useState("");
 	const [participantRole, setParticipantRole] = useState("");
 	const [participantPhotoUrl, setParticipantPhotoUrl] = useState<string | null>(
@@ -35,8 +37,8 @@ export default function ParticipantPovClient() {
 		queryKey: ["public-participant", slug, accessCode],
 		queryFn: () => getPublicParticipantPage(slug!, accessCode),
 		enabled: Boolean(slug),
-		retry: (failureCount, error: any) => {
-			if (error?.response?.status === 401) return false;
+		retry: (failureCount, error: unknown) => {
+			if ((error as AxiosError)?.response?.status === 401) return false;
 			return failureCount < 3;
 		},
 	});
@@ -62,45 +64,135 @@ export default function ParticipantPovClient() {
 			// used by CustomTemplatePreview
 			participantNamePlaceholder:
 				participantName || baseEditorState.participantNamePlaceholder,
-			roleTitlePlaceholder:
-				!isHng ? (participantRole || baseEditorState.roleTitlePlaceholder) : baseEditorState.roleTitlePlaceholder,
-			trackPlaceholder:
-				isHng ? (participantRole || baseEditorState.trackPlaceholder) : baseEditorState.trackPlaceholder,
+			roleTitlePlaceholder: !isHng
+				? participantRole || baseEditorState.roleTitlePlaceholder
+				: baseEditorState.roleTitlePlaceholder,
+			trackPlaceholder: isHng
+				? participantRole || baseEditorState.trackPlaceholder
+				: baseEditorState.trackPlaceholder,
 		};
 		return state;
 	}, [baseEditorState, participantName, participantRole]);
 
 	const getBadgeFile = useCallback(async (): Promise<File | null> => {
-		if (!badgeRef.current || !editorState) return null;
+		if (!badgeRef.current || !editorState) {
+			console.error("Badge capture failed: Missing badgeRef or editorState");
+			return null;
+		}
+
+		const originalStyles = new Map<HTMLElement, string>();
+		const objectUrls: string[] = [];
+
 		try {
-			const { toBlob } = await import("html-to-image");
-			const blob = await toBlob(badgeRef.current, {
+			const { toPng } = await import("html-to-image");
+
+			// 1. Pre-fetch all CSS background-image URLs inside the node as blobs
+			// CSS backgrounds are often missed by serialization libraries, so we inline them manually.
+			const elementsWithBg = Array.from(
+				badgeRef.current.querySelectorAll("*"),
+			).filter((el) => {
+				const style = window.getComputedStyle(el);
+				const bg = style.backgroundImage;
+				return bg && bg !== "none" && bg.startsWith("url(");
+			}) as HTMLElement[];
+
+			for (const el of elementsWithBg) {
+				const style = window.getComputedStyle(el);
+				const bg = style.backgroundImage;
+				const urlMatch = bg.match(/url\((['"]?)(.*?)\1\)/);
+				if (urlMatch && urlMatch[2]) {
+					const url = urlMatch[2];
+					if (url.startsWith("data:") || url.startsWith("blob:")) continue;
+
+					try {
+						const response = await fetch(url, { cache: "no-cache" });
+						if (!response.ok) throw new Error(`HTTP ${response.status}`);
+						const blob = await response.blob();
+						const objectUrl = URL.createObjectURL(blob);
+						originalStyles.set(el, el.style.backgroundImage);
+						el.style.backgroundImage = `url("${objectUrl}")`;
+						objectUrls.push(objectUrl);
+					} catch (err) {
+						console.warn(
+							"Could not pre-fetch background image, continuing with original:",
+							url,
+							err,
+						);
+					}
+				}
+			}
+
+			// 2. Ensure all <img> (including data URLs and Cloudinary URLs) are fully decoded and pixel-ready.
+			// This covers the decode lag for both base64 uploads and remote assets.
+			await Promise.all(
+				Array.from(badgeRef.current.querySelectorAll("img")).map((img) =>
+					img.decode().catch((err) => {
+						console.warn("Image decode failed for:", img.src, err);
+						return Promise.resolve();
+					}),
+				),
+			);
+
+			// 3. Capture the badge as PNG data URL
+			const dataUrl = await toPng(badgeRef.current, {
 				pixelRatio: 2,
 				backgroundColor: getBadgeCaptureBackground(editorState),
+				cacheBust: true,
+				imagePlaceholder:
+					"data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
 			});
-			if (!blob) return null;
+
+			if (!dataUrl) {
+				throw new Error("html-to-image returned empty dataUrl");
+			}
+
+			// 4. Convert dataUrl to Blob
+			const res = await fetch(dataUrl);
+			const blob = await res.blob();
+
+			if (!blob) throw new Error("Failed to convert dataUrl to blob");
+
 			return new File([blob], `${participantName || "badge"}.png`, {
 				type: "image/png",
 			});
-		} catch {
+		} catch (error) {
+			const err = error as Error;
+			console.error("Badge capture error detail:", {
+				message: err?.message,
+				name: err?.name,
+				stack: err?.stack,
+				error: error,
+			});
 			return null;
+		} finally {
+			// 5. Cleanup: Restore original styles and revoke object URLs
+			originalStyles.forEach((bg, el) => {
+				el.style.backgroundImage = bg;
+			});
+			objectUrls.forEach((url) => URL.revokeObjectURL(url));
 		}
 	}, [editorState, participantName]);
 
 	const handleDownload = useCallback(async () => {
 		const file = await getBadgeFile();
-		if (!file) return;
-		const url = URL.createObjectURL(file);
-		const link = document.createElement("a");
-		link.download = file.name;
-		link.href = url;
-		document.body.appendChild(link);
-		link.click();
-		link.remove();
-		setTimeout(() => URL.revokeObjectURL(url), 0);
+		if (!file) return false;
+		try {
+			const url = URL.createObjectURL(file);
+			const link = document.createElement("a");
+			link.download = file.name;
+			link.href = url;
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+			setTimeout(() => URL.revokeObjectURL(url), 100);
+			return true;
+		} catch (err) {
+			console.error("Link download failed:", err);
+			return false;
+		}
 	}, [getBadgeFile]);
 
-	const isUnauthorized = (error as any)?.response?.status === 401;
+	const isUnauthorized = (error as AxiosError)?.response?.status === 401;
 	const showGate = isUnauthorized;
 
 	if (isLoading && !badgeResponse) {
@@ -161,13 +253,17 @@ export default function ParticipantPovClient() {
 			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10 min-w-0">
 				{showGate ? (
 					<div className="w-full flex justify-center py-12">
-						<PasscodeGate slug={slug!} onSuccess={(code) => setAccessCode(code)} />
+						<PasscodeGate
+							slug={slug!}
+							onSuccess={(code) => setAccessCode(code)}
+						/>
 					</div>
 				) : (
 					<>
 						{isBadgeReady ? (
 							<BadgeReady
 								onDownload={handleDownload}
+								isGenerating={isGenerating}
 								defaultCaption={
 									participantCaption || baseEditorState?.defaultCaption
 								}
@@ -175,6 +271,7 @@ export default function ParticipantPovClient() {
 						) : (
 							<ParticipantForm
 								onSuccess={() => setIsBadgeReady(true)}
+								onGenerating={setIsGenerating}
 								onNameChange={setParticipantName}
 								onRoleChange={setParticipantRole}
 								onPhotoChange={setParticipantPhotoUrl}
@@ -187,24 +284,38 @@ export default function ParticipantPovClient() {
 						<div className="w-full max-w-135 shrink-0 min-w-0">
 							{!slug ? (
 								<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-									<p className="text-sm text-gray-500">No badge link provided.</p>
+									<p className="text-sm text-gray-500">
+										No badge link provided.
+									</p>
 								</div>
 							) : isLoading ? (
 								<div className="bg-primary-300 w-full h-125 lg:h-155 rounded-3xl animate-pulse" />
 							) : isError ? (
 								<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-									<p className="text-sm text-gray-500">
-										Failed to load badge. Please try again.
+									<p className="text-sm text-gray-500 px-10 text-center">
+										{((error as AxiosError)?.response?.data as { message?: string })?.message || "Failed to load badge. Please try again."}
 									</p>
 								</div>
 							) : editorState ? (
-								<LivePreview
-									editor={editorState}
-									participantPhotoUrl={participantPhotoUrl}
-									badgeRef={badgeRef}
-									hideExtras
-									badgeClassName="w-full max-w-110 h-140"
-								/>
+								<div className="relative">
+									<LivePreview
+										editor={editorState}
+										participantPhotoUrl={participantPhotoUrl}
+										badgeRef={badgeRef}
+										hideExtras
+										badgeClassName="w-full max-w-110 h-140"
+									/>
+									{isGenerating && (
+										<div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] rounded-3xl flex items-center justify-center z-20">
+											<div className="flex flex-col items-center gap-3">
+												<div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin" />
+												<p className="text-white font-medium">
+													Generating your badge...
+												</p>
+											</div>
+										</div>
+									)}
+								</div>
 							) : (
 								<div
 									aria-hidden="true"
@@ -218,3 +329,4 @@ export default function ParticipantPovClient() {
 		</div>
 	);
 }
+

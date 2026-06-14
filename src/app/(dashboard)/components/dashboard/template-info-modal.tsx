@@ -11,6 +11,7 @@ import {
 	buildParticipantShareUrl,
 	formatShareUrlForDisplay,
 } from "@/app/features/templates/lib/badge-share-url";
+import { Lock } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
@@ -118,6 +119,13 @@ export function TemplateInfoModal({
 							label="Total shares"
 							value={(template.total_shares ?? 0).toLocaleString()}
 						/>
+						{template.access_code && (
+							<InfoRow
+								icon={<Lock size={18} />}
+								label="Access code"
+								value={template.access_code}
+							/>
+						)}
 					</div>
 
 					<div className="pt-4">

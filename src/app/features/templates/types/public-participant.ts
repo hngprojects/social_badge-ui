@@ -9,6 +9,7 @@ export interface PublicParticipantPageData {
   destination_link?: string | null;
   hashtags?: string[];
   access_type: number;
+  access_code?: string | null;
 }
 
 export type PublicParticipantPageResponse = ApiEnvelope<PublicParticipantPageData>;
