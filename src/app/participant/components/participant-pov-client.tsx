@@ -63,10 +63,12 @@ export default function ParticipantPovClient() {
 			// used by CustomTemplatePreview
 			participantNamePlaceholder:
 				participantName || baseEditorState.participantNamePlaceholder,
-			roleTitlePlaceholder:
-				!isHng ? (participantRole || baseEditorState.roleTitlePlaceholder) : baseEditorState.roleTitlePlaceholder,
-			trackPlaceholder:
-				isHng ? (participantRole || baseEditorState.trackPlaceholder) : baseEditorState.trackPlaceholder,
+			roleTitlePlaceholder: !isHng
+				? participantRole || baseEditorState.roleTitlePlaceholder
+				: baseEditorState.roleTitlePlaceholder,
+			trackPlaceholder: isHng
+				? participantRole || baseEditorState.trackPlaceholder
+				: baseEditorState.trackPlaceholder,
 		};
 		return state;
 	}, [baseEditorState, participantName, participantRole]);
@@ -76,7 +78,7 @@ export default function ParticipantPovClient() {
 			console.error("Badge capture failed: Missing badgeRef or editorState");
 			return null;
 		}
-		
+
 		const originalStyles = new Map<HTMLElement, string>();
 		const objectUrls: string[] = [];
 
@@ -110,7 +112,11 @@ export default function ParticipantPovClient() {
 						el.style.backgroundImage = `url("${objectUrl}")`;
 						objectUrls.push(objectUrl);
 					} catch (err) {
-						console.warn("Could not pre-fetch background image, continuing with original:", url, err);
+						console.warn(
+							"Could not pre-fetch background image, continuing with original:",
+							url,
+							err,
+						);
 					}
 				}
 			}
@@ -131,7 +137,8 @@ export default function ParticipantPovClient() {
 				pixelRatio: 2,
 				backgroundColor: getBadgeCaptureBackground(editorState),
 				cacheBust: true,
-				imagePlaceholder: "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+				imagePlaceholder:
+					"data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
 			});
 
 			if (!dataUrl) {
@@ -153,7 +160,7 @@ export default function ParticipantPovClient() {
 				message: err?.message,
 				name: err?.name,
 				stack: err?.stack,
-				error: error
+				error: error,
 			});
 			return null;
 		} finally {
@@ -245,7 +252,10 @@ export default function ParticipantPovClient() {
 			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10 min-w-0">
 				{showGate ? (
 					<div className="w-full flex justify-center py-12">
-						<PasscodeGate slug={slug!} onSuccess={(code) => setAccessCode(code)} />
+						<PasscodeGate
+							slug={slug!}
+							onSuccess={(code) => setAccessCode(code)}
+						/>
 					</div>
 				) : (
 					<>
@@ -273,7 +283,9 @@ export default function ParticipantPovClient() {
 						<div className="w-full max-w-135 shrink-0 min-w-0">
 							{!slug ? (
 								<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-									<p className="text-sm text-gray-500">No badge link provided.</p>
+									<p className="text-sm text-gray-500">
+										No badge link provided.
+									</p>
 								</div>
 							) : isLoading ? (
 								<div className="bg-primary-300 w-full h-125 lg:h-155 rounded-3xl animate-pulse" />
