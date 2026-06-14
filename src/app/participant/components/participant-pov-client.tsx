@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import ParticipantForm from "./participant-form";
@@ -36,8 +37,8 @@ export default function ParticipantPovClient() {
 		queryKey: ["public-participant", slug, accessCode],
 		queryFn: () => getPublicParticipantPage(slug!, accessCode),
 		enabled: Boolean(slug),
-		retry: (failureCount, error: any) => {
-			if (error?.response?.status === 401) return false;
+		retry: (failureCount, error: unknown) => {
+			if ((error as AxiosError)?.response?.status === 401) return false;
 			return failureCount < 3;
 		},
 	});
@@ -191,7 +192,7 @@ export default function ParticipantPovClient() {
 		}
 	}, [getBadgeFile]);
 
-	const isUnauthorized = (error as any)?.response?.status === 401;
+	const isUnauthorized = (error as AxiosError)?.response?.status === 401;
 	const showGate = isUnauthorized;
 
 	if (isLoading && !badgeResponse) {
@@ -291,8 +292,8 @@ export default function ParticipantPovClient() {
 								<div className="bg-primary-300 w-full h-125 lg:h-155 rounded-3xl animate-pulse" />
 							) : isError ? (
 								<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-									<p className="text-sm text-gray-500">
-										Failed to load badge. Please try again.
+									<p className="text-sm text-gray-500 px-10 text-center">
+										{((error as AxiosError)?.response?.data as { message?: string })?.message || "Failed to load badge. Please try again."}
 									</p>
 								</div>
 							) : editorState ? (
@@ -328,3 +329,4 @@ export default function ParticipantPovClient() {
 		</div>
 	);
 }
+

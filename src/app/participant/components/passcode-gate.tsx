@@ -28,11 +28,10 @@ export default function PasscodeGate({ slug, onSuccess }: PasscodeGateProps) {
 			await getPublicParticipantPage(slug, accessCode);
 			toast.success("Access granted!");
 			onSuccess(accessCode);
-		} catch (error: unknown) {
-			const status = (error as any)?.response?.status;
-			const message = status === 401 
+		} catch (error: any) {
+			const message = error?.response?.data?.message || (error?.response?.status === 401 
 				? "Invalid access code. Please try again." 
-				: "An error occurred. Please try again.";
+				: "An error occurred. Please try again.");
 			toast.error(message);
 		} finally {
 			setIsValidating(false);

@@ -42,6 +42,12 @@ export default function ParticipantForm({
 	const roleRequired = isHng
 		? (editorState?.trackRequired ?? false)
 		: (editorState?.roleTitleRequired ?? false);
+	const roleLabel = isHng
+		? (editorState?.trackLabel ?? "TRACK")
+		: (editorState?.roleTitleLabel ?? "ROLE / TITLE");
+	const rolePlaceholder = isHng
+		? (editorState?.trackPlaceholder ?? "e.g. Design")
+		: (editorState?.roleTitlePlaceholder ?? "e.g. Product Designer");
 
 	const schema = useMemo(
 		() =>
@@ -198,7 +204,7 @@ export default function ParticipantForm({
 				>
 					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
 						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">
-							NAME <span className="text-[#ff693E]">*</span>
+							{editorState?.participantNameLabel || "NAME"} <span className="text-[#ff693E]">*</span>
 						</span>
 						<span
 							className={`shrink-0 text-[10px]  font-medium ${formValues.name?.length === 25 ? "text-amber-500" : "text-gray-400"}`}
