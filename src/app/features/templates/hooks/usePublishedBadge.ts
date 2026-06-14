@@ -18,6 +18,8 @@ export interface PublishedBadgeDisplay {
   publishedAt: string | null;
   defaultCaption: string | null;
   destinationLink: string | null;
+  access_code: string | null;
+  access_type: number;
 }
 
 export function usePublishedBadge(shareSlug: string | null) {
@@ -61,6 +63,8 @@ export function usePublishedBadge(shareSlug: string | null) {
         publishedAt: sessionResult?.published_at ?? null,
         defaultCaption: publicData?.default_caption ?? null,
         destinationLink: publicData?.destination_link ?? null,
+        access_code: publicData?.access_code ?? null,
+        access_type: publicData?.access_type ?? 0,
       }
     : null;
 

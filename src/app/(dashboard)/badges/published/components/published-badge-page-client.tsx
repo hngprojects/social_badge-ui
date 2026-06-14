@@ -45,7 +45,7 @@ export function PublishedBadgePageClient() {
   return (
     <div className="mx-auto mt-8 w-full max-w-227 min-w-0 overflow-x-hidden sm:mt-16 sm:w-[90%]">
       <LiveHeroBanner badgeName={data.title} publishedAt={data.publishedAt} />
-      <ShareableLinkCard url={data.displayUrl} fullUrl={data.fullUrl} />
+      <ShareableLinkCard url={data.displayUrl} fullUrl={data.fullUrl} access_code={data.access_code} />
       <SpreadTheWord url={data.fullUrl} badgeName={data.title} />
       <div className="mt-6">
         <EmbedNewsletter fullUrl={data.fullUrl} imageUrl={embedImageUrl} />

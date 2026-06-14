@@ -9,6 +9,8 @@ export type OrganizerTemplateInstanceRaw = {
   published_at: string | null;
   created_at: string;
   updated_at: string;
+  access_type?: number;
+  access_code?: string | null;
 };
 
 export type OrganizerTemplateInstance = Omit<

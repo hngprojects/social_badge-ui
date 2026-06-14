@@ -56,7 +56,7 @@ export const HNG_CARD_THEMES = {
 			headingTextColor: "#FF693E",
 			roleBgColor: "#FFFFFF",
 			roleBorderColor: "#FFD700",
-			nameTextColor: textColor || "#fecaca",
+			nameTextColor: textColor || "#ffffff",
 			roleTextColor: textColor || "#000000",
 			logoUrl: HNG_ASSETS.logos.orange,
 			svgFill: "text-[#F1C21C]",

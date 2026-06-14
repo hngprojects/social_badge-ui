@@ -18,7 +18,7 @@ export default function GradientBgSm() {
 
 export  function GradientBgLg() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="310" height="163" fill="none" viewBox="0 0 310 163">
+        <svg xmlns="http://www.w3.org/2000/svg" width="310" height="180" fill="none" viewBox="0 0 310 163">
   <path fill="url(#lg)" d="M0-66.5h400v400H0z"/>
   <defs>
     <radialGradient id="lg" cx="0" cy="0" r="1" gradientTransform="translate(200 133.5) scale(282.843)" gradientUnits="userSpaceOnUse">

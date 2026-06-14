@@ -39,7 +39,7 @@ export function Layout9({
 					</div>
 				</div>
 
-				<div className="px-8 my-6">
+				<div className="px-8 my-10">
 					<h2 style={textStyle} className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
