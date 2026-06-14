@@ -63,12 +63,11 @@ export default function ParticipantForm({
 		mode: "onChange",
 		defaultValues: {
 			name: "",
-			role:
-				editorState?.layoutId === "hng_finalist_pm_v1"
-					? "Product Management"
-					: editorState?.layoutId === "hng_finalist_design_v1"
-						? "Product Design"
-						: "",
+			role: editorState?.layoutId === "hng_finalist_pm_v1" 
+				? "Product Management" 
+				: editorState?.layoutId === "hng_finalist_design_v1" 
+				? "Product Design" 
+				: "",
 			caption: editorState?.defaultCaption || DEFAULT_CAPTION,
 		},
 	});
@@ -232,7 +231,9 @@ export default function ParticipantForm({
 					<label className="flex h-5 min-w-0 items-center justify-between gap-3 overflow-hidden text-[13.5px] font-bold leading-5">
 						<span className="block min-w-0 flex-1 overflow-hidden truncate whitespace-nowrap">
 							{roleLabel}{" "}
-							{roleRequired && <span className="text-[#ff693E]">*</span>}
+							{roleRequired && (
+								<span className="text-[#ff693E]">*</span>
+							)}
 						</span>
 						<span
 							className={`shrink-0 text-[10px]  font-medium ${formValues.role?.length === 25 ? "text-amber-500" : "text-gray-400"}`}

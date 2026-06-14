@@ -44,7 +44,7 @@ export function Layout4({
 					{getSafeImageUrl(participantPhotoUrl) ? (
 						<ParticipantPhoto
 							url={participantPhotoUrl}
-							className="w-full h-full object-contain"
+							className="w-full h-full object-cover"
 						/>
 					) : editor.allowParticipantPhoto ? (
 						"PHOTO"
