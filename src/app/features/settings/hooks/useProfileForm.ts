@@ -1,225 +1,154 @@
-import { useState, useRef, useEffect } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useUserStore } from "@/stores/use-user-store";
 import { getUserMail } from "@/lib/api/auth-session";
 import { useUpdateProfile } from "@/app/features/settings/hooks/useUpdateProfile";
-import {
-  ALLOWED_AVATAR_TYPES,
-  MAX_AVATAR_SIZE,
-  PROFILE_NAME_MAX_LENGTH,
-  PROFILE_NAME_PATTERN,
-  PROFILE_ROLE_PATTERN,
-  RISKY_SQL_PATTERN,
-  SQL_COMMENT_PATTERN,
-} from "../constants";
-import type { ProfileFieldErrors } from "../types";
+
+import { ALLOWED_AVATAR_TYPES, MAX_AVATAR_SIZE } from "../constants";
+
+import { profileSchema, ProfileFormValues } from "@/schemas/profile";
+
+type ProfilePayload = {
+	first_name?: string;
+	last_name?: string;
+	role?: string;
+};
 
 export function useProfileForm() {
-  const { saveProfile, isLoading } = useUpdateProfile();
-  const user = useUserStore((state) => state.user);
-  const emailAddress = getUserMail(user);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+	const user = useUserStore((state) => state.user);
+	const emailAddress = getUserMail(user);
 
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [avatarPreview, setAvatarPreview] = useState("");
+	const { saveProfile, isLoading } = useUpdateProfile();
 
-  const [formData, setFormData] = useState(() => ({
-    firstName: user?.first_name ?? "",
-    lastName: user?.last_name ?? "",
-    email: emailAddress,
-    role: user?.role ?? "",
-  }));
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [fieldErrors, setFieldErrors] = useState<ProfileFieldErrors>({});
-  const [savedFormData, setSavedFormData] = useState(formData);
+	const [avatarFile, setAvatarFile] = useState<File | null>(null);
+	const [avatarPreview, setAvatarPreview] = useState("");
 
-  useEffect(() => {
-    return () => {
-      if (avatarPreview) {
-        URL.revokeObjectURL(avatarPreview);
-      }
-    };
-  }, [avatarPreview]);
+	const {
+		register,
+		handleSubmit,
+		reset,
+		control,
+		formState: { errors, isDirty, isValid },
+	} = useForm<ProfileFormValues>({
+		resolver: zodResolver(profileSchema),
+		mode: "onChange",
+		defaultValues: {
+			firstName: user?.first_name ?? "",
+			lastName: user?.last_name ?? "",
+			role: user?.role ?? "",
+			email: emailAddress,
+		},
+	});
 
-  useEffect(() => {
-    const nextFormData = {
-      firstName: user?.first_name ?? "",
-      lastName: user?.last_name ?? "",
-      email: emailAddress,
-      role: user?.role ?? "",
-    };
+	useEffect(() => {
+		const next = {
+			firstName: user?.first_name ?? "",
+			lastName: user?.last_name ?? "",
+			role: user?.role ?? "",
+			email: emailAddress,
+		};
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFormData(nextFormData);
-    setSavedFormData(nextFormData);
-    setFieldErrors({});
-  }, [user?.first_name, user?.last_name, user?.role, emailAddress]);
+		reset(next);
+	}, [user?.first_name, user?.last_name, user?.role, emailAddress, reset]);
 
-  const hasTextChanges =
-    formData.firstName !== savedFormData.firstName ||
-    formData.lastName !== savedFormData.lastName ||
-    formData.role !== savedFormData.role;
+	useEffect(() => {
+		return () => {
+			if (avatarPreview) URL.revokeObjectURL(avatarPreview);
+		};
+	}, [avatarPreview]);
 
-  const hasAvatarChange = avatarFile !== null;
+	const hasAvatarChange = !!avatarFile;
 
-  const isFormValid =
-    formData.firstName.trim().length > 0 &&
-    formData.firstName.trim().length <= PROFILE_NAME_MAX_LENGTH &&
-    formData.lastName.trim().length > 0 &&
-    formData.lastName.trim().length <= PROFILE_NAME_MAX_LENGTH;
+	const canSubmit = (isDirty || hasAvatarChange) && isValid;
 
-  const canSubmit = isFormValid && (hasTextChanges || hasAvatarChange);
+	function handleUploadClick() {
+		fileInputRef.current?.click();
+	}
 
-  function handleChange(field: keyof typeof formData, value: string) {
-    const nextValue =
-      field === "firstName" || field === "lastName"
-        ? value.slice(0, PROFILE_NAME_MAX_LENGTH)
-        : value;
+	function clearAvatar() {
+		if (avatarPreview) URL.revokeObjectURL(avatarPreview);
+		setAvatarFile(null);
+		setAvatarPreview("");
+	}
 
-    setFieldErrors((prev) => {
-      if (!prev[field as keyof ProfileFieldErrors]) return prev;
-      return {
-        ...prev,
-        [field]: undefined,
-      };
-    });
-    setFormData((prev) => ({ ...prev, [field]: nextValue }));
-  }
+	function handleAvatarChange(event: React.ChangeEvent<HTMLInputElement>) {
+		const file = event.target.files?.[0];
+		if (!file) return;
 
-  function validateProfileFields() {
-    const nextErrors: ProfileFieldErrors = {};
-    const firstName = formData.firstName.trim();
-    const lastName = formData.lastName.trim();
-    const role = formData.role.trim();
+		if (!ALLOWED_AVATAR_TYPES.has(file.type)) {
+			toast.error("Please upload a JPEG, PNG, or GIF image.");
+			clearAvatar();
+			event.target.value = "";
+			return;
+		}
 
-    if (!firstName) {
-      nextErrors.firstName = "First name is required.";
-    } else if (firstName.length > PROFILE_NAME_MAX_LENGTH) {
-      nextErrors.firstName = `First name must be ${PROFILE_NAME_MAX_LENGTH} characters or less.`;
-    } else if (SQL_COMMENT_PATTERN.test(firstName)) {
-      nextErrors.firstName = "First name contains unsupported characters.";
-    } else if (!PROFILE_NAME_PATTERN.test(firstName)) {
-      nextErrors.firstName = "First name contains unsupported characters.";
-    }
+		if (file.size > MAX_AVATAR_SIZE) {
+			const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+			toast.error(`Image is ${sizeMB}MB. Max allowed is 10MB.`);
+			clearAvatar();
+			event.target.value = "";
+			return;
+		}
 
-    if (!lastName) {
-      nextErrors.lastName = "Last name is required.";
-    } else if (lastName.length > PROFILE_NAME_MAX_LENGTH) {
-      nextErrors.lastName = `Last name must be ${PROFILE_NAME_MAX_LENGTH} characters or less.`;
-    } else if (SQL_COMMENT_PATTERN.test(lastName)) {
-      nextErrors.lastName = "Last name contains unsupported characters.";
-    } else if (!PROFILE_NAME_PATTERN.test(lastName)) {
-      nextErrors.lastName = "Last name contains unsupported characters.";
-    }
+		clearAvatar();
 
-    if (
-      role &&
-      (RISKY_SQL_PATTERN.test(role) || !PROFILE_ROLE_PATTERN.test(role))
-    ) {
-      nextErrors.role = "Role contains unsupported characters.";
-    }
+		const url = URL.createObjectURL(file);
+		setAvatarFile(file);
+		setAvatarPreview(url);
 
-    setFieldErrors(nextErrors);
+		event.target.value = "";
+	}
 
-    const firstError = Object.values(nextErrors)[0];
-    if (firstError) {
-      toast.error(firstError);
-      return false;
-    }
+	const onSubmit = async (data: ProfileFormValues) => {
+		const profilePayload: ProfilePayload = {};
 
-    return true;
-  }
+		if (data.firstName !== user?.first_name) {
+			profilePayload.first_name = data.firstName;
+		}
 
-  function handleUploadClick() {
-    fileInputRef.current?.click();
-  }
+		if (data.lastName !== user?.last_name) {
+			profilePayload.last_name = data.lastName;
+		}
 
-  function clearSelectedAvatar() {
-    if (avatarPreview) {
-      URL.revokeObjectURL(avatarPreview);
-    }
+		const currentRole = (user?.role ?? "").trim();
+		const nextRole = (data.role ?? "").trim();
+		if (nextRole !== currentRole) {
+			profilePayload.role = nextRole;
+		}
 
-    setAvatarFile(null);
-    setAvatarPreview("");
-  }
+		if (!Object.keys(profilePayload).length && !avatarFile) {
+			toast.info("No changes to save.");
+			return;
+		}
 
-  function handleAvatarChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (!file) return;
+		const success = await saveProfile({
+			profilePayload,
+			photoFile: avatarFile,
+		});
 
-    if (!ALLOWED_AVATAR_TYPES.has(file.type)) {
-      toast.error("Please upload a JPEG, PNG, or GIF image.");
-      clearSelectedAvatar();
-      event.target.value = "";
-      return;
-    }
+		if (!success) return;
 
-    if (file.size > MAX_AVATAR_SIZE) {
-      const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-      toast.error(`Image is ${fileSizeMB}MB. Maximum allowed size is 10MB.`);
-      clearSelectedAvatar();
-      event.target.value = "";
-      return;
-    }
+		clearAvatar();
+		reset(data);
+	};
 
-    clearSelectedAvatar();
-
-    const previewUrl = URL.createObjectURL(file);
-    setAvatarFile(file);
-    setAvatarPreview(previewUrl);
-
-    event.target.value = "";
-  }
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (!validateProfileFields()) return;
-
-    const profilePayload: {
-      first_name?: string;
-      last_name?: string;
-      role?: string;
-    } = {};
-
-    if (formData.firstName !== savedFormData.firstName) {
-      profilePayload.first_name = formData.firstName.trim();
-    }
-
-    if (formData.lastName !== savedFormData.lastName) {
-      profilePayload.last_name = formData.lastName.trim();
-    }
-
-    if (formData.role !== savedFormData.role) {
-      profilePayload.role = formData.role.trim();
-    }
-
-    if (avatarFile && avatarFile.size > MAX_AVATAR_SIZE) {
-      toast.error("Image size must be less than 10MB.");
-      return;
-    }
-
-    const success = await saveProfile({
-      profilePayload,
-      photoFile: avatarFile,
-    });
-
-    if (!success) return;
-
-    setSavedFormData(formData);
-    clearSelectedAvatar();
-  }
-
-  return {
-    formData,
-    fieldErrors,
-    avatarPreview,
-    fileInputRef,
-    canSubmit,
-    isLoading,
-    handleChange,
-    handleSubmit,
-    handleUploadClick,
-    handleAvatarChange,
-  };
+	return {
+		register,
+		handleSubmit: handleSubmit(onSubmit),
+		errors,
+		control,
+		fileInputRef,
+		avatarPreview,
+		canSubmit,
+		isLoading,
+		handleUploadClick,
+		handleAvatarChange,
+	};
 }

@@ -11,7 +11,7 @@ export default function CookiePolicyPage() {
 		<LegalLayout
 			title="Data &"
 			titleHighlight="Cookies."
-			date="May 2026"
+			date="1 May 2026"
 			dateLabel="Last updated"
 			summary={
 				<p>

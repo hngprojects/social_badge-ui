@@ -1,16 +1,22 @@
 'use client';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { PhotoUploadProps } from '../../types/home';
+import { ImageCropper } from '@/components/image-cropper';
 
 export function PhotoUpload({ photoPreview, onUpload }: PhotoUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [tempImage, setTempImage] = useState<string | null>(null);
+  const [isCropperOpen, setIsCropperOpen] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => onUpload(file, reader.result as string);
+    reader.onload = () => {
+      setTempImage(reader.result as string);
+      setIsCropperOpen(true);
+    };
     reader.readAsDataURL(file);
   };
 
@@ -57,6 +63,33 @@ export function PhotoUpload({ photoPreview, onUpload }: PhotoUploadProps) {
         className="hidden"
         onChange={handleChange}
       />
+
+      {tempImage && (
+        <ImageCropper
+          open={isCropperOpen}
+          image={tempImage}
+          onCropComplete={async (croppedImage) => {
+            setIsCropperOpen(false);
+            setTempImage(null);
+            
+            try {
+              const res = await fetch(croppedImage);
+              const blob = await res.blob();
+              const file = new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' });
+              onUpload(file, croppedImage);
+            } catch (err) {
+              console.error("Failed to convert cropped image to file:", err);
+              // Fallback if needed, though fetch(base64) is reliable
+              onUpload(new File([], 'cropped-image.jpg'), croppedImage);
+            }
+          }}
+          onCancel={() => {
+            setIsCropperOpen(false);
+            setTempImage(null);
+          }}
+          aspectRatio={1}
+        />
+      )}
     </div>
   );
 }

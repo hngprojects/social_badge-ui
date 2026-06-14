@@ -1,7 +1,12 @@
-import type { ProfileFieldErrors } from "@/app/features/settings/types";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { ProfileFormValues } from "@/schemas/profile";
 
 export type ProfileInputProps = {
-  values: { firstName: string; lastName: string; email: string; role: string };
-  errors?: ProfileFieldErrors;
-  onChange: (field: "firstName" | "lastName" | "role", value: string) => void;
+	register: UseFormRegister<ProfileFormValues>;
+	errors: FieldErrors<ProfileFormValues>;
+	// values: ProfileFormValues;
+	firstNameAtMax?: boolean;
+	lastNameAtMax?: boolean;
+	roleAtMax?: boolean;
+	email?: string;
 };

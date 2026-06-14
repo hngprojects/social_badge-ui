@@ -39,7 +39,7 @@ export function Layout7({
 					</div>
 				</div>
 
-				<div className="px-8 my-6 min-h-20">
+				<div className="px-8 mt-10 mb-2 min-h-20">
 					<h2 style={textStyle} className="text-3xl font-bold uppercase">
 						{editor.participantNameVisible
 							? editor.participantNamePlaceholder || "Your full name"
@@ -51,7 +51,7 @@ export function Layout7({
 							: ""}
 					</p>
 				</div>
-				<div className="bg-white w-[80%] h-45 rounded-t-sm rounded-b-2xl mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden">
+				<div className="bg-white w-[80%] h-55 rounded-t-sm rounded-b-2xl mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden">
 					{getSafeImageUrl(participantPhotoUrl) ? (
 						<ParticipantPhoto
 							url={participantPhotoUrl}

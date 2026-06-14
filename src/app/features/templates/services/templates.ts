@@ -136,9 +136,14 @@ export async function getPlatformTemplate(
 
 export async function getPublicParticipantPage(
   shareSlug: string,
+  accessCode?: string,
 ): Promise<PublicParticipantPageResponse> {
   return apiClient<PublicParticipantPageResponse>(
     `/badges/public/${encodeURIComponent(shareSlug)}`,
+    {
+      method: "GET",
+      params: accessCode ? { access_code: accessCode } : undefined,
+    },
   );
 }
 
@@ -171,6 +176,7 @@ export function buildEditTemplateRequest(
     default_caption: payload.default_caption,
     hashtags: payload.hashtags,
     access_type: payload.access_type,
+    access_code: payload.access_code,
   };
 }
 
