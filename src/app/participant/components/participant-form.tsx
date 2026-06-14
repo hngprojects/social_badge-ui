@@ -83,20 +83,20 @@ export default function ParticipantForm({
 	// Sync initial caption when editorState loads
 	useEffect(() => {
 		if (editorState?.layoutId === "hng_finalist_pm_v1") {
-			setValue("role", "Product Management", { shouldValidate: true });
+			setValue("role", "Product Management");
 			onRoleChange?.("Product Management");
 		} else if (editorState?.layoutId === "hng_finalist_design_v1") {
-			setValue("role", "Product Design", { shouldValidate: true });
+			setValue("role", "Product Design");
 			onRoleChange?.("Product Design");
 		} else {
-			setValue("role", "", { shouldValidate: true });
+			setValue("role", "");
 			onRoleChange?.("");
 		}
 	}, [editorState?.layoutId, setValue, onRoleChange]);
 
 	useEffect(() => {
 		if (editorState?.defaultCaption) {
-			setValue("caption", editorState.defaultCaption, { shouldValidate: true });
+			setValue("caption", editorState.defaultCaption);
 			onCaptionChange?.(editorState.defaultCaption);
 		}
 	}, [editorState?.defaultCaption, setValue, onCaptionChange]);
