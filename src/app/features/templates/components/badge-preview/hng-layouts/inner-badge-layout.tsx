@@ -1,6 +1,7 @@
 import BadgeSvg, { FivePercent } from "../shared/badge-svg";
-import { isHngLayout } from "../utils";
 import type { InnerBadgeLayoutProps } from "../types";
+import { ParticipantPhoto } from "../shared/participant-photo";
+import { getSafeImageUrl, isHngLayout } from "../utils";
 
 export function InnerBadgeLayout({
 	editor,
@@ -57,18 +58,18 @@ export function InnerBadgeLayout({
 			</div>
 
 			<div className="w-full h-full flex justify-center items-center rounded-4xl overflow-hidden text-black relative">
-				{participantPhotoUrl ? (
+				{getSafeImageUrl(participantPhotoUrl) ? (
 					<>
 						{/* 1. The Background Layer: Stretched and blurred to fill the sides */}
-						<img
-							src={participantPhotoUrl}
+						<ParticipantPhoto
+							url={participantPhotoUrl}
 							alt=""
 							className="absolute inset-0 w-full h-full object-cover blur-md scale-110 opacity-50"
 						/>
 
 						{/* 2. The Foreground Layer: Perfectly proportioned, showing the whole picture */}
-						<img
-							src={participantPhotoUrl}
+						<ParticipantPhoto
+							url={participantPhotoUrl}
 							alt="Participant"
 							className="relative z-10 w-full h-full object-contain"
 						/>

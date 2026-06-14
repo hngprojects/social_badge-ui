@@ -47,7 +47,7 @@ export function Layout1({
 					)}
 				</div>
 			</div>
-			<div className="absolute top-48 px-8 w-full">
+			<div className="absolute top-52 px-8 w-full">
 				<h2
 					style={textStyle}
 					className="text-6xl font-normal uppercase text-black tracking-tight font-league-gothic leading-[0.85]"
@@ -62,7 +62,7 @@ export function Layout1({
 						: ""}
 				</p>
 			</div>
-			<div className="absolute bottom-8.5 w-full text-right px-6">
+			<div className="absolute bottom-8 w-full text-right px-6">
 				<p
 					style={fontStyle}
 					className="text-xl font-normal text-stone-300 font-league-gothic"

@@ -1,7 +1,7 @@
 import {
 	Template4,
 	Template4Left,
-	Template4Right,
+	Template4Right
 } from "@/app/(dashboard)/create-badges/customize/components/customizable-svgs";
 import { LogoPlaceholder } from "../shared/logo-placeholder";
 import { ParticipantPhoto } from "../shared/participant-photo";
@@ -30,8 +30,8 @@ export function Layout4({
 				baseColor={baseColor}
 			/>
 			<div className="absolute top-[22%] left-0 w-full h-[60%] flex">
-				<Template4Left />
-				<Template4Right />
+				<Template4Left/>
+				<Template4Right/>
 			</div>
 
 			<div className="h-[77%] w-full absolute top-0">
@@ -40,7 +40,7 @@ export function Layout4({
 					className="mt-12 mb-6 w-full"
 					logoPreviewUrl={editor.logoPreviewUrl}
 				/>
-				<div className="w-35 h-35 rounded-full bg-white mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden">
+				<div className="w-40 h-40 rounded-full bg-white mx-auto flex items-center justify-center text-black text-[10px] overflow-hidden">
 					{getSafeImageUrl(participantPhotoUrl) ? (
 						<ParticipantPhoto
 							url={participantPhotoUrl}

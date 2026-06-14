@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ParticipantForm from "./participant-form";
 import BadgeReady from "./badge-ready";
+import PasscodeGate from "./passcode-gate";
 import { LivePreview } from "@/app/(dashboard)/components/customize/LivePreview";
 import { getPublicParticipantPage } from "@/app/features/templates/services/templates";
 import { getBadgeCaptureBackground } from "@/app/features/templates/components/badge-preview/utils";
@@ -14,6 +15,7 @@ import { parseCanvasDataToEditorState } from "@/app/features/templates/lib/parse
 
 export default function ParticipantPovClient() {
 	const [isBadgeReady, setIsBadgeReady] = useState(false);
+	const [accessCode, setAccessCode] = useState("");
 	const [participantName, setParticipantName] = useState("");
 	const [participantRole, setParticipantRole] = useState("");
 	const [participantPhotoUrl, setParticipantPhotoUrl] = useState<string | null>(
@@ -27,11 +29,16 @@ export default function ParticipantPovClient() {
 	const {
 		data: badgeResponse,
 		isLoading,
+		error,
 		isError,
 	} = useQuery({
-		queryKey: ["public-participant", slug],
-		queryFn: () => getPublicParticipantPage(slug!),
+		queryKey: ["public-participant", slug, accessCode],
+		queryFn: () => getPublicParticipantPage(slug!, accessCode),
 		enabled: Boolean(slug),
+		retry: (failureCount, error: any) => {
+			if (error?.response?.status === 401) return false;
+			return failureCount < 3;
+		},
 	});
 
 	const baseEditorState = useMemo(() => {
@@ -42,6 +49,7 @@ export default function ParticipantPovClient() {
 			default_caption: d.default_caption ?? "",
 			hashtags: d.hashtags ?? [],
 			logo_url: d.logo_url,
+			access_type: d.access_type,
 		});
 	}, [badgeResponse]);
 
@@ -92,6 +100,21 @@ export default function ParticipantPovClient() {
 		setTimeout(() => URL.revokeObjectURL(url), 0);
 	}, [getBadgeFile]);
 
+	const isUnauthorized = (error as any)?.response?.status === 401;
+	const showGate = isUnauthorized;
+
+	if (isLoading && !badgeResponse) {
+		return (
+			<div className="relative min-h-screen bg-primary-50 flex flex-col items-center justify-center overflow-hidden">
+				<div className="flex items-center justify-center gap-2 p-6">
+					<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.3s]" />
+					<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500 [animation-delay:-0.15s]" />
+					<span className="h-3 w-3 animate-bounce rounded-full bg-primary-500" />
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="relative min-h-screen bg-primary-50 flex flex-col items-center justify-center py-28 lg:py-0 overflow-hidden">
 			{/* Background Blobs */}
@@ -136,53 +159,61 @@ export default function ParticipantPovClient() {
 
 			{/* Main section */}
 			<div className="flex flex-col-reverse lg:flex-row w-full max-w-6xl mx-auto items-center justify-center lg:justify-between gap-10 px-4 lg:px-8 relative z-10 min-w-0">
-				{isBadgeReady ? (
-					<BadgeReady
-						onDownload={handleDownload}
-						defaultCaption={
-							participantCaption || baseEditorState?.defaultCaption
-						}
-					/>
+				{showGate ? (
+					<div className="w-full flex justify-center py-12">
+						<PasscodeGate slug={slug!} onSuccess={(code) => setAccessCode(code)} />
+					</div>
 				) : (
-					<ParticipantForm
-						onSuccess={() => setIsBadgeReady(true)}
-						onNameChange={setParticipantName}
-						onRoleChange={setParticipantRole}
-						onPhotoChange={setParticipantPhotoUrl}
-						onCaptionChange={setParticipantCaption}
-						editorState={editorState}
-					/>
-				)}
+					<>
+						{isBadgeReady ? (
+							<BadgeReady
+								onDownload={handleDownload}
+								defaultCaption={
+									participantCaption || baseEditorState?.defaultCaption
+								}
+							/>
+						) : (
+							<ParticipantForm
+								onSuccess={() => setIsBadgeReady(true)}
+								onNameChange={setParticipantName}
+								onRoleChange={setParticipantRole}
+								onPhotoChange={setParticipantPhotoUrl}
+								onCaptionChange={setParticipantCaption}
+								editorState={editorState}
+							/>
+						)}
 
-				{/* Badge preview */}
-				<div className="w-full max-w-135 shrink-0 min-w-0">
-					{!slug ? (
-						<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-							<p className="text-sm text-gray-500">No badge link provided.</p>
+						{/* Badge preview */}
+						<div className="w-full max-w-135 shrink-0 min-w-0">
+							{!slug ? (
+								<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
+									<p className="text-sm text-gray-500">No badge link provided.</p>
+								</div>
+							) : isLoading ? (
+								<div className="bg-primary-300 w-full h-125 lg:h-155 rounded-3xl animate-pulse" />
+							) : isError ? (
+								<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
+									<p className="text-sm text-gray-500">
+										Failed to load badge. Please try again.
+									</p>
+								</div>
+							) : editorState ? (
+								<LivePreview
+									editor={editorState}
+									participantPhotoUrl={participantPhotoUrl}
+									badgeRef={badgeRef}
+									hideExtras
+									badgeClassName="w-full max-w-110 h-140"
+								/>
+							) : (
+								<div
+									aria-hidden="true"
+									className="preview-section bg-primary-300 w-full max-w-135 h-125 lg:h-155 rounded-3xl"
+								/>
+							)}
 						</div>
-					) : isLoading ? (
-						<div className="bg-primary-300 w-full h-125 lg:h-155 rounded-3xl animate-pulse" />
-					) : isError ? (
-						<div className="flex items-center justify-center bg-primary-300 w-full h-125 lg:h-155 rounded-3xl">
-							<p className="text-sm text-gray-500">
-								Failed to load badge. Please try again.
-							</p>
-						</div>
-					) : editorState ? (
-						<LivePreview
-							editor={editorState}
-							participantPhotoUrl={participantPhotoUrl}
-							badgeRef={badgeRef}
-							hideExtras
-							badgeClassName="w-full max-w-110 h-140"
-						/>
-					) : (
-						<div
-							aria-hidden="true"
-							className="preview-section bg-primary-300 w-full max-w-135 h-125 lg:h-155 rounded-3xl"
-						/>
-					)}
-				</div>
+					</>
+				)}
 			</div>
 		</div>
 	);
