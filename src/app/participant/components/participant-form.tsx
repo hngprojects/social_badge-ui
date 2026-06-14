@@ -88,13 +88,6 @@ export default function ParticipantForm({
 		onSuccess?.();
 	};
 
-	const roleLabel = isHng
-		? editorState?.trackLabel || "TRACK"
-		: editorState?.roleTitleLabel || "ROLE / TITLE";
-	const rolePlaceholder = isHng
-		? editorState?.trackPlaceholder || "e.g. Design"
-		: editorState?.roleTitlePlaceholder || "e.g. Product Designer";
-
 	return (
 		<motion.form
 			onSubmit={handleSubmit(onSubmit)}
@@ -231,7 +224,6 @@ export default function ParticipantForm({
 							editorState?.roleTitlePlaceholder || "e.g. Product Designer"
 						}
 						maxLength={25}
-						onKeyDown={(e) => {}}
 						{...register("role", {
 							onChange: (e) => onRoleChange?.(e.target.value),
 						})}
