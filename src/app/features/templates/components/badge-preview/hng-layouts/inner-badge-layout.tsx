@@ -1,7 +1,6 @@
 import BadgeSvg, { FivePercent } from "../shared/badge-svg";
+import { isHngLayout } from "../utils";
 import type { InnerBadgeLayoutProps } from "../types";
-import { ParticipantPhoto } from "../shared/participant-photo";
-import { getSafeImageUrl, isHngLayout } from "../utils";
 
 export function InnerBadgeLayout({
 	editor,
@@ -57,29 +56,29 @@ export function InnerBadgeLayout({
 				)}
 			</div>
 
-			<div className="w-full h-full flex justify-center items-center rounded-4xl overflow-hidden text-black relative">
-				{getSafeImageUrl(participantPhotoUrl) ? (
-					<>
-						{/* 1. The Background Layer: Stretched and blurred to fill the sides */}
-						<ParticipantPhoto
-							url={participantPhotoUrl}
-							alt=""
-							className="absolute inset-0 w-full h-full object-cover blur-md scale-110 opacity-50"
-						/>
-
-						{/* 2. The Foreground Layer: Perfectly proportioned, showing the whole picture */}
-						<ParticipantPhoto
-							url={participantPhotoUrl}
+			<div className="relative border-5 rounded-4xl min-h-53 flex justify-center items-center w-60 h-[40%] mx-auto bg-[#ECF5D6] border-white">
+				<div className="w-full h-full flex justify-center items-center rounded-4xl overflow-hidden text-black">
+					{participantPhotoUrl ? (
+						// eslint-disable-next-line @next/next/no-img-element
+						<img
+							src={participantPhotoUrl}
 							alt="Participant"
-							className="relative z-10 w-full h-full object-contain"
+							className="w-full h-full object-cover"
 						/>
-					</>
-				) : editor.allowParticipantPhoto ? (
-					"Photo"
-				) : (
-					""
-				)}
+					) : editor.allowParticipantPhoto ? (
+						"Photo"
+					) : (
+						""
+					)}
+				</div>
+				<div className="absolute -bottom-6 -right-7 w-20 h-20 flex justify-center items-center">
+					<BadgeSvg className={svgFill} />
+					<span className="absolute flex flex-col justify-center items-center font-semibold">
+						<FivePercent className={percentIConFill} />
+					</span>
+				</div>
 			</div>
+
 			<div className="text-center -mt-2">
 				<span
 					className="font-bricolage text-[24px] font-semibold"
