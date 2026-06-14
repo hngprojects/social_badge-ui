@@ -15,7 +15,8 @@ import { DEFAULT_CAPTION } from "../constants";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { ImageCropper } from "@/components/image-cropper";
 
 export default function ParticipantForm({
 	onSuccess,
@@ -23,6 +24,7 @@ export default function ParticipantForm({
 	onNameChange,
 	onRoleChange,
 	onPhotoChange,
+	onCancel,
 	onCaptionChange,
 	editorState,
 }: {
@@ -31,9 +33,13 @@ export default function ParticipantForm({
 	onNameChange?: (name: string) => void;
 	onRoleChange?: (role: string) => void;
 	onPhotoChange?: (url: string | null) => void;
+	onCancel?: () => void;
 	onCaptionChange?: (caption: string) => void;
 	editorState: CustomizeEditorState | null;
 }) {
+	const [tempImage, setTempImage] = useState<string | null>(null);
+	const [isCropperOpen, setIsCropperOpen] = useState(false);
+
 	const isHng = editorState?.layoutId.startsWith("hng_finalist_");
 	const showName = editorState?.participantNameVisible ?? true;
 	const showRole = isHng
@@ -159,11 +165,6 @@ export default function ParticipantForm({
 						const file = e.target.files?.[0];
 						if (!file) return;
 
-						setValue("avatar", file, {
-							shouldValidate: true,
-							shouldDirty: true,
-						});
-
 						const toBase64 = (f: File): Promise<string> =>
 							new Promise((res, rej) => {
 								const reader = new FileReader();
@@ -174,13 +175,43 @@ export default function ParticipantForm({
 
 						try {
 							const base64 = await toBase64(file);
-							onPhotoChange?.(base64);
+							setTempImage(base64);
+							setIsCropperOpen(true);
 						} catch (err) {
 							console.error("Failed to convert image to base64:", err);
-							onPhotoChange?.(URL.createObjectURL(file));
 						}
 					}}
 				/>
+
+				{tempImage && (
+					<ImageCropper
+						open={isCropperOpen}
+						image={tempImage}
+						onCropComplete={async (croppedImage) => {
+							setIsCropperOpen(false);
+							onPhotoChange?.(croppedImage);
+
+							// Convert base64 to File for form validation
+							try {
+								const res = await fetch(croppedImage);
+								const blob = await res.blob();
+								const file = new File([blob], "avatar.jpg", { type: "image/jpeg" });
+								
+								setValue("avatar", file, {
+									shouldValidate: true,
+									shouldDirty: true,
+								});
+							} catch (err) {
+								console.error("Failed to convert cropped image to file:", err);
+							}
+						}}
+						onCancel={() => {
+							setIsCropperOpen(false);
+							setTempImage(null);
+						}}
+						aspectRatio={1}
+					/>
+				)}
 
 				<p className="text-neutral-400 text-[12.5px] font-sans break-words">
 					SVG recommended for crisp display. PNG works too (min 240 × 240px).
