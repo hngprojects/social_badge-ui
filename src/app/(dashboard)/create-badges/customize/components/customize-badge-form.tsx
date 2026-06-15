@@ -61,6 +61,7 @@ export function CustomizeBadgeForm({
 			accessCode: editor.accessCode,
 			fontId: editor.fontId,
 			paletteId: editor.paletteId,
+			badgeTitle: editor.badgeTitle || "Finalist",
 			bgMode: editor.isSplit ? "split" : editor.bgMode,
 			secondaryColor: editor.secSolidColor,
 			textColor: editor.textColor,
@@ -76,6 +77,7 @@ export function CustomizeBadgeForm({
     ...formValues,
     title: formValues.eventName || editor.title,
     eventName: formValues.eventName || editor.eventName,
+    badgeTitle: formValues.badgeTitle || editor.badgeTitle,
     bgMode: formValues.bgMode ?? editor.bgMode,
     secSolidColor: formValues.secondaryColor ?? editor.secSolidColor,
   };
@@ -146,6 +148,7 @@ export function CustomizeBadgeForm({
         <form id="badge-form" onSubmit={(e) => e.preventDefault()} className="w-full space-y-6 mt-9">
           <BrandSection
             register={register}
+            control={control}
             editor={previewEditor}
             eventNameValue={formValues.eventName || ""}
             onChange={(p) => {

@@ -7,15 +7,17 @@ import {
 	TextInput,
 	HelperText,
 	BadgeDatePicker,
+	BadgeDropdown,
 } from "./ui";
 import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
 import type { LayoutCapabilities } from "@/app/features/templates/constants/layout-mapping";
 
-import type { UseFormRegister } from "react-hook-form";
+import { Controller, type UseFormRegister, type Control } from "react-hook-form";
 import type { CustomizeBadgeFormValues } from "@/schemas/template";
 
 interface BrandSectionProps {
 	register: UseFormRegister<CustomizeBadgeFormValues>;
+	control: Control<CustomizeBadgeFormValues>;
 	editor: CustomizeEditorState;
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	layoutCaps: LayoutCapabilities;
@@ -24,6 +26,7 @@ interface BrandSectionProps {
 
 export function BrandSection({
 	register,
+	control,
 	editor,
 	onChange,
 	layoutCaps,
@@ -132,6 +135,27 @@ export function BrandSection({
 						<HelperText>Shown alongside the date on the badge.</HelperText>
 					</div>
 				</>
+			)}
+
+			{editor.layoutId.startsWith("hng_finalist_") && (
+				<div className="pt-4 border-t border-gray-100">
+					<FieldLabel label="Badge Title" required />
+					<Controller
+						name="badgeTitle"
+						control={control}
+						render={({ field }) => (
+							<BadgeDropdown
+								value={field.value || "Finalist"}
+								onChange={field.onChange}
+								options={[
+									{ label: "Finalist", value: "Finalist" },
+									{ label: "Mentor", value: "Mentor" },
+								]}
+							/>
+						)}
+					/>
+					<HelperText>Select the role title to display at the top of the badge.</HelperText>
+				</div>
 			)}
 		</SectionCard>
 	);
