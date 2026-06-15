@@ -11,6 +11,7 @@ export const customizeBadgeSchema = z.object({
   trackRequired: z.boolean().default(false),
   roleTitleRequired: z.boolean().default(false),
   allowParticipantPhoto: z.boolean().default(true),
+  badgeTitle: z.string().optional().default("Finalist"),
   defaultCaption: z.string().optional(),
   hashtags: z.array(z.string()).optional(),
   fontId: z.string().optional(),

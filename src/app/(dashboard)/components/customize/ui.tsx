@@ -142,6 +142,35 @@ export function Toggle({
 	return <Switch checked={checked} onCheckedChange={onChange} />;
 }
 
+/* ── BadgeDropdown ──────────────────────────────────────────────────────── */
+
+export function BadgeDropdown({
+  value,
+  onChange,
+  options,
+  placeholder = "Select option",
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: { label: string; value: string }[];
+  placeholder?: string;
+}) {
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className="!w-full !h-12 px-4 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus:ring-orange-500/20 focus:border-orange-500 ring-offset-0 focus:ring-0">
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent position="popper" side="bottom" sideOffset={4}>
+        {options.map((opt) => (
+          <SelectItem key={opt.value} value={opt.value}>
+            {opt.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+
 /* ── BadgeDatePicker ────────────────────────────────────────────────────── */
 
 export function BadgeDatePicker({
@@ -163,7 +192,7 @@ export function BadgeDatePicker({
   };
 
   const triggerClass =
-    "flex-1 h-12 px-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500";
+    "flex-1 !h-12 px-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500";
 
   return (
     <div className="flex gap-2">
