@@ -72,11 +72,22 @@ export default async function getCroppedImg(
 		return null;
 	}
 
-	// Set the size of the cropped canvas
-	croppedCanvas.width = pixelCrop.width;
-	croppedCanvas.height = pixelCrop.height;
+	// Cap output dimensions so the inlined data URL stays small. The photo only
+	// renders in a ~240px box, so a full-resolution crop (e.g. 3000px from a phone
+	// photo) bloats the base64 string, slows decode inside html-to-image's
+	// foreignObject (worsening the capture race), and can hit browser data-URL
+	// source-length limits. Downscaling keeps quality while removing both risks.
+	const MAX_DIM = 1000;
+	const scale = Math.min(
+		1,
+		MAX_DIM / Math.max(pixelCrop.width, pixelCrop.height),
+	);
 
-	// Draw the cropped image onto the new canvas
+	// Set the size of the cropped canvas
+	croppedCanvas.width = Math.round(pixelCrop.width * scale);
+	croppedCanvas.height = Math.round(pixelCrop.height * scale);
+
+	// Draw the cropped image onto the new canvas, scaling to the capped size
 	croppedCtx.drawImage(
 		canvas,
 		pixelCrop.x,
@@ -85,12 +96,12 @@ export default async function getCroppedImg(
 		pixelCrop.height,
 		0,
 		0,
-		pixelCrop.width,
-		pixelCrop.height,
+		croppedCanvas.width,
+		croppedCanvas.height,
 	);
 
 	// As Base64 string
-	return croppedCanvas.toDataURL("image/jpeg");
+	return croppedCanvas.toDataURL("image/jpeg", 0.9);
 
 	// As a blob
 	// return new Promise((resolve, reject) => {
