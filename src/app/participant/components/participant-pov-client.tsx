@@ -13,6 +13,7 @@ import { LivePreview } from "@/app/(dashboard)/components/customize/LivePreview"
 import { getPublicParticipantPage } from "@/app/features/templates/services/templates";
 import { getBadgeCaptureBackground } from "@/app/features/templates/components/badge-preview/utils";
 import { parseCanvasDataToEditorState } from "@/app/features/templates/lib/parse-canvas-data";
+import { captureNodeToPng } from "@/lib/capture-badge";
 
 export default function ParticipantPovClient() {
 	const [isBadgeReady, setIsBadgeReady] = useState(false);
@@ -84,8 +85,6 @@ export default function ParticipantPovClient() {
 		const objectUrls: string[] = [];
 
 		try {
-			const { toPng } = await import("html-to-image");
-
 			// 1. Pre-fetch all CSS background-image URLs inside the node as blobs
 			// CSS backgrounds are often missed by serialization libraries, so we inline them manually.
 			const elementsWithBg = Array.from(
@@ -133,8 +132,10 @@ export default function ParticipantPovClient() {
 				),
 			);
 
-			// 3. Capture the badge as PNG data URL
-			const dataUrl = await toPng(badgeRef.current, {
+			// 3. Capture the badge as PNG data URL. captureNodeToPng awaits fonts
+			// and runs warm-up passes to work around a WebKit foreignObject bug that
+			// drops the inner photo on a cold decode (see src/lib/capture-badge.ts).
+			const dataUrl = await captureNodeToPng(badgeRef.current, {
 				pixelRatio: 2,
 				backgroundColor: getBadgeCaptureBackground(editorState),
 				cacheBust: true,
