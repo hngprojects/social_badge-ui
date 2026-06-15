@@ -178,7 +178,7 @@ export interface CustomizeEditorState {
 	trackPlaceholder?: string;
 	trackVisible?: boolean;
 	trackRequired?: boolean;
-	badgeTitle?: string;
+	badgeTitle?: "Finalist" | "Mentor";
 	percentileBadge?: string;
 	allowParticipantPhoto: boolean;
 	logo: CanvasLogo | null;

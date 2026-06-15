@@ -267,7 +267,7 @@ export function parseCanvasDataToEditorState(
 		trackPlaceholder: trackPlaceholder || "e.g. Design",
 		trackVisible: Boolean(trackField?.visible ?? true),
 		trackRequired: trackField?.type === "participant_input" ? trackField.required : false,
-		badgeTitle: badgeTitleField?.value ?? "Finalist",
+		badgeTitle: (badgeTitleField?.value as "Finalist" | "Mentor") ?? "Finalist",
 		percentileBadge: percentileField?.value ?? "Top 5%",
 		allowParticipantPhoto: hasPhoto,
 		logo: canvas.logo,
