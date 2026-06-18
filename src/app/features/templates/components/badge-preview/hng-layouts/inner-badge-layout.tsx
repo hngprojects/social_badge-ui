@@ -16,6 +16,7 @@ export function InnerBadgeLayout({
 }: InnerBadgeLayoutProps) {
 	const isHng = isHngLayout(editor.layoutId);
 	const badgeTitle = isHng ? editor.badgeTitle || "Finalist" : "Finalist";
+	const showBadgeMarker = badgeTitle !== "Mentor";
 	const trackValue = isHng
 		? editor.trackVisible === true
 			? editor.trackPlaceholder || "Virtual Assistant"
@@ -71,12 +72,14 @@ export function InnerBadgeLayout({
 						""
 					)}
 				</div>
-				<div className="absolute -bottom-6 -right-7 w-20 h-20 flex justify-center items-center">
-					<BadgeSvg className={svgFill} />
-					<span className="absolute flex flex-col justify-center items-center font-semibold">
-						<FivePercent className={percentIConFill} />
-					</span>
-				</div>
+				{showBadgeMarker && (
+					<div className="absolute -bottom-6 -right-7 w-20 h-20 flex justify-center items-center">
+						<BadgeSvg className={svgFill} />
+						<span className="absolute flex flex-col justify-center items-center font-semibold">
+							<FivePercent className={percentIConFill} />
+						</span>
+					</div>
+				)}
 			</div>
 
 			<div className="text-center -mt-2">
