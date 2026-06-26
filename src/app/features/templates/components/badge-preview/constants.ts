@@ -15,6 +15,11 @@ export const HNG_ASSETS = {
 	decorations: {
 		confetti: "/assets/badges/confetti.webp",
 	},
+	trademark: {
+		logo: "/assets/logo.svg",
+		brandName: "Flare Tag",
+		url: "flaretag.hng14.com"
+	}
 } as const;
 
 export const HNG_LAYOUT_IDS = new Set([

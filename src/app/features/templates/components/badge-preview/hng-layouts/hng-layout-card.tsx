@@ -3,6 +3,7 @@ import type { HngCardThemeKey, TemplateLayoutProps } from "../types";
 import { buildBgStyle } from "../utils";
 import { Confetti } from "./coffetti";
 import { HNG_CARD_THEMES } from "./hng-card-config";
+import { HNG_ASSETS } from "../constants";
 import { InnerBadgeLayout } from "./inner-badge-layout";
 
 interface HngLayoutCardProps extends TemplateLayoutProps {
@@ -28,6 +29,7 @@ export function HngLayoutCard({
 			data-badge-root
 			className="relative h-full w-full overflow-hidden rounded-[18px]"
 		>
+			{/* BACKGROUND IMAGE */}
 			{editor.bgMode === "image" && (
 				<HngBackgroundImage
 					key={theme.background}
@@ -35,9 +37,13 @@ export function HngLayoutCard({
 					editor={editor}
 				/>
 			)}
+			{/* CONTAINER WITH THE EDITABLE CONTENT ON IT */}
 			<div className={contentClassName} style={bgStyle}>
 				<Confetti />
 				<InnerBadgeLayout
+				trademarkLogo={HNG_ASSETS.trademark.logo}
+				trademarkURL={HNG_ASSETS.trademark.url}
+				trademarkBrandName= {HNG_ASSETS.trademark.brandName}
 					editor={editor}
 					participantPhotoUrl={participantPhotoUrl}
 					{...theme.resolveInnerProps(textColor)}

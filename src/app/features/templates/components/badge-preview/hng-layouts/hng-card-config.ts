@@ -10,10 +10,12 @@ export const HNG_CARD_THEMES = {
 			roleBgColor: "#00AEFF",
 			nameTextColor: textColor || "#000000",
 			roleTextColor: textColor || "#000000",
+			trademarkColor: "black",
 			svgFill: "text-[#00AEFF]",
 			percentIConFill: "text-white",
 			logoUrl: HNG_ASSETS.logos.blue,
 		}),
+		
 	},
 	pm: {
 		background: HNG_ASSETS.backgrounds.pm,
@@ -23,10 +25,13 @@ export const HNG_CARD_THEMES = {
 			headingTextColor: "#00AEFF",
 			nameTextColor: textColor || "#000000",
 			roleTextColor: textColor || "#000000",
+			trademarkColor: "black",
 			svgFill: "text-[#00AEFF]",
 			percentIConFill: "text-white",
 			logoUrl: HNG_ASSETS.logos.blue,
 		}),
+
+		
 	},
 	default: {
 		background: HNG_ASSETS.backgrounds.default,
@@ -35,6 +40,7 @@ export const HNG_CARD_THEMES = {
 			roleBgColor: "#AFF47F",
 			nameTextColor: textColor || "#ffffff",
 			roleTextColor: textColor || "#000000",
+		trademarkColor: "black",
 			logoUrl: HNG_ASSETS.logos.white,
 		}),
 	},
@@ -46,6 +52,7 @@ export const HNG_CARD_THEMES = {
 			roleBgColor: "#AFF47F",
 			nameTextColor: textColor || "#000000",
 			roleTextColor: textColor || "#000000",
+		trademarkColor: "white",
 			logoUrl: HNG_ASSETS.logos.black,
 		}),
 	},
@@ -58,9 +65,11 @@ export const HNG_CARD_THEMES = {
 			roleBorderColor: "#FFD700",
 			nameTextColor: textColor || "#ffffff",
 			roleTextColor: textColor || "#000000",
+		trademarkColor: "white",
 			logoUrl: HNG_ASSETS.logos.orange,
 			svgFill: "text-[#F1C21C]",
 			percentIConFill: "text-white",
 		}),
+
 	},
 } satisfies Record<HngCardThemeKey, HngCardTheme>;
