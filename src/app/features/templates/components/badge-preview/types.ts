@@ -22,10 +22,17 @@ export interface InnerBadgeLayoutProps {
 	participantPhotoUrl?: string | null;
 	logoUrl?: string;
 	roleBorderColor?: string;
-	trademarkColor?: "black" | "white";
-	trademarkLogo?: string | undefined;
-	trademarkBrandName?: "Flare Tag";
-	trademarkURL?: "flaretag.hng14.com";
+	watermarkColor?: "black" | "white";
+	watermarkLogo?: string | undefined;
+	watermarkBrandName?: "Flare Tag";
+	watermarkURL?: "flaretag.hng14.com";
+}
+
+export interface WatermarkProps {
+	watermarkColor?: string;
+	watermarkLogo?: string | undefined;
+	watermarkBrandName?: string;
+	watermarkURL?: string;
 }
 
 export interface CustomTemplatePreviewProps {
@@ -40,7 +47,7 @@ export interface HngCardTheme {
 	centerContent?: boolean;
 	resolveInnerProps: (
 		textColor?: string,
-	) => Omit<InnerBadgeLayoutProps, "editor" | "participantPhotoUrl" | "trademarkURL" | "trademarkBrandName" |"trademarkLogo">;
+	) => Omit<InnerBadgeLayoutProps, "editor" | "participantPhotoUrl" | "watermarkURL" | "watermarkBrandName" |"watermarkLogo">;
 	
 
 }

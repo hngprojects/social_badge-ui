@@ -41,9 +41,9 @@ export function HngLayoutCard({
 			<div className={contentClassName} style={bgStyle}>
 				<Confetti />
 				<InnerBadgeLayout
-				trademarkLogo={HNG_ASSETS.trademark.logo}
-				trademarkURL={HNG_ASSETS.trademark.url}
-				trademarkBrandName= {HNG_ASSETS.trademark.brandName}
+				watermarkLogo={HNG_ASSETS.watermark.logo}
+				watermarkURL={HNG_ASSETS.watermark.url}
+				watermarkBrandName= {HNG_ASSETS.watermark.brandName}
 					editor={editor}
 					participantPhotoUrl={participantPhotoUrl}
 					{...theme.resolveInnerProps(textColor)}

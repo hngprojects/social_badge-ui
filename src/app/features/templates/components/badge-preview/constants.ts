@@ -15,7 +15,7 @@ export const HNG_ASSETS = {
 	decorations: {
 		confetti: "/assets/badges/confetti.webp",
 	},
-	trademark: {
+	watermark: {
 		logo: "/assets/logo.svg",
 		brandName: "Flare Tag",
 		url: "flaretag.hng14.com"
