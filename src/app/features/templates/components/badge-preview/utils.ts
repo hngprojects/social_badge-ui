@@ -42,7 +42,7 @@ export function getBadgeCaptureBackground(editor: CustomizeEditorState): string 
 	if (editor.bgMode === "gradient" && editor.gradientColors?.[0]) {
 		return editor.gradientColors[0];
 	}
-	return "#ffffff";
+	return "transparent";
 }
 
 export function buildBgStyle(editor: CustomizeEditorState): CSSProperties {
