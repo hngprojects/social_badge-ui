@@ -1,6 +1,6 @@
 import { HngBackgroundImage } from "../shared/hng-background-image";
 import type { HngCardThemeKey, TemplateLayoutProps } from "../types";
-import { buildBgStyle } from "../utils";
+import { buildBgStyle, getWatermarkColorForBackground } from "../utils";
 import { Confetti } from "./coffetti";
 import { HNG_CARD_THEMES } from "./hng-card-config";
 import { HNG_ASSETS } from "../constants";
@@ -19,6 +19,7 @@ export function HngLayoutCard({
 }: HngLayoutCardProps) {
 	const theme = HNG_CARD_THEMES[themeKey];
 	const bgStyle = buildBgStyle(editor);
+	const watermarkColor = getWatermarkColorForBackground(editor)
 	const contentClassName = theme.centerContent
 		? "relative z-10 w-full h-full flex flex-col items-center justify-center text-white font-bricolage"
 		: "relative z-10 w-full h-full flex flex-col justify-center text-white font-bricolage";
@@ -42,11 +43,11 @@ export function HngLayoutCard({
 				<Confetti />
 				<InnerBadgeLayout
 				watermarkLogo={HNG_ASSETS.watermark.logo}
-				watermarkURL={HNG_ASSETS.watermark.url}
 				watermarkBrandName= {HNG_ASSETS.watermark.brandName}
 					editor={editor}
 					participantPhotoUrl={participantPhotoUrl}
 					{...theme.resolveInnerProps(textColor)}
+					watermarkColor={watermarkColor}
 				/>
 			</div>
 		</div>

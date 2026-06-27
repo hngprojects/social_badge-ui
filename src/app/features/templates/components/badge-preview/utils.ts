@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { CustomizeEditorState } from "../../types/canvas-data";
-import { HNG_LAYOUT_IDS } from "./constants";
+import { HNG_LAYOUT_IDS } from "./constants";;
 
 export function isHngLayout(layoutId: string): boolean {
 	return HNG_LAYOUT_IDS.has(layoutId);
@@ -44,6 +44,34 @@ export function getBadgeCaptureBackground(editor: CustomizeEditorState): string 
 	}
 	return "transparent";
 }
+
+export function isLighterColor(hex:string):boolean{
+const normalized = hex.replace("#", "");
+
+const r = parseInt(normalized.slice(0,2), 16);
+const g = parseInt(normalized.slice(2,4), 16);
+const b = parseInt(normalized.slice(4,6), 16);
+
+const brightness = (r*299 + g*587 + b*114) /1000;
+
+return brightness > 160;
+}
+
+
+
+export function getWatermarkColorForBackground(editor: CustomizeEditorState): "black" | "white" {
+let bgColor: string | null = null;
+
+if (editor.bgMode === "solid") {
+	bgColor = editor.solidColor
+}else if ( editor.bgMode === "gradient"){
+	bgColor = editor.gradientColors?.[0]
+}
+	if (!bgColor) return "black";
+	return isLighterColor(bgColor) ? "black" : "white"
+}
+
+
 
 export function buildBgStyle(editor: CustomizeEditorState): CSSProperties {
 	if (editor.bgMode === "gradient") {
