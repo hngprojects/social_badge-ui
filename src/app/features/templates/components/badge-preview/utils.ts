@@ -74,10 +74,6 @@ function getRepresentativeBgColor(editor: CustomizeEditorState): string | null {
 		return editor.solidColor;
 	}
 
-	if (editor.bgMode === "image") {
-		return editor.gradientColors?.[0] ?? editor.solidColor;
-	}
-
 	return null;
 }
 
@@ -85,6 +81,11 @@ function getRepresentativeBgColor(editor: CustomizeEditorState): string | null {
 
 
 export function getWatermarkColorForBackground(editor: CustomizeEditorState): "black" | "white" {
+		if (editor.bgMode === "image") {
+			// Image backgrounds don't expose a representative color.
+    // Use the default branded watermark color.
+		return "black";
+	}
 const bgColor = getRepresentativeBgColor(editor);
 	if (!bgColor) return "black";
 	return isLighterColor(bgColor) ? "black" : "white"
