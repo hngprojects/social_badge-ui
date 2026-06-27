@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { CustomizeEditorState } from "../../types/canvas-data";
-import { HNG_LAYOUT_IDS } from "./constants";;
+import { HNG_LAYOUT_IDS } from "./constants";
 
 export function isHngLayout(layoutId: string): boolean {
 	return HNG_LAYOUT_IDS.has(layoutId);
@@ -57,19 +57,39 @@ const brightness = (r*299 + g*587 + b*114) /1000;
 return brightness > 160;
 }
 
+function getRepresentativeBgColor(editor: CustomizeEditorState): string | null {
+	if (editor.bgMode === "solid") {
+		return editor.solidColor;
+	}
+
+	if (editor.bgMode === "gradient") {
+		return editor.gradientColors?.[0] ?? null;
+	}
+
+	if (editor.bgMode === "split") {
+		if (editor.priBgMode === "gradient") {
+			return editor.gradientColors?.[0] ?? null;
+		}
+
+		return editor.solidColor;
+	}
+
+	if (editor.bgMode === "image") {
+		return editor.gradientColors?.[0] ?? editor.solidColor;
+	}
+
+	return null;
+}
+
+
 
 
 export function getWatermarkColorForBackground(editor: CustomizeEditorState): "black" | "white" {
-let bgColor: string | null = null;
-
-if (editor.bgMode === "solid") {
-	bgColor = editor.solidColor
-}else if ( editor.bgMode === "gradient"){
-	bgColor = editor.gradientColors?.[0]
-}
+const bgColor = getRepresentativeBgColor(editor);
 	if (!bgColor) return "black";
 	return isLighterColor(bgColor) ? "black" : "white"
 }
+
 
 
 
