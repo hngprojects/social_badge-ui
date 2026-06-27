@@ -4,7 +4,7 @@ import { DM_Sans } from "next/font/google";
 import { Plus_Jakarta_Sans, League_Gothic, Bricolage_Grotesque} from "next/font/google";
 import Providers from "@/components/providers/providers";
 import { Toaster } from "sonner";
-export const dmSans = DM_Sans({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
   weight: ["400", "500", "600"],
