@@ -25,6 +25,7 @@ export interface InnerBadgeLayoutProps {
 	watermarkColor?: "black" | "white";
 	watermarkLogo?: string | undefined;
 	watermarkBrandName?: "Flare Tag";
+	// Bound to chnage with change in domain name
 	watermarkURL?: "flaretag.hng14.com";
 }
 

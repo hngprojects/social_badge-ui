@@ -1,7 +1,7 @@
 import BadgeSvg, { FivePercent } from "../shared/badge-svg";
 import { isHngLayout } from "../utils";
 import type { InnerBadgeLayoutProps } from "../types";
-import { Watermark } from "@/app/(dashboard)/create-badges/customize/components/watermark";
+import { Watermark } from "@/app/features/templates/components/badge-preview/watermark";
 
 export function InnerBadgeLayout({
 	editor,
@@ -15,7 +15,6 @@ export function InnerBadgeLayout({
 	logoUrl,
 	roleBorderColor,watermarkLogo,
 	watermarkBrandName,
-	watermarkURL,
 	watermarkColor
 }: InnerBadgeLayoutProps) {
 	const isHng = isHngLayout(editor.layoutId);
@@ -100,7 +99,7 @@ export function InnerBadgeLayout({
 				</span>
 
 				{/* How can we set a proper color for our brand text that sits on the BG? */}
-				{watermarkURL && <Watermark watermarkColor={watermarkColor} watermarkBrandName={watermarkBrandName} watermarkLogo={watermarkLogo} watermarkURL={watermarkURL} />}
+				<Watermark watermarkColor={watermarkColor} watermarkBrandName={watermarkBrandName} watermarkLogo={watermarkLogo}  />
 			</div>
 		</div>
 	);
