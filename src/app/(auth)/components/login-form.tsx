@@ -93,7 +93,7 @@ export const LoginForm = () => {
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"
-            className="font-bold text-[#B53D00] hover:text-[#8f2e00]"
+            className="font-bold text-[#B53D00] hover:text-primary"
           >
             Sign up
           </Link>

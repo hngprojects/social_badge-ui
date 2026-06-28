@@ -14,6 +14,7 @@ export const HNG_CARD_THEMES = {
 			percentIConFill: "text-white",
 			logoUrl: HNG_ASSETS.logos.blue,
 		}),
+		
 	},
 	pm: {
 		background: HNG_ASSETS.backgrounds.pm,
@@ -27,6 +28,8 @@ export const HNG_CARD_THEMES = {
 			percentIConFill: "text-white",
 			logoUrl: HNG_ASSETS.logos.blue,
 		}),
+
+		
 	},
 	default: {
 		background: HNG_ASSETS.backgrounds.default,
@@ -62,5 +65,6 @@ export const HNG_CARD_THEMES = {
 			svgFill: "text-[#F1C21C]",
 			percentIConFill: "text-white",
 		}),
+
 	},
 } satisfies Record<HngCardThemeKey, HngCardTheme>;

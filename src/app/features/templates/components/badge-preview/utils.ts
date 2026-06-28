@@ -42,8 +42,57 @@ export function getBadgeCaptureBackground(editor: CustomizeEditorState): string 
 	if (editor.bgMode === "gradient" && editor.gradientColors?.[0]) {
 		return editor.gradientColors[0];
 	}
-	return "#ffffff";
+	return "transparent";
 }
+
+export function isLighterColor(hex:string):boolean{
+const normalized = hex.replace("#", "");
+
+const r = parseInt(normalized.slice(0,2), 16);
+const g = parseInt(normalized.slice(2,4), 16);
+const b = parseInt(normalized.slice(4,6), 16);
+
+const brightness = (r*299 + g*587 + b*114) /1000;
+
+return brightness > 160;
+}
+
+function getRepresentativeBgColor(editor: CustomizeEditorState): string | null {
+	if (editor.bgMode === "solid") {
+		return editor.solidColor;
+	}
+
+	if (editor.bgMode === "gradient") {
+		return editor.gradientColors?.[0] ?? null;
+	}
+
+	if (editor.bgMode === "split") {
+		if (editor.priBgMode === "gradient") {
+			return editor.gradientColors?.[0] ?? null;
+		}
+
+		return editor.solidColor;
+	}
+
+	return null;
+}
+
+
+
+
+export function getWatermarkColorForBackground(editor: CustomizeEditorState): "black" | "white" {
+		if (editor.bgMode === "image") {
+			// Image backgrounds don't expose a representative color.
+    // Use the default branded watermark color.
+		return "black";
+	}
+const bgColor = getRepresentativeBgColor(editor);
+	if (!bgColor) return "black";
+	return isLighterColor(bgColor) ? "black" : "white"
+}
+
+
+
 
 export function buildBgStyle(editor: CustomizeEditorState): CSSProperties {
 	if (editor.bgMode === "gradient") {
