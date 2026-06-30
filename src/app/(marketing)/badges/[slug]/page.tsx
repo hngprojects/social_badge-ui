@@ -2,7 +2,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { usePublishedBadge } from "@/app/features/templates/hooks/usePublishedBadge";
+import { usePublishedBadge } from "@/app/features/badges/hooks/use-published-badge";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";

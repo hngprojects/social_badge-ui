@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { incrementBadgeShare } from "../services/badge";
-import { badgeAnalyticsKey } from "@/app/(dashboard)/hooks/use-badge-analytics";
-import { organizerTemplateInstancesRootKey } from "@/app/(dashboard)/hooks/use-organizer-template-instances";
+import { badgeAnalyticsKey } from "@/app/features/dashboard/hooks/use-badge-analytics";
+import { organizerTemplateInstancesRootKey } from "@/app/features/dashboard/hooks/use-organizer-template-instances";
 
 export const useIncrementBadgeShare = () => {
 	const queryClient = useQueryClient();

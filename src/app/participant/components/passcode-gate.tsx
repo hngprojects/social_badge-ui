@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { getPublicParticipantPage } from "@/app/features/templates/services/templates";
+import { getPublicParticipantPage } from "@/app/features/badges/services/templates";
 import { Lock } from "lucide-react";
 
 interface PasscodeGateProps {

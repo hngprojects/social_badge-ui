@@ -1,7 +1,7 @@
-import { OrganizerTemplateInstance } from "../../types/dashboard/organizer-template-instances";
-import { STATUS_STYLES_LOWERCASE } from "../../constants/dashboard";
+import { STATUS_STYLES_LOWERCASE } from "@/app/features/dashboard/constants";
+import { OrganizerTemplateInstance } from "@/app/features/dashboardLayout/types";
 
-export function StatusPill({
+export default function StatusPill({
   status,
 }: {
   status: OrganizerTemplateInstance["status"];

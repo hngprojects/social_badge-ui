@@ -1,1 +1,1 @@
-export { default } from "@/app/features/templates/components/badge-preview/shared/placeholder-logo";
+export { default } from "@/app/features/badges/components/badge-preview/shared/placeholder-logo";

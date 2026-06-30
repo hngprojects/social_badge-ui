@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { LivePreview } from "@/app/(dashboard)/components/customize/LivePreview";
-import { StyleSection } from "@/app/(dashboard)/components/customize/StyleSection";
-import { createDefaultEditorState } from "@/app/features/templates/lib/parse-canvas-data";
-import { useCustomizeEditorState } from "@/app/features/templates/hooks/useCustomizeEditor";
-import { CustomTemplatePreview } from "@/app/features/templates/components/badge-preview/CustomTemplatePreview";
-import type { LayoutId } from "@/app/features/templates/components/badge-preview/layout-registry";
-import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
+import { LivePreview } from "@/app/features/customize/components/LivePreview";
+import { StyleSection } from "@/app/features/customize/components/StyleSection";
+import { createDefaultEditorState } from "@/app/features/badges/lib/parse-canvas-data";
+import { useCustomizeEditorState } from "@/app/features/badges/hooks/use-customize-editor";
+import { CustomTemplatePreview } from "@/app/features/badges/components/badge-preview/CustomTemplatePreview";
+import type { LayoutId } from "@/app/features/badges/components/badge-preview/layout-registry";
+import type { CustomizeEditorState } from "@/app/features/customize/canvas-data";
 
 const TEST_TEMPLATES = [
 	{ id: "tpl_1", label: "Template 1" },

@@ -1,1 +1,1 @@
-export { CustomTemplatePreview } from "@/app/features/templates/components/badge-preview/CustomTemplatePreview";
+export { CustomTemplatePreview } from "@/app/features/badges/components/badge-preview/CustomTemplatePreview";
