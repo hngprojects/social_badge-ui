@@ -9,10 +9,10 @@ import Link from "next/link";
 import ParticipantForm from "./participant-form";
 import BadgeReady from "./badge-ready";
 import PasscodeGate from "./passcode-gate";
-import { LivePreview } from "@/app/(dashboard)/components/customize/LivePreview";
-import { getPublicParticipantPage } from "@/app/features/templates/services/templates";
-import { getBadgeCaptureBackground } from "@/app/features/templates/components/badge-preview/utils";
-import { parseCanvasDataToEditorState } from "@/app/features/templates/lib/parse-canvas-data";
+import { LivePreview } from "@/app/features/customize/components/LivePreview";
+import { getPublicParticipantPage } from "@/app/features/badges/services/templates";
+import { getBadgeCaptureBackground } from "@/app/features/badges/components/badge-preview/utils";
+import { parseCanvasDataToEditorState } from "@/app/features/badges/lib/parse-canvas-data";
 import { captureNodeToPng } from "@/lib/capture-badge";
 
 export default function ParticipantPovClient() {

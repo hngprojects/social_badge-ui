@@ -1,10 +1,10 @@
 "use client";
 
-import { useDashboardTopbarState } from "@/app/(dashboard)/hooks/use-dashboard-topbar-state";
-import { DashboardBar } from "@/app/(dashboard)/components/topbar/DashboardBar";
-import { CreateBadgeBar } from "@/app/(dashboard)/components/topbar/CreateBadgeBar";
-import { CustomizeBar } from "@/app/(dashboard)/components/topbar/CustomizeBar";
-import { PublishedBar } from "@/app/(dashboard)/components/topbar/PublishedBar";
+import { useDashboardTopbarState } from "@/app/features/dashboard/hooks/use-dashboard-topbar-state";
+import { CreateBadgeBar } from "@/app/features/dashboardLayout/components/create-badge-bar";
+import { CustomizeBar } from "@/app/features/dashboardLayout/components/customize-bar";
+import { DashboardBar } from "@/app/features/dashboardLayout/components/dashboard-bar";
+import { PublishedBar } from "@/app/features/dashboardLayout/components/publised-bar";
 
 export default function TopBar() {
   const {

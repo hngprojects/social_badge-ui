@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { incrementBadgeCreation } from "../services/badge";
-import { badgeAnalyticsKey } from "@/app/(dashboard)/hooks/use-badge-analytics";
+import { badgeAnalyticsKey } from "@/app/features/dashboard/hooks/use-badge-analytics";
 import {
 	notificationsRootKey,
 	unreadNotificationCountKey,
-} from "@/app/(dashboard)/hooks/use-notifications";
+} from "@/app/features/dashboard/hooks/use-notifications";
 
 export const useIncrementBadgeCreation = () => {
 	const queryClient = useQueryClient();

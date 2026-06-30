@@ -8,9 +8,9 @@ import { usePathname } from "next/navigation";
 import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
 import { useUserStore } from "@/stores/use-user-store";
-import { navigationLinks } from "../../../app/(dashboard)/constants/layout/sidebar-nav";
-import type { NavigationLink } from "../../../app/(dashboard)/types/dashboard/sidebar-nav";
 import { DashboardUserAvatar } from "./dashboard-user-avatar";
+import { navigationLinks } from "@/app/features/dashboardLayout/constants";
+import { NavigationLink } from "@/app/features/dashboardLayout/types";
 
 const mainLinks = navigationLinks.filter((nav) =>
   ["Dashboard", "Badges"].includes(nav.label),
