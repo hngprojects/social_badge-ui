@@ -171,7 +171,21 @@ export const SignupForm = () => {
 									checked={isChecked}
 								/>
 								<label htmlFor="remember-me" className="text-xs text-[#595959]">
-									I agree to Flare Tag Terms of Service and Privacy Policy. I
+									I agree to Flare Tag&apos;s  <Link
+                    href="/terms"
+                    className="font-bold text-[#B53D00] hover:text-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Terms of Service
+                  </Link> and <Link
+                    href="/privacy"
+                    className="font-bold text-[#B53D00] hover:text-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Privacy Policy
+                  </Link>. I
 									may receive product update emails.
 								</label>
 							</div>
@@ -201,7 +215,7 @@ export const SignupForm = () => {
 						Already have an account?{" "}
 						<Link
 							href="/login"
-							className="font-bold text-[#B53D00] hover:text-[#8f2e00]"
+							className="font-bold text-[#B53D00] hover:text-primary"
 						>
 							Log in
 						</Link>
