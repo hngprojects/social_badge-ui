@@ -3,12 +3,13 @@
 import { UserWelcome } from "../components/dashboard/user-welcome";
 import Analytics from "../components/dashboard/analytics";
 import BrowseTemplate from "../components/dashboard/browse-templates";
-import { FirstBadgeCta } from "../components/dashboard/first-badge-cta";
+import  FirstBadgeCta  from "../components/dashboard/first-badge-cta";
 import RecentBadges from "../components/dashboard/recent-badges";
-import { RECENT_BADGES_LIMIT } from "../components/dashboard/recent-badges-types";
+// import { RECENT_BADGES_LIMIT } from "../components/dashboard/recent-badges-types";
 import Steps from "../components/dashboard/steps";
-import { useBadgeAnalytics } from "../hooks/use-badge-analytics";
-import { useRecentOrganizerBadges } from "../hooks/use-organizer-template-instances";
+import { useBadgeAnalytics } from "../../features/dashboard/hooks/use-badge-analytics";
+import { useRecentOrganizerBadges } from "../../features/dashboard/hooks/use-organizer-template-instances";
+import { RECENT_BADGES_LIMIT } from "@/app/features/dashboard/constants";
 
 export default function Dashboard() {
 	const {

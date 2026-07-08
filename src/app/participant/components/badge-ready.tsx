@@ -25,7 +25,6 @@ interface BadgeReadyProps {
 export default function BadgeReady({
 	onDownload,
 	defaultCaption,
-	shareUrl,
 	isGenerating = false,
 }: BadgeReadyProps) {
 	const searchParams = useSearchParams();

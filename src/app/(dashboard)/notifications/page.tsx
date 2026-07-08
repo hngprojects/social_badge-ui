@@ -1,5 +1,5 @@
-import NotificationsHeader from "./notifiaction-header";
-import NotificationsTabs from "./notification-tabs";
+import NotificationsHeader from "../components/notifications/notifiaction-header";
+import NotificationsTabs from "../components/notifications/notification-tabs";
 
 export default function Notifications() {
   return (

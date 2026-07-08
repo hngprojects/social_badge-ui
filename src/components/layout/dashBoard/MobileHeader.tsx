@@ -13,16 +13,16 @@ import {
 	SheetDescription,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { navigationLinks } from "../../../app/(dashboard)/constants/layout/sidebar-nav";
 import { useState, useEffect } from "react";
 import { useUserStore } from "@/stores/use-user-store";
 import { useLogout } from "@/app/features/auth/hooks/useLogout";
 import { getUserDisplayName } from "@/lib/api/auth-session";
-import { useDashboardTopbarState } from "@/app/(dashboard)/hooks/use-dashboard-topbar-state";
-import type { TopBarAction } from "@/app/(dashboard)/types/dashboard/topbar";
-import { TopBarSearch } from "@/app/(dashboard)/components/topbar/topbar-search";
+import { useDashboardTopbarState } from "@/app/features/dashboard/hooks/use-dashboard-topbar-state";
+import { TopBarSearch } from "@/app/features/dashboardLayout/components/topbar-search";
 import { DashboardUserAvatar } from "./dashboard-user-avatar";
-import { NotificationDropDown } from "@/app/(dashboard)/components/topbar/notification";
+import { NotificationDropDown } from "@/app/features/dashboardLayout/components/notification";
+import { navigationLinks } from "@/app/features/dashboardLayout/constants";
+import { TopBarAction } from "@/app/features/dashboardLayout/types";
 
 function MobileActionMenu({ actions }: { actions: TopBarAction[] }) {
 	const [open, setOpen] = useState(false);
