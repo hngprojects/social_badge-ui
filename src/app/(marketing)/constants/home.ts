@@ -2,8 +2,8 @@ import { BadgeState, BadgeStyle } from '../types/badge';
 import { Testimonial } from '../types/home';
 import { StepItem } from '../types/home';
 
-export const BADGE_COLORS = ['#E8441A', '#1A1A1A', '#F5C542', '#4ECDC4', '#A78BFA', '#3B82F6', '#E5E7EB'];
-export const TEXT_COLORS = ['#E8441A', '#1A1A1A', '#F5C542', '#4ECDC4', '#A78BFA', '#3B82F6', '#ffffff'];
+export const BADGE_COLORS = [ '#1A1A1A', '#F5C542', '#4ECDC4', '#A78BFA', '#3B82F6', '#E5E7EB'];
+export const TEXT_COLORS = [ '#1A1A1A', '#F5C542', '#4ECDC4', '#A78BFA', '#3B82F6', '#ffffff'];
 
 export const DECORATIVE_DOT_PATTERN = [
   [1, 0, 1],
@@ -25,7 +25,7 @@ export const INITIAL_STATE: BadgeState = {
   event: '',
   hashtag: '',
   style: 'classic',
-  badgeColor: '#E8441A',
+  badgeColor: '#3B82F6',
   textColor: '#ffffff',
 };
 

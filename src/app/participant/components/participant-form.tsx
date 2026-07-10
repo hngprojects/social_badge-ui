@@ -14,7 +14,7 @@ import CaptionBox from "./caption-box";
 import { DEFAULT_CAPTION } from "../constants";
 import { motion } from "motion/react";
 import { containerVariants, itemVariants } from "../constants";
-import type { CustomizeEditorState } from "@/app/features/templates/types/canvas-data";
+import type { CustomizeEditorState } from "@/app/features/customize/canvas-data";
 import { useMemo, useState } from "react";
 import { ImageCropper } from "@/components/image-cropper";
 
@@ -24,7 +24,6 @@ export default function ParticipantForm({
 	onNameChange,
 	onRoleChange,
 	onPhotoChange,
-	onCancel,
 	onCaptionChange,
 	editorState,
 }: {

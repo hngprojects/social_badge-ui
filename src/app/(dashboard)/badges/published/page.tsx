@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { PublishedBadgePageClient } from "./components/published-badge-page-client";
+import { PublishedBadgePageClient } from "../../components/badge-published/published-badge-page-client";
 
 export default function PublishedBadgePage() {
   return (

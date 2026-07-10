@@ -1,7 +1,6 @@
+import { STATS } from "@/app/features/dashboard/constants";
+import { AnalyticsProps } from "@/app/features/dashboard/types";
 import Image from "next/image";
-import { AnalyticsProps } from "../../types/dashboard/analytics";
-
-import { stats } from "../../constants/dashboard";
 
 export default function Analytics({
   totalBadges,
@@ -9,31 +8,29 @@ export default function Analytics({
   totalShares,
   totalDrafts,
 }: AnalyticsProps) {
-  const analyticsStats = [
+
+  const analyticStats = [
     {
-      ...stats[0],
+      ...STATS[0],
       count: totalBadges,
     },
     {
-      ...stats[1],
+      ...STATS[1],
       count: activeBadges,
     },
-    // {
-    //   ...stats[2],
-    //   count: 0,
-    // },
+  
     {
-      ...stats[4],
+      ...STATS[4],
       count: totalDrafts,
     },
     {
-      ...stats[3],
+      ...STATS[3],
       count: totalShares,
     },
   ];
   return (
     <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 xl:grid-cols-4">
-      {analyticsStats.map((card) => (
+      {analyticStats.map((card) => (
         <article
           key={card.title}
           aria-label={`${card.title}: ${card.count}`}

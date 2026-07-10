@@ -1,8 +1,8 @@
 "use client";
 
+import { useLiveTemplateGallery } from "@/app/features/create-badges/hooks/use-live-template-gallery";
 import Link from "next/link";
-import { useLiveTemplateGallery } from "../../create-badges/lib/use-live-template-gallery";
-import MockTemplates from "../../templates/components/all-templates";
+import DashboardTemplates from "@/app/features/dashboard/components/template-grid";
 
 export default function BrowseTemplate() {
   const { filteredTemplates, isLoading } = useLiveTemplateGallery();
@@ -28,7 +28,7 @@ export default function BrowseTemplate() {
       </div>
 
       <div className="p-5">
-        <MockTemplates
+        <DashboardTemplates
           templates={filteredTemplates}
           isLoading={isLoading}
           activeTab="All layouts"

@@ -1,9 +1,5 @@
 import { apiClient } from "@/lib/api/client";
-import type {
-  NotificationPreferencesResponse,
-  UpdateNotificationPreferencesPayload,
-  UpdateNotificationPreferencesResponse,
-} from "../types/notification-preferences";
+import { NotificationPreferencesResponse, UpdateNotificationPreferencesPayload, UpdateNotificationPreferencesResponse } from "../types";
 
 const NOTIFICATION_PREFERENCES_ENDPOINT = "/organiser/notifications";
 

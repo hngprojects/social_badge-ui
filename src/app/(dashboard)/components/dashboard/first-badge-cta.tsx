@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export function FirstBadgeCta() {
+export default function FirstBadgeCta() {
 	return (
 		<section className="grid min-h-[295px] items-center gap-8 overflow-hidden rounded-[24px] border border-[#E8E8E8] bg-[linear-gradient(120deg,#FFEDE0_15%,#FED4CC_60%,#FF8D6D_100%)] px-4 py-8 md:pt-10 md:px-10 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.75fr)] lg:px-[56px] lg:py-[48px]">
 			<div className="max-w-[620px]">
