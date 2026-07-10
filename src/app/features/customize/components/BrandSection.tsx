@@ -22,6 +22,7 @@ interface BrandSectionProps {
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	layoutCaps: LayoutCapabilities;
 	eventNameValue: string;
+	hasParam?: boolean
 }
 
 export function BrandSection({
@@ -31,6 +32,7 @@ export function BrandSection({
 	onChange,
 	layoutCaps,
 	eventNameValue,
+	hasParam
 }: BrandSectionProps) {
 	const currentBlobUrl = useRef<string | null>(null);
 
@@ -104,7 +106,7 @@ export function BrandSection({
 				</div>
 			)}
 
-			<div>
+			{hasParam && <div>
 				<FieldLabel label="Event Name" required />
 				<TextInput
 					placeholder={editor.eventName || "e.g. DESIGNWEEKLAGOS"}
@@ -112,8 +114,8 @@ export function BrandSection({
 					value={eventNameValue || ""}
 					maxLength={25}
 				/>
-				<HelperText>Appears as the main title on the badge.</HelperText>
-			</div>
+				<HelperText>It may appear on participant badges depending on the selected template.</HelperText>
+			</div>}
 
 			{layoutCaps.staticFields.includes("event_date") && (
 				<>
