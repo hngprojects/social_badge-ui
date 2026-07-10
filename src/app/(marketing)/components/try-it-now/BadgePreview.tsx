@@ -16,20 +16,7 @@ function FlareTagLogo({ className }: { className: string }) {
 			aria-hidden
 		>
 			<div className="inline-flex h-4.5 w-7 opacity-75 p-1 relative">
-				
-					{/* {DECORATIVE_DOT_PATTERN.flatMap((row, ri) =>
-						row.map((cell, ci) => (
-							<div
-								key={`${ri}-${ci}`}
-								className={
-									cell === 1
-										? "min-h-0 min-w-0 rounded-xs bg-white/60"
-										: "min-h-0 min-w-0 rounded-xs bg-transparent"
-								}
-							/>
-						)),
-					)} */}<Image src="/assets/logo.svg" fill alt="flare tag logo" style={{objectFit:"contain"}} />
-			
+				<Image src="/assets/logo.svg" fill alt="flare tag logo" style={{objectFit:"contain"}} />
 			</div>
 		</div>
 	);
@@ -167,7 +154,7 @@ const BadgePreview = forwardRef<HTMLDivElement, BadgePreviewProps>(
 								className={`${avatarShell} ${layout.topBand.avatarOuter}`}
 								style={{
 									backgroundColor: "rgba(255,255,255,0.18)",
-									color: "textColor",
+									color: textColor,
 								}}
 							>
 								{avatarInner}
