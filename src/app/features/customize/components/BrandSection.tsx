@@ -62,7 +62,7 @@ export function BrandSection({
 		>
 			{layoutCaps.hasHeaderLogo && (
 				<div>
-					<FieldLabel label="Logo" required />
+					<FieldLabel hasParam={hasParam} label="Logo" required />
 					<div className="flex items-center gap-3">
 
 						<label className="cursor-pointer">

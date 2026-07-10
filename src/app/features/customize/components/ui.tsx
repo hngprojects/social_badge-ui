@@ -43,11 +43,11 @@ export function SectionCard({
 
 /* ── FieldLabel ─────────────────────────────────────────────────────────── */
 
-export function FieldLabel({ label, required }: { label: string; required?: boolean }) {
+export function FieldLabel({ label, required, hasParam }: { label: string; required?: boolean; hasParam?: boolean; }) {
   return (
     <Label className="block text-xs font-bold uppercase tracking-wider text-[#595959] mb-1.5">
       {label}
-      {required && <span className="text-[#FB3748] ml-0.5">*</span>}
+      {required && hasParam && <span className="text-[#FB3748] ml-0.5">*</span>}
     </Label>
   );
 }
