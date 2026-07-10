@@ -29,7 +29,7 @@ export function CustomTemplatePreview({
 	}
 
 	return (
-		<div className="mx-auto h-112.75 w-full max-w-79.5">
+		<div className="mx-auto h-112.75 w-full max-w-80 aspect-[79.5/112.75]">
 			<LayoutComponent
 				editor={editor}
 				participantPhotoUrl={participantPhotoUrl}

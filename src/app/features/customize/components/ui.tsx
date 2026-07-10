@@ -43,11 +43,11 @@ export function SectionCard({
 
 /* ── FieldLabel ─────────────────────────────────────────────────────────── */
 
-export function FieldLabel({ label, required }: { label: string; required?: boolean }) {
+export function FieldLabel({ label, required, hasParam }: { label: string; required?: boolean; hasParam?: boolean; }) {
   return (
     <Label className="block text-xs font-bold uppercase tracking-wider text-[#595959] mb-1.5">
       {label}
-      {required && <span className="text-[#FB3748] ml-0.5">*</span>}
+      {required && hasParam && <span className="text-[#FB3748] ml-0.5">*</span>}
     </Label>
   );
 }
@@ -79,7 +79,7 @@ export const TextInput = React.forwardRef<
 				className="h-12 px-4 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
 			/>
 			{maxLength && (
-				<span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
+				<span className="absolute right-3 top-[-18px] text-[10px] font-medium text-gray-400">
 					{(value ?? "").length}/{maxLength}
 				</span>
 			)}
@@ -91,7 +91,7 @@ TextInput.displayName = "TextInput";
 /* ── HelperText ─────────────────────────────────────────────────────────── */
 
 export function HelperText({ children }: { children: React.ReactNode }) {
-	return <p className="text-xs text-gray-400 mt-1.5">{children}</p>;
+	return <p className="text-xs text-gray-400 mt-1.5">{children}</p>
 }
 
 /* ── TextArea ───────────────────────────────────────────────────────────── */
@@ -121,7 +121,7 @@ export const TextArea = React.forwardRef<
 				className="px-4 py-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
 			/>
 			{maxLength && (
-				<span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
+				<span className="absolute right-3 top-[-18px] text-[10px] font-medium text-gray-400">
 					{(value ?? "").length}/{maxLength}
 				</span>
 			)}
