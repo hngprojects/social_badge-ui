@@ -3,22 +3,21 @@ import Image from "next/image";
 import { BadgeStyle } from "../../types/badge";
 
 import { BadgePreviewProps, BadgeLayoutVariant } from "../../types/home";
-import { DECORATIVE_DOT_PATTERN } from "../../constants/home";
 
 const TRANSITION_LAYER =
 	"transition-all duration-300 ease-in-out motion-reduce:transition-none motion-reduce:transform-none";
 
 const BADGE_CONTENT_FRAME = "absolute inset-[10px_12px_10px_14px]";
 
-function DecorativeBottomSquare({ className }: { className: string }) {
+function FlareTagLogo({ className }: { className: string }) {
 	return (
 		<div
 			className={`pointer-events-none ${TRANSITION_LAYER} ${className}`}
 			aria-hidden
 		>
-			<div className="inline-flex h-7 w-7 rounded-md bg-white/10 p-1">
-				<div className="grid h-full w-full grid-cols-3 grid-rows-3 gap-px">
-					{DECORATIVE_DOT_PATTERN.flatMap((row, ri) =>
+			<div className="inline-flex h-4.5 w-7 opacity-75 p-1 relative">
+				
+					{/* {DECORATIVE_DOT_PATTERN.flatMap((row, ri) =>
 						row.map((cell, ci) => (
 							<div
 								key={`${ri}-${ci}`}
@@ -29,8 +28,8 @@ function DecorativeBottomSquare({ className }: { className: string }) {
 								}
 							/>
 						)),
-					)}
-				</div>
+					)} */}<Image src="/assets/logo.svg" fill alt="flare tag logo" style={{objectFit:"contain"}} />
+			
 			</div>
 		</div>
 	);
@@ -99,7 +98,7 @@ function buildEventLine(event: string, hashtag: string) {
 			: `#${hashtag}`
 		: "";
 	const parts = [event.trim(), tag].filter(Boolean).join(" / ");
-	return parts || "BADGE.BUILD / DEVCON 2026";
+	return parts || "FLARE TAG / #DEMO";
 }
 
 const BadgePreview = forwardRef<HTMLDivElement, BadgePreviewProps>(
@@ -161,14 +160,14 @@ const BadgePreview = forwardRef<HTMLDivElement, BadgePreviewProps>(
 			>
 				<div className={`${BADGE_CONTENT_FRAME} min-h-0 min-w-0`}>
 					<div className="relative h-full w-full min-h-0 min-w-0">
-						<div className={layout.decorativeCircle} aria-hidden />
+						{/* <div className={layout.decorativeCircle} aria-hidden /> */}
 
 						<div className={layout.topBand.wrapper}>
 							<div
 								className={`${avatarShell} ${layout.topBand.avatarOuter}`}
 								style={{
 									backgroundColor: "rgba(255,255,255,0.18)",
-									color: textColor,
+									color: "textColor",
 								}}
 							>
 								{avatarInner}
@@ -197,7 +196,8 @@ const BadgePreview = forwardRef<HTMLDivElement, BadgePreviewProps>(
 							</p>
 						</div>
 
-						<DecorativeBottomSquare
+
+						<FlareTagLogo
 							className={layout.decorativeSquarePosition}
 						/>
 					</div>
