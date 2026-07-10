@@ -27,8 +27,9 @@ export const EDITOR_PALETTES: PaletteSwatch[] = [
   { id: "bg_color_green", from: "#00C853", to: "#00C853" },
   { id: "bg_color_red", from: "#FF3D00", to: "#FF3D00" },
   { id: "bg_color_orange", from: "#FF9100", to: "#FF9100" },
-  { id: "bg_color_yellow", from: "#FFEA00", to: "#FFEA00" },
   { id: "bg_color_white", from: "#FFFFFF", to: "#FFFFFF" },
+  { id: "bg_color_yellow", from: "#FFEA00", to: "#FFEA00" },
+
 ];
 
 export const BACKGROUND_IMAGE_BY_PALETTE: Record<string, string> = {

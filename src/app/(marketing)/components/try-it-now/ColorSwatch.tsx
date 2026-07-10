@@ -7,7 +7,8 @@ export function ColorSwatch({ colors, selected, onChange }: ColorSwatchProps) {
         const isActive = selected === color;
         const isLight = color === '#E5E7EB' || color === '#ffffff' || color === '#F5C542';
         return (
-          <button
+          <button type='button'
+            aria-label={`Select color ${color}`}
             key={color}
             onClick={() => onChange(color)}
             title={color}
