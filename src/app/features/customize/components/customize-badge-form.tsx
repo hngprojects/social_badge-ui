@@ -7,13 +7,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-
 import { BrandSection } from "./BrandSection";
 import { StyleSection } from "./StyleSection";
 import { BadgeContentSection } from "./BadgeContentSection";
 import { ShareMessageSection } from "./ShareMessageSection";
 import { VisibilitySection } from "./VisibilitySection";
 import { LivePreview } from "./LivePreview";
+import { getDefaultFormValues } from "./editor-to-form-value";
 
 import { customizeBadgeSchema, type CustomizeBadgeFormValues } from "@/schemas/template";
 
@@ -39,18 +39,7 @@ export function CustomizeBadgeForm({
    const { editor, patch, setPalette, setBgMode, layoutCaps } =
     useCustomizeEditorState(initialEditor);
   	
-useEffect(()=>{
-  const pending = sessionStorage.getItem("pendingDemoCustomization");
-if (!pending) return;
-const saved = JSON.parse(pending);
 
-patch({...saved, logoPreviewUrl:null})
-
-
-toast.success("We've restored your badge customization");
-
-sessionStorage.removeItem("pendingDemoCustomization")
-},[patch]);
    
   
  
@@ -63,33 +52,31 @@ sessionStorage.removeItem("pendingDemoCustomization")
 		control,
 		watch,
 		setValue,
+    reset,
 		formState: { errors },
 	} = useForm<CustomizeBadgeFormValues>({
 		resolver: zodResolver(customizeBadgeSchema),
-		defaultValues: {
-			eventName: organiserTemplateId ? editor.eventName : "",
-			title: editor.title,
-			eventDate: editor.eventDate,
-			eventTime: editor.eventTime,
-			participantNameVisible: editor.participantNameVisible,
-			roleTitleVisible: editor.roleTitleVisible,
-			trackVisible: editor.trackVisible ?? true,
-			trackRequired: editor.trackRequired ?? false,
-			roleTitleRequired: editor.roleTitleRequired,
-			allowParticipantPhoto: editor.allowParticipantPhoto,
-			defaultCaption: editor.defaultCaption,
-			hashtags: editor.hashtags,
-			accessType: editor.accessType,
-			accessCode: editor.accessCode,
-			fontId: editor.fontId,
-			paletteId: editor.paletteId,
-			badgeTitle: editor.badgeTitle || "Finalist",
-			bgMode: editor.isSplit ? "split" : editor.bgMode,
-			secondaryColor: editor.secSolidColor,
-			textColor: editor.textColor,
-		},
+		defaultValues:getDefaultFormValues(editor, organiserTemplateId),
 	});
 
+useEffect(()=>{
+  const pending = sessionStorage.getItem("pendingDemoCustomization");
+  if (!pending) return;
+
+  try {
+    const restoredEditor: CustomizeEditorState = {
+      ...JSON.parse(pending),
+      pendingLogoFile: null,
+      logoPreviewUrl: null,
+    };
+  patch(restoredEditor)
+  reset(getDefaultFormValues(restoredEditor, organiserTemplateId))
+
+sessionStorage.removeItem("pendingDemoCustomization")
+toast.success("We've restored your badge customization");
+}catch{
+  sessionStorage.removeItem("pendingDemoCustomization");
+}},[organiserTemplateId, patch, reset])
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const formValues = watch();
@@ -112,7 +99,7 @@ sessionStorage.removeItem("pendingDemoCustomization")
       toast.error("Please upload a logo for this badge layout.");
       return;
     }
-    
+
     const payload = buildOrganiserTemplatePayload({
       ...editor,
       ...data,
@@ -140,7 +127,7 @@ sessionStorage.removeItem("pendingDemoCustomization")
   const handleContinue = () =>{
     
 
-  sessionStorage.setItem("pendingDemoCustomization", JSON.stringify(editor))
+  sessionStorage.setItem("pendingDemoCustomization", JSON.stringify(previewEditor))
   sessionStorage.setItem(
   "pendingDemoTemplateId",
   DEMO_TEMPLATE_ID
