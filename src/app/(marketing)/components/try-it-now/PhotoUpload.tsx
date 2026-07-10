@@ -42,7 +42,7 @@ export function PhotoUpload({ photoPreview, onUpload }: PhotoUploadProps) {
 
       {/* Label */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-neutral-800 leading-tight">Upload your photo</p>
+        <p className="text-sm font-medium text-neutral-800 leading-tight">Upload your logo</p>
         <p className="text-xs text-neutral-400 truncate">JPG / PNG · or use initials</p>
       </div>
 

@@ -32,9 +32,9 @@ export function LivePreview({
 				</div>
 			)}
 
-			<div className={hideExtras ? "" : " rounded-2xl bg-orange-50 p-5"}>
+			<div className={`rounded-2xl p-5  bg-orange-50 ${hideExtras && "mt-8"}`}>
 				<div
-					className={`mx-auto ${badgeClassName ?? ""} ${badgeClassName ? "flex h-152 w-full max-w-full flex-col items-center justify-center" : ""}`}
+					className={`mx-auto ${badgeClassName ?? ""} ${badgeClassName ? "flex max-h-90 w-full max-w-full flex-col items-center justify-center" : ""}`}
 				>
 					<CustomTemplatePreview
 						templateId={editor.layoutId}
@@ -46,7 +46,7 @@ export function LivePreview({
 			</div>
 			{!hideExtras && (
 				<div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-4 py-4 space-y-2">
-					<p className="text-sm font-semibold text-gray-900 leading-tight">
+					<p className={`text-sm font-semibold text-gray-900 leading-tight`}>
 						Caption preview
 					</p>
 					<p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">

@@ -31,7 +31,7 @@ export default function BadgeForm({ badge, update,  }: BadgeFormProps) {
 	return (
 		<div className="flex flex-col gap-4">
 			{/* Photo */}
-			<Field label="Your Photo">
+			<Field label="Your Logo">
 				<PhotoUpload
 					photoPreview={badge.photoPreview}
 					onUpload={(file, preview) => {
@@ -102,7 +102,7 @@ export default function BadgeForm({ badge, update,  }: BadgeFormProps) {
 			{/* Text color */}
 			<Field label="Text Color">
 				<ColorSwatch
-					colors={TEXT_COLORS}
+					colors={TEXT_COLORS.toReversed()}
 					selected={badge.textColor}
 					onChange={(c) => update("textColor", c)}
 				/>
