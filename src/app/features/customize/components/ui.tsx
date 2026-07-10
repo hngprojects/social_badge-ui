@@ -79,7 +79,7 @@ export const TextInput = React.forwardRef<
 				className="h-12 px-4 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
 			/>
 			{maxLength && (
-				<span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
+				<span className="absolute right-3 top-[-18px] text-[10px] font-medium text-gray-400">
 					{(value ?? "").length}/{maxLength}
 				</span>
 			)}
@@ -91,7 +91,7 @@ TextInput.displayName = "TextInput";
 /* ── HelperText ─────────────────────────────────────────────────────────── */
 
 export function HelperText({ children }: { children: React.ReactNode }) {
-	return <p className="text-xs text-gray-400 mt-1.5">{children}</p>;
+	return <p className="text-xs text-gray-400 mt-1.5">{children}</p>
 }
 
 /* ── TextArea ───────────────────────────────────────────────────────────── */
@@ -121,7 +121,7 @@ export const TextArea = React.forwardRef<
 				className="px-4 py-3 rounded-xl border-[#BDBDBD] bg-[#F6F6F6] text-[#595959] text-sm font-medium focus-visible:ring-orange-500/20 focus-visible:border-orange-500"
 			/>
 			{maxLength && (
-				<span className="absolute right-3 bottom-[-18px] text-[10px] font-medium text-gray-400">
+				<span className="absolute right-3 top-[-18px] text-[10px] font-medium text-gray-400">
 					{(value ?? "").length}/{maxLength}
 				</span>
 			)}
