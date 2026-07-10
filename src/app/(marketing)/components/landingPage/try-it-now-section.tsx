@@ -56,7 +56,7 @@ export default function TryItNow() {
           {/* Heading */}
           <motion.h2
             variants={itemVariants}
-            className="font-semibold text-[clamp(28px,5vw,72px)] leading-[1.03] tracking-[-0.65px] text-neutral-900"
+            className="font-semibold text-[clamp(28px,5vw,72px)] leading-[1.03] tracking-[-0.65px] text-center md:text-left text-neutral-900"
           >
             Make one. <span className="italic font-fraunces text-primary">right now.</span>
           </motion.h2>
