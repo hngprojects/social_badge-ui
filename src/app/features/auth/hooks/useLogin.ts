@@ -26,9 +26,7 @@ export const useLogin = () => {
       toast.success("Login successful!");
 
        const hasPendingDemo = sessionStorage.getItem("pendingDemoCustomization");
-       console.log(
-  sessionStorage.getItem("pendingDemoCustomization")
-);
+    
       if (hasPendingDemo){
         router.push("/create-badges/customize")
         return
