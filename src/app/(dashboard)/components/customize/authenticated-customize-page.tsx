@@ -4,27 +4,44 @@ import { createDefaultEditorState } from "@/app/features/badges/lib/parse-canvas
 import { CustomizeBadgeForm } from "@/app/features/customize/components/customize-badge-form";
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import { DEMO_CANVAS_TEMPLATE_DATA, DEMO_TEMPLATE_ID } from "./demo/demo-canvas-data";
 
 export function AuthenticatedCustomizePage(){
   const searchParams = useSearchParams();
-      const isParam = searchParams.has("template");
       const platformTemplateId = searchParams.get("template")
       const organiserTemplateId = searchParams.get("id") ;
+
+  
+  const hasPendingDemo = typeof window !== "undefined" && sessionStorage.getItem("pendingDemoCustomization") !== null;
+
+  console.log({
+  platformTemplateId,
+  organiserTemplateId,
+  hasPendingDemo,
+});
+
+console.log("yess", sessionStorage.getItem("pendingDemoCustomization"))
+      
+      
     const {
       data: loadedState,
       isLoading: organiserLoading,
       isError: organiserError,
-    } = useLoadOrganiserTemplate(organiserTemplateId);
+    } = useLoadOrganiserTemplate(organiserTemplateId, !hasPendingDemo);
   
     const {
       data: platformTemplate,
       isLoading: platformLoading,
       isError: platformError,
-    } = useLoadPlatformTemplate(organiserTemplateId ? null : platformTemplateId );
+    } = useLoadPlatformTemplate(organiserTemplateId ? null : platformTemplateId, !hasPendingDemo );
   
   
     // Compute initialEditor. It might be null if we have a UUID but no canvasData yet.
     const initialEditor = useMemo(() => {
+if (hasPendingDemo) {
+  return createDefaultEditorState(DEMO_TEMPLATE_ID, DEMO_CANVAS_TEMPLATE_DATA)
+}
+
       if (loadedState) return loadedState;
       
       const canvasData = platformTemplate?.canvasData;
@@ -43,7 +60,7 @@ export function AuthenticatedCustomizePage(){
       organiserTemplateId,
       platformTemplateId,
       platformLoading,
-      platformTemplate,
+      platformTemplate,hasPendingDemo
     ]);
   
     const editorKey = useMemo(() => {
@@ -51,7 +68,7 @@ export function AuthenticatedCustomizePage(){
     }, [organiserTemplateId, platformTemplateId, loadedState]);
   
     // We are loading if a required query is still pending AND we don't have enough data to render the form.
-    const isFetching = organiserTemplateId ? organiserLoading : platformLoading;
+    const isFetching =hasPendingDemo ? false :  organiserTemplateId ? organiserLoading : platformLoading;
     const isLoading = isFetching && !initialEditor;
   
     if (isLoading) {
@@ -66,10 +83,9 @@ export function AuthenticatedCustomizePage(){
     }
   
     // Error state: we finished fetching but couldn't get an editor state.
-    const hasError =
-      (organiserTemplateId && organiserError) ||
+    const hasError = hasPendingDemo ? false :((organiserTemplateId && organiserError) ||
       (!organiserTemplateId && platformError) ||
-      (!initialEditor && !isFetching);
+      (!initialEditor && !isFetching));
   
     if (hasError) {
       return (
@@ -92,7 +108,7 @@ export function AuthenticatedCustomizePage(){
     // At this point, initialEditor is guaranteed to be non-null
     return (
       <CustomizeBadgeForm
-      hasParam={isParam}
+      isDemo={false}
         key={editorKey}
         initialEditor={initialEditor!}
         organiserTemplateId={organiserTemplateId}

@@ -21,17 +21,16 @@ import { useCustomizeEditorState } from "@/app/features/badges/hooks/use-customi
 import { useSaveOrganiserTemplate } from "@/app/features/badges/hooks/use-save-organiser-template";
 import { buildOrganiserTemplatePayload } from "@/app/features/badges/lib/build-canvas-data";
 import type { CustomizeEditorState } from "@/app/features/customize/canvas-data";
-import { DEMO_TEMPLATE_ID } from "@/app/(dashboard)/components/customize/demo/demo-canvas-data";
 
 interface CustomizeBadgeFormProps {
   initialEditor: CustomizeEditorState;
   organiserTemplateId: string | null;
-  hasParam?: boolean;
+  isDemo?: boolean;
   
 }
 
 export function CustomizeBadgeForm({
-  hasParam,
+  isDemo,
   initialEditor,
   organiserTemplateId,
 }: CustomizeBadgeFormProps) {
@@ -39,10 +38,6 @@ export function CustomizeBadgeForm({
    const { editor, patch, setPalette, setBgMode, layoutCaps } =
     useCustomizeEditorState(initialEditor);
   	
-
-   
-  
- 
   const { saveTemplateAsync } = useSaveOrganiserTemplate();
   const [savingAction, setSavingAction] = useState<"draft" | "publish" | null>(null);
 
@@ -58,6 +53,7 @@ export function CustomizeBadgeForm({
 		resolver: zodResolver(customizeBadgeSchema),
 		defaultValues:getDefaultFormValues(editor, organiserTemplateId),
 	});
+
 
 useEffect(()=>{
   const pending = sessionStorage.getItem("pendingDemoCustomization");
@@ -77,6 +73,7 @@ toast.success("We've restored your badge customization");
 }catch{
   sessionStorage.removeItem("pendingDemoCustomization");
 }},[organiserTemplateId, patch, reset])
+
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const formValues = watch();
@@ -128,10 +125,7 @@ toast.success("We've restored your badge customization");
     
 
   sessionStorage.setItem("pendingDemoCustomization", JSON.stringify(previewEditor))
-  sessionStorage.setItem(
-  "pendingDemoTemplateId",
-  DEMO_TEMPLATE_ID
-);
+
   navigate.push("/signup")
   }
 
@@ -155,9 +149,9 @@ toast.success("We've restored your badge customization");
   const isPublished = editor.status === "live";
 
   return (
-    <main className={`grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-0 md:gap-8 w-full items-start ${hasParam &&"border"}`}>
+    <main className={`grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-0 md:gap-8 w-full items-start ${!isDemo &&"border"}`}>
       <section className="order-2 lg:order-1 lg:col-span-7 w-full min-w-0 overflow-hidden p-3 max-[400px]:p-3 min-[400px]:p-6 space-y-6">
-        {hasParam && <div className=" border-b border-gray-100">
+        {!isDemo && <div className=" border-b border-gray-100">
           <p className="text-xs text-gray-400">
             <Link href="/dashboard" className="hover:text-gray-600 transition-colors">Dashboard</Link>
             &nbsp;/&nbsp;
@@ -171,7 +165,7 @@ toast.success("We've restored your badge customization");
 
         <form id="badge-form" onSubmit={(e) => e.preventDefault()} className="w-full space-y-6 mt-9">
           <BrandSection
-          hasParam={hasParam}
+          isDemo={isDemo}
             register={register}
             control={control}
             editor={previewEditor}
@@ -184,6 +178,7 @@ toast.success("We've restored your badge customization");
           />
 
           <StyleSection
+          isDemo={isDemo}
             editor={previewEditor}
             onChange={(p) => {
               patch(p);
@@ -196,13 +191,13 @@ toast.success("We've restored your badge customization");
             layoutCaps={layoutCaps}
           />
 
-{hasParam && <>
+
 <BadgeContentSection
             control={control}
             layoutCaps={layoutCaps}
           />
 
-          <ShareMessageSection
+        {!isDemo && <>  <ShareMessageSection
             register={register}
             editor={previewEditor}
           />
@@ -218,7 +213,7 @@ toast.success("We've restored your badge customization");
           }
         </form>
 
-        {hasParam && <div className="flex flex-row gap-3 pb-8 w-full justify-end">
+        {!isDemo && <div className="flex flex-row gap-3 pb-8 w-full justify-end">
           {!isPublished && (
             <Button
               type="button"
@@ -251,15 +246,15 @@ toast.success("We've restored your badge customization");
           </Button>
           
         </div>}
-        {!hasParam && <Button onClick={handleContinue} className="w-full py-4! lg:py-6!"  variant="default">
+        {isDemo && <Button onClick={handleContinue} className="w-full py-4! lg:py-6!"  variant="default">
           Create My Event  <svg className="size-3" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.875 0C1.52982 0 1.25 0.279822 1.25 0.625C1.25 0.970178 1.52982 1.25 1.875 1.25H4.11612L0.183058 5.18306C-0.0610194 5.42714 -0.0610194 5.82287 0.183058 6.06694C0.427136 6.31102 0.822864 6.31102 1.06694 6.06694L5 2.13388V4.375C5 4.72018 5.27982 5 5.625 5C5.97018 5 6.25 4.72018 6.25 4.375V0.625C6.25 0.279822 5.97018 0 5.625 0H1.875Z" fill="white"/>
               </svg>
         </Button>}
       </section>
 
-      <section className={`order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full ${hasParam && "lg:sticky"} lg:top-18 ${hasParam?"lg:h-screen":"lg:h-full"} lg:overflow-y-auto ${hasParam?"lg:pt-6":"lg:pt-8"} lg:pb-6`}>
-        <LivePreview hideExtras={!hasParam} editor={previewEditor} />
+      <section className={`order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full ${!isDemo && "lg:sticky"} lg:top-18 ${!isDemo?"lg:h-screen":"lg:h-full"} lg:overflow-y-auto ${!isDemo?"lg:pt-0":"lg:pt-8"} lg:pb-6 flex flex-col justify-center`}>
+        <LivePreview hideExtras={isDemo} editor={previewEditor} />
       </section>
     </main>
   );

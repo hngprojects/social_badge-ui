@@ -11,7 +11,7 @@ export const useLogin = () => {
   const router = useRouter();
   const { setUser } = useUserStore();
 
-  const pendingTemplateId = sessionStorage.getItem("pendingDemoTemplateId")
+ 
 
   const {
     mutate: login,
@@ -25,8 +25,12 @@ export const useLogin = () => {
       setUser(profile.data);
       toast.success("Login successful!");
 
-      if (pendingTemplateId){
-        router.push(`/create-badges/customize?template=${pendingTemplateId}`)
+       const hasPendingDemo = sessionStorage.getItem("pendingDemoCustomization");
+       console.log(
+  sessionStorage.getItem("pendingDemoCustomization")
+);
+      if (hasPendingDemo){
+        router.push("/create-badges/customize")
         return
       }
       router.push("/dashboard");

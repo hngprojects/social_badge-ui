@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
-import { CustomizeBadgePageClient } from '@/app/(dashboard)/components/customize/customize-badge-page-client';
+import { DemoCustomizePage } from '@/app/(dashboard)/components/customize/demo/demo-customize-page';
 
 // ── Shared easing ──────────────────────────────────────────────────────────────
 const EASE = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
@@ -53,7 +53,7 @@ export default function TryItNow() {
         </motion.div>
 
         <div className='mt-[50px]'>
-          <CustomizeBadgePageClient />
+          <DemoCustomizePage />
         </div>
 
         

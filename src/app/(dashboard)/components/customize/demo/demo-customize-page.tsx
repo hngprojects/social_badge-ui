@@ -13,7 +13,7 @@ export function DemoCustomizePage(){
         }
         
         return (
-          <CustomizeBadgeForm hasParam={false} initialEditor={initialEditor} organiserTemplateId={null} />
+          <CustomizeBadgeForm isDemo={true} initialEditor={initialEditor} organiserTemplateId={null} />
         )
 
 }
