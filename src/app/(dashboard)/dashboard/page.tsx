@@ -12,6 +12,7 @@ import { useRecentOrganizerBadges } from "../../features/dashboard/hooks/use-org
 import { RECENT_BADGES_LIMIT } from "@/app/features/dashboard/constants";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { PENDING_DEMO_CUSTOMIZATION_KEY } from "@/app/features/customize/constant";
 
 export default function Dashboard() {
 	const {
@@ -22,9 +23,9 @@ export default function Dashboard() {
 
 const router = useRouter()
 	useEffect(()=>{
-		const pendingDemo = sessionStorage.getItem("pendingDemoCustomization")
+		const pendingDemo = sessionStorage.getItem(PENDING_DEMO_CUSTOMIZATION_KEY)
 		if (pendingDemo) {
-router.replace("create-badges/customize")
+router.replace("/create-badges/customize")
 		}
 	}, [router])
 	const { data: badgeAnalytics, isPending: analyticsPending } =
