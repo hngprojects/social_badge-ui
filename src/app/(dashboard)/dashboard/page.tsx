@@ -10,6 +10,8 @@ import Steps from "../components/dashboard/steps";
 import { useBadgeAnalytics } from "../../features/dashboard/hooks/use-badge-analytics";
 import { useRecentOrganizerBadges } from "../../features/dashboard/hooks/use-organizer-template-instances";
 import { RECENT_BADGES_LIMIT } from "@/app/features/dashboard/constants";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
 	const {
@@ -17,6 +19,14 @@ export default function Dashboard() {
 		activeBadges,
 		isPending: badgesPending,
 	} = useRecentOrganizerBadges(1, RECENT_BADGES_LIMIT);
+
+const router = useRouter()
+	useEffect(()=>{
+		const pendingDemo = sessionStorage.getItem("pendingDemoCustomization")
+		if (pendingDemo) {
+router.replace("create-badges/customize")
+		}
+	}, [router])
 	const { data: badgeAnalytics, isPending: analyticsPending } =
 		useBadgeAnalytics();
 
