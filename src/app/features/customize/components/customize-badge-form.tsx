@@ -21,6 +21,7 @@ import { useCustomizeEditorState } from "@/app/features/badges/hooks/use-customi
 import { useSaveOrganiserTemplate } from "@/app/features/badges/hooks/use-save-organiser-template";
 import { buildOrganiserTemplatePayload } from "@/app/features/badges/lib/build-canvas-data";
 import type { CustomizeEditorState } from "@/app/features/customize/canvas-data";
+import { PENDING_DEMO_CUSTOMIZATION_KEY } from "../constant";
 
 interface CustomizeBadgeFormProps {
   initialEditor: CustomizeEditorState;
@@ -56,7 +57,7 @@ export function CustomizeBadgeForm({
 
 
 useEffect(()=>{
-  const pending = sessionStorage.getItem("pendingDemoCustomization");
+  const pending = sessionStorage.getItem(PENDING_DEMO_CUSTOMIZATION_KEY);
   if (!pending) return;
 
   try {
@@ -68,10 +69,10 @@ useEffect(()=>{
   patch(restoredEditor)
   reset(getDefaultFormValues(restoredEditor, organiserTemplateId))
 
-sessionStorage.removeItem("pendingDemoCustomization")
+sessionStorage.removeItem(PENDING_DEMO_CUSTOMIZATION_KEY)
 toast.success("We've restored your badge customization");
 }catch{
-  sessionStorage.removeItem("pendingDemoCustomization");
+  sessionStorage.removeItem(PENDING_DEMO_CUSTOMIZATION_KEY);
 }},[organiserTemplateId, patch, reset])
 
 
@@ -124,7 +125,7 @@ toast.success("We've restored your badge customization");
   const handleContinue = () =>{
     
 
-  sessionStorage.setItem("pendingDemoCustomization", JSON.stringify(previewEditor))
+  sessionStorage.setItem(PENDING_DEMO_CUSTOMIZATION_KEY, JSON.stringify(previewEditor))
 
   navigate.push("/signup")
   }

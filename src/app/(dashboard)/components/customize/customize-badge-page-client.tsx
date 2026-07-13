@@ -7,6 +7,7 @@ import { CustomizeBadgeForm } from "@/app/features/customize/components/customiz
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { DEMO_CANVAS_TEMPLATE_DATA, DEMO_TEMPLATE_ID } from "./demo/demo-canvas-data";
+import { PENDING_DEMO_CUSTOMIZATION_KEY } from "@/app/features/customize/constant";
 
 export function CustomizeBadgePageClient(){
 	const searchParams = useSearchParams();
@@ -14,7 +15,7 @@ export function CustomizeBadgePageClient(){
 			const organiserTemplateId = searchParams.get("id") ;
 
 	
-	const hasPendingDemo = typeof window !== "undefined" && sessionStorage.getItem("pendingDemoCustomization") !== null;
+	const hasPendingDemo = typeof window !== "undefined" && sessionStorage.getItem(PENDING_DEMO_CUSTOMIZATION_KEY) !== null;
 			
 		const {
 			data: loadedState,
