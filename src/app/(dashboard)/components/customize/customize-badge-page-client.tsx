@@ -15,15 +15,6 @@ export function CustomizeBadgePageClient(){
 
 	
 	const hasPendingDemo = typeof window !== "undefined" && sessionStorage.getItem("pendingDemoCustomization") !== null;
-
-	console.log({
-	platformTemplateId,
-	organiserTemplateId,
-	hasPendingDemo,
-});
-
-console.log("yess", sessionStorage.getItem("pendingDemoCustomization"))
-			
 			
 		const {
 			data: loadedState,
