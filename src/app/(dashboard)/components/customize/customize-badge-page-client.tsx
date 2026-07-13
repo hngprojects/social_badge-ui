@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { DEMO_CANVAS_TEMPLATE_DATA, DEMO_TEMPLATE_ID } from "./demo/demo-canvas-data";
 
-export function AuthenticatedCustomizePage(){
+export function CustomizeBadgePageClient(){
 	const searchParams = useSearchParams();
 			const platformTemplateId = searchParams.get("template")
 			const organiserTemplateId = searchParams.get("id") ;
