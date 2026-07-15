@@ -5,7 +5,6 @@ import Analytics from "../components/dashboard/analytics";
 import BrowseTemplate from "../components/dashboard/browse-templates";
 import FirstBadgeCta from "../components/dashboard/first-badge-cta";
 import RecentBadges from "../components/dashboard/recent-badges";
-// import { RECENT_BADGES_LIMIT } from "../components/dashboard/recent-badges-types";
 import Steps from "../components/dashboard/steps";
 import { useBadgeAnalytics } from "../../features/dashboard/hooks/use-badge-analytics";
 import { useRecentOrganizerBadges } from "../../features/dashboard/hooks/use-organizer-template-instances";
