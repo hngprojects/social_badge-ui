@@ -99,7 +99,6 @@ export function CustomizeBadgeForm({
     data: CustomizeBadgeFormValues,
     shouldPublish = true,
   ) => {
-    setSavingAction(shouldPublish ? "publish" : "draft");
     // Make logo compulsory if required by layout
     if (
       layoutCaps.hasHeaderLogo &&
@@ -109,6 +108,7 @@ export function CustomizeBadgeForm({
       toast.error("Please upload a logo for this badge layout.");
       return;
     }
+    setSavingAction(shouldPublish ? "publish" : "draft");
 
     const payload = buildOrganiserTemplatePayload({
       ...editor,
@@ -169,7 +169,7 @@ export function CustomizeBadgeForm({
 
   return (
     <main
-      className={`grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-0 md:gap-8 w-full items-start ${!isDemo && "border"}`}
+      className={`grid grid-cols-1 bg-[#F5F5F5] lg:grid-cols-12 gap-0 md:gap-8 w-full items-start ${!isDemo ? "border" : ""}`}
     >
       <section className="order-2 lg:order-1 lg:col-span-7 w-full min-w-0 overflow-hidden p-3 max-[400px]:p-3 min-[400px]:p-6 space-y-6">
         {!isDemo && (
@@ -321,7 +321,7 @@ export function CustomizeBadgeForm({
       </section>
 
       <section
-        className={`order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full ${!isDemo && "lg:sticky"} lg:top-18 ${!isDemo ? "lg:h-screen" : "lg:h-full"} lg:overflow-y-auto ${!isDemo ? "lg:pt-0" : "lg:pt-8"} lg:pb-6 flex flex-col justify-center`}
+        className={`order-1 p-3 bg-[#FFFFFF] lg:order-2 lg:col-span-5 w-full ${!isDemo ? "lg:sticky" : ""} lg:top-18 ${!isDemo ? "lg:h-screen" : "lg:h-full"} lg:overflow-y-auto ${!isDemo ? "lg:pt-0" : "lg:pt-8"} lg:pb-6 flex flex-col justify-center`}
       >
         <LivePreview hideExtras={isDemo} editor={previewEditor} />
       </section>
