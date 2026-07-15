@@ -19,9 +19,11 @@ export function CustomizeBadgePageClient() {
   const platformTemplateId = searchParams.get("template");
   const organiserTemplateId = searchParams.get("id");
 
-  const [hasPendingDemo] = useState(
-    () => sessionStorage.getItem(PENDING_DEMO_CUSTOMIZATION_KEY) !== null,
-  );
+  const [hasPendingDemo] = useState(() => {
+    if (typeof window === "undefined") return false;
+
+    return sessionStorage.getItem(PENDING_DEMO_CUSTOMIZATION_KEY) !== null;
+  });
 
   const hasValidSource =
     hasPendingDemo || !!platformTemplateId || !!organiserTemplateId;
@@ -127,6 +129,7 @@ export function CustomizeBadgePageClient() {
             Could not load this badge.
           </p>
           <button
+            type="button"
             onClick={() => window.location.reload()}
             className="text-xs text-gray-500 underline"
           >
