@@ -13,10 +13,10 @@ import {
 
 
 /** Loads platform template + canvas_data for /customize (gallery uses thumbnails only). */
-export function useLoadPlatformTemplate(platformTemplateId: string | null) {
+export function useLoadPlatformTemplate(platformTemplateId: string | null, enabled=true) {
   return useQuery({
     queryKey: ["platform-template", platformTemplateId],
-    enabled: Boolean(platformTemplateId),
+    enabled:enabled &&  Boolean(platformTemplateId),
     queryFn: async (): Promise<LayoutTemplate | null> => {
       if (!platformTemplateId) return null;
 

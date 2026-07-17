@@ -1,0 +1,1 @@
+export const PENDING_DEMO_CUSTOMIZATION_KEY = "pendingDemoCustomization"

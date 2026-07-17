@@ -22,7 +22,7 @@ interface BrandSectionProps {
 	onChange: (partial: Partial<CustomizeEditorState>) => void;
 	layoutCaps: LayoutCapabilities;
 	eventNameValue: string;
-	hasParam?: boolean
+	isDemo?: boolean
 }
 
 export function BrandSection({
@@ -32,7 +32,7 @@ export function BrandSection({
 	onChange,
 	layoutCaps,
 	eventNameValue,
-	hasParam
+	isDemo
 }: BrandSectionProps) {
 	const currentBlobUrl = useRef<string | null>(null);
 
@@ -62,7 +62,7 @@ export function BrandSection({
 		>
 			{layoutCaps.hasHeaderLogo && (
 				<div>
-					<FieldLabel hasParam={hasParam} label="Logo" required />
+					<FieldLabel isDemo={isDemo} label="Logo" required />
 					<div className="flex items-center gap-3">
 
 						<label className="cursor-pointer">
@@ -106,7 +106,7 @@ export function BrandSection({
 				</div>
 			)}
 
-			{hasParam && <div>
+			{!isDemo && <div>
 				<FieldLabel label="Event Name" required />
 				<TextInput
 					placeholder={editor.eventName || "e.g. DESIGNWEEKLAGOS"}
