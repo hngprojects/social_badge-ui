@@ -17,9 +17,11 @@ interface StyleSectionProps {
 	onPaletteChange: (paletteId: string) => void;
 	onBgModeChange: (mode: "gradient" | "solid" | "image") => void;
 	layoutCaps: LayoutCapabilities;
+	isDemo?: boolean
 }
 
 export function StyleSection({
+	isDemo,
 	editor,
 	onChange,
 	onPaletteChange,
@@ -274,7 +276,7 @@ export function StyleSection({
 				</TabsContent>
 			</Tabs>
 
-			<div>
+			{!isDemo && <div>
 				<p className="text-sm font-medium text-gray-800 mb-2">Title font</p>
 				<div className="grid grid-cols-2 gap-2">
 					{FONTS.map((f) => (
@@ -300,7 +302,7 @@ export function StyleSection({
 						</button>
 					))}
 				</div>
-			</div>
+			</div>}
 		</SectionCard>
 	);
 }

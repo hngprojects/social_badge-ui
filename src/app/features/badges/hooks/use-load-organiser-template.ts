@@ -4,12 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import { getOrganiserTemplate } from "../services/templates";
 import { parseCanvasDataToEditorState } from "../lib/parse-canvas-data";
 
-export function useLoadOrganiserTemplate(organiserTemplateId: string | null) {
+export function useLoadOrganiserTemplate(organiserTemplateId: string | null, enabled = true) {
   return useQuery({
     queryKey: ["organiser-template", organiserTemplateId],
     queryFn: async () => {
       if (!organiserTemplateId) return null;
+
       const response = await getOrganiserTemplate(organiserTemplateId);
+
       return parseCanvasDataToEditorState(
         response.platform_template_id,
         response.canvas_data,
@@ -25,7 +27,7 @@ export function useLoadOrganiserTemplate(organiserTemplateId: string | null) {
         },
       );
     },
-    enabled: Boolean(organiserTemplateId),
+    enabled:enabled && Boolean(organiserTemplateId),
     retry: 1,
   });
 }
